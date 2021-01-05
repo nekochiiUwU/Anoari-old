@@ -15,11 +15,11 @@ E:/#GitHub Anoari/Anoari/Anoari
 -logFile
 Logs/AssetImportWorker0.log
 -srvPort
-56348
+61816
 Successfully changed project path to: E:/#GitHub Anoari/Anoari/Anoari
 E:/#GitHub Anoari/Anoari/Anoari
 Using Asset Import Pipeline V2.
-Refreshing native plugins compatible for Editor in 244.50 ms, found 2 plugins.
+Refreshing native plugins compatible for Editor in 173.83 ms, found 2 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
 Initialize engine version: 2020.2.1f1 (270dd8c3da1c)
 [Subsystems] Discovering subsystems at path E:/unity/2020.2.1f1/Editor/Data/Resources/UnitySubsystems
@@ -35,464 +35,80 @@ Initialize mono
 Mono path[0] = 'E:/unity/2020.2.1f1/Editor/Data/Managed'
 Mono path[1] = 'E:/unity/2020.2.1f1/Editor/Data/MonoBleedingEdge/lib/mono/unityjit'
 Mono config path = 'E:/unity/2020.2.1f1/Editor/Data/MonoBleedingEdge/etc'
-Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,server=y,suspend=n,address=127.0.0.1:56232
+Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,server=y,suspend=n,address=127.0.0.1:56208
 Begin MonoManager ReloadAssembly
 Registering precompiled unity dll's ...
 Register platform support module: E:/unity/2020.2.1f1/Editor/Data/PlaybackEngines/WindowsStandaloneSupport/UnityEditor.WindowsStandalone.Extensions.dll
-Registered in 0.001686 seconds.
+Registered in 0.004272 seconds.
 Native extension for WindowsStandalone target not found
-Refreshing native plugins compatible for Editor in 114.87 ms, found 2 plugins.
+Refreshing native plugins compatible for Editor in 106.35 ms, found 2 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
 Invoked RoslynAnalysisRunner static constructor.
 RoslynAnalysisRunner will not be running.
 RoslynAnalysisRunner has terminated.
 Mono: successfully reloaded assembly
-- Completed reload, in  5.495 seconds
+- Completed reload, in  3.999 seconds
 Platform modules already initialized, skipping
 Registering precompiled user dll's ...
-Registered in 0.013238 seconds.
+Registered in 0.013500 seconds.
 Begin MonoManager ReloadAssembly
 Native extension for WindowsStandalone target not found
-Refreshing native plugins compatible for Editor in 0.83 ms, found 2 plugins.
+Refreshing native plugins compatible for Editor in 0.84 ms, found 2 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
 Invoked RoslynAnalysisRunner static constructor.
 RoslynAnalysisRunner will not be running.
 RoslynAnalysisRunner has terminated.
 Mono: successfully reloaded assembly
-- Completed reload, in  3.959 seconds
+- Completed reload, in  4.166 seconds
 Platform modules already initialized, skipping
 ========================================================================
 Worker process is ready to serve import requests
-Launched and connected shader compiler UnityShaderCompiler.exe after 0.25 seconds
-Refreshing native plugins compatible for Editor in 2.89 ms, found 2 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Unloading 1393 Unused Serialized files (Serialized files now loaded: 0)
-System memory in use before: 64.0 MB.
-System memory in use after: 64.1 MB.
-
-Unloading 50 unused Assets to reduce memory usage. Loaded Objects now: 1843.
-Total: 6.819500 ms (FindLiveObjects: 0.337300 ms CreateObjectMapping: 0.098000 ms MarkObjects: 6.169600 ms  DeleteObjects: 0.211600 ms)
-
-========================================================================
-Received Import Request.
-  path: Assets/sprites aseprites/Plateforme test 24x24-export.png
-  artifactKey: Guid(2f58103981901c241b600bc82bb22160) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/sprites aseprites/Plateforme test 24x24-export.png using Guid(2f58103981901c241b600bc82bb22160) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'c811efd1dcfa8ad743d068f50dd44cd3') in 0.591577 seconds
-  Import took 0.635832 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 14.472829 seconds.
-  path: Assets/sprites aseprites/Plateforme test 24x24-export.asset
-  artifactKey: Guid(267c225daafe02d44b8f2aee2be47127) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/sprites aseprites/Plateforme test 24x24-export.asset using Guid(267c225daafe02d44b8f2aee2be47127) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '378a3b60f37ec160640d06efe60d114c') in 0.131918 seconds
-  Import took 0.165888 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 34.430646 seconds.
-  path: Assets/sprites aseprites/Plateforme test 24x24-export.png
-  artifactKey: Guid(2f58103981901c241b600bc82bb22160) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/sprites aseprites/Plateforme test 24x24-export.png using Guid(2f58103981901c241b600bc82bb22160) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'a1c7c7a23b44957aa1dabb53604dd1da') in 0.063444 seconds
-  Import took 0.083560 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 42.991380 seconds.
-  path: Assets/Personnages/Player Inputs.cs
-  artifactKey: Guid(e93f63e942874d04284412ba2ef15d7b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Personnages/Player Inputs.cs using Guid(e93f63e942874d04284412ba2ef15d7b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'c5ad338e33f25f1faf3990e4351636c5') in 0.301053 seconds
-  Import took 0.345270 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 36.296985 seconds.
-  path: Assets/Personnages/mystique.png
-  artifactKey: Guid(0b626fa2eefece7498f6701e7e1ee244) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Personnages/mystique.png using Guid(0b626fa2eefece7498f6701e7e1ee244) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'f5541d3d1ae1882a5e882a9ba0ae27fa') in 0.903287 seconds
-  Import took 1.146826 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 62.761600 seconds.
-  path: Assets/Personnages/mystique.png
-  artifactKey: Guid(0b626fa2eefece7498f6701e7e1ee244) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Personnages/mystique.png using Guid(0b626fa2eefece7498f6701e7e1ee244) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'e1512601f293befd382953cf7e1df6bd') in 0.037528 seconds
-  Import took 0.064843 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 24.481058 seconds.
-  path: Assets/Personnages/mystique.png
-  artifactKey: Guid(0b626fa2eefece7498f6701e7e1ee244) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Personnages/mystique.png using Guid(0b626fa2eefece7498f6701e7e1ee244) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '2bd93d46732e84a463338b141edced90') in 0.024734 seconds
-  Import took 0.029196 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 188.806567 seconds.
-  path: Assets/Personnages/mystique.png
-  artifactKey: Guid(0b626fa2eefece7498f6701e7e1ee244) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Personnages/mystique.png using Guid(0b626fa2eefece7498f6701e7e1ee244) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'f2137f46bef196ba0a393b758d76ba78') in 0.040090 seconds
-  Import took 0.077370 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 3.378486 seconds.
-  path: Assets/Personnages/mystique.png
-  artifactKey: Guid(0b626fa2eefece7498f6701e7e1ee244) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Personnages/mystique.png using Guid(0b626fa2eefece7498f6701e7e1ee244) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '77e4bcfa533bc7db6274f923e3a09408') in 0.028553 seconds
-  Import took 0.044284 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 13.934901 seconds.
-  path: Assets/Personnages/mystique.png
-  artifactKey: Guid(0b626fa2eefece7498f6701e7e1ee244) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Personnages/mystique.png using Guid(0b626fa2eefece7498f6701e7e1ee244) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '94e559a84dbaa04e359cd1f384f8c0f4') in 0.023599 seconds
-  Import took 0.028922 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 113.757177 seconds.
-  path: Assets/Personnages/mystique.png
-  artifactKey: Guid(0b626fa2eefece7498f6701e7e1ee244) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Personnages/mystique.png using Guid(0b626fa2eefece7498f6701e7e1ee244) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '7cd0156e1f541e77cfcf95584a80f286') in 0.047901 seconds
-  Import took 0.054755 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 33.689066 seconds.
-  path: Assets/sprites aseprites/Plateforme test 24x24-export.png
-  artifactKey: Guid(2f58103981901c241b600bc82bb22160) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/sprites aseprites/Plateforme test 24x24-export.png using Guid(2f58103981901c241b600bc82bb22160) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'ace59ac5085b94e646b35eabaa8d9a27') in 0.039555 seconds
-  Import took 0.067182 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 1647.221538 seconds.
-  path: Assets/Samples/2D Pixel Perfect/4.0.1/Sample Scenes and Extras
-  artifactKey: Guid(a67d911b26c475f4e9a89161a8a66b13) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Samples/2D Pixel Perfect/4.0.1/Sample Scenes and Extras using Guid(a67d911b26c475f4e9a89161a8a66b13) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '6663df9ba7e3a5a4aa45a10e5689edb1') in 1.759195 seconds
-  Import took 2.542324 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 0.968385 seconds.
-  path: Assets/Samples/2D Pixel Perfect/4.0.1/Sample Scenes and Extras/Unity.2D.PixelPerfect.Samples.asmdef
-  artifactKey: Guid(5c401abef5fdf4442be445501720cde0) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Samples/2D Pixel Perfect/4.0.1/Sample Scenes and Extras/Unity.2D.PixelPerfect.Samples.asmdef using Guid(5c401abef5fdf4442be445501720cde0) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '5f99ae9b2767e412e8a0178e4865f3d0') in 0.041797 seconds
-  Import took 0.048097 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 1.616171 seconds.
-  path: Assets/Samples/2D Pixel Perfect/4.0.1/Sample Scenes and Extras/Scenes
-  artifactKey: Guid(fbf6a109fe5bd4794b76e23184357943) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Samples/2D Pixel Perfect/4.0.1/Sample Scenes and Extras/Scenes using Guid(fbf6a109fe5bd4794b76e23184357943) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'be6857b752d3aeb4c5aefdcaf7b5b00c') in 0.015205 seconds
-  Import took 0.023401 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 3.724335 seconds.
-  path: Assets/Samples/2D Pixel Perfect/4.0.1/Sample Scenes and Extras/Scenes/Sprites
-  artifactKey: Guid(afa63396ccfba4c9ca0c6d22cd36ef7e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Samples/2D Pixel Perfect/4.0.1/Sample Scenes and Extras/Scenes/Sprites using Guid(afa63396ccfba4c9ca0c6d22cd36ef7e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'a9282e4832df14c5e41219c694c86a8d') in 0.053360 seconds
-  Import took 0.201812 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 0.000078 seconds.
-  path: Assets/Samples/2D Pixel Perfect/4.0.1/Sample Scenes and Extras/Scenes/Sprites/Hero.png
-  artifactKey: Guid(fc6d5f2018b324fcb8b63dd9f88d39e7) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Samples/2D Pixel Perfect/4.0.1/Sample Scenes and Extras/Scenes/Sprites/Hero.png using Guid(fc6d5f2018b324fcb8b63dd9f88d39e7) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '9b153a8af1d1eed02028bde087f2b905') in 0.959853 seconds
-  Import took 1.061788 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 0.000452 seconds.
-  path: Assets/Samples/2D Pixel Perfect/4.0.1/Sample Scenes and Extras/Scenes/Sprites/Ground.png
-  artifactKey: Guid(a262b59e67b934b1b92684d42069e37c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Samples/2D Pixel Perfect/4.0.1/Sample Scenes and Extras/Scenes/Sprites/Ground.png using Guid(a262b59e67b934b1b92684d42069e37c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '1c684d9cc86cad822d9565b35ff15909') in 0.233369 seconds
-  Import took 0.238512 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 0.000766 seconds.
-  path: Assets/Samples/2D Pixel Perfect/4.0.1/Sample Scenes and Extras/Scenes/Sprites/Enemy.png
-  artifactKey: Guid(ab7826c35d95f48c78e5464b3c85772a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Samples/2D Pixel Perfect/4.0.1/Sample Scenes and Extras/Scenes/Sprites/Enemy.png using Guid(ab7826c35d95f48c78e5464b3c85772a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '9e8a3d8af5f3cb56c5537e2aea3aa0b4') in 9.415872 seconds
-  Import took 9.420858 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 39.852891 seconds.
-  path: Assets/Samples/2D Pixel Perfect/4.0.1
-  artifactKey: Guid(ef0b2aecb396a3049980882bf191eb71) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Samples/2D Pixel Perfect/4.0.1 using Guid(ef0b2aecb396a3049980882bf191eb71) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '4ca70de7f187ca8ffa5660d591a74723') in 0.019572 seconds
-  Import took 0.065627 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 1.387501 seconds.
-  path: Assets/Samples/2D Pixel Perfect/4.0.1/Sample Scenes and Extras/Third-Party Notices.md
-  artifactKey: Guid(57169de316008f640817935054b81df2) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Samples/2D Pixel Perfect/4.0.1/Sample Scenes and Extras/Third-Party Notices.md using Guid(57169de316008f640817935054b81df2) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '4bddcdc087ea544a6d062b886c821a19') in 0.018747 seconds
-  Import took 0.022137 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 0.003683 seconds.
-  path: Assets/Samples/2D Pixel Perfect/4.0.1/Sample Scenes and Extras/Third-Party Notices.md
-  artifactKey: Guid(57169de316008f640817935054b81df2) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Samples/2D Pixel Perfect/4.0.1/Sample Scenes and Extras/Third-Party Notices.md using Guid(57169de316008f640817935054b81df2) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '4bddcdc087ea544a6d062b886c821a19') in 0.010781 seconds
-  Import took 0.015944 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 1.863238 seconds.
-  path: Assets/Samples/2D Pixel Perfect/4.0.1/Sample Scenes and Extras/Extras
-  artifactKey: Guid(accba601416254dfd83471710db81093) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Samples/2D Pixel Perfect/4.0.1/Sample Scenes and Extras/Extras using Guid(accba601416254dfd83471710db81093) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '63ecca183c4aadb974eec42f55b30fe7') in 0.023919 seconds
-  Import took 0.051584 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 1.188091 seconds.
-  path: Assets/Samples/2D Pixel Perfect/4.0.1/Sample Scenes and Extras/Extras/Custom Canvas Scaler
-  artifactKey: Guid(c0fa7f2d905c54ebcab10535eb524708) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Samples/2D Pixel Perfect/4.0.1/Sample Scenes and Extras/Extras/Custom Canvas Scaler using Guid(c0fa7f2d905c54ebcab10535eb524708) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'b44d419797e221a39fc7d57b24a8bf8d') in 0.017721 seconds
-  Import took 0.030834 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 1.082058 seconds.
-  path: Assets/Samples/2D Pixel Perfect/4.0.1/Sample Scenes and Extras/Extras/Custom Canvas Scaler/CustomCanvasScaler.cs
-  artifactKey: Guid(6b62f966127c3a7488ac83bcdf66753d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Samples/2D Pixel Perfect/4.0.1/Sample Scenes and Extras/Extras/Custom Canvas Scaler/CustomCanvasScaler.cs using Guid(6b62f966127c3a7488ac83bcdf66753d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'b3c51732b2e89eff630273835bd72cb5') in 0.016193 seconds
-  Import took 0.023377 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 0.001317 seconds.
-  path: Assets/Samples/2D Pixel Perfect/4.0.1/Sample Scenes and Extras/Extras/Custom Canvas Scaler/CustomCanvasScaler.cs
-  artifactKey: Guid(6b62f966127c3a7488ac83bcdf66753d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Samples/2D Pixel Perfect/4.0.1/Sample Scenes and Extras/Extras/Custom Canvas Scaler/CustomCanvasScaler.cs using Guid(6b62f966127c3a7488ac83bcdf66753d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'b3c51732b2e89eff630273835bd72cb5') in 0.011312 seconds
-  Import took 0.015586 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 1.479058 seconds.
-  path: Assets/Samples/2D Pixel Perfect/4.0.1/Sample Scenes and Extras/Extras/Custom Canvas Scaler/UI Scaling Example.unity
-  artifactKey: Guid(a5b499b9e1c89094c83a36dd583972f3) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Samples/2D Pixel Perfect/4.0.1/Sample Scenes and Extras/Extras/Custom Canvas Scaler/UI Scaling Example.unity using Guid(a5b499b9e1c89094c83a36dd583972f3) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '3429b63f5dfc652b52b713e73fa0f882') in 0.022746 seconds
-  Import took 0.027114 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 9.339318 seconds.
-  path: Assets/Samples/2D Pixel Perfect/4.0.1/Sample Scenes and Extras/Scenes/Scripts
-  artifactKey: Guid(87386e4c738ed4d9393424b69a893be0) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Samples/2D Pixel Perfect/4.0.1/Sample Scenes and Extras/Scenes/Scripts using Guid(87386e4c738ed4d9393424b69a893be0) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'cf7a549243f1331f7c8a0523dffc1399') in 0.020561 seconds
-  Import took 0.025408 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 1.394437 seconds.
-  path: Assets/Samples/2D Pixel Perfect/4.0.1/Sample Scenes and Extras/Scenes/Scripts/BasicCameraFollow.cs
-  artifactKey: Guid(6992f49c3fd3c4795a3c9f80850a68d4) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Samples/2D Pixel Perfect/4.0.1/Sample Scenes and Extras/Scenes/Scripts/BasicCameraFollow.cs using Guid(6992f49c3fd3c4795a3c9f80850a68d4) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '86a4e6d5e405bf5aafdd358ace0eedf4') in 0.020813 seconds
-  Import took 0.051635 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 0.370297 seconds.
-  path: Assets/Samples/2D Pixel Perfect/4.0.1/Sample Scenes and Extras/Scenes/Scripts/CameraManager.cs
-  artifactKey: Guid(34e749f8e89764026b0bcd4ced153c5f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Samples/2D Pixel Perfect/4.0.1/Sample Scenes and Extras/Scenes/Scripts/CameraManager.cs using Guid(34e749f8e89764026b0bcd4ced153c5f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '01504a4bb1384b0a2b8c3bbf2a6a3c35') in 0.020920 seconds
-  Import took 0.035661 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 1.081380 seconds.
-  path: Assets/Samples/2D Pixel Perfect/4.0.1/Sample Scenes and Extras/Scenes/Scripts/HeroMover.cs
-  artifactKey: Guid(c009ff863a0ae4c33809953147cc9fee) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Samples/2D Pixel Perfect/4.0.1/Sample Scenes and Extras/Scenes/Scripts/HeroMover.cs using Guid(c009ff863a0ae4c33809953147cc9fee) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '9e7ac545775bf1a33b6d94a0a0e28434') in 0.022877 seconds
-  Import took 0.031034 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 13.992736 seconds.
-  path: Assets/Samples/2D Pixel Perfect/4.0.1/Sample Scenes and Extras/Scenes/Rule Tiles
-  artifactKey: Guid(10024b47351da48fb8a3c18e5000fec4) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Samples/2D Pixel Perfect/4.0.1/Sample Scenes and Extras/Scenes/Rule Tiles using Guid(10024b47351da48fb8a3c18e5000fec4) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '863e68920952d4498fe148d6b874d559') in 0.023179 seconds
-  Import took 0.050443 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 0.280379 seconds.
-  path: Assets/Samples/2D Pixel Perfect/4.0.1/Sample Scenes and Extras/Scenes/RoboHero
-  artifactKey: Guid(1e05cc4d30ac741898ad2f8fbefde299) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Samples/2D Pixel Perfect/4.0.1/Sample Scenes and Extras/Scenes/RoboHero using Guid(1e05cc4d30ac741898ad2f8fbefde299) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '2a893ece3a8d204d31796de0f281c5d6') in 0.023044 seconds
-  Import took 0.027838 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 0.274151 seconds.
-  path: Assets/Samples/2D Pixel Perfect/4.0.1/Sample Scenes and Extras/Scenes/Presets
-  artifactKey: Guid(b7381bd17ebd04728b9a225859c7c73b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Samples/2D Pixel Perfect/4.0.1/Sample Scenes and Extras/Scenes/Presets using Guid(b7381bd17ebd04728b9a225859c7c73b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '30476e7418c6015b2be03d942bdd05db') in 0.023484 seconds
-  Import took 0.028562 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 0.301602 seconds.
-  path: Assets/Samples/2D Pixel Perfect/4.0.1/Sample Scenes and Extras/Scenes/Physics2D Materials
-  artifactKey: Guid(7cc7dea6d8065409e89700580d5f805e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Samples/2D Pixel Perfect/4.0.1/Sample Scenes and Extras/Scenes/Physics2D Materials using Guid(7cc7dea6d8065409e89700580d5f805e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '83b9e50a70aea391798bb517668ea66c') in 0.020092 seconds
-  Import took 0.024891 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 1.607743 seconds.
-  path: Assets/Samples/2D Pixel Perfect/4.0.1/Sample Scenes and Extras/Scenes/_Scenes
-  artifactKey: Guid(2a4a85ed51c81744883e04fed4411d01) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Samples/2D Pixel Perfect/4.0.1/Sample Scenes and Extras/Scenes/_Scenes using Guid(2a4a85ed51c81744883e04fed4411d01) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '1ed0f4c44a32aefd42c59ba7f9eb3245') in 0.022462 seconds
-  Import took 0.026580 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 4.069773 seconds.
-  path: Assets/Samples/2D Pixel Perfect/4.0.1/Sample Scenes and Extras/Scenes/Animation
-  artifactKey: Guid(24de85c8b199a4dedb817324c9cd0b06) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Samples/2D Pixel Perfect/4.0.1/Sample Scenes and Extras/Scenes/Animation using Guid(24de85c8b199a4dedb817324c9cd0b06) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '9c6cbff6206805656219e77c9904def9') in 0.020496 seconds
-  Import took 0.025198 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 1.073887 seconds.
-  path: Assets/Samples/2D Pixel Perfect/4.0.1/Sample Scenes and Extras/Scenes/Animation/Animators
-  artifactKey: Guid(a1f747d86c1e64cfa8b95f8d379cc866) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Samples/2D Pixel Perfect/4.0.1/Sample Scenes and Extras/Scenes/Animation/Animators using Guid(a1f747d86c1e64cfa8b95f8d379cc866) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '987d3a8674a9bed8c048063359836fd9') in 0.019626 seconds
-  Import took 0.040898 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 1.899505 seconds.
-  path: Assets/Samples/2D Pixel Perfect/4.0.1/Sample Scenes and Extras/Scenes/Fonts
-  artifactKey: Guid(8b1a36ce54cb74f70b1903b7b999def6) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Samples/2D Pixel Perfect/4.0.1/Sample Scenes and Extras/Scenes/Fonts using Guid(8b1a36ce54cb74f70b1903b7b999def6) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '0bd9ec9078268164d519ac59951e0714') in 0.018747 seconds
-  Import took 0.022930 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 0.048050 seconds.
-  path: Assets/Samples/2D Pixel Perfect/4.0.1/Sample Scenes and Extras/Scenes/Fonts/RobotoCondensed-Bold.ttf
-  artifactKey: Guid(b20f139c373fa4555a05cdd0036dfa44) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Samples/2D Pixel Perfect/4.0.1/Sample Scenes and Extras/Scenes/Fonts/RobotoCondensed-Bold.ttf using Guid(b20f139c373fa4555a05cdd0036dfa44) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'dad1bb4d53e47f584d3f46b78ce4ed2f') in 0.226091 seconds
-  Import took 0.230766 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 1.298719 seconds.
-  path: Assets/Samples/2D Pixel Perfect/4.0.1/Sample Scenes and Extras/Scenes/Physics2D Materials/Bouncy.physicsMaterial2D
-  artifactKey: Guid(552718e596d0e408295d5ae742cc4097) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Samples/2D Pixel Perfect/4.0.1/Sample Scenes and Extras/Scenes/Physics2D Materials/Bouncy.physicsMaterial2D using Guid(552718e596d0e408295d5ae742cc4097) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '3aaaf3ea3d08c2b5128d8f8b294e4afa') in 0.014448 seconds
-  Import took 0.018068 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 3.750590 seconds.
-  path: Assets/Samples/2D Pixel Perfect/4.0.1/Sample Scenes and Extras/Scenes/Presets/Pixel Perfect Cameras
-  artifactKey: Guid(cc2fb811f43eb478497d53d76fa4e294) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Samples/2D Pixel Perfect/4.0.1/Sample Scenes and Extras/Scenes/Presets/Pixel Perfect Cameras using Guid(cc2fb811f43eb478497d53d76fa4e294) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '529a34286fe5257f9892f8123bfabc22') in 0.018038 seconds
-  Import took 0.023107 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 0.049620 seconds.
-  path: Assets/Samples/2D Pixel Perfect/4.0.1/Sample Scenes and Extras/Scenes/Presets/Pixel Perfect Cameras/PixelPerfectCamera_16PPU_320x240_Pixel Snapped.preset
-  artifactKey: Guid(063aa59e0522c4256bbd33abac84b6b0) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Samples/2D Pixel Perfect/4.0.1/Sample Scenes and Extras/Scenes/Presets/Pixel Perfect Cameras/PixelPerfectCamera_16PPU_320x240_Pixel Snapped.preset using Guid(063aa59e0522c4256bbd33abac84b6b0) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '286375e5b034431b5cb552624eaeb347') in 0.024505 seconds
-  Import took 0.029205 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 0.000377 seconds.
-  path: Assets/Samples/2D Pixel Perfect/4.0.1/Sample Scenes and Extras/Scenes/Presets/Pixel Perfect Cameras/PixelPerfectCamera_32PPU_320x240_Pixel Snapped.preset
-  artifactKey: Guid(6680887e1c3df45c69746fd58f044a8c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Samples/2D Pixel Perfect/4.0.1/Sample Scenes and Extras/Scenes/Presets/Pixel Perfect Cameras/PixelPerfectCamera_32PPU_320x240_Pixel Snapped.preset using Guid(6680887e1c3df45c69746fd58f044a8c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '6b3d98991250fb9876bf4121b08c2c49') in 0.016381 seconds
-  Import took 0.019904 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 84.568617 seconds.
-  path: Assets/Samples/2D Pixel Perfect/4.0.1/Sample Scenes and Extras/Scenes/Tilemap Palettes
-  artifactKey: Guid(553e3be723a664c748d3e7094cd95da8) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Samples/2D Pixel Perfect/4.0.1/Sample Scenes and Extras/Scenes/Tilemap Palettes using Guid(553e3be723a664c748d3e7094cd95da8) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'a50808fb21009384c3290ee110e897fb') in 0.018857 seconds
-  Import took 0.023651 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 0.643249 seconds.
-  path: Assets/Samples/2D Pixel Perfect/4.0.1/Sample Scenes and Extras/Scenes/Tilemap Palettes/Rule Tiles.prefab
-  artifactKey: Guid(c67fca4441fb7d1479fd4b32f838d684) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Samples/2D Pixel Perfect/4.0.1/Sample Scenes and Extras/Scenes/Tilemap Palettes/Rule Tiles.prefab using Guid(c67fca4441fb7d1479fd4b32f838d684) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '6a6d6878e4f1cb5136b7f979dacc37b2') in 0.027934 seconds
-  Import took 0.032326 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 6.761031 seconds.
-  path: Assets/Samples/2D Pixel Perfect/4.0.1/Sample Scenes and Extras/Scenes/Rule Tiles/Scripts
-  artifactKey: Guid(e3dfd2d84bd19e940a1eaf932c37c072) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Samples/2D Pixel Perfect/4.0.1/Sample Scenes and Extras/Scenes/Rule Tiles/Scripts using Guid(e3dfd2d84bd19e940a1eaf932c37c072) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'ec156eef275e672c37c40a0ae6d5f367') in 0.007939 seconds
-  Import took 0.012380 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 0.006586 seconds.
-  path: Assets/Samples/2D Pixel Perfect/4.0.1/Sample Scenes and Extras/Scenes/Rule Tiles/Scripts
-  artifactKey: Guid(e3dfd2d84bd19e940a1eaf932c37c072) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Samples/2D Pixel Perfect/4.0.1/Sample Scenes and Extras/Scenes/Rule Tiles/Scripts using Guid(e3dfd2d84bd19e940a1eaf932c37c072) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'ec156eef275e672c37c40a0ae6d5f367') in 0.008201 seconds
-  Import took 0.012535 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 1.348535 seconds.
-  path: Assets/Samples/2D Pixel Perfect/4.0.1/Sample Scenes and Extras/Scenes/Rule Tiles/Scripts/Editor
-  artifactKey: Guid(c1cbbd5ac8fed1a4087cbe4fbee0d570) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Samples/2D Pixel Perfect/4.0.1/Sample Scenes and Extras/Scenes/Rule Tiles/Scripts/Editor using Guid(c1cbbd5ac8fed1a4087cbe4fbee0d570) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '4e20feec3e4c296bb5311b50d8eea476') in 0.018141 seconds
-  Import took 0.022578 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 0.052736 seconds.
-  path: Assets/Samples/2D Pixel Perfect/4.0.1/Sample Scenes and Extras/Scenes/Rule Tiles/Scripts/Editor/Unity.2D.PixelPerfect.Samples.Editor.asmdef
-  artifactKey: Guid(2577262ae6c562e478a09842b1269c41) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Samples/2D Pixel Perfect/4.0.1/Sample Scenes and Extras/Scenes/Rule Tiles/Scripts/Editor/Unity.2D.PixelPerfect.Samples.Editor.asmdef using Guid(2577262ae6c562e478a09842b1269c41) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '1e4b2d6a732e14070b30f4c717edbcd0') in 0.016038 seconds
-  Import took 0.020027 seconds .
-
-========================================================================
-Received Prepare
-Registering precompiled user dll's ...
-Registered in 0.015546 seconds.
-Begin MonoManager ReloadAssembly
-Native extension for WindowsStandalone target not found
+Launched and connected shader compiler UnityShaderCompiler.exe after 0.53 seconds
 Refreshing native plugins compatible for Editor in 0.84 ms, found 2 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
-Invoked RoslynAnalysisRunner static constructor.
-RoslynAnalysisRunner will not be running.
-RoslynAnalysisRunner has terminated.
-Mono: successfully reloaded assembly
-- Completed reload, in  2.296 seconds
-Platform modules already initialized, skipping
-Refreshing native plugins compatible for Editor in 0.84 ms, found 2 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Unloading 1402 Unused Serialized files (Serialized files now loaded: 0)
-System memory in use before: 68.0 MB.
-System memory in use after: 68.1 MB.
+Unloading 1401 Unused Serialized files (Serialized files now loaded: 0)
+System memory in use before: 64.3 MB.
+System memory in use after: 64.3 MB.
 
-Unloading 41 unused Assets to reduce memory usage. Loaded Objects now: 1917.
-Total: 3.208500 ms (FindLiveObjects: 0.424700 ms CreateObjectMapping: 0.143400 ms MarkObjects: 2.595700 ms  DeleteObjects: 0.042600 ms)
+Unloading 50 unused Assets to reduce memory usage. Loaded Objects now: 1851.
+Total: 3.800400 ms (FindLiveObjects: 0.667700 ms CreateObjectMapping: 0.195400 ms MarkObjects: 2.834600 ms  DeleteObjects: 0.100800 ms)
 
-AssetImportWorkerClient::OnTransportError - code=2 error=End of file
+========================================================================
+Received Import Request.
+  path: Assets/tilesets/Palette test.prefab
+  artifactKey: Guid(f55633c77db4d6d499d97c62e10335e0) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/tilesets/Palette test.prefab using Guid(f55633c77db4d6d499d97c62e10335e0) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'beb9b6d0ec9dbf76aa251098ecca2cfe') in 1.314701 seconds
+  Import took 1.368124 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 20.067006 seconds.
+  path: Assets/tilesets/Palette test.prefab
+  artifactKey: Guid(f55633c77db4d6d499d97c62e10335e0) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/tilesets/Palette test.prefab using Guid(f55633c77db4d6d499d97c62e10335e0) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'beb9b6d0ec9dbf76aa251098ecca2cfe') in 0.016125 seconds
+  Import took 0.045817 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 369.586219 seconds.
+  path: Assets/Personnages/mystique.png
+  artifactKey: Guid(0b626fa2eefece7498f6701e7e1ee244) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Personnages/mystique.png using Guid(0b626fa2eefece7498f6701e7e1ee244) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '45b5649446043d617381fc33bbc5f4f7') in 0.481989 seconds
+  Import took 0.566959 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 21.009481 seconds.
+  path: Assets/Personnages/mystique.png
+  artifactKey: Guid(0b626fa2eefece7498f6701e7e1ee244) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Personnages/mystique.png using Guid(0b626fa2eefece7498f6701e7e1ee244) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'e77da182af1fe4da71e75f2373f3baaa') in 0.102596 seconds
+  Import took 0.138813 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 14.264730 seconds.
+  path: Assets/Personnages/mystique.png
+  artifactKey: Guid(0b626fa2eefece7498f6701e7e1ee244) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Personnages/mystique.png using Guid(0b626fa2eefece7498f6701e7e1ee244) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '56da57bd01defb06c59cc05e805286b9') in 0.182928 seconds
+  Import took 0.265569 seconds .
+
