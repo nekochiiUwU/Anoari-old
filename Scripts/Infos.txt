@@ -1,0 +1,1 @@
+Ici c'est pour les fichiers Python sauf pour le main
