@@ -31,7 +31,7 @@ class Player(pygame.sprite.Sprite):
 		self.Projectiles = pygame.sprite.Group()
 
 	def Lunch_Projectile(self):
-		self.Projectiles.add(Projectile())
+		self.Projectiles.add(Projectile(self))
 
 	def Move_Right(self):
 		self.HitBox.x += self.Speed
@@ -41,7 +41,7 @@ class Player(pygame.sprite.Sprite):
 
 class Projectile(pygame.sprite.Sprite):
 
-	def __init__(self):
+	def __init__(self, player):
 		super().__init__()
 		self.speed = 4
 
