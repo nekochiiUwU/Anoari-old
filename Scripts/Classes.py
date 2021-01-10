@@ -32,3 +32,11 @@ class Player(pygame.sprite.Sprite):
 
 	def Move_Left(self):
 		self.HitBox.x -= self.Speed
+
+class Projectile(pygame.sprite.Sprite):
+
+	def __init__(self):
+		super().__init__()
+		self.speed = 4
+		self.image = pygame.image.load("Assets/Visual/projectile.png.png")
+		self.HitBox = self.image.get_rect()
