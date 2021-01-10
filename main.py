@@ -29,11 +29,18 @@ while Running:
 	Screen.blit(ground, (0, 400))
 	Screen.blit(Game.Player.Visual, Game.Player.HitBox)
 
+	if Game.pressed.get(pygame.K_d) and Game.Player.HitBox.x < Game.Player.MaxX or Game.pressed.get(pygame.K_RIGHT) and Game.Player.HitBox.x < Game.Player.MaxX:
+		Game.Player.Move_Right()
+	elif Game.pressed.get(pygame.K_q) and Game.Player.HitBox.x > Game.Player.MinX or Game.pressed.get(pygame.K_LEFT) and Game.Player.HitBox.x > Game.Player.MinX:
+		Game.Player.Move_Left()
+
 	pygame.display.flip()
 
 	for event in pygame.event.get():
 		if event.type == pygame.QUIT:
 			running = False
 			pygame.quit()
-
-pygame.quit()
+		elif event.type == pygame.KEYDOWN:
+			Game.pressed[event.key] = True
+		elif event.type == pygame.KEYUP:
+			Game.pressed[event.key] = False
