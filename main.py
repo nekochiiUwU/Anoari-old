@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-import pygame
+# import pygame
 from Scripts.Classes import *
 
 

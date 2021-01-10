@@ -1,8 +1,10 @@
 import pygame
 
+
 class Game:
 	def __init__(self):
 		self.Player = Player()
+
 
 class Player(pygame.sprite.Sprite):
 
@@ -20,4 +22,3 @@ class Player(pygame.sprite.Sprite):
 		self.MaxX = 520
 		self.MinY = 0
 		self.maxY = 282
-
