@@ -28,6 +28,7 @@ while Running:
 	Screen.blit(font, (-1000, -1000))
 	Screen.blit(ground, (0, 400))
 	Screen.blit(Game.Player.Visual, Game.Player.HitBox)
+	Game.Player.Projectiles.draw(Screen)
 
 	if Game.pressed.get(pygame.K_d) and Game.Player.HitBox.x < Game.Player.MaxX or Game.pressed.get(pygame.K_RIGHT) and Game.Player.HitBox.x < Game.Player.MaxX:
 		Game.Player.Move_Right()
@@ -42,5 +43,9 @@ while Running:
 			pygame.quit()
 		elif event.type == pygame.KEYDOWN:
 			Game.pressed[event.key] = True
+
+			if event.key == pygame.K_SPACE:
+				Game.Player.Lunch_Projectile()
+
 		elif event.type == pygame.KEYUP:
 			Game.pressed[event.key] = False
