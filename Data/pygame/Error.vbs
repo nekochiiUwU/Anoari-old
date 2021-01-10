@@ -1,0 +1,1 @@
+MsgBox "Si l'invite de commande vous affiche des erreurs telechargez le python qui va pop-up",0,"Installation PyGame"
