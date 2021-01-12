@@ -5,7 +5,7 @@ from Scripts.Classes import *
 
 
 Game = Game()
-
+Mob1 = Mob1()
 
 def Display():
     pygame.init()
@@ -27,6 +27,7 @@ Running = True
 
 while Running:
 
+
     for Projectile in Game.Player.Projectiles:
         Projectile.move()
         print("Nombre de Projectiles éfféctifs:", Game.Player.Projectiles)
@@ -34,6 +35,7 @@ while Running:
     Screen.blit(font, (-1000, -1000))
     Screen.blit(ground, (0, 400))
     Game.Player.Projectiles.draw(Screen)
+    Game.Mobs.draw(Screen)
     Screen.blit(Game.Player.image, Game.Player.rect)
 
     if Game.pressed.get(pygame.K_d) and Game.Player.rect.x < Game.Player.MaxX \

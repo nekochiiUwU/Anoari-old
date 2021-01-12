@@ -7,6 +7,13 @@ class Game:
 	def __init__(self):
 		self.Player = Player()
 		self.pressed = {}
+		self.Mobs = pygame.sprite.Group()
+		self.spawn_Mob1()
+
+	def spawn_Mob1(self):
+		NewMob1 = Mob1()
+		self.Mobs.add(NewMob1)
+
 
 
 """=====  Player [2]  ====="""
@@ -95,14 +102,27 @@ class Mob1(pygame.sprite.Sprite):
 		self.Damage = 6
 		self.Speed = 2
 
-		self.image = pygame.image.load("Assets/Visual/mystique.png")
+		self.image = pygame.image.load("Assets/Visual/humain.png")
+		self.image = pygame.transform.scale(self.image, (100, 100))
 		self.rect = self.image.get_rect()
 
-		self.rect.x = 50
-		self.rect.y = 282
+		self.rect.x = 500
+		self.rect.y = 302
 
 		self.MinX = -20
 		self.MaxX = 550
 
 		self.MinY = 0
 		self.MaxY = 282
+
+	def walk1(self):
+		self.MovementCheck = self.rect.x
+		self.rect.x -= self.Speed
+		self.MovementCheck = self.MovementCheck - self.rect.x
+		return self.MovementCheck
+
+	def walk2(self):
+		self.MovementCheck = self.rect.x
+		self.rect.x += self.Speed
+		self.MovementCheck = self.MovementCheck - self.rect.x
+		return self.MovementCheck
