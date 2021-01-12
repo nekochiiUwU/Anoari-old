@@ -3,41 +3,40 @@
 # import pygame
 from Scripts.Classes import *
 
-
+# Execute les Classes
 Game = Game()
-Mob1 = Mob1()
 
+
+# Execute les Classes
 def Display():
     pygame.init()
     pygame.display.set_caption("Anatori")
-    Screen = pygame.display.set_mode((640, 480))
-    return Screen
+    screen = pygame.display.set_mode((640, 480))
+    return screen
 
 
-# Execute les fonctions (On va déplacer ca plus tard dans un autre fichier)
+# L'écran est stockée dans une variable
 Screen = Display()
 
-# Definit les éléments visuels en tant que variable (On va déplacer ca plus tard dans un autre fichier)
+# Definit les éléments visuels en tant que variable
 font = pygame.image.load("Assets/Visual/background_cave.png")
 ground = pygame.image.load("Assets/Visual/ground.jpg")
 
 
 Running = True
 
-
+# Contient tout ce qui est fait pent que le jeu est run
 while Running:
 
-
-    for Projectile in Game.Player.Projectiles:
-        Projectile.move()
-        print("Nombre de Projectiles éfféctifs:", Game.Player.Projectiles)
-
+    # Affiche a l'écran des éléments
     Screen.blit(font, (-1000, -1000))
     Screen.blit(ground, (0, 400))
-    Game.Player.Projectiles.draw(Screen)
-    Game.Mobs.draw(Screen)
     Screen.blit(Game.Player.image, Game.Player.rect)
 
+    # Debug des input clavier
+    print(Game.pressed)
+
+    # Déplacement du joueur (x)
     if Game.pressed.get(pygame.K_d) and Game.Player.rect.x < Game.Player.MaxX \
             or Game.pressed.get(pygame.K_RIGHT) and Game.Player.rect.x < Game.Player.MaxX:
 
@@ -48,17 +47,21 @@ while Running:
 
         Game.Player.Move_Left()
 
+    # Met a jour l'affichage
     pygame.display.flip()
 
+    # Check les input et instances
     for event in pygame.event.get():
+
+        # Bouton croix en haut a droite (Fermer le Programme)
         if event.type == pygame.QUIT:
             running = False
             pygame.quit()
+
+        # Touches enfoncées
         elif event.type == pygame.KEYDOWN:
             Game.pressed[event.key] = True
 
-            if event.key == pygame.K_SPACE:
-                Game.Player.Lunch_Projectile()
-
+        # Touches relachées
         elif event.type == pygame.KEYUP:
             Game.pressed[event.key] = False
