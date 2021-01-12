@@ -43,7 +43,7 @@ while Running:
 
         Game.Player.Move_Right()
 
-    elif Game.pressed.get(pygame.K_q) and Game.Player.rect.x > Game.Player.MinX \
+    if Game.pressed.get(pygame.K_q) and Game.Player.rect.x > Game.Player.MinX \
             or Game.pressed.get(pygame.K_LEFT) and Game.Player.rect.x > Game.Player.MinX:
 
         Game.Player.Move_Left()
