@@ -29,21 +29,20 @@ while Running:
 
     for Projectile in Game.Player.Projectiles:
         Projectile.move()
-        print("Nombre de Projectiles éfféctifs:",Game.Player.Projectiles)
+        print("Nombre de Projectiles éfféctifs:", Game.Player.Projectiles)
 
     Screen.blit(font, (-1000, -1000))
     Screen.blit(ground, (0, 400))
     Game.Player.Projectiles.draw(Screen)
-    Screen.blit(Game.Player.Visual, Game.Player.rect)
-
+    Screen.blit(Game.Player.image, Game.Player.rect)
 
     if Game.pressed.get(pygame.K_d) and Game.Player.rect.x < Game.Player.MaxX \
-        or Game.pressed.get(pygame.K_RIGHT) and Game.Player.rect.x < Game.Player.MaxX:
+            or Game.pressed.get(pygame.K_RIGHT) and Game.Player.rect.x < Game.Player.MaxX:
 
         Game.Player.Move_Right()
 
     elif Game.pressed.get(pygame.K_q) and Game.Player.rect.x > Game.Player.MinX \
-    or Game.pressed.get(pygame.K_LEFT) and Game.Player.rect.x > Game.Player.MinX:
+            or Game.pressed.get(pygame.K_LEFT) and Game.Player.rect.x > Game.Player.MinX:
 
         Game.Player.Move_Left()
 

@@ -21,8 +21,8 @@ class Player(pygame.sprite.Sprite):
 		self.Damage = 10
 		self.Speed = 3
 
-		self.Visual = pygame.image.load("Assets/Visual/mystique.png")
-		self.rect = self.Visual.get_rect()
+		self.image = pygame.image.load("Assets/Visual/mystique.png")
+		self.rect = self.image.get_rect()
 
 		self.rect.x = 50
 		self.rect.y = 282
@@ -60,6 +60,13 @@ class Projectile(pygame.sprite.Sprite):
 		self.rect = self.image.get_rect()
 		self.rect.x = Player.rect.x + 80
 		self.rect.y = Player.rect.y + 45
+		self.origin_image = self.image
+		self.angle = 0
+
+	def rotation(self):
+		self.angle += 5
+		self.image = pygame.transform.rotozoom(self.origin_image, self.angle, 1)
+		self.rect = self.image.get_rect(center = self.rect.center)
 
 	def remove(self):
 		self.Player.Projectiles.remove(self)
@@ -67,10 +74,35 @@ class Projectile(pygame.sprite.Sprite):
 
 	def move(self):
 		self.rect.x += self.speed
+		self.rotation()
 
 		if self.rect.x > 640 or self.rect.x < 0 \
-			or self.rect.y > 480 or self.rect.y < 0:
+				or self.rect.y > 480 or self.rect.y < 0:
+
 			self.remove()
 
 
-"""=====   [4]  ====="""
+"""=====  Mob [4]  ====="""
+
+
+class Mob1(pygame.sprite.Sprite):
+
+	def __init__(self):
+
+		super().__init__()
+		self.Pv = 10
+		self.MaxPv = 10
+		self.Damage = 6
+		self.Speed = 2
+
+		self.image = pygame.image.load("Assets/Visual/mystique.png")
+		self.rect = self.image.get_rect()
+
+		self.rect.x = 50
+		self.rect.y = 282
+
+		self.MinX = -20
+		self.MaxX = 550
+
+		self.MinY = 0
+		self.MaxY = 282
