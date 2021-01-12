@@ -1,13 +1,13 @@
 # -*- coding: utf-8 -*-
 
-# import pygame
+# Importe le fichier Classes
 from Scripts.Classes import *
 
 # Execute les Classes
 Game = Game()
 
 
-# Execute les Classes
+# Crée l'écran
 def Display():
     pygame.init()
     pygame.display.set_caption("Anatori")
