@@ -33,9 +33,6 @@ while Running:
     Screen.blit(ground, (0, 400))
     Screen.blit(Game.Player.image, Game.Player.rect)
 
-    # Debug des input clavier
-    print(Game.pressed)
-
     # Déplacement du joueur (x)
     if Game.pressed.get(pygame.K_d) and Game.Player.rect.x < Game.Player.MaxX \
             or Game.pressed.get(pygame.K_RIGHT) and Game.Player.rect.x < Game.Player.MaxX:
@@ -65,3 +62,6 @@ while Running:
         # Touches relachées
         elif event.type == pygame.KEYUP:
             Game.pressed[event.key] = False
+
+    # Debug des input clavier
+    print(Game.pressed)
