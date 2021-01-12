@@ -25,7 +25,7 @@ ground = pygame.image.load("Assets/Visual/ground.jpg")
 
 Running = True
 
-# Contient tout ce qui est fait pent que le jeu est run
+# Contient tout ce qui est fait pendant que le jeu est run
 while Running:
 
     # Affiche a l'écran des éléments
