@@ -50,27 +50,27 @@ class Player(pygame.sprite.Sprite):
 
 class Projectile(pygame.sprite.Sprite):
 
-	def __init__(self, player):
-
+	def __init__(self, Player):
 		super().__init__()
 
 		self.speed = 4
-
+		self.Player = Player
 		self.image = pygame.image.load("Assets/Visual/projectile.png")
 		self.image = pygame.transform.scale(self.image, (10, 10))
 		self.rect = self.image.get_rect()
-		self.rect.x = player.rect.x + 80
-		self.rect.y = player.rect.y + 45
+		self.rect.x = Player.rect.x + 80
+		self.rect.y = Player.rect.y + 45
 
-	def move(self ):
+	def remove(self):
+		self.Player.Projectiles.remove(self)
 
-		super().__init__()
+
+	def move(self):
 		self.rect.x += self.speed
 
 		if self.rect.x > 640 or self.rect.x < 0 \
 			or self.rect.y > 480 or self.rect.y < 0:
-
-			Player. Projectiles.remove(self)
+			self.remove()
 
 
 """=====   [4]  ====="""

@@ -7,7 +7,6 @@ from Scripts.Classes import *
 Game = Game()
 
 
-
 def Display():
     pygame.init()
     pygame.display.set_caption("Anatori")
@@ -30,6 +29,7 @@ while Running:
 
     for Projectile in Game.Player.Projectiles:
         Projectile.move()
+        print("Nombre de Projectiles éfféctifs:",Game.Player.Projectiles)
 
     Screen.blit(font, (-1000, -1000))
     Screen.blit(ground, (0, 400))
