@@ -12,4 +12,4 @@ Good game !
 
 
 
-This game is developed by nekochiitsu iRaiZz and tremisabdoul
+This game is developped by nekochiitsu iRaiZz and tremisabdoul
