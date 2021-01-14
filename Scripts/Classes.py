@@ -47,7 +47,7 @@ class Player(pygame.sprite.Sprite):
 		self.Gold = 7
 
 		# Definit l'élément visuels en tant que variable
-		self.image = pygame.image.load("Assets/Visual/mystique.png")
+		self.image = pygame.image.load("Assets/Visual/Mystique_resp/Frame1.png")
 
 		# Récupérer l'origine de la hitbox de player(Position)
 		self.rect = self.image.get_rect()

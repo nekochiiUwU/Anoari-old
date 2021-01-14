@@ -1,12 +1,11 @@
 # -*- coding: utf-8 -*-
 
-# Importe le fichier Classes
+# Importe le fichier Classes et Time
 from Scripts.Classes import *
+import time
 
 # Execute les Classes
 Game = Game()
-
-timer = 0
 
 
 # Crée l'écran
@@ -52,31 +51,34 @@ while Running:
     # Check les input et instances
     for event in pygame.event.get():
 
-        # Bouton croix en haut a droite (Fermer le Programme)
-        if event.type == pygame.QUIT:
-            running = False
-            pygame.quit()
-
         # Touches enfoncées
-        elif event.type == pygame.KEYDOWN:
+        if event.type == pygame.KEYDOWN:
             Game.pressed[event.key] = True
 
         # Touches relachées
         elif event.type == pygame.KEYUP:
             Game.pressed[event.key] = False
 
-        # Proggramme de pause: touche "p"
+        # Programme de pause: Touche "p"
         if Game.pressed.get(pygame.K_p):
             Pause = True
             print("Pause")
+
             while Pause:
+
+                # Programme d'Unpause: Touche "p"
                 for event in pygame.event.get():
+
                     if Game.pressed.get(pygame.K_p):
+                        time.sleep(0.2)
                         Pause = False
                         print("UnPause")
-                    else:
-                        timer += 1
-                        print(timer)
+                print("[p] for unpause")
+
+        # Bouton croix en haut a droite (Fermer le Programme)
+        if event.type == pygame.QUIT:
+            running = False
+            pygame.quit()
 
     # Debug des input clavier
-    print(Game.pressed)
+    #print(Game.pressed)
