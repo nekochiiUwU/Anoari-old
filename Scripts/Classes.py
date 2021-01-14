@@ -18,6 +18,9 @@ class Game:
 		# Contiens Les Touches Préssées
 		self.pressed = {}
 
+		def collisions(self, sprite, group):
+			return pygame.sprite.spritecollide(sprite, group, False, pygame.sprite.collide_mask)
+
 
 """=====  Player [2]  ====="""
 

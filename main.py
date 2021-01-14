@@ -6,6 +6,8 @@ from Scripts.Classes import *
 # Execute les Classes
 Game = Game()
 
+timer = 0
+
 
 # Crée l'écran
 def Display():
@@ -47,9 +49,6 @@ while Running:
     # Met a jour l'affichage
     pygame.display.flip()
 
-
-
-
     # Check les input et instances
     for event in pygame.event.get():
 
@@ -65,6 +64,19 @@ while Running:
         # Touches relachées
         elif event.type == pygame.KEYUP:
             Game.pressed[event.key] = False
+
+        # Proggramme de pause: touche "p"
+        if Game.pressed.get(pygame.K_p):
+            Pause = True
+            print("Pause")
+            while Pause:
+                for event in pygame.event.get():
+                    if Game.pressed.get(pygame.K_p):
+                        Pause = False
+                        print("UnPause")
+                    else:
+                        timer += 1
+                        print(timer)
 
     # Debug des input clavier
     print(Game.pressed)
