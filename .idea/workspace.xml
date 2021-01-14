@@ -1,12 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="0df041be-4ad5-44a2-aebc-965f9eff4328" name="Default Changelist" comment="Ca Bosse dur">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Scripts/Classes.py" beforeDir="false" afterPath="$PROJECT_DIR$/Scripts/Classes.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/__Trash__/Trash_Classes.py" beforeDir="false" afterPath="$PROJECT_DIR$/__Trash__/Trash_Classes.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
-    </list>
+    <list default="true" id="0df041be-4ad5-44a2-aebc-965f9eff4328" name="Default Changelist" comment="Ca Bosse dur" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -241,7 +236,14 @@
       <option name="project" value="LOCAL" />
       <updated>1610645355022</updated>
     </task>
-    <option name="localTasksCounter" value="24" />
+    <task id="LOCAL-00024" summary="Ca Bosse dur">
+      <created>1610652830756</created>
+      <option name="number" value="00024" />
+      <option name="presentableId" value="LOCAL-00024" />
+      <option name="project" value="LOCAL" />
+      <updated>1610652830756</updated>
+    </task>
+    <option name="localTasksCounter" value="25" />
     <servers />
   </component>
   <component name="Vcs.Log.History.Properties">
