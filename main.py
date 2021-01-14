@@ -32,20 +32,24 @@ while Running:
     # Affiche a l'écran des éléments
     Screen.blit(font, (-1000, -1000))
     Screen.blit(ground, (0, 400))
-    Screen.blit(Game.Player.image, Game.Player.rect)
+    Screen.blit(Game.Player.image, Game.Player.Position)
+
+    Game.Player.Force.x = 0
+    Game.Player.Force.y = 0
 
     # Déplacement du joueur (x)
-    if Game.pressed.get(pygame.K_d) and Game.Player.pos.x < Game.Player.MaxX \
-            or Game.pressed.get(pygame.K_RIGHT) and Game.Player.pos.x < Game.Player.MaxX: 
+    if Game.pressed.get(pygame.K_d) and Game.Player.Position.x < Game.Player.MaxX \
+            or Game.pressed.get(pygame.K_RIGHT) and Game.Player.Position.x < Game.Player.MaxX:
 
         Game.Player.Move_Right()
 
-    if Game.pressed.get(pygame.K_q) and Game.Player.pos.x > Game.Player.MinX \
-            or Game.pressed.get(pygame.K_LEFT) and Game.Player.pos.x > Game.Player.MinX:
-    #on doit pouvoir simplifier "Game.pressed.get(pygame.K_)" en le définissant comme un truc plus court, ça pourrait être pratique▒ rect > pos
+    if Game.pressed.get(pygame.K_q) and Game.Player.Position.x > Game.Player.MinX \
+            or Game.pressed.get(pygame.K_LEFT) and Game.Player.Position.x > Game.Player.MinX:
+        # On doit pouvoir simplifier "Game.pressed.get(pygame.K_)" en le définissant comme un truc plus court,
+        # ça pourrait être pratique▒ rect > pos
         Game.Player.Move_Left()
 
-    # Met a jour l'affichage > rafraîchissement de l'écran en language professionnel 
+    # Met a jour l'affichage > rafraîchissement de l'écran en language professionnel
     pygame.display.flip()
 
     # Check les input et instances
@@ -81,4 +85,10 @@ while Running:
             pygame.quit()
 
     # Debug des input clavier
-    #print(Game.pressed)
+    print(Game.pressed)
+
+    Game.Player.Force.x = 0
+    Game.Player.Force.y = 0
+
+    Game.Player.Position.x = Game.Player.Force.AccelerationFunctionX()
+    Game.Player.Position.y = Game.Player.Force.AccelerationFunctionY()

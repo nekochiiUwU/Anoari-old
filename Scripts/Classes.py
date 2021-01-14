@@ -25,6 +25,8 @@ class Player(pygame.sprite.Sprite):
 	def __init__(self):
 		super().__init__()
 
+		self.Force = Force()
+
 		# Statistiques
 		self.Pv = 100
 		self.MaxPv = 100
@@ -33,11 +35,11 @@ class Player(pygame.sprite.Sprite):
 
 		# Definit l'élément visuels en tant que variable
 		self.image = pygame.image.load("Assets/Visual/mystique.png")
-		self.rect = self.image.get_rect()
+		self.Position = self.image.get_rect()
 
 		# Position de Player
-		self.rect.x = 50
-		self.rect.y = 282
+		self.Position.x = 50
+		self.Position.y = 282
 
 		# Valeurs max et min que Player peut atteindre (Bords de l'écran x)
 		self.MinX = -20
@@ -49,8 +51,44 @@ class Player(pygame.sprite.Sprite):
 
 	# Fonction de mouvement (Droite)
 	def Move_Right(self):
-		self.rect.x += self.Speed
+		self.Force.x += self.Speed
 
 	# Fonction de mouvement (Gauche)
 	def Move_Left(self):
-		self.rect.x -= self.Speed
+		self.Force.x -= self.Speed
+
+
+#  Contient les vecteurs physiques
+class Force:
+	def __init__(self):
+
+		self.x = 0
+		self.y = 0
+		self.stepX = 0
+		self.stepY = 0
+		self.lastx = 0
+		self.lasty = 0
+
+	def AccelerationFunctionX(self):
+
+		self.StepX = self.x + self.lastx / 2
+
+		if -1 < self.StepX < 1:
+			self.StepX = 0
+			self.lastx = self.StepX
+			return 0
+		else:
+			self.lastx = self.StepX
+			return self.StepX
+
+	def AccelerationFunctionY(self):
+
+		self.StepY = self.y + self.lasty / 2
+
+		if -1 < self.StepY < 1:
+			self.StepY = 0
+			self.lasty = self.StepY
+			return 0
+		else:
+			self.lasty = self.StepY
+			return self.StepY
