@@ -47,6 +47,9 @@ while Running:
     # Met a jour l'affichage
     pygame.display.flip()
 
+
+
+
     # Check les input et instances
     for event in pygame.event.get():
 

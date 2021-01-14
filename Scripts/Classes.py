@@ -9,6 +9,9 @@ class Game:
 	# Fonction éxécuté au démarrage de Game
 	def __init__(self):
 
+		# Une condition qui va être exécuté seulement a la création du perso (a déplacer) [if Class == "SorcierInit":]
+		self.Class = "SorcierInit"
+
 		# Player deviens une sous-classe de Game
 		self.Player = Player()
 
@@ -26,13 +29,24 @@ class Player(pygame.sprite.Sprite):
 		super().__init__()
 
 		# Statistiques
+		self.Level = 1
+
 		self.Pv = 100
-		self.MaxPv = 100
-		self.Damage = 10
+		self.MaxPv = 85 + self.Level * 15  # Level 1: 100Pv > Level 2: 115Pv > (etc.)
+		self.Attack = 9 + self.Level * 1  # Level 1: 10Atk > Level 2: 11Atk > (etc.)
 		self.Speed = 3
+
+		#  Attributs
+		self.Weapon = "Staff1"
+		self.Armor = "ArmorWeak1"
+
+		# Gold
+		self.Gold = 7
 
 		# Definit l'élément visuels en tant que variable
 		self.image = pygame.image.load("Assets/Visual/mystique.png")
+
+		# Récupérer l'origine de la hitbox de player(Position)
 		self.rect = self.image.get_rect()
 
 		# Position de Player
