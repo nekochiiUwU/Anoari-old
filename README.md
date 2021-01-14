@@ -11,8 +11,8 @@ to run it by running the "DebugPygame.cmd" check file.
 Good game !
 
 
-This game is developped by 
+	This game is developped by 
 
-	nekochiitsu 
-	iRaiZz 
-and	tremisabdoul
+		nekochiitsu 
+		iRaiZz 
+		tremisabdoul

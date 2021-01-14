@@ -35,17 +35,17 @@ while Running:
     Screen.blit(Game.Player.image, Game.Player.rect)
 
     # Déplacement du joueur (x)
-    if Game.pressed.get(pygame.K_d) and Game.Player.rect.x < Game.Player.MaxX \
-            or Game.pressed.get(pygame.K_RIGHT) and Game.Player.rect.x < Game.Player.MaxX:
+    if Game.pressed.get(pygame.K_d) and Game.Player.pos.x < Game.Player.MaxX \
+            or Game.pressed.get(pygame.K_RIGHT) and Game.Player.pos.x < Game.Player.MaxX: 
 
         Game.Player.Move_Right()
 
-    if Game.pressed.get(pygame.K_q) and Game.Player.rect.x > Game.Player.MinX \
-            or Game.pressed.get(pygame.K_LEFT) and Game.Player.rect.x > Game.Player.MinX:
-
+    if Game.pressed.get(pygame.K_q) and Game.Player.pos.x > Game.Player.MinX \
+            or Game.pressed.get(pygame.K_LEFT) and Game.Player.pos.x > Game.Player.MinX:
+    #on doit pouvoir simplifier "Game.pressed.get(pygame.K_)" en le définissant comme un truc plus court, ça pourrait être pratique▒ rect > pos
         Game.Player.Move_Left()
 
-    # Met a jour l'affichage
+    # Met a jour l'affichage > rafraîchissement de l'écran en language professionnel 
     pygame.display.flip()
 
     # Check les input et instances
