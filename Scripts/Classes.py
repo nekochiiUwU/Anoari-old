@@ -26,31 +26,31 @@ class Player(pygame.sprite.Sprite):
 		super().__init__()
 
 		# Statistiques
-		self.Pv = 100
-		self.MaxPv = 100
-		self.Damage = 10
-		self.Speed = 3
+		self.Pv = 100 #> à définir en global
+		self.MaxPv = 100 #> doit prendre en compte le niveau
+		self.Damage = 10 #> formule prenant en compte le niveau et l'arme, rien à faire ici
+		self.Speed = 3 #> à définir en global, à diviser en speedX et speedY
 
 		# Definit l'élément visuels en tant que variable
 		self.image = pygame.image.load("Assets/Visual/mystique.png")
 		self.rect = self.image.get_rect()
 
 		# Position de Player
-		self.rect.x = 50
-		self.rect.y = 282
+		self.pos.x = 50 #rect = hitbox, pas position. donc j'ai modifié rect en pos et puis uwu▒à définir en global
+		self.pos.y = 282 #rect = hitbox, pas position. donc j'ai modifié rect en pos et puis uwu▒à définir en global
 
 		# Valeurs max et min que Player peut atteindre (Bords de l'écran x)
-		self.MinX = -20
-		self.MaxX = 550
+		self.MinX = -20 #inutile
+		self.MaxX = 550 #à définir en global
 
 		# Valeurs max et min que Player peut atteindre (Bords de l'écran y)
-		self.MinY = 0
-		self.MaxY = 282
+		self.MinY = 0 #à définir en global
+		self.MaxY = 282 #inutile
 
 	# Fonction de mouvement (Droite)
 	def Move_Right(self):
-		self.rect.x += self.Speed
+		self.pos.x += self.Speed # rect > pos
 
 	# Fonction de mouvement (Gauche)
 	def Move_Left(self):
-		self.rect.x -= self.Speed
+		self.pos.x -= self.Speed #rect > pos
