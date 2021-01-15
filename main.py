@@ -74,7 +74,8 @@ while Running:
                         time.sleep(0.2)
                         Pause = False
                         print("UnPause")
-                print("[p] for unpause")
+                    else:
+                        print("[p] for unpause")
 
         # Bouton croix en haut a droite (Fermer le Programme)
         if event.type == pygame.QUIT:
@@ -84,5 +85,5 @@ while Running:
     # Debug des input clavier
     # print(Game.pressed)
 
-    Game.Player.rect.x += Game.Player.Force.AccelerationFunctionX() / 100
-    Game.Player.rect.y += Game.Player.Force.AccelerationFunctionY() / 100
+    Game.Player.rect.x += Game.Player.Force.AccelerationFunctionX()
+    Game.Player.rect.y += Game.Player.Force.AccelerationFunctionY()

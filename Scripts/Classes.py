@@ -14,6 +14,7 @@ class Game:
 
 		# Contiens Les Touches Préssées
 		self.pressed = {}
+
 	def check_collisions(self, sprite, group):
 		return pygame.sprite.spritecollide(sprite, group, False, pygame.sprite.collide_mask)
 
@@ -33,7 +34,7 @@ class Player(pygame.sprite.Sprite, Game):
 		self.Pv = 100
 		self.MaxPv = 100
 		self.Damage = 10
-		self.Speed = 100
+		self.Speed = 2.5
 
 		# Definit l'élément visuels en tant que variable
 		self.image = pygame.image.load("Assets/Visual/mystique.png")
@@ -64,30 +65,29 @@ class Player(pygame.sprite.Sprite, Game):
 class Force:
 	def __init__(self):
 
-		self.x = 0
-		self.y = 0
-		self.StepX = 0
-		self.StepY = 0
-		self.lastx = 0
-		self.lasty = 0
+		self.x = float(0)
+		self.y = float(0)
+		self.StepX = float(0)
+		self.StepY = float(0)
+		self.lastx = float(0)
+		self.lasty = float(0)
 
 	def AccelerationFunctionX(self):
 
 		# Forces appliquées + Forces appliquées lors de la dernière frame /1.2
-		self.StepX = self.x + self.lastx/1.2
+		self.StepX = self.x + ((self.lastx/1.3) / 1.1)
 
-		if -0.1 < self.StepX < 0.1:
+		if round(self.StepX) == 0 :
 			self.StepX = 0
 			self.lastx = self.StepX
-			print(self.StepX)
 			self.x = 0
 			return 0
+
 		else:
 			self.lastx = self.StepX
-			print(self.StepX)
+			print(self.StepX, "=", (self.x/2), "+", (self.lastx/5)/1.1)
 			self.x = 0
 			return self.StepX
-
 
 	def AccelerationFunctionY(self):
 
@@ -96,8 +96,9 @@ class Force:
 		if -1 < self.StepY < 1:
 			self.StepY = 0
 			self.lasty = self.StepY
+			self.y = 0
 			return 0
 		else:
 			self.lasty = self.StepY
+			self.y = 0
 			return self.StepY
-		self.y = 0
