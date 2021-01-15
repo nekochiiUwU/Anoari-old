@@ -7,6 +7,7 @@ import time
 # Execute les Classes
 Game = Game()
 
+frame = 0
 
 # Crée l'écran
 def Display():
@@ -28,6 +29,9 @@ Running = True
 
 # Contient tout ce qui est fait pendant que le jeu est run
 while Running:
+
+    tick = time.time()
+
 
     # Affiche a l'écran des éléments
     Screen.blit(font, (-1000, -1000))
@@ -85,5 +89,85 @@ while Running:
     # Debug des input clavier
     # print(Game.pressed)
 
+
+    if not Game.Player.Force.x:
+        x = 0
+
+        if Game.Player.Actual_image == 1:
+
+            Game.Player.image = pygame.image.load("Assets/Visual/Mystique_resp/Frame2.png")
+            Game.Player.Actual_image = 2
+            Game.Player.rect.y += 1
+
+        elif Game.Player.Actual_image == 2:
+
+            Game.Player.image = pygame.image.load("Assets/Visual/Mystique_resp/Frame3.png")
+            Game.Player.Actual_image = 3
+            Game.Player.rect.y += 1
+
+        elif Game.Player.Actual_image == 3:
+
+            Game.Player.image = pygame.image.load("Assets/Visual/Mystique_resp/Frame4.png")
+            Game.Player.Actual_image = 4
+            Game.Player.rect.y += 1
+
+        elif Game.Player.Actual_image == 4:
+
+            Game.Player.image = pygame.image.load("Assets/Visual/Mystique_resp/Frame5.png")
+            Game.Player.Actual_image = 5
+            Game.Player.rect.y -= 1
+
+        elif Game.Player.Actual_image == 5:
+
+            Game.Player.image = pygame.image.load("Assets/Visual/Mystique_resp/Frame6.png")
+            Game.Player.Actual_image = 6
+            Game.Player.rect.y -= 1
+
+        elif Game.Player.Actual_image == 6:
+
+            Game.Player.image = pygame.image.load("Assets/Visual/Mystique_resp/Frame1.png")
+            Game.Player.Actual_image = 1
+            Game.Player.rect.y -= 1
+    else:
+        x = 0
+
+#        elif Game.Player.Actual_image == -1:
+#            Game.Player.image = pygame.image.load("Assets/Visual/Mystique_resp/Frame2.png")
+#            Game.Player.Actual_image == 2
+#
+#        elif Game.Player.Actual_image == -2:
+#            Game.Player.image = pygame.image.load("Assets/Visual/Mystique_resp/Frame2.png")
+#            Game.Player.Actual_image == 2
+#
+#        elif Game.Player.Actual_image == -3:
+#            Game.Player.image = pygame.image.load("Assets/Visual/Mystique_resp/Frame2.png")
+#            Game.Player.Actual_image == 2
+#
+#        elif Game.Player.Actual_image == -4:
+#            Game.Player.image = pygame.image.load("Assets/Visual/Mystique_resp/Frame2.png")
+#            Game.Player.Actual_image == 2
+#
+#        elif Game.Player.Actual_image == -5:
+#            Game.Player.image = pygame.image.load("Assets/Visual/Mystique_resp/Frame2.png")
+#            Game.Player.Actual_image == 2
+#
+#        elif Game.Player.Actual_image == -5:
+#            Game.Player.image = pygame.image.load("Assets/Visual/Mystique_resp/Frame2.png")
+#            Game.Player.Actual_image == 2
+
     Game.Player.rect.x += Game.Player.Force.AccelerationFunctionX()
     Game.Player.rect.y += Game.Player.Force.AccelerationFunctionY()
+
+    tickcheck = time.time()
+    tickchecker = tick - tickcheck
+
+    print("FPS =", frame)
+
+    while tickchecker < 0.019:
+        tickcheck = time.time()
+        tickchecker =  tickcheck - tick
+    frame = 1
+    frame = frame / tickchecker
+
+
+

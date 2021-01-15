@@ -37,7 +37,8 @@ class Player(pygame.sprite.Sprite, Game):
 		self.Speed = 2.5
 
 		# Definit l'élément visuels en tant que variable
-		self.image = pygame.image.load("Assets/Visual/mystique.png")
+		self.image = pygame.image.load("Assets/Visual/Mystique_resp/Frame1.png")
+		self.Actual_image = 1
 		self.rect = self.image.get_rect()
 
 		# Position de Player
