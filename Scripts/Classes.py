@@ -1,18 +1,17 @@
 import pygame
 
-
 """=====  Game [1]  ====="""
 
 
 class Game:
 
-	# Fonction éxécuté au démarrage de Game
+	# Fonction éxécuté au démarrage de Game -tremisabdoul
 	def __init__(self):
 
-		# Player deviens une sous-classe de Game
+		# Player deviens une sous-classe de Game -tremisabdoul
 		self.Player = Player()
 
-		# Contiens Les Touches Préssées
+		# Contiens Les Touches Préssées -tremisabdoul
 		self.pressed = {}
 
 	def check_collisions(self, sprite, group):
@@ -24,7 +23,7 @@ class Game:
 
 class Player(pygame.sprite.Sprite, Game):
 
-	# Fonction éxécuté au démarrage de Player
+	# Fonction éxécuté au démarrage de Player -tremisabdoul
 	def __init__(self):
 		super().__init__()
 
@@ -34,35 +33,35 @@ class Player(pygame.sprite.Sprite, Game):
 		self.Pv = 100
 		self.MaxPv = 100
 		self.Damage = 10
-		self.Speed = 2.5
+		self.Speed = 1.8
 
-		# Definit l'élément visuels en tant que variable
+		# Definit l'élément visuels en tant que variable -tremisabdoul
 		self.image = pygame.image.load("Assets/Visual/Mystique_resp/Frame1.png")
 		self.Actual_image = 1
 		self.rect = self.image.get_rect()
 
-		# Position de Player
+		# Position de Player -tremisabdoul
 		self.rect.x = 50
 		self.rect.y = 282
 
-		# Valeurs max et min que Player peut atteindre (Bords de l'écran x)
+		# Valeurs max et min que Player peut atteindre (Bords de l'écran x) -tremisabdoul
 		self.MinX = -20
 		self.MaxX = 550
 
-		# Valeurs max et min que Player peut atteindre (Bords de l'écran y)
+		# Valeurs max et min que Player peut atteindre (Bords de l'écran y) -tremisabdoul
 		self.MinY = 0
 		self.MaxY = 282
 
-	# Fonction de mouvement (Droite)
+	# Fonction de mouvement (Droite) -tremisabdoul
 	def Move_Right(self):
 		self.Force.x += self.Speed
 
-	# Fonction de mouvement (Gauche)
+	# Fonction de mouvement (Gauche) -tremisabdoul
 	def Move_Left(self):
 		self.Force.x -= self.Speed
 
 
-#  Contient les vecteurs physiques
+#  Contient les vecteurs physiques -tremisabdoul
 class Force:
 	def __init__(self):
 
@@ -75,18 +74,20 @@ class Force:
 
 	def AccelerationFunctionX(self):
 
-		# Forces appliquées + Forces appliquées lors de la dernière frame /1.2
+		# Forces appliqués + ((Forces appliqués lors de la dernière frame / 1.3) /1.1) -tremisabdoul
 		self.StepX = self.x + ((self.lastx/1.3) / 1.1)
 
-		if round(self.StepX) == 0 :
+		if round(self.StepX) == 0:
 			self.StepX = 0
 			self.lastx = self.StepX
 			self.x = 0
 			return 0
 
 		else:
+			# Debug du mouvement de player
+			print(self.StepX)
+
 			self.lastx = self.StepX
-			print(self.StepX, "=", (self.x/2), "+", (self.lastx/5)/1.1)
 			self.x = 0
 			return self.StepX
 
@@ -103,3 +104,6 @@ class Force:
 			self.lasty = self.StepY
 			self.y = 0
 			return self.StepY
+
+
+
