@@ -264,6 +264,7 @@
       <option name="project" value="LOCAL" />
       <updated>1610737041362</updated>
     </task>
+<<<<<<< HEAD
     <task id="LOCAL-00027" summary="Ca Bosse Dur">
       <created>1610801439332</created>
       <option name="number" value="00027" />
@@ -272,6 +273,9 @@
       <updated>1610801439332</updated>
     </task>
     <option name="localTasksCounter" value="28" />
+=======
+    <option name="localTasksCounter" value="27" />
+>>>>>>> c4a72ac6092f65c10901f9825d3093d347fc0564
     <servers />
   </component>
   <component name="Vcs.Log.History.Properties">
@@ -300,6 +304,7 @@
     <MESSAGE value="Ca Bosse dur" />
     <MESSAGE value="CaBosse Dur" />
     <MESSAGE value="Ca Bosse Dur" />
-    <option name="LAST_COMMIT_MESSAGE" value="Ca Bosse Dur" />
+    <MESSAGE value="CaBosse Dur" />
+    <option name="LAST_COMMIT_MESSAGE" value="CaBosse Dur" />
   </component>
 </project>
