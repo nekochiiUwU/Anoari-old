@@ -94,7 +94,7 @@ while Running:
         # Animation de respiration (sorcière)
         resp_sorciere(Game)
         # Debug des fps
-        print("FPS =", round(fps), "/ 50.251")
+        print("FPS =", round(fps), "/ 60")
 
     Game.Player.rect.x += Game.Player.Force.AccelerationFunctionX()
     Game.Player.rect.y += Game.Player.Force.AccelerationFunctionY()
@@ -105,7 +105,7 @@ while Running:
     # Met a jour l'affichage (rafraîchissement de l'écran) -tremisabdoul
     pygame.display.flip()
 
-    while tickchecker < 0.0199:
+    while tickchecker < 0.017:
         tickcheck = time.time()
         tickchecker = tickcheck - tick
 
