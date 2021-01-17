@@ -34,9 +34,7 @@ class Player(pygame.sprite.Sprite, Game):
 	def __init__(self):
 		super().__init__()
 
-
-		self.SpeedY = 0
-
+		# Force deviens une sousclasse de Player et Game est load en tant que super-classe
 		self.Force = Force()
 		self.Game = Game
 
@@ -45,6 +43,7 @@ class Player(pygame.sprite.Sprite, Game):
 		self.MaxPv = 100
 		self.Damage = 10
 		self.Speed = 1.8
+		self.SpeedY = 0
 
 		# Definit l'élément visuels en tant que variable -tremisabdoul
 		self.image = pygame.image.load("Assets/Visual/Mystique_resp/Frame1.png")
@@ -62,8 +61,6 @@ class Player(pygame.sprite.Sprite, Game):
 		# Valeurs max et min que Player peut atteindre (Bords de l'écran y) -tremisabdoul
 		self.MinY = -40
 		self.MaxY = 440
-
-
 
 	def check_collisions(self, sprite, group):
 		return pygame.sprite.spritecollide(sprite, group, False, pygame.sprite.collide_mask)

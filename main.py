@@ -13,7 +13,7 @@ import pygame
 Game = Game()
 
 # Valeurs qui vont servir plus tard
-# (faites gaffe les valeurs peuvent crash si vous en supprimez certeines) -tremisabdoul
+# (faites gaffe les valeurs peuvent faire crash le jeu si vous en supprimez certeines) -tremisabdoul
 frame = 0
 nbframe = 0
 fps = 0
@@ -31,6 +31,7 @@ Running = True
 # Contient tout ce qui est fait pendant que le jeu est run -tremisabdoul
 while Running:
 
+    # Initialisation du compteur de temps pour limiter les fps -tremisabdoul
     tick = time.time()
     nbframe += 1
     if nbframe % 10 == 0:
@@ -54,7 +55,9 @@ while Running:
         elif event.type == pygame.KEYUP:
             Game.pressed[event.key] = False
 
-        if Game.pressed.get(pygame.K_SPACE):
+        if Game.pressed.get(pygame.K_SPACE) \
+                and Game.Player.check_collisions(Game.Player, Game.all_platform):
+
             Game.Player.SpeedY = -60
 
         # Programme de pause: Touche "p" -tremisabdoul
@@ -85,10 +88,12 @@ while Running:
     # Déplacement du joueur (x) (Impossible aux limites de l'écran): Touche q / d et LEFT / RIGHT -tremisabdoul
     if Game.pressed.get(pygame.K_d) and Game.Player.rect.x < Game.Player.MaxX \
             or Game.pressed.get(pygame.K_RIGHT) and Game.Player.rect.x < Game.Player.MaxX:
+
         Game.Player.Move_Right()
 
     if Game.pressed.get(pygame.K_q) and Game.Player.rect.x > Game.Player.MinX \
             or Game.pressed.get(pygame.K_LEFT) and Game.Player.rect.x > Game.Player.MinX:
+
         Game.Player.Move_Left()
 
     # Opération éfféctuée toutes les 10 frames -tremisabdoul
@@ -110,7 +115,7 @@ while Running:
     # Met a jour l'affichage (rafraîchissement de l'écran) -tremisabdoul
     pygame.display.flip()
 
-    # Permet d'avoir des frames régulières
+    # Permet d'avoir des frames régulières -tremisabdoul
     tickcheck = time.time()
     tickchecker = tick - tickcheck
 
@@ -122,8 +127,8 @@ while Running:
             timeframe = + tickchecker
             frame = + 1
             fps = frame / tickchecker
-
             fps = "FPS : " + str(round(fps))
+
         else:
             timeframe = tickchecker
             frame = 1
