@@ -11,6 +11,15 @@ class Game:
 		# Player deviens une sous-classe de Game -tremisabdoul
 		self.Player = Player()
 
+		#Création du groupe composé de tous les joueurs -Steven
+		self.all_Player = pygame.sprite.Group()
+		self.all_Player.add(self.Player)
+
+		#Création du groupe composé de tous les joueurs -Steven
+		self.Sol = Sol()
+		self.all_platform = pygame.sprite.Group()
+		self.all_platform.add(self.Sol)
+
 		# Contiens Les Touches Préssées -tremisabdoul
 		self.pressed = {}
 
@@ -105,5 +114,20 @@ class Force:
 			self.y = 0
 			return self.StepY
 
+"""=====  Terrain [3]  ====="""
+
+class Sol(pygame.sprite.Sprite):
+
+	def __init__(self):
+
+		super().__init__()
+
+		# Définit l'élément visuel en tant que variable
+		self.image = pygame.image.load("Assets/Visual/ground.jpg")
+		self.rect = self.image.get_rect()
+
+		# Position de la plateforme principale
+		self.rect.x = 0
+		self.rect.y = 400
 
 
