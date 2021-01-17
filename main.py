@@ -23,7 +23,6 @@ Screen = Display()
 
 # Definit les éléments visuels en tant que variable -tremisabdoul
 font = pygame.image.load("Assets/Visual/background_cave.png")
-ground = pygame.image.load("Assets/Visual/ground.jpg")
 
 
 Running = True
@@ -40,7 +39,7 @@ while Running:
 
     # Affiche a l'écran des éléments -tremisabdoul
     Screen.blit(font, (-1000, -1000))
-    Screen.blit(ground, (0, 400))
+    Screen.blit(Game.Sol.image, Game.Sol.rect)
     Screen.blit(Game.Player.image, Game.Player.rect)
 
     #font = pygame.Surface.Font("Assets/Font/8-BIT WONDER.TTF", 30)
