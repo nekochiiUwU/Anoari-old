@@ -10,21 +10,19 @@ class Game:
 
 		# Player deviens une sous-classe de Game -tremisabdoul
 		self.Player = Player()
+		# Sol deviens une sous-classe de Game -Steven
+		self.Sol = Sol()
 
 		#Création du groupe composé de tous les joueurs -Steven
 		self.all_Player = pygame.sprite.Group()
 		self.all_Player.add(self.Player)
 
-		#Création du groupe composé de tous les joueurs -Steven
-		self.Sol = Sol()
+		#Création du groupe composé de toutes les plateformes -Steven
 		self.all_platform = pygame.sprite.Group()
 		self.all_platform.add(self.Sol)
 
 		# Contiens Les Touches Préssées -tremisabdoul
 		self.pressed = {}
-
-	def check_collisions(self, sprite, group):
-		return pygame.sprite.spritecollide(sprite, group, False, pygame.sprite.collide_mask)
 
 
 """=====  Player [2]  ====="""
@@ -36,8 +34,12 @@ class Player(pygame.sprite.Sprite, Game):
 	def __init__(self):
 		super().__init__()
 
+
+		self.SpeedY = 0
+
 		self.Force = Force()
 		self.Game = Game
+
 		# Statistiques
 		self.Pv = 100
 		self.MaxPv = 100
@@ -51,15 +53,20 @@ class Player(pygame.sprite.Sprite, Game):
 
 		# Position de Player -tremisabdoul
 		self.rect.x = 50
-		self.rect.y = 282
+		self.rect.y = 82
 
 		# Valeurs max et min que Player peut atteindre (Bords de l'écran x) -tremisabdoul
-		self.MinX = -20
-		self.MaxX = 550
+		self.MinX = -10
+		self.MaxX = 720
 
 		# Valeurs max et min que Player peut atteindre (Bords de l'écran y) -tremisabdoul
-		self.MinY = 0
-		self.MaxY = 282
+		self.MinY = -40
+		self.MaxY = 440
+
+
+
+	def check_collisions(self, sprite, group):
+		return pygame.sprite.spritecollide(sprite, group, False, pygame.sprite.collide_mask)
 
 	# Fonction de mouvement (Droite) -tremisabdoul
 	def Move_Right(self):
@@ -68,6 +75,9 @@ class Player(pygame.sprite.Sprite, Game):
 	# Fonction de mouvement (Gauche) -tremisabdoul
 	def Move_Left(self):
 		self.Force.x -= self.Speed
+
+
+"""=====  Player.Force [2.1]  ====="""
 
 
 #  Contient les vecteurs physiques -tremisabdoul
@@ -80,6 +90,9 @@ class Force:
 		self.StepY = float(0)
 		self.lastx = float(0)
 		self.lasty = float(0)
+
+		self.Base_Gravity = 10
+		self.Game = Game
 
 	def AccelerationFunctionX(self):
 
@@ -113,6 +126,17 @@ class Force:
 			self.lasty = self.StepY
 			self.y = 0
 			return self.StepY
+
+	def Gravity(self, Game):
+
+		if not Game.Player.check_collisions(Game.Player, Game.all_platform):
+			if self.Base_Gravity < 48:
+				self.Base_Gravity += 2
+			return self.Base_Gravity
+		else:
+			self.Base_Gravity = 10
+			return 0
+
 
 """=====  Terrain [3]  ====="""
 

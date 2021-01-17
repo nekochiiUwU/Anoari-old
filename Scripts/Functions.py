@@ -9,7 +9,7 @@ import pygame
 def Display():
     pygame.init()
     pygame.display.set_caption("Anatori")
-    screen = pygame.display.set_mode((640, 480), pygame.FULLSCREEN)
+    screen = pygame.display.set_mode((1280, 780), pygame.FULLSCREEN)
     return screen
 
 
@@ -52,3 +52,8 @@ def resp_sorciere(Game):
             Game.Player.image = pygame.image.load("Assets/Visual/Mystique_resp/Frame1.png")
             Game.Player.Actual_image = 1
             Game.Player.rect.y -= 1
+
+
+def Jump(Game):
+    Game.Player.rect.y += Game.Player.SpeedY
+    Game.Player.SpeedY += 6

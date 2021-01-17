@@ -54,6 +54,9 @@ while Running:
         elif event.type == pygame.KEYUP:
             Game.pressed[event.key] = False
 
+        if Game.pressed.get(pygame.K_SPACE):
+            Game.Player.SpeedY = -60
+
         # Programme de pause: Touche "p" -tremisabdoul
         if Game.pressed.get(pygame.K_p):
             Pause = True
@@ -75,6 +78,9 @@ while Running:
         if event.type == pygame.QUIT:
             running = False
             pygame.quit()
+
+    if Game.Player.SpeedY:
+        Jump(Game)
 
     # Déplacement du joueur (x) (Impossible aux limites de l'écran): Touche q / d et LEFT / RIGHT -tremisabdoul
     if Game.pressed.get(pygame.K_d) and Game.Player.rect.x < Game.Player.MaxX \
@@ -99,6 +105,7 @@ while Running:
     # Déplacement de player -tremisabdoul
     Game.Player.rect.x += Game.Player.Force.AccelerationFunctionX()
     Game.Player.rect.y += Game.Player.Force.AccelerationFunctionY()
+    Game.Player.rect.y += Game.Player.Force.Gravity(Game)
 
     # Met a jour l'affichage (rafraîchissement de l'écran) -tremisabdoul
     pygame.display.flip()
