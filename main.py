@@ -7,6 +7,7 @@
 from Scripts.Classes import *
 from Scripts.Functions import *
 import time
+import pygame
 
 # Execute les Classes -tremisabdoul
 Game = Game()
@@ -41,10 +42,6 @@ while Running:
     Screen.blit(font, (-1000, -1000))
     Screen.blit(Game.Sol.image, Game.Sol.rect)
     Screen.blit(Game.Player.image, Game.Player.rect)
-
-    #font = pygame.Surface.Font("Assets/Font/8-BIT WONDER.TTF", 30)
-    #printfps = font.render(str(fps), 1, (255, 255, 255))
-    #Screen.blit(printfps, (6, 32))
 
     # Check les input et instances -tremisabdoul
     for event in pygame.event.get():
@@ -90,29 +87,38 @@ while Running:
 
     # Opération éfféctuée toutes les 10 frames -tremisabdoul
     if not nbframe10 == 0:
-        # Animation de respiration (sorcière)
-        resp_sorciere(Game)
-        # Debug des fps
-        print("FPS =", round(fps), "/ 60")
 
+        # Animation de respiration (sorcière) -tremisabdoul
+        resp_sorciere(Game)
+
+    # Debug des fps -tremisabdoul
+    police = pygame.font.Font("Assets/Font/Retro Gaming.ttf", 10)
+    printfps = police.render(str(fps), 1, (255, 255, 255))
+    Screen.blit(printfps, (6, 32))
+
+    # Déplacement de player -tremisabdoul
     Game.Player.rect.x += Game.Player.Force.AccelerationFunctionX()
     Game.Player.rect.y += Game.Player.Force.AccelerationFunctionY()
-
-    tickcheck = time.time()
-    tickchecker = tick - tickcheck
 
     # Met a jour l'affichage (rafraîchissement de l'écran) -tremisabdoul
     pygame.display.flip()
 
+    # Permet d'avoir des frames régulières
+    tickcheck = time.time()
+    tickchecker = tick - tickcheck
+
     while tickchecker < 0.017:
         tickcheck = time.time()
         tickchecker = tickcheck - tick
+    if not nbframe10 == 0:
+        if frame < 10:
+            timeframe = + tickchecker
+            frame = + 1
+            fps = frame / tickchecker
 
-    if frame < 10:
-        timeframe = + tickchecker
-        frame = + 1
-        fps = frame / tickchecker
-    else:
-        timeframe = tickchecker
-        frame = 1
-        fps = frame / tickchecker
+            fps = "FPS : " + str(round(fps))
+        else:
+            timeframe = tickchecker
+            frame = 1
+            fps = frame / tickchecker
+            fps = "FPS : " + str(round(fps))

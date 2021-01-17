@@ -9,7 +9,7 @@ import pygame
 def Display():
     pygame.init()
     pygame.display.set_caption("Anatori")
-    screen = pygame.display.set_mode((640, 480))
+    screen = pygame.display.set_mode((640, 480), pygame.FULLSCREEN)
     return screen
 
 
