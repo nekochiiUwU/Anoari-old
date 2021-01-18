@@ -41,7 +41,7 @@ while Running:
     else:
         nbframe10 = False
 
-    police = pygame.font.Font("Assets/Font/Retro Gaming.ttf", 10)
+    police1 = pygame.font.Font("Assets/Font/Retro Gaming.ttf", 10)
 
     # Affiche a l'écran des éléments -tremisabdoul
     Screen.blit(font, (-400, -800))
@@ -77,11 +77,11 @@ while Running:
                     if Game.pressed.get(pygame.K_p):
                         time.sleep(0.2)
                         Pause = False
-                        printpause = police.render("UnPause", 1, (255, 255, 255))
+                        printpause = police1.render("UnPause", 1, (255, 255, 255))
                         Screen.blit(printpause, (36, 32))
-                    else:
-                        printunpause = police.render("UnPause", 1, (255, 255, 255))
-                        Screen.blit(printunpause, (66, 32))
+
+                printunpause = police1.render("UnPause : [P]", 1, (255, 255, 255))
+                Screen.blit(printunpause, (66, 32))
 
         # Bouton croix en haut a droite (Fermer le Programme) -tremisabdoul
         if event.type == pygame.QUIT:
@@ -110,7 +110,7 @@ while Running:
 
     # Debug des fps -tremisabdoul
 
-    printfps = police.render(str(fps), 1, (255, 255, 255))
+    printfps = police1.render(str(fps), 1, (255, 255, 255))
     Screen.blit(printfps, (6, 32))
 
     # Déplacement de player -tremisabdoul
