@@ -45,6 +45,9 @@ class Player(pygame.sprite.Sprite, Game):
 		self.Speed = 1.8
 		self.SpeedY = 0
 
+		self.Level = 0
+		self.Gold = 0
+
 		# Definit l'élément visuels en tant que variable -tremisabdoul
 		self.image = pygame.image.load("Assets/Visual/Mystique_resp/Frame1.png")
 		self.Actual_image = 1

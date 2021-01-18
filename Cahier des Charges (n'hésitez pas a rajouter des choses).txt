@@ -1,0 +1,122 @@
+vie joueur			        | = (a Finir)
+                            |
+                            |   Game.Player.Pv
+                            |   Game.Player.MaxPv
+				            |
+				            |
+posX/Y joueur			    | = Forces Appliquées a la position:
+                            |       Game.Player.Force.AccelerationFunctionX()
+                            |
+                            |   Position Joueur:
+                            |       Game.Player.rect
+				            |
+				            |
+SpeedX joueur			    | = Game.Player.Speed
+				            |
+speedY joueur			    | = Game.Player.SpeedY
+				            |
+niveau joueur?			    | = Game.Player.Level (a finir)
+				            |
+argent joueur?			    | = //////////
+				            |
+arme joueur?			    | = //////////
+				            |
+(à voir plus tard)		    | == == == == == == == == == == == == == == == == == ==
+				            |
+Une liste de bonus		    | = //////////
+permanents à acheter	    |
+entre les parties		    |
+				            |
+bord Ecran      		    | = //////////
+				            |
+            		        |
+				            |
+distance parcourue dans		| = //////////
+le niveau               	|
+				            |
+valeur de la gravité		| = Game.Player.Force.Base_Gravity
+(ça peut être utile)		|
+				            |
+-Faire afficher			    | = Display()
+la fenêtre			        |
+				            |
+-Créer le menu,			    | = //////////
+sans pour autant le	        |
+rendre fonctionnel		    |
+(continuer/nouveau			|
+uniquement)			        |
+				            |
+-Définir les dimensions	    | = Niveau : //////////
+d'un niveau [~4000;720],    |
+du joueur [~40;120],        |   Joueur : 240/240
+des monstres[~un peu        |
+comme on veut]			    |   Mob : Variable
+				            |
+-Créer les mouvements	    | =
+de base du joueur			|
+>urgent ngl			        |
+				            |
+-Mettre en place			| = //////////
+les monstres			    |
+				            |
+-Finaliser la			    | = //////////
+continuité des niveaux		|
+( pouvoir jouer en			|
+boucle sans s'arrêter)		|
+				            |
+-Ajout du système de		| = //////////
+level et de progression		|
+statistique			        |
+				            |
+-Ajouter la fonction		| = //////////
+de continuer sa partie		|
+et donc une sauvegarde		|
+				            |
+-Ajouter le loot et			| = //////////
+les équipements			    |
+				            |
+-Ajouter les armes de		| = //////////
+la première classe			|
+				            |
+-Ajouter les armes de		| = //////////
+la seconde classe			|
+				            |
+-Ajouter la création de		| = //////////
+personnage au			    |
+menu nouveau			    |
+				            |
+-Ajouter la troisième 		| = //////////
+classe et ses armes			|
+				            |
+- Ajouter un système		| = //////////
+monétaire et des			|
+bonus à acheter			    |
+				            |
+-Ajouter des boss			| = //////////
+et leur bonus			    |
+				            |
+-Ajouter des			    | = //////////
+améliorations			    |
+inter-parties			    |
+				            |
+-Vérifier l'algorithme 	    | = //////////
+des salles			        |
+				            |
+-Ajout de la mécanique	    | = //////////
+de bonus selon la		    |
+rapidité du 		        |
+clear du niveau			    |
+				            |
+-Peaufiner les 			    | = //////////
+graphismes et 			    |
+les animations			    |
+				            |
+-Ajouter classes,			| = //////////
+armes et ennemis			|
+				            |
+-Peaufiner le			    | = //////////
+layout des niveaux			|
+				            |
+-Optimisation			    | = //////////
+si besoin                   |
+				            |
