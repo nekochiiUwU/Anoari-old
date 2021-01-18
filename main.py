@@ -18,7 +18,9 @@ frame = 0
 nbframe = 0
 fps = 0
 event = 0
-
+printpause = 0
+printunpause = 0
+x = 0
 # L'écran est stockée dans une variable -tremisabdoul
 Screen = Display()
 
@@ -39,8 +41,10 @@ while Running:
     else:
         nbframe10 = False
 
+    police = pygame.font.Font("Assets/Font/Retro Gaming.ttf", 10)
+
     # Affiche a l'écran des éléments -tremisabdoul
-    Screen.blit(font, (-1000, -1000))
+    Screen.blit(font, (-400, -800))
     Screen.blit(Game.Sol.image, Game.Sol.rect)
     Screen.blit(Game.Player.image, Game.Player.rect)
 
@@ -58,7 +62,7 @@ while Running:
         if Game.pressed.get(pygame.K_SPACE) \
                 and Game.Player.check_collisions(Game.Player, Game.all_platform):
 
-            Game.Player.SpeedY = -60
+            Game.Player.SpeedY = -100
 
         # Programme de pause: Touche "p" -tremisabdoul
         if Game.pressed.get(pygame.K_p):
@@ -73,9 +77,11 @@ while Running:
                     if Game.pressed.get(pygame.K_p):
                         time.sleep(0.2)
                         Pause = False
-                        print("UnPause")
+                        printpause = police.render("UnPause", 1, (255, 255, 255))
+                        Screen.blit(printpause, (36, 32))
                     else:
-                        print("[p] for unpause")
+                        printunpause = police.render("UnPause", 1, (255, 255, 255))
+                        Screen.blit(printunpause, (66, 32))
 
         # Bouton croix en haut a droite (Fermer le Programme) -tremisabdoul
         if event.type == pygame.QUIT:
@@ -103,7 +109,7 @@ while Running:
         resp_sorciere(Game)
 
     # Debug des fps -tremisabdoul
-    police = pygame.font.Font("Assets/Font/Retro Gaming.ttf", 10)
+
     printfps = police.render(str(fps), 1, (255, 255, 255))
     Screen.blit(printfps, (6, 32))
 

@@ -34,6 +34,8 @@ class Player(pygame.sprite.Sprite, Game):
 	def __init__(self):
 		super().__init__()
 
+		self.pop = False
+
 		# Force deviens une sousclasse de Player et Game est load en tant que super-classe
 		self.Force = Force()
 		self.Game = Game
@@ -42,7 +44,7 @@ class Player(pygame.sprite.Sprite, Game):
 		self.Pv = 100
 		self.MaxPv = 100
 		self.Damage = 10
-		self.Speed = 1.8
+		self.Speed = 7
 		self.SpeedY = 0
 
 		self.Level = 0
@@ -58,8 +60,8 @@ class Player(pygame.sprite.Sprite, Game):
 		self.rect.y = 82
 
 		# Valeurs max et min que Player peut atteindre (Bords de l'écran x) -tremisabdoul
-		self.MinX = -10
-		self.MaxX = 720
+		self.MinX = +10
+		self.MaxX = 1280
 
 		# Valeurs max et min que Player peut atteindre (Bords de l'écran y) -tremisabdoul
 		self.MinY = -40
@@ -91,7 +93,7 @@ class Force:
 		self.lastx = float(0)
 		self.lasty = float(0)
 
-		self.Base_Gravity = 10
+		self.Base_Gravity = 100
 		self.Game = Game
 
 	def AccelerationFunctionX(self):
@@ -130,8 +132,8 @@ class Force:
 	def Gravity(self, Game):
 
 		if not Game.Player.check_collisions(Game.Player, Game.all_platform):
-			if self.Base_Gravity < 48:
-				self.Base_Gravity += 2
+			if self.Base_Gravity < 100:
+				self.Base_Gravity += 4
 			return self.Base_Gravity
 		else:
 			self.Base_Gravity = 10
@@ -152,6 +154,6 @@ class Sol(pygame.sprite.Sprite):
 
 		# Position de la plateforme principale
 		self.rect.x = 0
-		self.rect.y = 400
+		self.rect.y = 700
 
 

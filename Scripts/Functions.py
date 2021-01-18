@@ -56,4 +56,4 @@ def resp_sorciere(Game):
 
 def Jump(Game):
     Game.Player.rect.y += Game.Player.SpeedY
-    Game.Player.SpeedY += 6
+    Game.Player.SpeedY += 10
