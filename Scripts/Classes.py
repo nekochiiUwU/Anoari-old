@@ -136,8 +136,10 @@ class Force:
 				self.Base_Gravity += 4
 			return self.Base_Gravity
 		else:
+			y = Game.Player.check_collisions(Game.Player, Game.all_platform)[0].rect[1] - Game.Player.rect[1]
+			#y = y[1] - Game.Player.rect[1]
 			self.Base_Gravity = 10
-			return 0
+			return y
 
 
 """=====  Terrain [3]  ====="""
