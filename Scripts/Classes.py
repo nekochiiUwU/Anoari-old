@@ -54,6 +54,7 @@ class Player(pygame.sprite.Sprite, Game):
 		self.image = pygame.image.load("Assets/Visual/Mystique_resp/Frame1.png")
 		self.Actual_image = 1
 		self.rect = self.image.get_rect()
+		self.rect = self.image.get_rect(bottomleft=self.rect.bottomleft)
 
 		# Position de Player -tremisabdoul
 		self.rect.x = 50
@@ -136,8 +137,7 @@ class Force:
 				self.Base_Gravity += 4
 			return self.Base_Gravity
 		else:
-			y = Game.Player.check_collisions(Game.Player, Game.all_platform)[0].rect[1] - Game.Player.rect[1]
-			#y = y[1] - Game.Player.rect[1]
+			y = Game.Player.check_collisions(Game.Player, Game.all_platform)[0].rect[1] - Game.Player.rect[1] -115
 			self.Base_Gravity = 10
 			return y
 
