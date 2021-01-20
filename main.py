@@ -12,10 +12,9 @@ import pygame
 # Execute les Classes -tremisabdoul
 Game = Game()
 
-x = 1
-
 # Valeurs qui vont servir plus tard
 # (faites gaffe les valeurs peuvent faire crash le jeu si vous en supprimez certeines) -tremisabdoul
+x = 2
 frame = 0
 nbframe = 0
 fps = 0
@@ -50,6 +49,7 @@ while Running:
 
     # Affiche les éléments a l'écran
     Printer(Screen, Game, font, police1, fps)
+    OptiGraphic(Screen, police1)
 
     # Check les input et instances -tremisabdoul
     for event in pygame.event.get():
@@ -68,7 +68,7 @@ while Running:
         # Animation de respiration (sorcière) -tremisabdoul
         resp_sorciere(Game)
 
-    # Debug des fps -tremisabdoul
+    # Transforme une variable en composent graphique -tremisabdoul
     printfps = police1.render(str(fps), True, (255, 255, 255))
 
     # Déplacements de player -tremisabdoul
@@ -82,9 +82,9 @@ while Running:
     tickchecker = time.time()
     tickchecker -= tick
 
-    #while tickchecker < 0.017:
-    #    tickchecker = time.time()
-    #    tickchecker -= tick
+    while tickchecker < 0.017:
+        tickchecker = time.time()
+        tickchecker -= tick
 
     # Permet de récupérer le nombre de frames a la seconde -tremisabdoul
     if not nbframe10 == 0:

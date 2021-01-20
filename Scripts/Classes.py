@@ -25,7 +25,7 @@ class Game:
 		self.pressed = {}
 
 
-"""=====  Player [2]  ====="""
+"""=====  Game.Player [2]  ====="""
 
 
 class Player(pygame.sprite.Sprite, Game):
@@ -69,7 +69,7 @@ class Player(pygame.sprite.Sprite, Game):
 		self.MaxY = 440
 
 	def check_collisions(self, sprite, group):
-		return pygame.sprite.spritecollide(sprite, group, False, pygame.sprite.collide_mask)
+		return pygame.sprite.spritecollide(sprite, group, False, pygame.sprite.collide_rect)
 
 	# Fonction de mouvement (Droite) -tremisabdoul
 	def Move_Right(self):
@@ -80,7 +80,7 @@ class Player(pygame.sprite.Sprite, Game):
 		self.Force.x -= self.Speed
 
 
-"""=====  Player.Force [2.1]  ====="""
+"""=====  Game.Player.Force [2.1]  ====="""
 
 
 #  Contient les vecteurs physiques -tremisabdoul
@@ -96,7 +96,7 @@ class Force:
 		self.lastx = float(0)
 		self.lasty = float(0)
 
-		self.Base_Gravity = 100
+		self.Base_Gravity = 0
 		self.Game = Game
 
 	# Fonction permettant un mouvement fluide -tremisabdoul
@@ -112,9 +112,6 @@ class Force:
 			return 0
 
 		else:
-			# Debug du mouvement de player
-			print(self.StepX)
-
 			self.lastx = self.StepX
 			self.x = 0
 			return self.StepX
@@ -151,7 +148,7 @@ class Force:
 			return y
 
 
-"""=====  Terrain [3]  ====="""
+"""=====  Game.Sol [3]  ====="""
 
 
 class Sol(pygame.sprite.Sprite):

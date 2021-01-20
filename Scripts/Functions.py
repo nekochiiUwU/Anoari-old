@@ -79,7 +79,9 @@ def InputConfig(Game, event):
         return running
 
 
+
 def DeplacementX(Game):
+
     # Déplacement du joueur (x) (Impossible aux limites de l'écran): Touche q / d et LEFT / RIGHT -tremisabdoul
     if Game.pressed.get(pygame.K_d) and Game.Player.rect.x < Game.Player.MaxX \
             or Game.pressed.get(pygame.K_RIGHT) and Game.Player.rect.x < Game.Player.MaxX:
@@ -97,3 +99,11 @@ def Printer(Screen, Game, font, police1, fps):
     Screen.blit(Game.Player.image, Game.Player.rect)
     printfps = police1.render(str(fps), True, (255, 255, 255))
     Screen.blit(printfps, (6, 32))
+
+def OptiGraphic(Screen, police1):
+    opti ="Element faisent perde des FPS: Game.Player.check_collisions(self, sprite, group)"
+    opti1 ="Element faisent perde des FPS: Game.Player.Force.Gravity(self, Game)"
+    opti = police1.render(str(opti), True, (255, 255, 255))
+    opti1 = police1.render(str(opti1), True, (255, 255, 255))
+    Screen.blit(opti, (15, 44))
+    Screen.blit(opti1, (15, 58))
