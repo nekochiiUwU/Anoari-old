@@ -140,7 +140,7 @@ class Force:
 
 		if not Game.Player.check_collisions(Game.Player, Game.all_platform):
 			if self.Base_Gravity < 100:
-				self.Base_Gravity += 4
+				self.Base_Gravity += 2
 			return self.Base_Gravity
 		else:
 			y = Game.Player.check_collisions(Game.Player, Game.all_platform)[0].rect[1] - Game.Player.rect[1] - 115

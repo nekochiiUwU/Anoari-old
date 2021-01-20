@@ -56,7 +56,7 @@ def resp_sorciere(Game):
 
 def Jump(Game):
     Game.Player.rect.y += Game.Player.SpeedY
-    Game.Player.SpeedY += 10
+    Game.Player.SpeedY += 5
 
 
 def InputConfig(Game, event):
@@ -70,14 +70,13 @@ def InputConfig(Game, event):
 
     if Game.pressed.get(pygame.K_SPACE) \
             and Game.Player.check_collisions(Game.Player, Game.all_platform):
-        Game.Player.SpeedY = -100
+        Game.Player.SpeedY = -70
 
     # Bouton croix en haut a droite (Fermer le Programme) -tremisabdoul
     if event.type == pygame.QUIT:
         running = False
         pygame.quit()
         return running
-
 
 
 def DeplacementX(Game):
@@ -100,9 +99,10 @@ def Printer(Screen, Game, font, police1, fps):
     printfps = police1.render(str(fps), True, (255, 255, 255))
     Screen.blit(printfps, (6, 32))
 
+
 def OptiGraphic(Screen, police1):
-    opti ="Element faisent perde des FPS: Game.Player.check_collisions(self, sprite, group)"
-    opti1 ="Element faisent perde des FPS: Game.Player.Force.Gravity(self, Game)"
+    opti = "..."
+    opti1 = "..."
     opti = police1.render(str(opti), True, (255, 255, 255))
     opti1 = police1.render(str(opti1), True, (255, 255, 255))
     Screen.blit(opti, (15, 44))
