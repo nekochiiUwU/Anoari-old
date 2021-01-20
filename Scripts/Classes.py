@@ -36,11 +36,11 @@ class Player(pygame.sprite.Sprite, Game):
 
 		self.pop = False
 
-		# Force deviens une sousclasse de Player et Game est load en tant que super-classe
+		# Force deviens une sous-classe de Player et Game est load en tant que super-classe -tremisabdoul
 		self.Force = Force()
 		self.Game = Game
 
-		# Statistiques
+		# Statistiques -tremisabdoul
 		self.Pv = 100
 		self.MaxPv = 100
 		self.Damage = 10
@@ -85,6 +85,8 @@ class Player(pygame.sprite.Sprite, Game):
 
 #  Contient les vecteurs physiques -tremisabdoul
 class Force:
+
+	# Fonction exécutée au demarée au lancement de Force
 	def __init__(self):
 
 		self.x = float(0)
@@ -97,9 +99,10 @@ class Force:
 		self.Base_Gravity = 100
 		self.Game = Game
 
+	# Fonction permettant un mouvement fluide -tremisabdoul
 	def AccelerationFunctionX(self):
 
-		# Forces appliqués + ((Forces appliqués lors de la dernière frame / 1.3) /1.1) -tremisabdoul
+		# Forces appliqués + ((Forces appliqués lors de la dernière frame / 1.3) / 1.1) -tremisabdoul
 		self.StepX = self.x + ((self.lastx/1.3) / 1.1)
 
 		if round(self.StepX) == 0:
@@ -116,6 +119,8 @@ class Force:
 			self.x = 0
 			return self.StepX
 
+	""" vv Pour l'instent pas nessesaire vv """
+
 	#def AccelerationFunctionY(self):
 	#
 	#	self.StepY = self.y + self.lasty / 2
@@ -130,6 +135,10 @@ class Force:
 	#		self.y = 0
 	#		return self.StepY
 
+	""" ^^ Pour l'instent pas nessesaire ^^ """
+
+	# Faut se dire que la gravité a une force de 100 et que lorsque
+	# Base_Gravity est a 0 c'est que la force appliquée par le sol est de -100
 	def Gravity(self, Game):
 
 		if not Game.Player.check_collisions(Game.Player, Game.all_platform):
@@ -151,10 +160,10 @@ class Sol(pygame.sprite.Sprite):
 
 		super().__init__()
 
-		# Définit l'élément visuel en tant que variable
+		# Définit l'élément visuel en tant que variable -steven
 		self.image = pygame.image.load("Assets/Visual/ground.jpg")
 		self.rect = self.image.get_rect()
 
-		# Position de la plateforme principale
+		# Position de la plateforme principale -steven
 		self.rect.x = 0
 		self.rect.y = 700

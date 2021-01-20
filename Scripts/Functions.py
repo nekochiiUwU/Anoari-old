@@ -59,7 +59,7 @@ def Jump(Game):
     Game.Player.SpeedY += 10
 
 
-def InputConfig(Game,event):
+def InputConfig(Game, event):
     # Touches enfoncées -tremisabdoul
     if event.type == pygame.KEYDOWN:
         Game.pressed[event.key] = True
@@ -76,6 +76,7 @@ def InputConfig(Game,event):
     if event.type == pygame.QUIT:
         running = False
         pygame.quit()
+        return running
 
 
 def DeplacementX(Game):
@@ -87,3 +88,12 @@ def DeplacementX(Game):
     if Game.pressed.get(pygame.K_q) and Game.Player.rect.x > Game.Player.MinX \
             or Game.pressed.get(pygame.K_LEFT) and Game.Player.rect.x > Game.Player.MinX:
         Game.Player.Move_Left()
+
+
+def Printer(Screen, Game, font, police1, fps):
+    # Affiche a l'écran des éléments -tremisabdoul
+    Screen.blit(font, (-400, -800))
+    Screen.blit(Game.Sol.image, Game.Sol.rect)
+    Screen.blit(Game.Player.image, Game.Player.rect)
+    printfps = police1.render(str(fps), True, (255, 255, 255))
+    Screen.blit(printfps, (6, 32))
