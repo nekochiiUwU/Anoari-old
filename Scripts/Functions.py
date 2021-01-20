@@ -57,3 +57,33 @@ def resp_sorciere(Game):
 def Jump(Game):
     Game.Player.rect.y += Game.Player.SpeedY
     Game.Player.SpeedY += 10
+
+
+def InputConfig(Game,event):
+    # Touches enfoncées -tremisabdoul
+    if event.type == pygame.KEYDOWN:
+        Game.pressed[event.key] = True
+
+    # Touches relachées -tremisabdoul
+    elif event.type == pygame.KEYUP:
+        Game.pressed[event.key] = False
+
+    if Game.pressed.get(pygame.K_SPACE) \
+            and Game.Player.check_collisions(Game.Player, Game.all_platform):
+        Game.Player.SpeedY = -100
+
+    # Bouton croix en haut a droite (Fermer le Programme) -tremisabdoul
+    if event.type == pygame.QUIT:
+        running = False
+        pygame.quit()
+
+
+def DeplacementX(Game):
+    # Déplacement du joueur (x) (Impossible aux limites de l'écran): Touche q / d et LEFT / RIGHT -tremisabdoul
+    if Game.pressed.get(pygame.K_d) and Game.Player.rect.x < Game.Player.MaxX \
+            or Game.pressed.get(pygame.K_RIGHT) and Game.Player.rect.x < Game.Player.MaxX:
+        Game.Player.Move_Right()
+
+    if Game.pressed.get(pygame.K_q) and Game.Player.rect.x > Game.Player.MinX \
+            or Game.pressed.get(pygame.K_LEFT) and Game.Player.rect.x > Game.Player.MinX:
+        Game.Player.Move_Left()

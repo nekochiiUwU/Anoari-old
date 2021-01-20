@@ -116,19 +116,19 @@ class Force:
 			self.x = 0
 			return self.StepX
 
-	def AccelerationFunctionY(self):
-
-		self.StepY = self.y + self.lasty / 2
-
-		if -1 < self.StepY < 1:
-			self.StepY = 0
-			self.lasty = self.StepY
-			self.y = 0
-			return 0
-		else:
-			self.lasty = self.StepY
-			self.y = 0
-			return self.StepY
+	#def AccelerationFunctionY(self):
+	#
+	#	self.StepY = self.y + self.lasty / 2
+	#
+	#	if -1 < self.StepY < 1:
+	#		self.StepY = 0
+	#		self.lasty = self.StepY
+	#		self.y = 0
+	#		return 0
+	#	else:
+	#		self.lasty = self.StepY
+	#		self.y = 0
+	#		return self.StepY
 
 	def Gravity(self, Game):
 
@@ -137,12 +137,13 @@ class Force:
 				self.Base_Gravity += 4
 			return self.Base_Gravity
 		else:
-			y = Game.Player.check_collisions(Game.Player, Game.all_platform)[0].rect[1] - Game.Player.rect[1] -115
+			y = Game.Player.check_collisions(Game.Player, Game.all_platform)[0].rect[1] - Game.Player.rect[1] - 115
 			self.Base_Gravity = 10
 			return y
 
 
 """=====  Terrain [3]  ====="""
+
 
 class Sol(pygame.sprite.Sprite):
 
@@ -157,5 +158,3 @@ class Sol(pygame.sprite.Sprite):
 		# Position de la plateforme principale
 		self.rect.x = 0
 		self.rect.y = 700
-
-
