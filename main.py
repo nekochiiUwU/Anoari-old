@@ -28,6 +28,7 @@ Screen = Display()
 
 # Definit les éléments visuels en tant que variable -tremisabdoul
 font = pygame.image.load("Assets/Visual/background_cave.png")
+RambardePaint = pygame.image.load("Assets/Visual/UI/RambardePAINT.png")
 
 Running = True
 
@@ -48,7 +49,7 @@ while Running:
         nbframe10 = False
 
     # Affiche les éléments a l'écran
-    Printer(Screen, Game, font, police1, fps)
+    Printer(Screen, Game, font, police1, fps, RambardePaint)
     OptiGraphic(Screen, police1, Game)
 
     # Check les input et instances -tremisabdoul
@@ -64,7 +65,7 @@ while Running:
         # Active le Jump() -tremisabdoul
         if Game.pressed.get(pygame.K_SPACE) \
                 and Game.Player.check_collisions(Game.Player, Game.all_platform):
-            Game.Player.SpeedY = -70
+            Game.Player.SpeedY = -60
 
         # Bouton croix en haut a droite (Fermer le Programme) -tremisabdoul
         if event.type == pygame.QUIT:

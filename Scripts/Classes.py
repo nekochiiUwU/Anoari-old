@@ -41,7 +41,7 @@ class Player(pygame.sprite.Sprite, Game):
 		self.Game = Game
 
 		# Statistiques -tremisabdoul
-		self.Pv = 100
+		self.Pv = 50
 		self.MaxPv = 100
 		self.Damage = 10
 		self.Speed = 7
@@ -61,8 +61,8 @@ class Player(pygame.sprite.Sprite, Game):
 		self.rect.y = 82
 
 		# Valeurs max et min que Player peut atteindre (Bords de l'écran x) -tremisabdoul
-		self.MinX = +10
-		self.MaxX = 1280
+		self.MinX = +20
+		self.MaxX = 1200
 
 		# Valeurs max et min que Player peut atteindre (Bords de l'écran y) -tremisabdoul
 		self.MinY = -40
@@ -73,11 +73,14 @@ class Player(pygame.sprite.Sprite, Game):
 
 	# Fonction de mouvement (Droite) -tremisabdoul
 	def Move_Right(self):
-		self.Force.x += self.Speed
+            self.Force.x += self.Speed
+            self.image = pygame.image.load("Assets/Visual/Mystique_resp/Frame1.png")
+
 
 	# Fonction de mouvement (Gauche) -tremisabdoul
 	def Move_Left(self):
-		self.Force.x -= self.Speed
+            self.Force.x -= self.Speed
+            self.image = pygame.image.load("Assets/Visual/Mystique_resp/Left/1.png")
 
 
 """=====  Game.Player.Force [2.1]  ====="""

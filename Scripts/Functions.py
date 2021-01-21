@@ -17,46 +17,11 @@ def resp_sorciere(Game):
 
     if not Game.Player.Force.x:
 
-        if Game.Player.Actual_image == 1:
-
-            Game.Player.image = pygame.image.load("Assets/Visual/Mystique_resp/Frame2.png")
-            Game.Player.Actual_image = 2
-            Game.Player.rect.y += 1
-
-        elif Game.Player.Actual_image == 2:
-
-            Game.Player.image = pygame.image.load("Assets/Visual/Mystique_resp/Frame3.png")
-            Game.Player.Actual_image = 3
-            Game.Player.rect.y += 1
-
-        elif Game.Player.Actual_image == 3:
-
-            Game.Player.image = pygame.image.load("Assets/Visual/Mystique_resp/Frame4.png")
-            Game.Player.Actual_image = 4
-            Game.Player.rect.y += 1
-
-        elif Game.Player.Actual_image == 4:
-
-            Game.Player.image = pygame.image.load("Assets/Visual/Mystique_resp/Frame5.png")
-            Game.Player.Actual_image = 5
-            Game.Player.rect.y -= 1
-
-        elif Game.Player.Actual_image == 5:
-
-            Game.Player.image = pygame.image.load("Assets/Visual/Mystique_resp/Frame6.png")
-            Game.Player.Actual_image = 6
-            Game.Player.rect.y -= 1
-
-        elif Game.Player.Actual_image == 6:
-
-            Game.Player.image = pygame.image.load("Assets/Visual/Mystique_resp/Frame1.png")
-            Game.Player.Actual_image = 1
-            Game.Player.rect.y -= 1
-
+        null = 0
 
 def Jump(Game):
     Game.Player.rect.y += Game.Player.SpeedY
-    Game.Player.SpeedY += 5
+    Game.Player.SpeedY += 3
 
 
 def DeplacementX(Game):
@@ -71,19 +36,21 @@ def DeplacementX(Game):
         Game.Player.Move_Left()
 
 
-def Printer(Screen, Game, font, police1, fps):
+def Printer(Screen, Game, font, police1, fps, RambardePaint):
     # Affiche a l'écran des éléments -tremisabdoul
     Screen.blit(font, (-400, -800))
     Screen.blit(Game.Sol.image, Game.Sol.rect)
     Screen.blit(Game.Player.image, Game.Player.rect)
+    Screen.blit(RambardePaint, (0, 0))
     printfps = police1.render(str(fps), True, (255, 255, 255))
-    Screen.blit(printfps, (6, 32))
+    Screen.blit(printfps, (6, 34))
 
 
 def OptiGraphic(Screen, police1,Game):
+    Color = (Game.Player.Pv / Game.Player.MaxPv) * 255
     opti = Game.Player.Pv
     opti1 = "..."
-    opti = police1.render(str(opti), True, (255, 255, 255))
-    opti1 = police1.render(str(opti1), True, (255, 255, 255))
-    Screen.blit(opti, (15, 44))
-    Screen.blit(opti1, (15, 58))
+    opti = police1.render(str(opti), True, (255, Color, Color))
+    opti1 = police1.render(str(opti1), True, (255, Color, Color))
+    Screen.blit(opti, (15, 48))
+    Screen.blit(opti1, (15, 60))
