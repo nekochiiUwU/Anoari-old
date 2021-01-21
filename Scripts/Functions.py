@@ -9,15 +9,15 @@ import pygame
 def Display():
     pygame.init()
     pygame.display.set_caption("Anatori")
-    screen = pygame.display.set_mode((1280, 780), pygame.FULLSCREEN)
+    screen = pygame.display.set_mode((1280, 720), pygame.FULLSCREEN)
     return screen
 
 
 def resp_sorciere(Game):
 
     if not Game.Player.Force.x:
+        return 0
 
-        null = 0
 
 def Jump(Game):
     Game.Player.rect.y += Game.Player.SpeedY
@@ -36,21 +36,25 @@ def DeplacementX(Game):
         Game.Player.Move_Left()
 
 
-def Printer(Screen, Game, font, police1, fps, RambardePaint):
+def Printer(Screen, Game, font, police1, fps):
     # Affiche a l'écran des éléments -tremisabdoul
-    Screen.blit(font, (-400, -800))
+    Screen.blit(font, (0, 0))
     Screen.blit(Game.Sol.image, Game.Sol.rect)
     Screen.blit(Game.Player.image, Game.Player.rect)
-    Screen.blit(RambardePaint, (0, 0))
     printfps = police1.render(str(fps), True, (255, 255, 255))
     Screen.blit(printfps, (6, 34))
 
 
-def OptiGraphic(Screen, police1,Game):
+def OptiGraphic(Screen, police1, Game):
     Color = (Game.Player.Pv / Game.Player.MaxPv) * 255
-    opti = Game.Player.Pv
-    opti1 = "..."
-    opti = police1.render(str(opti), True, (255, Color, Color))
-    opti1 = police1.render(str(opti1), True, (255, Color, Color))
+    LifeColor = [255, Color, Color]
+    opti = str(round(Game.Player.Pv))
+    opti = str(str(opti) + " / " + str(Game.Player.MaxPv) + " PV")
+    opti1 = round((Game.Player.Pv / Game.Player.MaxPv) * 100)
+    opti1 = opti1 * "☺"
+    opti = police1.render(str(opti), True, LifeColor)
+    opti1 = police1.render(str(opti1), True, LifeColor)
     Screen.blit(opti, (15, 48))
     Screen.blit(opti1, (15, 60))
+
+# map.maskimage.map_rgb(127, 127, 127, 255)

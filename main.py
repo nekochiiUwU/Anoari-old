@@ -27,8 +27,8 @@ Pause = False
 Screen = Display()
 
 # Definit les éléments visuels en tant que variable -tremisabdoul
-font = pygame.image.load("Assets/Visual/background_cave.png")
-RambardePaint = pygame.image.load("Assets/Visual/UI/RambardePAINT.png")
+font = pygame.image.load("Assets/Visual/UI/RambardePAINT.png")
+font = pygame.transform.scale(font, (1500, 720))
 
 Running = True
 
@@ -37,6 +37,11 @@ police1 = pygame.font.Font("Assets/Font/Retro Gaming.ttf", 10)
 
 # Contient tout ce qui est fait pendant que le jeu est run -tremisabdoul
 while Running:
+
+    if Game.Player.Pv < 2:
+        Game.Player.Pv = Game.Player.MaxPv
+    else:
+        Game.Player.Pv -= 1
 
     # Initialisation du compteur de temps pour limiter les fps -tremisabdoul
     tick = time.time()
@@ -49,7 +54,7 @@ while Running:
         nbframe10 = False
 
     # Affiche les éléments a l'écran
-    Printer(Screen, Game, font, police1, fps, RambardePaint)
+    Printer(Screen, Game, font, police1, fps)
     OptiGraphic(Screen, police1, Game)
 
     # Check les input et instances -tremisabdoul

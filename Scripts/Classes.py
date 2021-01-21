@@ -42,7 +42,7 @@ class Player(pygame.sprite.Sprite, Game):
 
 		# Statistiques -tremisabdoul
 		self.Pv = 50
-		self.MaxPv = 100
+		self.MaxPv = 1000
 		self.Damage = 10
 		self.Speed = 7
 		self.SpeedY = 0
@@ -68,19 +68,19 @@ class Player(pygame.sprite.Sprite, Game):
 		self.MinY = -40
 		self.MaxY = 440
 
+	# Fonction de collisions en fonction du rect -tremisabdoul
 	def check_collisions(self, sprite, group):
 		return pygame.sprite.spritecollide(sprite, group, False, pygame.sprite.collide_rect)
 
 	# Fonction de mouvement (Droite) -tremisabdoul
 	def Move_Right(self):
-            self.Force.x += self.Speed
-            self.image = pygame.image.load("Assets/Visual/Mystique_resp/Frame1.png")
-
+		self.Force.x += self.Speed
+		self.image = pygame.image.load("Assets/Visual/Mystique_resp/Frame1.png")
 
 	# Fonction de mouvement (Gauche) -tremisabdoul
 	def Move_Left(self):
-            self.Force.x -= self.Speed
-            self.image = pygame.image.load("Assets/Visual/Mystique_resp/Left/1.png")
+		self.Force.x -= self.Speed
+		self.image = pygame.image.load("Assets/Visual/Mystique_resp/Left/1.png")
 
 
 """=====  Game.Player.Force [2.1]  ====="""
@@ -161,7 +161,10 @@ class Sol(pygame.sprite.Sprite):
 		super().__init__()
 
 		# Définit l'élément visuel en tant que variable -steven
-		self.image = pygame.image.load("Assets/Visual/ground.jpg")
+		self.image = pygame.image.load("Assets/Visual/plateforme_base.png")
+		# Transforme l'image sol en la resolution indiquée vv vv -tremisabdoul
+		self.image = pygame.transform.scale(self.image, (1280, 20))
+		# Définit la hitbox de sol -steven
 		self.rect = self.image.get_rect()
 
 		# Position de la plateforme principale -steven
