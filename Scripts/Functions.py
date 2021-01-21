@@ -59,26 +59,6 @@ def Jump(Game):
     Game.Player.SpeedY += 5
 
 
-def InputConfig(Game, event):
-    # Touches enfoncées -tremisabdoul
-    if event.type == pygame.KEYDOWN:
-        Game.pressed[event.key] = True
-
-    # Touches relachées -tremisabdoul
-    elif event.type == pygame.KEYUP:
-        Game.pressed[event.key] = False
-
-    if Game.pressed.get(pygame.K_SPACE) \
-            and Game.Player.check_collisions(Game.Player, Game.all_platform):
-        Game.Player.SpeedY = -70
-
-    # Bouton croix en haut a droite (Fermer le Programme) -tremisabdoul
-    if event.type == pygame.QUIT:
-        running = False
-        pygame.quit()
-        return running
-
-
 def DeplacementX(Game):
 
     # Déplacement du joueur (x) (Impossible aux limites de l'écran): Touche q / d et LEFT / RIGHT -tremisabdoul
@@ -100,8 +80,8 @@ def Printer(Screen, Game, font, police1, fps):
     Screen.blit(printfps, (6, 32))
 
 
-def OptiGraphic(Screen, police1):
-    opti = "..."
+def OptiGraphic(Screen, police1,Game):
+    opti = Game.Player.Pv
     opti1 = "..."
     opti = police1.render(str(opti), True, (255, 255, 255))
     opti1 = police1.render(str(opti1), True, (255, 255, 255))

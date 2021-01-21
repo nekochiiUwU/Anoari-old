@@ -49,11 +49,32 @@ while Running:
 
     # Affiche les éléments a l'écran
     Printer(Screen, Game, font, police1, fps)
-    OptiGraphic(Screen, police1)
+    OptiGraphic(Screen, police1, Game)
 
     # Check les input et instances -tremisabdoul
     for event in pygame.event.get():
-        InputConfig(Game, event)
+        # Touches enfoncées -tremisabdoul
+        if event.type == pygame.KEYDOWN:
+            Game.pressed[event.key] = True
+
+        # Touches relachées -tremisabdoul
+        elif event.type == pygame.KEYUP:
+            Game.pressed[event.key] = False
+
+        # Active le Jump() -tremisabdoul
+        if Game.pressed.get(pygame.K_SPACE) \
+                and Game.Player.check_collisions(Game.Player, Game.all_platform):
+            Game.Player.SpeedY = -70
+
+        # Bouton croix en haut a droite (Fermer le Programme) -tremisabdoul
+        if event.type == pygame.QUIT:
+            running = False
+            pygame.quit()
+
+        # Touche Echap (Fermer le Programme) -tremisabdoul
+        if Game.pressed.get(pygame.K_ESCAPE):
+            running = False
+            pygame.quit()
 
     # Fonction de Jump -tremisabdoul
     if Game.Player.SpeedY:
