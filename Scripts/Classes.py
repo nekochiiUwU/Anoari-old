@@ -42,9 +42,9 @@ class Player(pygame.sprite.Sprite, Game):
 
 		# Statistiques -tremisabdoul
 		self.Pv = 50
-		self.MaxPv = 1000
+		self.MaxPv = 100
 		self.Damage = 10
-		self.Speed = 7
+		self.Speed = 4
 		self.SpeedY = 0
 
 		self.Level = 0
@@ -143,7 +143,7 @@ class Force:
 
 		if not Game.Player.check_collisions(Game.Player, Game.all_platform):
 			if self.Base_Gravity < 100:
-				self.Base_Gravity += 2
+				self.Base_Gravity += 1
 			return self.Base_Gravity
 		else:
 			y = Game.Player.check_collisions(Game.Player, Game.all_platform)[0].rect[1] - Game.Player.rect[1] - 115

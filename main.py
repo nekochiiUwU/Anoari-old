@@ -70,7 +70,7 @@ while Running:
         # Active le Jump() -tremisabdoul
         if Game.pressed.get(pygame.K_SPACE) \
                 and Game.Player.check_collisions(Game.Player, Game.all_platform):
-            Game.Player.SpeedY = -60
+            Game.Player.SpeedY = -40
 
         # Bouton croix en haut a droite (Fermer le Programme) -tremisabdoul
         if event.type == pygame.QUIT:
@@ -81,6 +81,10 @@ while Running:
         if Game.pressed.get(pygame.K_ESCAPE):
             running = False
             pygame.quit()
+
+        if Game.pressed.get(pygame.K_p):
+            Pause = True
+            Running = False
 
     # Fonction de Jump -tremisabdoul
     if Game.Player.SpeedY:
@@ -115,14 +119,7 @@ while Running:
 
     # Permet de récupérer le nombre de frames a la seconde -tremisabdoul
     if not nbframe10 == 0:
-        if frame < 10:
-            timeframe = + tickchecker
-            frame = + 1
-            fps = frame / tickchecker
-            fps = "FPS : " + str(round(fps))
-
-        else:
-            timeframe = tickchecker
-            frame = 1
-            fps = frame / tickchecker
-            fps = "FPS : " + str(round(fps))
+        timeframe = tickchecker
+        frame = 1
+        fps = frame / tickchecker
+        fps = "FPS : " + str(round(fps))
