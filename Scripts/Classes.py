@@ -44,7 +44,7 @@ class Player(pygame.sprite.Sprite, Game):
 		self.Pv = 50
 		self.MaxPv = 100
 		self.Damage = 10
-		self.Speed = 4
+		self.Speed = 3
 		self.SpeedY = 0
 
 		self.Level = 0
@@ -137,17 +137,17 @@ class Force:
 
 	""" ^^ Pour l'instent pas nessesaire ^^ """
 
-	# Faut se dire que la gravité a une force de 100 et que lorsque
-	# Base_Gravity est a 0 c'est que la force appliquée par le sol est de -100
+	# Faut se dire que la gravité a une force de 20 et que lorsque
+	# Base_Gravity est a 0 c'est que la force appliquée par le sol est de -20
 	def Gravity(self, Game):
 
 		if not Game.Player.check_collisions(Game.Player, Game.all_platform):
 			if self.Base_Gravity < 100:
-				self.Base_Gravity += 1
+				self.Base_Gravity += 0.6
 			return self.Base_Gravity
 		else:
 			y = Game.Player.check_collisions(Game.Player, Game.all_platform)[0].rect[1] - Game.Player.rect[1] - 115
-			self.Base_Gravity = 10
+			self.Base_Gravity = 0
 			return y
 
 

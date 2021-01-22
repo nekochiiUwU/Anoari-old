@@ -9,8 +9,11 @@ from Scripts.Functions import *
 import time
 import pygame
 
+pygame.init()
+
 # Execute les Classes -tremisabdoul
 Game = Game()
+
 
 # Valeurs qui vont servir plus tard
 # (faites gaffe les valeurs peuvent faire crash le jeu si vous en supprimez certeines) -tremisabdoul
@@ -70,7 +73,7 @@ while Running:
         # Active le Jump() -tremisabdoul
         if Game.pressed.get(pygame.K_SPACE) \
                 and Game.Player.check_collisions(Game.Player, Game.all_platform):
-            Game.Player.SpeedY = -40
+            Game.Player.SpeedY = -30
 
         # Bouton croix en haut a droite (Fermer le Programme) -tremisabdoul
         if event.type == pygame.QUIT:
