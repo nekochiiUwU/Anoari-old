@@ -21,7 +21,7 @@ def resp_sorciere(Game):
 
 def Jump(Game):
     Game.Player.rect.y += Game.Player.SpeedY
-    Game.Player.SpeedY += 1.5
+    Game.Player.SpeedY += 1.2
 
 
 def DeplacementX(Game):

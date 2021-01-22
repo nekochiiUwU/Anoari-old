@@ -73,7 +73,7 @@ while Running:
         # Active le Jump() -tremisabdoul
         if Game.pressed.get(pygame.K_SPACE) \
                 and Game.Player.check_collisions(Game.Player, Game.all_platform):
-            Game.Player.SpeedY = -30
+            Game.Player.SpeedY = -33
 
         # Bouton croix en haut a droite (Fermer le Programme) -tremisabdoul
         if event.type == pygame.QUIT:
