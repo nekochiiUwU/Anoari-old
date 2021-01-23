@@ -143,14 +143,20 @@ class Force:
 	# Base_Gravity est a 0 c'est que la force appliquée par le sol est de -20
 	def Gravity(self, Game0):
 
-		if not Game0.Player.check_collisions(Game0.Player, Game0.all_platform):
-			if self.Base_Gravity < 100:
-				self.Base_Gravity += 0.6
+		if not Game0.Player.check_collisions(Game0.Player, Game0.all_platform) \
+				and self.Base_Gravity < 20:
+			self.Base_Gravity += 0.6
 			return self.Base_Gravity
 		else:
-			y = Game0.Player.check_collisions(Game0.Player, Game0.all_platform)[0].rect[1] - Game0.Player.rect[1] - 115
-			self.Base_Gravity = 0
-			return y
+			try:
+				y = Game0.Player.rect[1] - Game0.Player.check_collisions(Game0.Player, Game0.all_platform)[0].rect[1] + 115
+				self.Base_Gravity = 0
+				print(y)
+				return y
+			except:
+				self.Base_Gravity = 20
+				return 20
+
 
 
 """=====  Game.Sol [3]  ====="""
@@ -173,6 +179,9 @@ class Sol(pygame.sprite.Sprite):
 		self.rect.x = 0
 		self.rect.y = 700
 
+	def tempSol(self,Screen):
+		Screen.blit(self.image, (1000, 48))
+
 
 """=====  Game.Mouse [4]  ====="""
 
@@ -186,5 +195,3 @@ class Mouse:
 		self.image = pygame.transform.scale(self.image, (33, 33))
 		self.rect = self.image.get_rect()
 		self.rect = self.image.get_rect(center=self.rect.center)
-
-

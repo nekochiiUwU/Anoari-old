@@ -43,7 +43,7 @@ police1 = pygame.font.Font("Assets/Font/Retro Gaming.ttf", 10)
 
 # Contient tout ce qui est fait pendant que le jeu est run -tremisabdoul
 while Running:
-
+    #print(Game.Player.image, " ", Game.Player.rect)
     if Game.Player.Pv < 2:
         Game.Player.Pv = Game.Player.MaxPv
     else:
