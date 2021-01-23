@@ -27,8 +27,11 @@ def resp_sorciere(time, Game, AnimationSorcer):
 
 
 def Jump(Game):
-    Game.Player.rect.y += Game.Player.SpeedY
-    Game.Player.SpeedY += 1.2
+    if Game.Player.SpeedY < 0:
+        Game.Player.rect.y += Game.Player.SpeedY
+        Game.Player.SpeedY += 0.66
+    else:
+        Game.Player.SpeedY = 0
 
 
 def DeplacementX(Game):
@@ -43,12 +46,13 @@ def DeplacementX(Game):
         Game.Player.Move_Left()
 
 
-def Printer(Screen, Game, font, police1, fps):
+def Printer(Screen, Game, font):
     # Affiche a l'écran des éléments -tremisabdoul
     Screen.blit(font, (0, 0))
     Screen.blit(Game.Sol.image, Game.Sol.rect)
     Screen.blit(Game.Player.image, Game.Player.rect)
     Screen.blit(Game.Mouse.image, pygame.mouse.get_pos())
+    Game.Plateform.NewPlateform(Screen, 300, 500)
 
 
 def OptiGraphic(Screen, police1, Game, tickchecker):
@@ -73,7 +77,6 @@ def OptiGraphic(Screen, police1, Game, tickchecker):
     opti1 = round((Game.Player.Pv / Game.Player.MaxPv) * 100)
     opti1 = opti1 * "☺"
     opti1 = police1.render(str(opti1), True, LifeColor)
-
 
     Screen.blit(opti, (15, 48))
     Screen.blit(opti1, (15, 60))

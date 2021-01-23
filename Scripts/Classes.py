@@ -15,6 +15,8 @@ class Game:
 		# Mouse deviens une sous-classe de Game -tremisabdoul
 		self.Mouse = Mouse()
 
+		self.Plateform = Plateform()
+
 		#Création du groupe composé de tous les joueurs -Steven
 		self.all_Player = pygame.sprite.Group()
 		self.all_Player.add(self.Player)
@@ -22,6 +24,7 @@ class Game:
 		#Création du groupe composé de toutes les plateformes -Steven
 		self.all_platform = pygame.sprite.Group()
 		self.all_platform.add(self.Sol)
+		self.all_platform.add(self.Plateform)
 
 		# Contiens Les Touches Préssées -tremisabdoul
 		self.pressed = {}
@@ -72,7 +75,7 @@ class Player(pygame.sprite.Sprite, Game):
 
 	# Fonction de collisions en fonction du rect -tremisabdoul
 	def check_collisions(self, sprite, group):
-		return pygame.sprite.spritecollide(sprite, group, False, pygame.sprite.collide_rect)
+		return pygame.sprite.spritecollide(sprite, group, False, pygame.sprite.collide_mask)
 
 	# Fonction de mouvement (Droite) -tremisabdoul
 	def Move_Right(self):
@@ -142,21 +145,22 @@ class Force:
 	# Faut se dire que la gravité a une force de 20 et que lorsque
 	# Base_Gravity est a 0 c'est que la force appliquée par le sol est de -20
 	def Gravity(self, Game0):
+		Collide = Game0.Player.check_collisions(Game0.Player, Game0.all_platform)
+		if not Collide:
 
-		if not Game0.Player.check_collisions(Game0.Player, Game0.all_platform) \
-				and self.Base_Gravity < 20:
-			self.Base_Gravity += 0.6
-			return self.Base_Gravity
+			if self.Base_Gravity < 33:
+				self.Base_Gravity += 0.66
+				return self.Base_Gravity
+
+			else:
+				self.Base_Gravity = 33
+				return 33
+
 		else:
-			try:
-				y = Game0.Player.rect[1] - Game0.Player.check_collisions(Game0.Player, Game0.all_platform)[0].rect[1] + 115
-				self.Base_Gravity = 0
-				print(y)
-				return y
-			except:
-				self.Base_Gravity = 20
-				return 20
-
+			Apply = Collide[0].rect.top - Game0.Player.rect.bottom + 1
+			print(Apply)
+			self.Base_Gravity = 0
+			return Apply
 
 
 """=====  Game.Sol [3]  ====="""
@@ -170,8 +174,10 @@ class Sol(pygame.sprite.Sprite):
 
 		# Définit l'élément visuel en tant que variable -steven
 		self.image = pygame.image.load("Assets/Visual/plateforme_base.png")
+
 		# Transforme l'image sol en la resolution indiquée -tremisabdoul
 		self.image = pygame.transform.scale(self.image, (1280, 20))
+
 		# Définit la hitbox de sol -steven
 		self.rect = self.image.get_rect()
 
@@ -179,19 +185,46 @@ class Sol(pygame.sprite.Sprite):
 		self.rect.x = 0
 		self.rect.y = 700
 
-	def tempSol(self,Screen):
-		Screen.blit(self.image, (1000, 48))
+
+class Plateform(pygame.sprite.Sprite, Game):
+
+	def __init__(self):
+
+		super().__init__()
+
+		# Définit l'élément visuel en tant que variable -steven
+		self.image = pygame.image.load("Assets/Visual/plateforme_base.png")
+
+		# Transforme l'image sol en la resolution indiquée -tremisabdoul
+		self.image = pygame.transform.scale(self.image, (320, 20))
+
+		# Définit la hitbox de sol -steven
+		self.rect = self.image.get_rect()
+
+		# Position de la plateforme -steven
+		self.rect.x = 400
+		self.rect.y = 520
+
+	def NewPlateform(self, Screen, x, y):
+		P = [x, y]
+		self.rect.x = x
+		self.rect.y = y
+		Screen.blit(self.image, P)
 
 
 """=====  Game.Mouse [4]  ====="""
 
 
-class Mouse:
+class Mouse(pygame.sprite.Sprite):
 
 	def __init__(self):
 
+		super().__init__()
+
 		pygame.mouse.set_visible(False)
+
 		self.image = pygame.image.load("Assets/Visual/UI/Mouse.png")
 		self.image = pygame.transform.scale(self.image, (33, 33))
+
 		self.rect = self.image.get_rect()
 		self.rect = self.image.get_rect(center=self.rect.center)

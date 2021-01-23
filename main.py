@@ -30,8 +30,6 @@ Pause = False
 # L'écran est stockée dans une variable -tremisabdoul
 Screen = Display()
 
-
-
 # Definit les éléments visuels en tant que variable -tremisabdoul
 font = pygame.image.load("Assets/Visual/UI/RambardePAINT.png")
 font = pygame.transform.scale(font, (1500, 720))
@@ -43,7 +41,7 @@ police1 = pygame.font.Font("Assets/Font/Retro Gaming.ttf", 10)
 
 # Contient tout ce qui est fait pendant que le jeu est run -tremisabdoul
 while Running:
-    #print(Game.Player.image, " ", Game.Player.rect)
+    print(Game.Player.image, "\n", Game.Player.rect)
     if Game.Player.Pv < 2:
         Game.Player.Pv = Game.Player.MaxPv
     else:
@@ -54,7 +52,7 @@ while Running:
 
     nbframe += 1
 
-    Printer(Screen, Game, font, police1, fps)
+    Printer(Screen, Game, font)
     OptiGraphic(Screen, police1, Game, tickchecker)
 
     # Check les input et instances -tremisabdoul
@@ -70,7 +68,7 @@ while Running:
         # Active le Jump() -tremisabdoul
         if Game.pressed.get(pygame.K_SPACE) \
                 and Game.Player.check_collisions(Game.Player, Game.all_platform):
-            Game.Player.SpeedY = -33
+            Game.Player.SpeedY = -24
 
         # Bouton croix en haut a droite (Fermer le Programme) -tremisabdoul
         if event.type == pygame.QUIT:
