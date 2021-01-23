@@ -55,7 +55,6 @@ class Player(pygame.sprite.Sprite, Game):
 		# Definit l'élément visuels en tant que variable -tremisabdoul
 		self.image = pygame.image.load("Assets/Visual/Mystique_resp/Frame1.png")
 		self.imageTag = 1
-		self.Actual_image = 1
 		self.rect = self.image.get_rect()
 		self.rect = self.image.get_rect(bottomleft=self.rect.bottomleft)
 
