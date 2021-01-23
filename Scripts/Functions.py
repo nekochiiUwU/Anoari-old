@@ -43,16 +43,38 @@ def DeplacementX(Game):
         Game.Player.Move_Left()
 
 
-#def Printer(Screen, Game, font, police1, fps):
-def OptiGraphic(Screen, police1, Game):
+def Printer(Screen, Game, font, police1, fps):
+    # Affiche a l'écran des éléments -tremisabdoul
+    Screen.blit(font, (0, 0))
+    Screen.blit(Game.Sol.image, Game.Sol.rect)
+    Screen.blit(Game.Player.image, Game.Player.rect)
+    Screen.blit(Game.Mouse.image, pygame.mouse.get_pos())
+
+
+def OptiGraphic(Screen, police1, Game, tickchecker):
+
+    # Permet de récupérer le nombre de frames a la seconde -tremisabdoul
+    frame = 1
+    fps = frame / tickchecker
+    fps = "FPS : " + str(round(fps))
+
+    # Transforme une variable en composent graphique -tremisabdoul
+    printfps = police1.render(str(fps), True, (255, 255, 255))
+
+    Screen.blit(printfps, (6, 34))
+
     Color = (Game.Player.Pv / Game.Player.MaxPv) * 255
     LifeColor = [255, Color, Color]
+
     opti = str(round(Game.Player.Pv))
     opti = str(str(opti) + " / " + str(Game.Player.MaxPv) + " PV")
+    opti = police1.render(str(opti), True, LifeColor)
+
     opti1 = round((Game.Player.Pv / Game.Player.MaxPv) * 100)
     opti1 = opti1 * "☺"
-    opti = police1.render(str(opti), True, LifeColor)
     opti1 = police1.render(str(opti1), True, LifeColor)
+
+
     Screen.blit(opti, (15, 48))
     Screen.blit(opti1, (15, 60))
 

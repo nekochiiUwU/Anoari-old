@@ -17,13 +17,14 @@ Game = Game()
 
 # Valeurs qui vont servir plus tard
 # (faites gaffe les valeurs peuvent faire crash le jeu si vous en supprimez certeines) -tremisabdoul
-x = 2
+x = 0
 frame = 0
 nbframe = 0
 fps = 0
 event = 0
 printpause = 0
 printunpause = 0
+tickchecker = 1
 Pause = False
 
 # L'écran est stockée dans une variable -tremisabdoul
@@ -53,14 +54,8 @@ while Running:
 
     nbframe += 1
 
-    # Affiche a l'écran des éléments -tremisabdoul
-    Screen.blit(font, (0, 0))
-    Screen.blit(Game.Sol.image, Game.Sol.rect)
-    Screen.blit(Game.Player.image, Game.Player.rect)
-    printfps = police1.render(str(fps), True, (255, 255, 255))
-    Screen.blit(printfps, (6, 34))
-    Screen.blit(Game.Mouse.image, pygame.mouse.get_pos())
-    OptiGraphic(Screen, police1, Game)
+    Printer(Screen, Game, font, police1, fps)
+    OptiGraphic(Screen, police1, Game, tickchecker)
 
     # Check les input et instances -tremisabdoul
     for event in pygame.event.get():
@@ -98,9 +93,6 @@ while Running:
     # Fonction de déplacement gauche / droite -tremisabdoul
     DeplacementX(Game)
 
-    # Transforme une variable en composent graphique -tremisabdoul
-    printfps = police1.render(str(fps), True, (255, 255, 255))
-
     # Déplacements de player -tremisabdoul
     Game.Player.rect.x += Game.Player.Force.AccelerationFunctionX()
     Game.Player.rect.y += Game.Player.Force.Gravity(Game)
@@ -115,9 +107,3 @@ while Running:
     while tickchecker < 0.017:
         tickchecker = time.time()
         tickchecker -= tick
-
-    # Permet de récupérer le nombre de frames a la seconde -tremisabdoul
-    timeframe = tickchecker
-    frame = 1
-    fps = frame / tickchecker
-    fps = "FPS : " + str(round(fps))
