@@ -12,6 +12,8 @@ class Game:
 		self.Player = Player()
 		# Sol deviens une sous-classe de Game -Steven
 		self.Sol = Sol()
+		# Mouse deviens une sous-classe de Game -tremisabdoul
+		self.Mouse = Mouse()
 
 		#Création du groupe composé de tous les joueurs -Steven
 		self.all_Player = pygame.sprite.Group()
@@ -52,6 +54,7 @@ class Player(pygame.sprite.Sprite, Game):
 
 		# Definit l'élément visuels en tant que variable -tremisabdoul
 		self.image = pygame.image.load("Assets/Visual/Mystique_resp/Frame1.png")
+		self.imageTag = 1
 		self.Actual_image = 1
 		self.rect = self.image.get_rect()
 		self.rect = self.image.get_rect(bottomleft=self.rect.bottomleft)
@@ -65,8 +68,8 @@ class Player(pygame.sprite.Sprite, Game):
 		self.MaxX = 1200
 
 		# Valeurs max et min que Player peut atteindre (Bords de l'écran y) -tremisabdoul
-		self.MinY = -40
-		self.MaxY = 440
+		self.MinY = -20
+		self.MaxY = 740
 
 	# Fonction de collisions en fonction du rect -tremisabdoul
 	def check_collisions(self, sprite, group):
@@ -75,12 +78,12 @@ class Player(pygame.sprite.Sprite, Game):
 	# Fonction de mouvement (Droite) -tremisabdoul
 	def Move_Right(self):
 		self.Force.x += self.Speed
-		self.image = pygame.image.load("Assets/Visual/Mystique_resp/Frame1.png")
+		self.imageTag = 1
 
 	# Fonction de mouvement (Gauche) -tremisabdoul
 	def Move_Left(self):
 		self.Force.x -= self.Speed
-		self.image = pygame.image.load("Assets/Visual/Mystique_resp/Left/1.png")
+		self.imageTag = -1
 
 
 """=====  Game.Player.Force [2.1]  ====="""
@@ -139,14 +142,14 @@ class Force:
 
 	# Faut se dire que la gravité a une force de 20 et que lorsque
 	# Base_Gravity est a 0 c'est que la force appliquée par le sol est de -20
-	def Gravity(self, Game):
+	def Gravity(self, Game0):
 
-		if not Game.Player.check_collisions(Game.Player, Game.all_platform):
+		if not Game0.Player.check_collisions(Game0.Player, Game0.all_platform):
 			if self.Base_Gravity < 100:
 				self.Base_Gravity += 0.6
 			return self.Base_Gravity
 		else:
-			y = Game.Player.check_collisions(Game.Player, Game.all_platform)[0].rect[1] - Game.Player.rect[1] - 115
+			y = Game0.Player.check_collisions(Game0.Player, Game0.all_platform)[0].rect[1] - Game0.Player.rect[1] - 115
 			self.Base_Gravity = 0
 			return y
 
@@ -162,7 +165,7 @@ class Sol(pygame.sprite.Sprite):
 
 		# Définit l'élément visuel en tant que variable -steven
 		self.image = pygame.image.load("Assets/Visual/plateforme_base.png")
-		# Transforme l'image sol en la resolution indiquée vv vv -tremisabdoul
+		# Transforme l'image sol en la resolution indiquée -tremisabdoul
 		self.image = pygame.transform.scale(self.image, (1280, 20))
 		# Définit la hitbox de sol -steven
 		self.rect = self.image.get_rect()
@@ -170,3 +173,19 @@ class Sol(pygame.sprite.Sprite):
 		# Position de la plateforme principale -steven
 		self.rect.x = 0
 		self.rect.y = 700
+
+
+"""=====  Game.Mouse [4]  ====="""
+
+
+class Mouse:
+
+	def __init__(self):
+
+		pygame.mouse.set_visible(False)
+		self.image = pygame.image.load("Assets/Visual/UI/Mouse.png")
+		self.image = pygame.transform.scale(self.image, (33, 33))
+		self.rect = self.image.get_rect()
+		self.rect = self.image.get_rect(center=self.rect.center)
+
+

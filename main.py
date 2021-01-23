@@ -29,6 +29,8 @@ Pause = False
 # L'écran est stockée dans une variable -tremisabdoul
 Screen = Display()
 
+
+
 # Definit les éléments visuels en tant que variable -tremisabdoul
 font = pygame.image.load("Assets/Visual/UI/RambardePAINT.png")
 font = pygame.transform.scale(font, (1500, 720))
@@ -51,13 +53,13 @@ while Running:
 
     nbframe += 1
 
-    if nbframe % 10 == 0:
-        nbframe10 = True
-    else:
-        nbframe10 = False
-
-    # Affiche les éléments a l'écran
-    Printer(Screen, Game, font, police1, fps)
+    # Affiche a l'écran des éléments -tremisabdoul
+    Screen.blit(font, (0, 0))
+    Screen.blit(Game.Sol.image, Game.Sol.rect)
+    Screen.blit(Game.Player.image, Game.Player.rect)
+    printfps = police1.render(str(fps), True, (255, 255, 255))
+    Screen.blit(printfps, (6, 34))
+    Screen.blit(Game.Mouse.image, pygame.mouse.get_pos())
     OptiGraphic(Screen, police1, Game)
 
     # Check les input et instances -tremisabdoul
@@ -96,12 +98,6 @@ while Running:
     # Fonction de déplacement gauche / droite -tremisabdoul
     DeplacementX(Game)
 
-    # Opération éfféctuée toutes les 10 frames -tremisabdoul
-    if not nbframe10 == 0:
-
-        # Animation de respiration (sorcière) -tremisabdoul
-        resp_sorciere(Game)
-
     # Transforme une variable en composent graphique -tremisabdoul
     printfps = police1.render(str(fps), True, (255, 255, 255))
 
@@ -121,8 +117,7 @@ while Running:
         tickchecker -= tick
 
     # Permet de récupérer le nombre de frames a la seconde -tremisabdoul
-    if not nbframe10 == 0:
-        timeframe = tickchecker
-        frame = 1
-        fps = frame / tickchecker
-        fps = "FPS : " + str(round(fps))
+    timeframe = tickchecker
+    frame = 1
+    fps = frame / tickchecker
+    fps = "FPS : " + str(round(fps))

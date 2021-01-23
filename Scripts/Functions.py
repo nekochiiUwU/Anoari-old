@@ -13,10 +13,17 @@ def Display():
     return screen
 
 
-def resp_sorciere(Game):
+def resp_sorciere(time, Game, AnimationSorcer):
 
-    if not Game.Player.Force.x:
-        return 0
+    while AnimationSorcer:
+
+        if not Game.Player.Force.x:
+            time.sleep(0.5)
+            return 0
+
+        else:
+            time.sleep(0.5)
+            return 0
 
 
 def Jump(Game):
@@ -36,15 +43,7 @@ def DeplacementX(Game):
         Game.Player.Move_Left()
 
 
-def Printer(Screen, Game, font, police1, fps):
-    # Affiche a l'écran des éléments -tremisabdoul
-    Screen.blit(font, (0, 0))
-    Screen.blit(Game.Sol.image, Game.Sol.rect)
-    Screen.blit(Game.Player.image, Game.Player.rect)
-    printfps = police1.render(str(fps), True, (255, 255, 255))
-    Screen.blit(printfps, (6, 34))
-
-
+#def Printer(Screen, Game, font, police1, fps):
 def OptiGraphic(Screen, police1, Game):
     Color = (Game.Player.Pv / Game.Player.MaxPv) * 255
     LifeColor = [255, Color, Color]
