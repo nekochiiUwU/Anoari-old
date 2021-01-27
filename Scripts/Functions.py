@@ -84,7 +84,7 @@ def OptiGraphic(Screen, police1, Game, tickchecker):
 
 # map.maskimage.map_rgb(127, 127, 127, 255)
 
-def pause(Game, Screen, font, baselayer):
+def pause(Game, Screen, font):
 
     for event in pygame.event.get():
 
@@ -97,10 +97,19 @@ def pause(Game, Screen, font, baselayer):
         elif event.type == pygame.KEYUP:
             Game.pressed[event.key] = False
 
-    Screen.blit(font, (0, 0))
-    Screen.blit(baselayer, (10, 0))
+        if event.type == pygame.QUIT:
+            running = False
+            pygame.quit()
+            return False
 
-    # Met a jour l'affichage (rafraîchissement de l'écran) -tremisabdoul
+    Screen.blit(font, (0, 0))
+    Screen.blit(Game.UI.baselayer, (0, 0))
+    Screen.blit(Game.UI.playbuttun, Game.UI.playbuttunrect)
+    Screen.blit(Game.UI.quitbuttun, Game.UI.quitbuttunrect)
+    Screen.blit(Game.UI.resumebuttun, Game.UI.resumebuttunrect)
+    Screen.blit(Game.UI.savebuttun, Game.UI.savebuttunrect)
+    Screen.blit(Game.Mouse.image, pygame.mouse.get_pos())
+
     pygame.display.flip()
 
     return True

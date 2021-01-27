@@ -33,8 +33,6 @@ Screen = Display()
 # Definit les éléments visuels en tant que variable -tremisabdoul
 font = pygame.image.load("Assets/Visual/UI/RambardePAINT.png")
 font = pygame.transform.scale(font, (1500, 720))
-baselayer = pygame.image.load("Assets/Visual/UI/baselayer.png")
-baselayer = pygame.transform.scale(baselayer, (1280, 720))
 
 
 
@@ -85,7 +83,7 @@ while Running:
 
 
     while Pause:
-        Pause = pause(Game, Screen, font, baselayer)
+        Pause = pause(Game, Screen, font)
 
     # Fonction de Jump -tremisabdoul
     if Game.Player.SpeedY:

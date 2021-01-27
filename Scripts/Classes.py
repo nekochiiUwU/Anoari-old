@@ -14,7 +14,7 @@ class Game:
 		self.Sol = Sol()
 		# Mouse deviens une sous-classe de Game -tremisabdoul
 		self.Mouse = Mouse()
-
+		self.UI = UI()
 		self.Plateform = Plateform()
 
 		#Création du groupe composé de tous les joueurs -Steven
@@ -228,3 +228,36 @@ class Mouse(pygame.sprite.Sprite):
 
 		self.rect = self.image.get_rect()
 		self.rect = self.image.get_rect(center=self.rect.center)
+
+
+class UI:
+
+	def __init__(self):
+		super().__init__()
+
+		self.baselayer = pygame.image.load("Assets/Visual/UI/baselayer.png")
+		self.baselayer = pygame.transform.scale(self.baselayer, (1280, 720))
+
+		self.playbuttun = pygame.image.load("Assets/Visual/UI/bouton_JOUER.png")
+		self.playbuttun = pygame.transform.scale(self.playbuttun, (82, 30))
+		self.playbuttunrect = self.playbuttun.get_rect()
+		self.playbuttunrect.x = 640 - 41
+		self.playbuttunrect.y = 360 - 15 - 75
+
+		self.resumebuttun = pygame.image.load("Assets/Visual/UI/bouton_REPRENDRE.png")
+		self.resumebuttun = pygame.transform.scale(self.resumebuttun, (82, 30))
+		self.resumebuttunrect = self.resumebuttun.get_rect()
+		self.resumebuttunrect.x = 640 - 41
+		self.resumebuttunrect.y = 360 - 15 - 25
+
+		self.savebuttun = pygame.image.load("Assets/Visual/UI/bouton_SAUVEGARDER.png")
+		self.savebuttun = pygame.transform.scale(self.savebuttun, (82, 30))
+		self.savebuttunrect = self.savebuttun.get_rect()
+		self.savebuttunrect.x = 640 - 41
+		self.savebuttunrect.y = 360 - 15 + 25
+
+		self.quitbuttun = pygame.image.load("Assets/Visual/UI/bouton_QUITTER.png")
+		self.quitbuttun = pygame.transform.scale(self.quitbuttun, (82, 30))
+		self.quitbuttunrect = self.quitbuttun.get_rect()
+		self.quitbuttunrect.x = 640 - 41
+		self.quitbuttunrect.y = 360 - 15 + 75
