@@ -86,6 +86,7 @@ def OptiGraphic(Screen, police1, Game, tickchecker):
 
 def pause(Game, Screen, font):
 
+
     for event in pygame.event.get():
 
         if event.type == pygame.KEYDOWN:
@@ -98,9 +99,8 @@ def pause(Game, Screen, font):
             Game.pressed[event.key] = False
 
         if event.type == pygame.QUIT:
-            running = False
             pygame.quit()
-            return False
+            break
 
     Screen.blit(font, (0, 0))
     Screen.blit(Game.UI.baselayer, (0, 0))
