@@ -33,6 +33,10 @@ Screen = Display()
 # Definit les éléments visuels en tant que variable -tremisabdoul
 font = pygame.image.load("Assets/Visual/UI/RambardePAINT.png")
 font = pygame.transform.scale(font, (1500, 720))
+baselayer = pygame.image.load("Assets/Visual/UI/baselayer.png")
+baselayer = pygame.transform.scale(baselayer, (1280, 720))
+
+
 
 Running = True
 
@@ -59,7 +63,10 @@ while Running:
     for event in pygame.event.get():
         # Touches enfoncées -tremisabdoul
         if event.type == pygame.KEYDOWN:
+
             Game.pressed[event.key] = True
+            if Game.pressed.get(pygame.K_ESCAPE):
+                Pause = True
 
         # Touches relachées -tremisabdoul
         elif event.type == pygame.KEYUP:
@@ -75,14 +82,10 @@ while Running:
             running = False
             pygame.quit()
 
-        # Touche Echap (Fermer le Programme) -tremisabdoul
-        if Game.pressed.get(pygame.K_ESCAPE):
-            running = False
-            pygame.quit()
 
-        if Game.pressed.get(pygame.K_p):
-            Pause = True
-            Running = False
+
+    while Pause:
+        Pause = pause(Game, Screen, font, baselayer)
 
     # Fonction de Jump -tremisabdoul
     if Game.Player.SpeedY:
