@@ -149,17 +149,17 @@ class Force:
 		if not Collide:
 
 			if self.Base_Gravity < 33:
-				self.Base_Gravity += 0.66
+				self.Base_Gravity += 0.66  # Diminution
 				return self.Base_Gravity
 
 			else:
-				self.Base_Gravity = 33
+				self.Base_Gravity = 33  # Vitesse max de gravité
 				return 33
 
 		else:
-			Apply = Collide[0].rect.top - Game0.Player.rect.bottom + 1
-			print(Apply)
-			self.Base_Gravity = 0
+			Game0.Player.SpeedY = 0  # Cancel le saut
+			Apply = Collide[0].rect.top - Game0.Player.rect.bottom + 1  # Y reset (dernier pixel du rect de plateforme)
+			self.Base_Gravity = 0  # Reset la force du sol
 			return Apply
 
 
