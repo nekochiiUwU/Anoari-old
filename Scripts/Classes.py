@@ -134,7 +134,7 @@ class Force:
 
 		#Verification des collisions entre Player et toutes les plateformes
 		Collide = Game0.Player.check_collisions(Game0.Player, Game0.all_platform)
-		if not Collide:
+		if not Collide or Game0.Player.YVector > 0:
 
 			if self.Base_Gravity < 33: # Si force de sol > 0
 				self.Base_Gravity += 0.66  # Diminution de la force "Sol" (Ratio 0.66)
