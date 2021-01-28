@@ -90,7 +90,9 @@ class Player(pygame.sprite.Sprite, Game):
     #        return False
 
     # Fonction de collisions en fonction du rect -tremisabdoul
-    def check_collisions(self, sprite, group):
+
+    @staticmethod
+    def check_collisions(sprite, group):
         return pygame.sprite.spritecollide(sprite, group, False, pygame.sprite.collide_mask)
 
     # Fonction de mouvement (Droite) -tremisabdoul
@@ -164,7 +166,6 @@ class Force:
             return Apply
 
 
-
 """=====  Game.Sol [3]  ====="""
 
 
@@ -207,10 +208,11 @@ class Plateform(pygame.sprite.Sprite, Game):
         self.rect.x = 400
         self.rect.y = 520
 
-    # Création de nouvelles plateformes (pas fonctionnel)
-    def NewPlateform(self, Screen, x, y):
-        P = [x, y]
-        self.rect.x = x
+    # Création de nouvelles plateformes (semi-fonctionnel)
+    def NewPlateform(self, Screen, x1, x2, y):
+        P = [x1, y]
+        self.image = pygame.transform.scale(self.image, (x2 - x1, 20))
+        self.rect.x = x1
         self.rect.y = y
         Screen.blit(self.image, P)
 

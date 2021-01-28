@@ -52,7 +52,7 @@ def Printer(Screen, Game, font):
     Screen.blit(Game.Sol.image, Game.Sol.rect)
     Screen.blit(Game.Player.image, Game.Player.rect)
     Screen.blit(Game.Mouse.image, pygame.mouse.get_pos())
-    Game.Plateform.NewPlateform(Screen, 300, 500)
+    Game.Plateform.NewPlateform(Screen, 200, 700, 500)
 
 
 def UIPrinter(Screen, police1, Game, tickchecker):
@@ -75,11 +75,11 @@ def UIPrinter(Screen, police1, Game, tickchecker):
     opti = police1.render(str(opti), True, LifeColor)
 
     opti1 = round((Game.Player.Pv / Game.Player.MaxPv) * 100)
-    opti1 = opti1 * "☺"
+    opti1 = opti1 * "♫"
     opti1 = police1.render(str(opti1), True, LifeColor)
 
-    Screen.blit(opti, (15, 48))
-    Screen.blit(opti1, (15, 60))
+    Screen.blit(opti, (15 + Color / 50, 48 + Color / 50))
+    Screen.blit(opti1, (15 + Color / 50, 60 + Color / 50))
 
 
 # map.maskimage.map_rgb(127, 127, 127, 255)
@@ -110,6 +110,8 @@ def pause(Game, Screen, font, time, police1):
         tickchecker = time.time()
         tickchecker -= tick
 
+        pauseblit(Screen, font, Game)
+
         while tickchecker < 0.017:
             tickchecker = time.time()
             tickchecker -= tick
@@ -119,7 +121,7 @@ def pause(Game, Screen, font, time, police1):
         # Transforme une variable en composent graphique -tremisabdoul
         printfps = police1.render(str(fps), True, (255, 255, 255))
         Screen.blit(printfps, (6, 34))
-        pauseblit(Screen, font, Game)
+
         pygame.display.flip()
 
 

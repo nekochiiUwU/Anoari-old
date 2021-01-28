@@ -102,7 +102,6 @@ while Running:
     Game.Player.rect.x += Game.Player.Force.AccelerationFunctionX()
     Game.Player.rect.y += Game.Player.Force.Gravity(Game)
 
-
     """ ===== Printers ===== """
 
     # Print les elements In-Game du jeu  -tremisabdoul
