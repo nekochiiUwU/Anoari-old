@@ -85,7 +85,7 @@ while Running:
     # Loop de pause [Escape]
     if Pause:
         time.sleep(0.1)
-        Pause = pause(Game, Screen, font, time, tickchecker, police1)
+        Pause = pause(Game, Screen, font, time, police1)
 
     """ ===== Movements ===== """
 
@@ -101,6 +101,7 @@ while Running:
     # Déplacements de player -tremisabdoul
     Game.Player.rect.x += Game.Player.Force.AccelerationFunctionX()
     Game.Player.rect.y += Game.Player.Force.Gravity(Game)
+
 
     """ ===== Printers ===== """
 

@@ -84,7 +84,8 @@ def UIPrinter(Screen, police1, Game, tickchecker):
 
 # map.maskimage.map_rgb(127, 127, 127, 255)
 
-def pause(Game, Screen, font, time, tickchecker, police1):
+def pause(Game, Screen, font, time, police1):
+
     while 0 == 0:
         # Initialisation du compteur de temps pour limiter les fps -tremisabdoul
         tick = time.time()
@@ -105,21 +106,22 @@ def pause(Game, Screen, font, time, tickchecker, police1):
                 pygame.quit()
                 break
 
-        pauseblit(Screen, font, Game)
-
         # Permet de récupérer le nombre de frames a la seconde -tremisabdoul
         tickchecker = time.time()
         tickchecker -= tick
+
         while tickchecker < 0.017:
             tickchecker = time.time()
             tickchecker -= tick
+
         fps = 1 / tickchecker
         fps = "FPS : " + str(round(fps))
         # Transforme une variable en composent graphique -tremisabdoul
         printfps = police1.render(str(fps), True, (255, 255, 255))
         Screen.blit(printfps, (6, 34))
-
+        pauseblit(Screen, font, Game)
         pygame.display.flip()
+
 
 def pauseblit(Screen, font, Game):
 
