@@ -65,6 +65,9 @@ class Player(pygame.sprite.Sprite, Game):
 		self.rect.x = 50
 		self.rect.y = 82
 
+		self.LastY = 0
+		self.YVector = 0
+
 		# Valeurs max et min que Player peut atteindre (Bords de l'écran x) -tremisabdoul
 		self.MinX = +20
 		self.MaxX = 1200
@@ -124,48 +127,34 @@ class Force:
 			self.x = 0
 			return self.StepX
 
-	""" vv Pour l'instent pas nessesaire vv """
 
-	#def AccelerationFunctionY(self):
-	#
-	#	self.StepY = self.y + self.lasty / 2
-	#
-	#	if -1 < self.StepY < 1:
-	#		self.StepY = 0
-	#		self.lasty = self.StepY
-	#		self.y = 0
-	#		return 0
-	#	else:
-	#		self.lasty = self.StepY
-	#		self.y = 0
-	#		return self.StepY
-
-	""" ^^ Pour l'instent pas nessesaire ^^ """
-
-	# Faut se dire que la gravité a une force de 20 et que lorsque
-	# Base_Gravity est a 0 c'est que la force appliquée par le sol est de -20
+	# Faut se dire que la gravité a une force de 33 et que lorsque
+	# Base_Gravity est a 0 c'est que la force appliquée par le sol est de -33
 	def Gravity(self, Game0):
+
+		#Verification des collisions entre Player et toutes les plateformes
 		Collide = Game0.Player.check_collisions(Game0.Player, Game0.all_platform)
 		if not Collide:
 
-			if self.Base_Gravity < 33:
-				self.Base_Gravity += 0.66  # Diminution
+			if self.Base_Gravity < 33: # Si force de sol > 0
+				self.Base_Gravity += 0.66  # Diminution de la force "Sol" (Ratio 0.66)
 				return self.Base_Gravity
 
 			else:
-				self.Base_Gravity = 33  # Vitesse max de gravité
+				self.Base_Gravity = 33  # Force de sol = 0
 				return 33
 
 		else:
 			Game0.Player.SpeedY = 0  # Cancel le saut
-			Apply = Collide[0].rect.top - Game0.Player.rect.bottom + 1  # Y reset (dernier pixel du rect de plateforme)
-			self.Base_Gravity = 0  # Reset la force du sol
+			Apply = Collide[0].rect.top - Game0.Player.rect.bottom + 1  # Y reset (Premier pixel du rect de plateforme)
+			self.Base_Gravity = 0  # Reset la force du sol (-33)
 			return Apply
 
 
 """=====  Game.Sol [3]  ====="""
 
 
+# Sol -steven
 class Sol(pygame.sprite.Sprite):
 
 	def __init__(self):
@@ -186,6 +175,7 @@ class Sol(pygame.sprite.Sprite):
 		self.rect.y = 700
 
 
+#Creation de plateforme (pas entièrement fonctionnel) -tremisabdoul
 class Plateform(pygame.sprite.Sprite, Game):
 
 	def __init__(self):
@@ -205,6 +195,7 @@ class Plateform(pygame.sprite.Sprite, Game):
 		self.rect.x = 400
 		self.rect.y = 520
 
+	# Création de nouvelles plateformes (pas fonctionnel)
 	def NewPlateform(self, Screen, x, y):
 		P = [x, y]
 		self.rect.x = x
@@ -215,6 +206,7 @@ class Plateform(pygame.sprite.Sprite, Game):
 """=====  Game.Mouse [4]  ====="""
 
 
+# Sourie -tremisabdoul
 class Mouse(pygame.sprite.Sprite):
 
 	def __init__(self):
@@ -230,34 +222,44 @@ class Mouse(pygame.sprite.Sprite):
 		self.rect = self.image.get_rect(center=self.rect.center)
 
 
+"""=====  Game.UI [5]  ====="""
+
+
+# Interface -tremisabdoul
 class UI:
 
 	def __init__(self):
+
 		super().__init__()
 
+		# Font grisé -tremisabdoul
 		self.baselayer = pygame.image.load("Assets/Visual/UI/baselayer.png")
 		self.baselayer = pygame.transform.scale(self.baselayer, (1280, 720))
 
+		# Boutton "JOUER" -tremisabdoul
 		self.playbuttun = pygame.image.load("Assets/Visual/UI/bouton_JOUER.png")
 		self.playbuttun = pygame.transform.scale(self.playbuttun, (82, 30))
 		self.playbuttunrect = self.playbuttun.get_rect()
 		self.playbuttunrect.x = 640 - 41
 		self.playbuttunrect.y = 360 - 15 - 75
 
+		# Boutton "REPRENDRE" -tremisabdoul
 		self.resumebuttun = pygame.image.load("Assets/Visual/UI/bouton_REPRENDRE.png")
-		self.resumebuttun = pygame.transform.scale(self.resumebuttun, (82, 30))
+		self.resumebuttun = pygame.transform.scale(self.resumebuttun, (140, 30))
 		self.resumebuttunrect = self.resumebuttun.get_rect()
-		self.resumebuttunrect.x = 640 - 41
+		self.resumebuttunrect.x = 640 - 70
 		self.resumebuttunrect.y = 360 - 15 - 25
 
+		# Boutton "SAUVEGARDER" -tremisabdoul
 		self.savebuttun = pygame.image.load("Assets/Visual/UI/bouton_SAUVEGARDER.png")
-		self.savebuttun = pygame.transform.scale(self.savebuttun, (82, 30))
+		self.savebuttun = pygame.transform.scale(self.savebuttun, (172, 30))
 		self.savebuttunrect = self.savebuttun.get_rect()
-		self.savebuttunrect.x = 640 - 41
+		self.savebuttunrect.x = 640 - 86
 		self.savebuttunrect.y = 360 - 15 + 25
 
+		# Boutton "QUITER" -tremisabdoul
 		self.quitbuttun = pygame.image.load("Assets/Visual/UI/bouton_QUITTER.png")
-		self.quitbuttun = pygame.transform.scale(self.quitbuttun, (82, 30))
+		self.quitbuttun = pygame.transform.scale(self.quitbuttun, (100, 30))
 		self.quitbuttunrect = self.quitbuttun.get_rect()
-		self.quitbuttunrect.x = 640 - 41
+		self.quitbuttunrect.x = 640 - 50
 		self.quitbuttunrect.y = 360 - 15 + 75

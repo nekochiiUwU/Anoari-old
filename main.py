@@ -33,8 +33,6 @@ Screen = Display()
 # Definit les éléments visuels en tant que variable -tremisabdoul
 font = pygame.image.load("Assets/Visual/UI/BGPAINT.jpg")
 
-
-
 Running = True
 
 # Définit les polices -tremisabdoul
@@ -42,26 +40,29 @@ police1 = pygame.font.Font("Assets/Font/Retro Gaming.ttf", 10)
 
 # Contient tout ce qui est fait pendant que le jeu est run -tremisabdoul
 while Running:
-    print(Game.Player.image, "\n", Game.Player.rect)
+
+    """ Sert a rien ! """
     if Game.Player.Pv < 2:
         Game.Player.Pv = Game.Player.MaxPv
     else:
         Game.Player.Pv -= 1
+
+    """ ===== __init__ Frame Limiter ===== """
 
     # Initialisation du compteur de temps pour limiter les fps -tremisabdoul
     tick = time.time()
 
     nbframe += 1
 
-    Printer(Screen, Game, font)
-    OptiGraphic(Screen, police1, Game, tickchecker)
+    """ ===== Key Inputs ===== """
 
     # Check les input et instances -tremisabdoul
     for event in pygame.event.get():
+
         # Touches enfoncées -tremisabdoul
         if event.type == pygame.KEYDOWN:
-
             Game.pressed[event.key] = True
+
             if Game.pressed.get(pygame.K_ESCAPE):
                 Pause = True
 
@@ -79,10 +80,16 @@ while Running:
             running = False
             pygame.quit()
 
+    """ ===== Loop - Key: [Escape] ===== """
 
+    # Loop de pause [Escape]
+    if Pause:
+        time.sleep(0.1)
+        Pause = pause(Game, Screen, font, time, tickchecker, police1)
 
-    while Pause:
-        Pause = pause(Game, Screen, font)
+    """ ===== Movements ===== """
+
+    Game.Player.LastY = Game.Player.rect.y
 
     # Fonction de Jump -tremisabdoul
     if Game.Player.SpeedY:
@@ -95,8 +102,22 @@ while Running:
     Game.Player.rect.x += Game.Player.Force.AccelerationFunctionX()
     Game.Player.rect.y += Game.Player.Force.Gravity(Game)
 
+    """ ===== Printers ===== """
+
+    # Print les elements In-Game du jeu  -tremisabdoul
+    Printer(Screen, Game, font)
+
+    # Print l'interface de jeu -tremisabdoul
+    UIPrinter(Screen, police1, Game, tickchecker)
+
+    Game.Player.YVector = Game.Player.LastY - Game.Player.rect.y
+    YVector = police1.render("Y Vector checker: " + str(Game.Player.YVector), True, (255, 255, 255))
+    Screen.blit(YVector, (100, 34))
+
     # Met a jour l'affichage (rafraîchissement de l'écran) -tremisabdoul
     pygame.display.flip()
+
+    """ ===== Frame Limiter ===== """
 
     # Permet d'avoir des frames régulières -tremisabdoul
     tickchecker = time.time()

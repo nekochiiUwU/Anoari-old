@@ -55,7 +55,7 @@ def Printer(Screen, Game, font):
     Game.Plateform.NewPlateform(Screen, 300, 500)
 
 
-def OptiGraphic(Screen, police1, Game, tickchecker):
+def UIPrinter(Screen, police1, Game, tickchecker):
 
     # Permet de récupérer le nombre de frames a la seconde -tremisabdoul
     frame = 1
@@ -84,23 +84,44 @@ def OptiGraphic(Screen, police1, Game, tickchecker):
 
 # map.maskimage.map_rgb(127, 127, 127, 255)
 
-def pause(Game, Screen, font):
+def pause(Game, Screen, font, time, tickchecker, police1):
+    while 0 == 0:
+        # Initialisation du compteur de temps pour limiter les fps -tremisabdoul
+        tick = time.time()
 
+        for event in pygame.event.get():
 
-    for event in pygame.event.get():
+            if event.type == pygame.KEYDOWN:
+                Game.pressed[event.key] = True
 
-        if event.type == pygame.KEYDOWN:
-            Game.pressed[event.key] = True
+                if Game.pressed.get(pygame.K_ESCAPE):
+                    time.sleep(0.1)
+                    return False
 
-            if Game.pressed.get(pygame.K_ESCAPE):
-                return False
+            elif event.type == pygame.KEYUP:
+                Game.pressed[event.key] = False
 
-        elif event.type == pygame.KEYUP:
-            Game.pressed[event.key] = False
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                break
 
-        if event.type == pygame.QUIT:
-            pygame.quit()
-            break
+        pauseblit(Screen, font, Game)
+
+        # Permet de récupérer le nombre de frames a la seconde -tremisabdoul
+        tickchecker = time.time()
+        tickchecker -= tick
+        while tickchecker < 0.017:
+            tickchecker = time.time()
+            tickchecker -= tick
+        fps = 1 / tickchecker
+        fps = "FPS : " + str(round(fps))
+        # Transforme une variable en composent graphique -tremisabdoul
+        printfps = police1.render(str(fps), True, (255, 255, 255))
+        Screen.blit(printfps, (6, 34))
+
+        pygame.display.flip()
+
+def pauseblit(Screen, font, Game):
 
     Screen.blit(font, (0, 0))
     Screen.blit(Game.UI.baselayer, (0, 0))
@@ -109,7 +130,3 @@ def pause(Game, Screen, font):
     Screen.blit(Game.UI.resumebuttun, Game.UI.resumebuttunrect)
     Screen.blit(Game.UI.savebuttun, Game.UI.savebuttunrect)
     Screen.blit(Game.Mouse.image, pygame.mouse.get_pos())
-
-    pygame.display.flip()
-
-    return True
