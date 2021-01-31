@@ -5,7 +5,7 @@ vie joueur			        | = (a Finir)
 				            |
 				            |
 posX/Y joueur			    | = Forces Appliquées a la position:
-                            |       Game.Player.Force.AccelerationFunctionX()
+                            |       Game.Player.Force.AccelerationFunctionX() [and] Game.Player.Force.Gravity(Game)
                             |
                             |   Position Joueur:
                             |       Game.Player.rect
@@ -27,7 +27,7 @@ Une liste de bonus		    | = //////////
 permanents à acheter	    |
 entre les parties		    |
 				            |
-bord Ecran      		    | = //////////
+bord Ecran      		    | = x: 1280 [and] y: 720
 				            |
             		        |
 				            |
@@ -40,19 +40,19 @@ valeur de la gravité		| = Game.Player.Force.Base_Gravity
 -Faire afficher			    | = Display()
 la fenêtre			        |
 				            |
--Créer le menu,			    | = //////////
+-Créer le menu,			    | = pause() [Bind: ESCAPE]
 sans pour autant le	        |
 rendre fonctionnel		    |
 (continuer/nouveau			|
 uniquement)			        |
 				            |
--Définir les dimensions	    | = Niveau : //////////
+-Définir les dimensions	    | = Niveau : //// / ////
 d'un niveau [~4000;720],    |
-du joueur [~40;120],        |   Joueur : 240/240
+du joueur [~40;120],        |   Joueur : 60 / 60
 des monstres[~un peu        |
-comme on veut]			    |   Mob : Variable
+comme on veut]			    |   Mob : //// / ////
 				            |
--Créer les mouvements	    | =
+-Créer les mouvements	    | = Jump(Game) [and] DeplacementX(Game)
 de base du joueur			|
 >urgent ngl			        |
 				            |
