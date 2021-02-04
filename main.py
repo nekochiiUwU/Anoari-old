@@ -101,6 +101,7 @@ while Running:
     # Déplacements de player -tremisabdoul
     Game.Player.rect.x += Game.Player.Force.AccelerationFunctionX()
     Game.Player.rect.y += Game.Player.Force.Gravity(Game)
+    print(Game.Player.Force.AccelerationFunctionX())
 
     """ ===== Printers ===== """
 
@@ -109,6 +110,8 @@ while Running:
 
     # Print l'interface de jeu -tremisabdoul
     UIPrinter(Screen, police1, Game, tickchecker)
+
+    MousePriter(Screen, Game)
 
     Game.Player.YVector = Game.Player.LastY - Game.Player.rect.y
     YVector = police1.render("Y Vector checker: " + str(Game.Player.YVector), True, (255, 255, 255))

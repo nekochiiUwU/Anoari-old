@@ -226,7 +226,7 @@ class Mouse(pygame.sprite.Sprite):
     def __init__(self):
         super().__init__()
 
-        pygame.mouse.set_visible(False)
+        #pygame.mouse.set_visible(False)
 
         self.image = pygame.image.load("Assets/Visual/UI/Mouse.png")
         self.image = pygame.transform.scale(self.image, (33, 33))

@@ -9,7 +9,7 @@ import pygame
 def Display():
     pygame.init()
     pygame.display.set_caption("Anatori")
-    screen = pygame.display.set_mode((1280, 720), pygame.FULLSCREEN)
+    screen = pygame.display.set_mode((1280, 720))    #, pygame.FULLSCREEN
     return screen
 
 
@@ -45,14 +45,17 @@ def DeplacementX(Game):
             or Game.pressed.get(pygame.K_LEFT) and Game.Player.rect.x > Game.Player.MinX:
         Game.Player.Move_Left()
 
+def MousePriter(Screen, Game):
+    Game.Mouse.rect.center = pygame.mouse.get_pos()
+    Screen.blit(Game.Mouse.image, Game.Mouse.rect)
 
 def Printer(Screen, Game, font):
     # Affiche a l'écran des éléments -tremisabdoul
     Screen.blit(font, (0, 0))
     Screen.blit(Game.Sol.image, Game.Sol.rect)
     Screen.blit(Game.Player.image, Game.Player.rect)
-    Screen.blit(Game.Mouse.image, pygame.mouse.get_pos())
     Game.Plateform.NewPlateform(Screen, 200, 700, 500)
+    MousePriter(Screen, Game)
 
 
 def UIPrinter(Screen, police1, Game, tickchecker):
@@ -111,6 +114,7 @@ def pause(Game, Screen, font, time, police1):
         tickchecker -= tick
 
         pauseblit(Screen, font, Game)
+        MousePriter(Screen, Game)
 
         while tickchecker < 0.017:
             tickchecker = time.time()
@@ -128,9 +132,9 @@ def pause(Game, Screen, font, time, police1):
 def pauseblit(Screen, font, Game):
 
     Screen.blit(font, (0, 0))
-    Screen.blit(Game.UI.baselayer, (0, 0))
+    #Screen.blit(Game.UI.baselayer, (0, 0))
     Screen.blit(Game.UI.playbuttun, Game.UI.playbuttunrect)
     Screen.blit(Game.UI.quitbuttun, Game.UI.quitbuttunrect)
     Screen.blit(Game.UI.resumebuttun, Game.UI.resumebuttunrect)
     Screen.blit(Game.UI.savebuttun, Game.UI.savebuttunrect)
-    Screen.blit(Game.Mouse.image, pygame.mouse.get_pos())
+
