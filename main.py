@@ -54,7 +54,7 @@ while Running:
 
     nbframe += 1
 
-    """ ===== Monster Movement ===== """
+    """ ===== Monster Instruction ===== """
 
     for Monster in Game.all_Monster:
         Monster.Life(Screen)

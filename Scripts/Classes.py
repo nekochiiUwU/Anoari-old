@@ -5,18 +5,21 @@ import pygame
 
 class Game:
 
-    # Fonction éxécuté au démarrage de Game -tremisabdoul
+    # Fonction exécutée au démarrage de Game -tremisabdoul
     def __init__(self):
-        # Player deviens une sous-classe de Game -tremisabdoul
+        # Player devient une sous-classe de Game -tremisabdoul
         self.Player = Player()
-        # Sol deviens une sous-classe de Game -Steven
+        # Sol devient une sous-classe de Game -Steven
         self.Sol = Sol()
-        # Mouse deviens une sous-classe de Game -tremisabdoul
+        # Mouse devient une sous-classe de Game -tremisabdoul
         self.Mouse = Mouse()
         self.UI = UI()
         self.Plateform = Plateform()
 
+        # Monster devient une sous-classe de Game - steven
         self.Monster = Monster()
+
+        # Création du groupe composé de tous les joueurs -Steven
         self.all_Monster = pygame.sprite.Group()
         self.all_Monster.add(self.Monster)
 
@@ -29,7 +32,7 @@ class Game:
         self.all_platform.add(self.Sol)
         self.all_platform.add(self.Plateform)
 
-        # Contiens Les Touches Préssées -tremisabdoul
+        # Contient toutes les touches préssées -tremisabdoul
         self.pressed = {}
 
 
@@ -38,13 +41,13 @@ class Game:
 
 class Player(pygame.sprite.Sprite, Game):
 
-    # Fonction éxécuté au démarrage de Player -tremisabdoul
+    # Fonction exécutée au démarrage de Player -tremisabdoul
     def __init__(self):
         super().__init__()
 
         self.pop = False
 
-        # Force deviens une sous-classe de Player et Game est load en tant que super-classe -tremisabdoul
+        # Force devient une sous-classe de Player et Game est chargé en tant que super-classe -tremisabdoul
         self.Force = Force()
         self.Game = Game
 
@@ -58,12 +61,12 @@ class Player(pygame.sprite.Sprite, Game):
         self.Level = 0
         self.Gold = 0
 
-        #Statistique gagnée par niveau / points -steven
+        # Statistique gagnée par niveau / points -steven
         self.Gain_Stat_Level = 5
         self.Point_Pv = 0
         self.Point_Damage = 0
 
-        # Definit l'élément visuels en tant que variable -tremisabdoul
+        # Définit l'élément visuel en tant que variable -tremisabdoul
         self.image = pygame.image.load("Assets/Visual/Mystique_resp/Frame1.png")
         self.imageTag = 1
         self.rect = self.image.get_rect()
@@ -98,7 +101,7 @@ class Player(pygame.sprite.Sprite, Game):
     #        # rectB est en-dessous
     #        return False
 
-    # Fonction de collisions en fonction du rect -tremisabdoul
+    # Fonction de collision en fonction du rect ( position ) -tremisabdoul
 
     @staticmethod
     def check_collisions(sprite, group):
@@ -114,6 +117,7 @@ class Player(pygame.sprite.Sprite, Game):
             self.Force.x -= self.Speed
             self.imageTag = -1
 
+    # Fonction de gain de stat ( valeur placée arbitrairement lol ) - steven
     def Gain_Stats(self):
         self.MaxPv += self.Gain_Stat_Level + ( 4 * self.Point.Pv)
         self.Damage += self.Gain_Stat_Level + ( 2 * self.Point.Damage)
@@ -159,7 +163,7 @@ class Force:
     # Base_Gravity est a 0 c'est que la force appliquée par le sol est de -33
     def Gravity(self, Game0):
 
-        # Verification des collisions entre Player et toutes les plateformes
+        # Vérification des collisions entre Player et toutes les plateformes
         Collide = Game0.Player.check_collisions(Game0.Player, Game0.all_platform)
 
         if not Collide or Game0.Player.YVector > 0:
@@ -191,7 +195,7 @@ class Sol(pygame.sprite.Sprite):
         # Définit l'élément visuel en tant que variable -steven
         self.image = pygame.image.load("Assets/Visual/plateforme_base.png")
 
-        # Transforme l'image sol en la resolution indiquée -tremisabdoul
+        # Transforme l'image sol en la résolution indiquée -tremisabdoul
         self.image = pygame.transform.scale(self.image, (1280, 20))
 
         # Définit la hitbox de sol -steven
@@ -202,7 +206,7 @@ class Sol(pygame.sprite.Sprite):
         self.rect.y = 700
 
 
-# Creation de plateforme (pas entièrement fonctionnel) -tremisabdoul
+# Création de plateforme (pas entièrement fonctionnel) -tremisabdoul
 class Plateform(pygame.sprite.Sprite, Game):
 
     def __init__(self):
@@ -211,7 +215,7 @@ class Plateform(pygame.sprite.Sprite, Game):
         # Définit l'élément visuel en tant que variable -steven
         self.image = pygame.image.load("Assets/Visual/plateforme_base.png")
 
-        # Transforme l'image sol en la resolution indiquée -tremisabdoul
+        # Transforme l'image sol en la résolution indiquée -tremisabdoul
         self.image = pygame.transform.scale(self.image, (320, 20))
 
         # Définit la hitbox de sol -steven
@@ -233,7 +237,7 @@ class Plateform(pygame.sprite.Sprite, Game):
 """=====  Game.Mouse [4]  ====="""
 
 
-# Sourie -tremisabdoul
+# Souris -tremisabdoul
 class Mouse(pygame.sprite.Sprite):
 
     def __init__(self):
@@ -293,7 +297,7 @@ class UI:
 
 class Monster(pygame.sprite.Sprite, Game):
 
-    # Fonction éxécuté au démarrage de Player -steven
+    # Fonction éxécuté au démarrage de Monster -steven
     def __init__(self):
         super().__init__()
 
@@ -308,6 +312,7 @@ class Monster(pygame.sprite.Sprite, Game):
         self.rect.x = 1000
         self.rect.y = 600
 
+    #Dessin concernant la barre de vie du monstre ( à corriger car il ne s'affiche pas ) - steven
     def Life(self,surface):
         LifeBarre_position = [self.rect.x, self.rect.y, self.Pv, 20]
         LifeBarre_bg_position = [self.rect.x, self.rect.y, self.MaxPv, 20]
@@ -316,9 +321,10 @@ class Monster(pygame.sprite.Sprite, Game):
         pygame.draw.rect(surface, LifeBarre_colors, LifeBarre_position)
         pygame.draw.rect(surface, LifeBarre_bg_colors, LifeBarre_bg_position)
 
-
+    #Déplacement du monstre vers la droite - steven
     def Move_Right(self):
             self.rect.x += self.Speed
 
+    #Déplacement du monstre vers la gauche - steven
     def Move_Left(self):
             self.rect.x -= self.Speed
