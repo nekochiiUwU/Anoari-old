@@ -56,6 +56,7 @@ def Printer(Screen, Game, font):
     Screen.blit(Game.Player.image, Game.Player.rect)
     Game.Plateform.NewPlateform(Screen, 200, 700, 500)
     MousePriter(Screen, Game)
+    Screen.blit(Game.Monster.image, Game.Monster.rect)
 
 
 def UIPrinter(Screen, police1, Game, tickchecker):

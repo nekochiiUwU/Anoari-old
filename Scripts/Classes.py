@@ -16,6 +16,10 @@ class Game:
         self.UI = UI()
         self.Plateform = Plateform()
 
+        self.Monster = Monster()
+        self.all_Monster = pygame.sprite.Group()
+        self.all_Monster.add(self.Monster)
+
         # Création du groupe composé de tous les joueurs -Steven
         self.all_Player = pygame.sprite.Group()
         self.all_Player.add(self.Player)
@@ -53,6 +57,11 @@ class Player(pygame.sprite.Sprite, Game):
 
         self.Level = 0
         self.Gold = 0
+
+        #Statistique gagnée par niveau / points -steven
+        self.Gain_Stat_Level = 5
+        self.Point_Pv = 0
+        self.Point_Damage = 0
 
         # Definit l'élément visuels en tant que variable -tremisabdoul
         self.image = pygame.image.load("Assets/Visual/Mystique_resp/Frame1.png")
@@ -97,13 +106,17 @@ class Player(pygame.sprite.Sprite, Game):
 
     # Fonction de mouvement (Droite) -tremisabdoul
     def Move_Right(self):
-        self.Force.x += self.Speed
-        self.imageTag = 1
+            self.Force.x += self.Speed
+            self.imageTag = 1
 
     # Fonction de mouvement (Gauche) -tremisabdoul
     def Move_Left(self):
-        self.Force.x -= self.Speed
-        self.imageTag = -1
+            self.Force.x -= self.Speed
+            self.imageTag = -1
+
+    def Gain_Stats(self):
+        self.MaxPv += self.Gain_Stat_Level + ( 4 * self.Point.Pv)
+        self.Damage += self.Gain_Stat_Level + ( 2 * self.Point.Damage)
 
 
 """=====  Game.Player.Force [2.1]  ====="""
@@ -275,3 +288,37 @@ class UI:
         self.quitbuttunrect = self.quitbuttun.get_rect()
         self.quitbuttunrect.x = 640 - 50
         self.quitbuttunrect.y = 360 - 15 + 75
+
+"""=====  Monstre [6]  ====="""
+
+class Monster(pygame.sprite.Sprite, Game):
+
+    # Fonction éxécuté au démarrage de Player -steven
+    def __init__(self):
+        super().__init__()
+
+        # Statistiques -steven
+        self.Pv = 100
+        self.MaxPv = 100
+        self.DamageDealt = 10
+        self.Speed = 3
+        self.image = pygame.image.load("Assets/Visual/humain.png")
+        self.image = pygame.transform.scale(self.image, (100,100))
+        self.rect = self.image.get_rect()
+        self.rect.x = 1000
+        self.rect.y = 600
+
+    def Life(self,surface):
+        LifeBarre_position = [self.rect.x, self.rect.y, self.Pv, 20]
+        LifeBarre_bg_position = [self.rect.x, self.rect.y, self.MaxPv, 20]
+        LifeBarre_colors = (51, 255, 118)
+        LifeBarre_bg_colors = (222, 222, 222)
+        pygame.draw.rect(surface, LifeBarre_colors, LifeBarre_position)
+        pygame.draw.rect(surface, LifeBarre_bg_colors, LifeBarre_bg_position)
+
+
+    def Move_Right(self):
+            self.rect.x += self.Speed
+
+    def Move_Left(self):
+            self.rect.x -= self.Speed

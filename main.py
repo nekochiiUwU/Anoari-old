@@ -54,6 +54,14 @@ while Running:
 
     nbframe += 1
 
+    """ ===== Monster Movement ===== """
+
+    for Monster in Game.all_Monster:
+        Monster.Life(Screen)
+        if not Game.Player.check_collisions(Game.Player, Game.all_Monster):
+            Monster.Move_Left()
+
+
     """ ===== Key Inputs ===== """
 
     # Check les input et instances -tremisabdoul
@@ -74,6 +82,8 @@ while Running:
         if Game.pressed.get(pygame.K_SPACE) \
                 and Game.Player.check_collisions(Game.Player, Game.all_platform):
             Game.Player.SpeedY = -24
+
+
 
         # Bouton croix en haut a droite (Fermer le Programme) -tremisabdoul
         if event.type == pygame.QUIT:
