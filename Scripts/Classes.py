@@ -87,6 +87,7 @@ class Player(pygame.sprite.Sprite, Game):
         self.MinY = -20
         self.MaxY = 740
 
+
     #def Check_Collisions(rectA, rectB):
     #    if rectB.right < rectA.left:
     #        # rectB est à gauche
@@ -121,6 +122,11 @@ class Player(pygame.sprite.Sprite, Game):
     def Gain_Stats(self):
         self.MaxPv += self.Gain_Stat_Level + ( 4 * self.Point.Pv)
         self.Damage += self.Gain_Stat_Level + ( 2 * self.Point.Damage)
+
+    # Fonction appliqué que si l'utilisateur meurt
+    def Death(self):
+        self.all_Monster = pygame.sprite.Group()
+        self.Player.Pv = self.Player.MaxPv
 
 
 """=====  Game.Player.Force [2.1]  ====="""
@@ -306,20 +312,20 @@ class Monster(pygame.sprite.Sprite, Game):
         self.MaxPv = 100
         self.DamageDealt = 10
         self.Speed = 3
-        self.image = pygame.image.load("Assets/Visual/humain.png")
-        self.image = pygame.transform.scale(self.image, (100,100))
+        self.image = pygame.image.load("Assets/Visual/slime.png")
         self.rect = self.image.get_rect()
         self.rect.x = 1000
-        self.rect.y = 600
+        self.rect.y = 675
 
     #Dessin concernant la barre de vie du monstre ( à corriger car il ne s'affiche pas ) - steven
-    def Life(self,surface):
-        LifeBarre_position = [self.rect.x, self.rect.y, self.Pv, 20]
-        LifeBarre_bg_position = [self.rect.x, self.rect.y, self.MaxPv, 20]
+    def Life(self,Screen):
+        LifeBarre_position = [self.rect.x, self.rect.y, self.Pv, -20]
+        LifeBarre_bg_position = [self.rect.x, self.rect.y, self.MaxPv, -20]
         LifeBarre_colors = (51, 255, 118)
         LifeBarre_bg_colors = (222, 222, 222)
-        pygame.draw.rect(surface, LifeBarre_colors, LifeBarre_position)
-        pygame.draw.rect(surface, LifeBarre_bg_colors, LifeBarre_bg_position)
+        pygame.draw.rect(Screen, LifeBarre_bg_colors, LifeBarre_bg_position)
+        pygame.draw.rect(Screen, LifeBarre_colors, LifeBarre_position)
+
 
     #Déplacement du monstre vers la droite - steven
     def Move_Right(self):

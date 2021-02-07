@@ -8,7 +8,7 @@ import pygame
 # Crée l'écran -tremisabdoul
 def Display():
     pygame.init()
-    pygame.display.set_caption("Anatori")
+    pygame.display.set_caption("Anoari")
     screen = pygame.display.set_mode((1280, 720))    #, pygame.FULLSCREEN
     return screen
 
@@ -106,6 +106,10 @@ def pause(Game, Screen, font, time, police1):
             elif event.type == pygame.KEYUP:
                 Game.pressed[event.key] = False
 
+            elif event.type == pygame.MOUSEBUTTONDOWN :
+                if Game.UI.resumebuttunrect.collidepoint(event.pos) :
+                    return False
+
             if event.type == pygame.QUIT:
                 pygame.quit()
                 break
@@ -133,9 +137,7 @@ def pause(Game, Screen, font, time, police1):
 def pauseblit(Screen, font, Game):
 
     Screen.blit(font, (0, 0))
-    #Screen.blit(Game.UI.baselayer, (0, 0))
-    Screen.blit(Game.UI.playbuttun, Game.UI.playbuttunrect)
+    Screen.blit(Game.UI.baselayer, (0, 0))
     Screen.blit(Game.UI.quitbuttun, Game.UI.quitbuttunrect)
     Screen.blit(Game.UI.resumebuttun, Game.UI.resumebuttunrect)
     Screen.blit(Game.UI.savebuttun, Game.UI.savebuttunrect)
-
