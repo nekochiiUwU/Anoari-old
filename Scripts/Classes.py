@@ -35,6 +35,9 @@ class Game:
         # Contient toutes les touches préssées -tremisabdoul
         self.pressed = {}
 
+        self.InGame = True
+        self.Running = True
+        self.Pause = False
 
 """=====  Game.Player [2]  ====="""
 
@@ -316,15 +319,25 @@ class Monster(pygame.sprite.Sprite, Game):
         self.rect = self.image.get_rect()
         self.rect.x = 1000
         self.rect.y = 675
+        self.rect = self.image.get_rect(midtop=self.rect.midtop)
+
+        self.image0 = pygame.image.load("Assets/Visual/UI/100pv.png")
+        self.pvfontrect = self.image0.get_rect()
+        self.pvfontrect = self.image0.get_rect(midbottom=self.pvfontrect.midbottom)
+        self.image0 = pygame.transform.scale(self.image0, (200, 30))
+        self.pvfontrect.midbottom = self.rect.midtop
+        self.pvfontrect.y += 10
+
 
     #Dessin concernant la barre de vie du monstre ( à corriger car il ne s'affiche pas ) - steven
-    def Life(self,Screen):
-        LifeBarre_position = [self.rect.x, self.rect.y, self.Pv, -20]
-        LifeBarre_bg_position = [self.rect.x, self.rect.y, self.MaxPv, -20]
-        LifeBarre_colors = (51, 255, 118)
-        LifeBarre_bg_colors = (222, 222, 222)
-        pygame.draw.rect(Screen, LifeBarre_bg_colors, LifeBarre_bg_position)
-        pygame.draw.rect(Screen, LifeBarre_colors, LifeBarre_position)
+    def Life(self, Screen):
+        if self.Pv > 0:
+            self.pvfontrect = self.image0.get_rect(midbottom=self.pvfontrect.midbottom)
+            self.pvfontrect.midbottom = self.rect.midtop
+            self.pvfontrect.y -= 7
+            self.image0 = pygame.transform.scale(self.image0, (int(self.Pv / self.MaxPv * 64), 8))
+            self.Pv -= 0.2
+            Screen.blit(self.image0, self.pvfontrect)
 
 
     #Déplacement du monstre vers la droite - steven

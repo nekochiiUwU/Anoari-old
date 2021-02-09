@@ -9,6 +9,8 @@ from Scripts.Functions import *
 import time
 import pygame
 
+'''==================================='''
+
 pygame.init()
 
 # Execute les Classes -tremisabdoul
@@ -25,7 +27,6 @@ event = 0
 printpause = 0
 printunpause = 0
 tickchecker = 1
-Pause = False
 
 # L'écran est stockée dans une variable -tremisabdoul
 Screen = Display()
@@ -38,104 +39,17 @@ Running = True
 # Définit les polices -tremisabdoul
 police1 = pygame.font.Font("Assets/Font/Retro Gaming.ttf", 10)
 
+'''==================================='''
+
 # Contient tout ce qui est fait pendant que le jeu est run -tremisabdoul
 while Running:
 
-    """ Sert a rien ! """
-    if Game.Player.Pv < 2:
-        Game.Player.Pv = Game.Player.MaxPv
-    else:
-        Game.Player.Pv -= 1
-
-    """ ===== __init__ Frame Limiter ===== """
-
-    # Initialisation du compteur de temps pour limiter les fps -tremisabdoul
-    tick = time.time()
-
-    nbframe += 1
-
-    """ ===== Monster Instruction ===== """
-
-    for Monster in Game.all_Monster:
-        Monster.Life(Screen)
-        if not Game.Player.check_collisions(Game.Player, Game.all_Monster):
-            Monster.Move_Left()
-
-
-    """ ===== Key Inputs ===== """
-
-    # Check les input et instances -tremisabdoul
-    for event in pygame.event.get():
-
-        # Touches enfoncées -tremisabdoul
-        if event.type == pygame.KEYDOWN:
-            Game.pressed[event.key] = True
-
-            if Game.pressed.get(pygame.K_ESCAPE):
-                Pause = True
-
-        # Touches relachées -tremisabdoul
-        elif event.type == pygame.KEYUP:
-            Game.pressed[event.key] = False
-
-        # Active le Jump() -tremisabdoul
-        if Game.pressed.get(pygame.K_SPACE) \
-                and Game.Player.check_collisions(Game.Player, Game.all_platform):
-            Game.Player.SpeedY = -24
-
-
-
-        # Bouton croix en haut a droite (Fermer le Programme) -tremisabdoul
-        if event.type == pygame.QUIT:
-            running = False
-            pygame.quit()
-
-    """ ===== Loop - Key: [Escape] ===== """
+    """ ===== Loop ===== """
 
     # Loop de pause [Escape]
-    if Pause:
-        time.sleep(0.1)
-        Pause = pause(Game, Screen, font, time, police1)
+    if Game.Pause:
+        pause(Game, Screen, font, time, police1)
 
-    """ ===== Movements ===== """
-
-    Game.Player.LastY = Game.Player.rect.y
-
-    # Fonction de Jump -tremisabdoul
-    if Game.Player.SpeedY:
-        Jump(Game)
-
-    # Fonction de déplacement gauche / droite -tremisabdoul
-    DeplacementX(Game)
-
-    # Déplacements de player -tremisabdoul
-    Game.Player.rect.x += Game.Player.Force.AccelerationFunctionX()
-    Game.Player.rect.y += Game.Player.Force.Gravity(Game)
-    print(Game.Player.Force.AccelerationFunctionX())
-
-    """ ===== Printers ===== """
-
-    # Print les elements In-Game du jeu  -tremisabdoul
-    Printer(Screen, Game, font)
-
-    # Print l'interface de jeu -tremisabdoul
-    UIPrinter(Screen, police1, Game, tickchecker)
-
-    MousePriter(Screen, Game)
-
-    Game.Player.YVector = Game.Player.LastY - Game.Player.rect.y
-    YVector = police1.render("Y Vector checker: " + str(Game.Player.YVector), True, (255, 255, 255))
-    Screen.blit(YVector, (100, 34))
-
-    # Met a jour l'affichage (rafraîchissement de l'écran) -tremisabdoul
-    pygame.display.flip()
-
-    """ ===== Frame Limiter ===== """
-
-    # Permet d'avoir des frames régulières -tremisabdoul
-    tickchecker = time.time()
-    tickchecker -= tick
-
-    while tickchecker < 0.017:
-        tickchecker = time.time()
-        tickchecker -= tick
+    # Loop de jeu
+    if Game.InGame:
+        inGame(Game, time, nbframe, Screen, font, police1, tickchecker)
