@@ -141,8 +141,7 @@ def pause(Game, Screen, font, time, police1):
                     Game.InGame = True
                 elif Game.UI.quitbuttunrect.collidepoint(event.pos):
                     Game.Pause = False
-                    Game.Running = False
-                    pygame.quit()
+                    Game.Lobby = True
 
             if event.type == pygame.QUIT:
                 pygame.quit()
