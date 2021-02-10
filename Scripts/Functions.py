@@ -1,6 +1,5 @@
 
-# Contient toutes les fonctions non-dépendentes d'une classe
-# (pour ne pas envahir les autres fichiers) -tremisabdoul
+# Contient toutes les fonctions (pour ne pas envahir les autres fichiers) -tremisabdoul
 
 import pygame
 
@@ -13,6 +12,7 @@ def Display():
     return screen
 
 
+# Animation (resp_sorcière) -tremisabdoul
 def resp_sorciere(time, Game, AnimationSorcer):
 
     while AnimationSorcer:
@@ -26,6 +26,7 @@ def resp_sorciere(time, Game, AnimationSorcer):
             return 0
 
 
+# Fonction de jump: [ Key: Space ] -tremisabdoul
 def Jump(Game):
     if Game.Player.SpeedY < 0:
         Game.Player.rect.y += Game.Player.SpeedY
@@ -34,9 +35,10 @@ def Jump(Game):
         Game.Player.SpeedY = 0
 
 
+# Déplacement du joueur (x) (Impossible aux limites de l'écran): Touche q / d et LEFT / RIGHT -tremisabdoul
 def DeplacementX(Game):
 
-    # Déplacement du joueur (x) (Impossible aux limites de l'écran): Touche q / d et LEFT / RIGHT -tremisabdoul
+
     if Game.pressed.get(pygame.K_d) and Game.Player.rect.x < Game.Player.MaxX \
             or Game.pressed.get(pygame.K_RIGHT) and Game.Player.rect.x < Game.Player.MaxX:
         Game.Player.Move_Right()
@@ -46,11 +48,13 @@ def DeplacementX(Game):
         Game.Player.Move_Left()
 
 
+# Print: -tremisabdoul
 def MousePriter(Screen, Game):
     Game.Mouse.rect.center = pygame.mouse.get_pos()
     Screen.blit(Game.Mouse.image, Game.Mouse.rect)
 
 
+# Print: -tremisabdoul
 def Printer(Screen, Game, font):
     # Affiche a l'écran des éléments -tremisabdoul
     Screen.blit(font, (0, 0))
@@ -61,6 +65,7 @@ def Printer(Screen, Game, font):
     Screen.blit(Game.Monster.image, Game.Monster.rect)
 
 
+# Print: -tremisabdoul
 def UIPrinter(Screen, police1, Game, tickchecker):
 
     # Permet de récupérer le nombre de frames a la seconde -tremisabdoul
@@ -88,8 +93,17 @@ def UIPrinter(Screen, police1, Game, tickchecker):
     Screen.blit(opti1, (15 + Color / 50, 60 + Color / 50))
 
 
-# map.maskimage.map_rgb(127, 127, 127, 255)
+# Print: -tremisabdoul
+def pauseblit(Screen, font, Game):
 
+    Screen.blit(font, (0, 0))
+    Screen.blit(Game.UI.baselayer, (0, 0))
+    Screen.blit(Game.UI.quitbuttun, Game.UI.quitbuttunrect)
+    Screen.blit(Game.UI.resumebuttun, Game.UI.resumebuttunrect)
+    Screen.blit(Game.UI.savebuttun, Game.UI.savebuttunrect)
+
+
+# Loop de Pause: -tremisabdoul
 def pause(Game, Screen, font, time, police1):
 
     while Game.Pause:
@@ -142,15 +156,7 @@ def pause(Game, Screen, font, time, police1):
         pygame.display.flip()
 
 
-def pauseblit(Screen, font, Game):
-
-    Screen.blit(font, (0, 0))
-    Screen.blit(Game.UI.baselayer, (0, 0))
-    Screen.blit(Game.UI.quitbuttun, Game.UI.quitbuttunrect)
-    Screen.blit(Game.UI.resumebuttun, Game.UI.resumebuttunrect)
-    Screen.blit(Game.UI.savebuttun, Game.UI.savebuttunrect)
-
-
+# Loop de Jeu: -tremisabdoul
 def inGame(Game, time, nbframe, Screen, font, police1, tickchecker):
 
     while Game.InGame:

@@ -13,13 +13,15 @@ class Game:
         self.Sol = Sol()
         # Mouse devient une sous-classe de Game -tremisabdoul
         self.Mouse = Mouse()
+        # UI devient une sous-classe de Game -tremisabdoul
         self.UI = UI()
+        # Plateforme devient une sous-classe de Game -tremisabdoul
         self.Plateform = Plateform()
 
         # Monster devient une sous-classe de Game - steven
         self.Monster = Monster()
 
-        # Création du groupe composé de tous les joueurs -Steven
+        # Création du groupe composé de tous les monstres -Steven
         self.all_Monster = pygame.sprite.Group()
         self.all_Monster.add(self.Monster)
 
@@ -35,6 +37,7 @@ class Game:
         # Contient toutes les touches préssées -tremisabdoul
         self.pressed = {}
 
+        # Variables Générales -tremisabdoul
         self.InGame = True
         self.Running = True
         self.Pause = False
@@ -69,7 +72,7 @@ class Player(pygame.sprite.Sprite, Game):
         self.Point_Pv = 0
         self.Point_Damage = 0
 
-        # Définit l'élément visuel en tant que variable -tremisabdoul
+        # Définit l'élément visuel en tant que variable et la hitbox de Player -tremisabdoul
         self.image = pygame.image.load("Assets/Visual/Mystique_resp/Frame1.png")
         self.imageTag = 1
         self.rect = self.image.get_rect()
@@ -83,7 +86,7 @@ class Player(pygame.sprite.Sprite, Game):
         self.YVector = 0
 
         # Valeurs max et min que Player peut atteindre (Bords de l'écran x) -tremisabdoul
-        self.MinX = +20
+        self.MinX = 20
         self.MaxX = 1200
 
         # Valeurs max et min que Player peut atteindre (Bords de l'écran y) -tremisabdoul
@@ -105,8 +108,7 @@ class Player(pygame.sprite.Sprite, Game):
     #        # rectB est en-dessous
     #        return False
 
-    # Fonction de collision en fonction du rect ( position ) -tremisabdoul
-
+    # Fonction de collision -tremisabdoul
     @staticmethod
     def check_collisions(sprite, group):
         return pygame.sprite.spritecollide(sprite, group, False, pygame.sprite.collide_mask)
@@ -138,7 +140,7 @@ class Player(pygame.sprite.Sprite, Game):
 #  Contient les vecteurs physiques -tremisabdoul
 class Force:
 
-    # Fonction exécutée au demarée au lancement de Force
+    # Fonction exécutée au demarée au lancement de Force - tremisabdoul
     def __init__(self):
 
         self.x = float(0)
@@ -175,7 +177,7 @@ class Force:
         # Vérification des collisions entre Player et toutes les plateformes
         Collide = Game0.Player.check_collisions(Game0.Player, Game0.all_platform)
 
-        if not Collide or Game0.Player.YVector > 0:
+        if not Collide or Game0.Player.YVector > 0 or Game0.Player.rect.bottom > Collide[0].rect.top + 33:
 
             if self.Base_Gravity < 33:  # Si force de sol > 0
                 self.Base_Gravity += 0.66  # Diminution de la force "Sol" (Ratio 0.66)

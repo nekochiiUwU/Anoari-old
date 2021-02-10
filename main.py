@@ -1,5 +1,8 @@
 # -*- coding: utf-8 -*-
+
 # 32 20 41 / 39 20 41
+# main: Contient loop
+
 # Ecrivez une description de ce que vous codez
 # avec votre pseudo pour qu'on puisse vous demander plus d'infos -tremisabdoul
 
