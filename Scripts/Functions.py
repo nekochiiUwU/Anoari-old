@@ -262,3 +262,57 @@ def inGame(Game, time, nbframe, Screen, font, police1, tickchecker):
         while tickchecker < 0.017:
             tickchecker = time.time()
             tickchecker -= tick
+
+def LobbyBlit(Screen, font, Game):
+    """Fonction d'affichage: Eléments du lobby"""
+    Screen.blit(Game.UI.lobbybackground, (0, 0))
+    Screen.blit(Game.UI.lobby_loadbutton, Game.UI.lobby_loadbuttonrect)
+    Screen.blit(Game.UI.lobby_playbutton, Game.UI.lobby_playbuttonrect)
+    Screen.blit(Game.UI.lobby_quitbutton, Game.UI.lobby_quitbuttonrect)
+
+def Lobby(Game, Screen, font, time, police1):
+    Game.InGame = False
+    Game.Pause = False
+
+    while Game.Lobby:
+        # Initialisation du compteur de temps pour limiter les fps -tremisabdoul
+        tick = time.time()
+
+        for event in pygame.event.get():
+
+            if event.type == pygame.KEYDOWN:
+                Game.pressed[event.key] = True
+
+            elif event.type == pygame.KEYUP:
+                Game.pressed[event.key] = False
+
+            elif event.type == pygame.MOUSEBUTTONDOWN:
+                if Game.UI.lobby_playbuttonrect.collidepoint(event.pos):
+                    Game.InGame = True
+                    Game.Lobby = False
+                elif Game.UI.quitbuttunrect.collidepoint(event.pos):
+                    Game.Running = False
+                    pygame.quit()
+
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                break
+
+        # Permet de récupérer le nombre de frames a la seconde -tremisabdoul
+        tickchecker = time.time()
+        tickchecker -= tick
+
+        LobbyBlit(Screen, font, Game)
+        MousePriter(Screen, Game)
+
+        while tickchecker < 0.017:
+            tickchecker = time.time()
+            tickchecker -= tick
+
+        fps = 1 / tickchecker
+        fps = "FPS : " + str(round(fps))
+        # Transforme une variable en composent graphique -tremisabdoul
+        printfps = police1.render(str(fps), True, (255, 255, 255))
+        Screen.blit(printfps, (6, 34))
+
+        pygame.display.flip()
