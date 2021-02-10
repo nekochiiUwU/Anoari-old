@@ -6,6 +6,8 @@ import pygame
 
 # Crée l'écran -tremisabdoul
 def Display():
+    """Fonction Permettent l'affichage de l'écran"""
+
     pygame.init()
     pygame.display.set_caption("Anoari")
     screen = pygame.display.set_mode((1280, 720), pygame.FULLSCREEN)
@@ -14,6 +16,7 @@ def Display():
 
 # Animation (resp_sorcière) -tremisabdoul
 def resp_sorciere(time, Game, AnimationSorcer):
+    """Fonction d'animation: resp_mystique"""
 
     while AnimationSorcer:
 
@@ -28,6 +31,8 @@ def resp_sorciere(time, Game, AnimationSorcer):
 
 # Fonction de jump: [ Key: Space ] -tremisabdoul
 def Jump(Game):
+    """Fonction de jump: [ Key: Space ]"""
+
     if Game.Player.SpeedY < 0:
         Game.Player.rect.y += Game.Player.SpeedY
         Game.Player.SpeedY += 0.66
@@ -37,7 +42,7 @@ def Jump(Game):
 
 # Déplacement du joueur (x) (Impossible aux limites de l'écran): Touche q / d et LEFT / RIGHT -tremisabdoul
 def DeplacementX(Game):
-
+    """Fonction de déplacement [gauche/droite] :  [ Left: LEFT / Q ], [ Right: RIGHT / D ]"""
 
     if Game.pressed.get(pygame.K_d) and Game.Player.rect.x < Game.Player.MaxX \
             or Game.pressed.get(pygame.K_RIGHT) and Game.Player.rect.x < Game.Player.MaxX:
@@ -50,12 +55,16 @@ def DeplacementX(Game):
 
 # Print: -tremisabdoul
 def MousePriter(Screen, Game):
+    """Fonction d'affichage: Mouse"""
+
     Game.Mouse.rect.center = pygame.mouse.get_pos()
     Screen.blit(Game.Mouse.image, Game.Mouse.rect)
 
 
 # Print: -tremisabdoul
 def Printer(Screen, Game, font):
+    """Fonction d'affichage: Eléments in-game"""
+
     # Affiche a l'écran des éléments -tremisabdoul
     Screen.blit(font, (0, 0))
     Screen.blit(Game.Sol.image, Game.Sol.rect)
@@ -67,6 +76,7 @@ def Printer(Screen, Game, font):
 
 # Print: -tremisabdoul
 def UIPrinter(Screen, police1, Game, tickchecker):
+    """Fonction d'affichage: Eléments d'interface in-game"""
 
     # Permet de récupérer le nombre de frames a la seconde -tremisabdoul
     frame = 1
@@ -95,6 +105,7 @@ def UIPrinter(Screen, police1, Game, tickchecker):
 
 # Print: -tremisabdoul
 def pauseblit(Screen, font, Game):
+    """Fonction d'affichage: Eléments de pause"""
 
     Screen.blit(font, (0, 0))
     Screen.blit(Game.UI.baselayer, (0, 0))
@@ -105,6 +116,7 @@ def pauseblit(Screen, font, Game):
 
 # Loop de Pause: -tremisabdoul
 def pause(Game, Screen, font, time, police1):
+    """ Loop de pause """
 
     while Game.Pause:
         # Initialisation du compteur de temps pour limiter les fps -tremisabdoul
@@ -158,6 +170,7 @@ def pause(Game, Screen, font, time, police1):
 
 # Loop de Jeu: -tremisabdoul
 def inGame(Game, time, nbframe, Screen, font, police1, tickchecker):
+    """ Loop de Jeu """
 
     while Game.InGame:
         """ Sert a rien ! """

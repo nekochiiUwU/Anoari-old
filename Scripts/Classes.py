@@ -1,5 +1,6 @@
 import pygame
 
+
 """=====  Game [1]  ====="""
 
 
@@ -42,7 +43,8 @@ class Game:
         self.Running = True
         self.Pause = False
 
-"""=====  Game.Player [2]  ====="""
+
+"""=====  Game.Player [2.0]  ====="""
 
 
 class Player(pygame.sprite.Sprite, Game):
@@ -74,7 +76,6 @@ class Player(pygame.sprite.Sprite, Game):
 
         # Définit l'élément visuel en tant que variable et la hitbox de Player -tremisabdoul
         self.image = pygame.image.load("Assets/Visual/Mystique_resp/Frame1.png")
-        self.imageTag = 1
         self.rect = self.image.get_rect()
         self.rect = self.image.get_rect(bottomleft=self.rect.bottomleft)
 
@@ -85,6 +86,8 @@ class Player(pygame.sprite.Sprite, Game):
         self.LastY = 0
         self.YVector = 0
 
+        self.Movement = 1 # Droite = 1 Gauche = -1
+
         # Valeurs max et min que Player peut atteindre (Bords de l'écran x) -tremisabdoul
         self.MinX = 20
         self.MaxX = 1200
@@ -93,40 +96,40 @@ class Player(pygame.sprite.Sprite, Game):
         self.MinY = -20
         self.MaxY = 740
 
-
-    #def Check_Collisions(rectA, rectB):
-    #    if rectB.right < rectA.left:
-    #        # rectB est à gauche
-    #        return False
-    #    if rectB.bottom < rectA.top:
-    #        # rectB est au-dessus
-    #        return False
-    #    if rectB.left > rectA.right:
-    #        # rectB est à droite
-    #        return False
-    #    if rectB.top > rectA.bottom:
-    #        # rectB est en-dessous
-    #        return False
+    #   def Check_Collisions(rectA, rectB):
+    #       if rectB.right < rectA.left:
+    #           # rectB est à gauche
+    #           return False
+    #       if rectB.bottom < rectA.top:
+    #           # rectB est au-dessus
+    #           return False
+    #       if rectB.left > rectA.right:
+    #           # rectB est à droite
+    #           return False
+    #       if rectB.top > rectA.bottom:
+    #           # rectB est en-dessous
+    #           return False
 
     # Fonction de collision -tremisabdoul
+
     @staticmethod
     def check_collisions(sprite, group):
         return pygame.sprite.spritecollide(sprite, group, False, pygame.sprite.collide_mask)
 
     # Fonction de mouvement (Droite) -tremisabdoul
     def Move_Right(self):
-            self.Force.x += self.Speed
-            self.imageTag = 1
+        self.Force.x += self.Speed
+        self.Movement = 1
 
     # Fonction de mouvement (Gauche) -tremisabdoul
     def Move_Left(self):
-            self.Force.x -= self.Speed
-            self.imageTag = -1
+        self.Force.x -= self.Speed
+        self.Movement = 0
 
     # Fonction de gain de stat ( valeur placée arbitrairement lol ) - steven
     def Gain_Stats(self):
-        self.MaxPv += self.Gain_Stat_Level + ( 4 * self.Point.Pv)
-        self.Damage += self.Gain_Stat_Level + ( 2 * self.Point.Damage)
+        self.MaxPv += self.Gain_Stat_Level + (4 * self.Point_Pv)
+        self.Damage += self.Gain_Stat_Level + (2 * self.Point_Damage)
 
     # Fonction appliqué que si l'utilisateur meurt
     def Death(self):
@@ -197,7 +200,6 @@ class Force:
 """=====  Game.Sol [3]  ====="""
 
 
-# Sol -steven
 class Sol(pygame.sprite.Sprite):
 
     def __init__(self):
@@ -217,26 +219,28 @@ class Sol(pygame.sprite.Sprite):
         self.rect.y = 700
 
 
-# Création de plateforme (pas entièrement fonctionnel) -tremisabdoul
+"""=====  Game.Plateform [4]  ====="""
+
+
 class Plateform(pygame.sprite.Sprite, Game):
 
     def __init__(self):
         super().__init__()
 
-        # Définit l'élément visuel en tant que variable -steven
+        # Définit l'élément visuel en tant que variable -tremisabdoul
         self.image = pygame.image.load("Assets/Visual/plateforme_base.png")
 
         # Transforme l'image sol en la résolution indiquée -tremisabdoul
         self.image = pygame.transform.scale(self.image, (320, 20))
 
-        # Définit la hitbox de sol -steven
+        # Définit la hitbox de sol -tremisabdoul
         self.rect = self.image.get_rect()
 
-        # Position de la plateforme -steven
+        # Position de la plateforme -tremisabdoul
         self.rect.x = 400
         self.rect.y = 520
 
-    # Création de nouvelles plateformes (semi-fonctionnel)
+    # Création de nouvelles plateformes (semi-fonctionnel) -tremisabdoul
     def NewPlateform(self, Screen, x1, x2, y):
         P = [x1, y]
         self.image = pygame.transform.scale(self.image, (x2 - x1, 20))
@@ -245,25 +249,27 @@ class Plateform(pygame.sprite.Sprite, Game):
         Screen.blit(self.image, P)
 
 
-"""=====  Game.Mouse [4]  ====="""
+"""=====  Game.Mouse [5]  ====="""
 
 
-# Souris -tremisabdoul
 class Mouse(pygame.sprite.Sprite):
 
     def __init__(self):
         super().__init__()
 
-        #pygame.mouse.set_visible(False)
+        # Rends la sourie windows invisible -tremisabdoul
+        pygame.mouse.set_visible(False)
 
+        # Definit l'image (emplacent la sourie) -tremisabdoul
         self.image = pygame.image.load("Assets/Visual/UI/Mouse.png")
-        self.image = pygame.transform.scale(self.image, (33, 33))
+        self.image = pygame.transform.scale(self.image, (20, 20))
 
+        # Cree la hit-box de l'image -tremisabdoul
         self.rect = self.image.get_rect()
         self.rect = self.image.get_rect(center=self.rect.center)
 
 
-"""=====  Game.UI [5]  ====="""
+"""=====  Game.UI [6]  ====="""
 
 
 # Interface -tremisabdoul
@@ -272,7 +278,7 @@ class UI:
     def __init__(self):
         super().__init__()
 
-        # Font grisé -tremisabdoul
+        # Font grisé (Ca prends full perf) -tremisabdoul
         self.baselayer = pygame.image.load("Assets/Visual/UI/baselayer.png")
         self.baselayer = pygame.transform.scale(self.baselayer, (1280, 720))
 
@@ -304,7 +310,9 @@ class UI:
         self.quitbuttunrect.x = 640 - 50
         self.quitbuttunrect.y = 360 - 15 + 75
 
-"""=====  Monstre [6]  ====="""
+
+"""=====  Monstre [7]  ====="""
+
 
 class Monster(pygame.sprite.Sprite, Game):
 
@@ -323,6 +331,7 @@ class Monster(pygame.sprite.Sprite, Game):
         self.rect.y = 675
         self.rect = self.image.get_rect(midtop=self.rect.midtop)
 
+        # Barre de pv des monstres -tremisabdoul
         self.image0 = pygame.image.load("Assets/Visual/UI/100pv.png")
         self.pvfontrect = self.image0.get_rect()
         self.pvfontrect = self.image0.get_rect(midbottom=self.pvfontrect.midbottom)
@@ -330,8 +339,7 @@ class Monster(pygame.sprite.Sprite, Game):
         self.pvfontrect.midbottom = self.rect.midtop
         self.pvfontrect.y += 10
 
-
-    #Dessin concernant la barre de vie du monstre ( à corriger car il ne s'affiche pas ) - steven
+    # Dessin concernant la barre de vie du monstre -steven / tremisabdoul
     def Life(self, Screen):
         if self.Pv > 0:
             self.pvfontrect = self.image0.get_rect(midbottom=self.pvfontrect.midbottom)
@@ -341,11 +349,10 @@ class Monster(pygame.sprite.Sprite, Game):
             self.Pv -= 0.2
             Screen.blit(self.image0, self.pvfontrect)
 
-
-    #Déplacement du monstre vers la droite - steven
+    # Déplacement du monstre vers la droite -steven
     def Move_Right(self):
-            self.rect.x += self.Speed
+        self.rect.x += self.Speed
 
-    #Déplacement du monstre vers la gauche - steven
+    # Déplacement du monstre vers la gauche -steven
     def Move_Left(self):
-            self.rect.x -= self.Speed
+        self.rect.x -= self.Speed
