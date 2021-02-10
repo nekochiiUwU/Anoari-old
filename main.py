@@ -48,6 +48,7 @@ police1 = pygame.font.Font("Assets/Font/Retro Gaming.ttf", 10)
 while Running:
 
     """ ===== Loop ===== """
+    #Loop du Lobby
     if Game.Lobby :
         Lobby(Game, Screen, font, time, police1)
     # Loop de pause [Escape]

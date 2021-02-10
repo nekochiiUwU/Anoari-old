@@ -270,8 +270,6 @@ def LobbyBlit(Screen, font, Game):
     Screen.blit(Game.UI.lobby_quitbutton, Game.UI.lobby_quitbuttonrect)
 
 def Lobby(Game, Screen, font, time, police1):
-    Game.InGame = False
-    Game.Pause = False
 
     while Game.Lobby:
         # Initialisation du compteur de temps pour limiter les fps -tremisabdoul
