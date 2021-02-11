@@ -312,9 +312,9 @@ class UI:
         self.quitbuttunrect.x = 640 - 50
         self.quitbuttunrect.y = 360 - 15 + 75
 
-        """ Catégorie Lobby """
+        """ Catégorie Menu d'accueil """
 
-        #Intégration de l'image qui apparaitrera au Lobby -steven
+        #Intégration de l'image qui apparaitrera du menu d'accueil -steven
         self.lobbybackground = pygame.image.load("Assets/Visual/background.jpg")
         self.lobbybackground = pygame.transform.scale(self.lobbybackground, (1280, 720))
 
@@ -322,22 +322,22 @@ class UI:
         self.lobby_playbutton = pygame.image.load("Assets/Visual/UI/bouton_JOUER.png")
         self.lobby_playbutton = pygame.transform.scale(self.lobby_playbutton, (82, 30))
         self.lobby_playbuttonrect = self.lobby_playbutton.get_rect()
-        self.lobby_playbuttonrect.x = 640 - 70
-        self.lobby_playbuttonrect.y = 360 - 15 - 25
+        self.lobby_playbuttonrect.x = 1000
+        self.lobby_playbuttonrect.y = 360 - 30
 
         #Intégration du boutton "CHARGER" -steven
         self.lobby_loadbutton = pygame.image.load("Assets/Visual/UI/bouton_REPRENDRE.png")
         self.lobby_loadbutton = pygame.transform.scale(self.lobby_loadbutton, (140, 30))
         self.lobby_loadbuttonrect = self.lobby_loadbutton.get_rect()
-        self.lobby_loadbuttonrect.x = 640 - 86
-        self.lobby_loadbuttonrect.y = 360 - 15 + 25
+        self.lobby_loadbuttonrect.x = 1000 - 30
+        self.lobby_loadbuttonrect.y = 360
 
         #Intégration du boutton "QUITTER" -Steven
         self.lobby_quitbutton = pygame.image.load("Assets/Visual/UI/bouton_QUITTER.png")
         self.lobby_quitbutton = pygame.transform.scale(self.lobby_quitbutton, (100, 30))
         self.lobby_quitbuttonrect = self.lobby_quitbutton.get_rect()
-        self.lobby_quitbuttonrect.x = 640 - 50
-        self.lobby_quitbuttonrect.y = 360 - 15 + 75
+        self.lobby_quitbuttonrect.x = 1000 - 60
+        self.lobby_quitbuttonrect.y = 360 + 30
 
 
 

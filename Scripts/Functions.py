@@ -10,7 +10,7 @@ def Display():
 
     pygame.init()
     pygame.display.set_caption("Anoari")
-    screen = pygame.display.set_mode((1280, 720), pygame.FULLSCREEN)
+    screen = pygame.display.set_mode((1280, 720))#, pygame.FULLSCREEN
     return screen
 
 
@@ -287,7 +287,7 @@ def Lobby(Game, Screen, font, time, police1):
                 if Game.UI.lobby_playbuttonrect.collidepoint(event.pos):
                     Game.InGame = True
                     Game.Lobby = False
-                elif Game.UI.quitbuttunrect.collidepoint(event.pos):
+                elif Game.UI.lobby_quitbuttonrect.collidepoint(event.pos):
                     Game.Running = False
                     pygame.quit()
 
