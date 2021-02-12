@@ -1,5 +1,5 @@
 import pygame
-
+import random as rd
 
 """=====  Game [1]  ====="""
 
@@ -75,6 +75,9 @@ class Player(pygame.sprite.Sprite, Game):
         self.Point_Pv = 0
         self.Point_Damage = 0
 
+        self.Weapon1 = Weapon()
+        self.Weapon2 = Weapon()
+
         # Définit l'élément visuel en tant que variable et la hitbox de Player -tremisabdoul
         self.image = pygame.image.load("Assets/Visual/Mystique_resp/Frame1.png")
         self.rect = self.image.get_rect()
@@ -87,7 +90,7 @@ class Player(pygame.sprite.Sprite, Game):
         self.LastY = 0
         self.YVector = 0
 
-        self.Movement = 1 # Droite = 1 Gauche = -1
+        self.Movement = 1  # Droite = 1 Gauche = -1
 
         # Valeurs max et min que Player peut atteindre (Bords de l'écran x) -tremisabdoul
         self.MinX = 20
@@ -148,9 +151,7 @@ class Force:
     def __init__(self):
 
         self.x = float(0)
-        self.y = float(0)
         self.StepX = float(0)
-        self.StepY = float(0)
         self.lastx = float(0)
         self.lasty = float(0)
 
@@ -314,31 +315,30 @@ class UI:
 
         """ Catégorie Menu d'accueil """
 
-        #Intégration de l'image qui apparaitrera du menu d'accueil -steven
+        # Intégration de l'image qui apparaitrera du menu d'accueil -steven
         self.lobbybackground = pygame.image.load("Assets/Visual/background.jpg")
         self.lobbybackground = pygame.transform.scale(self.lobbybackground, (1280, 720))
 
-        #Intégration du boutton "JOUER" -steven
+        # Intégration du boutton "JOUER" -steven
         self.lobby_playbutton = pygame.image.load("Assets/Visual/UI/bouton_JOUER.png")
         self.lobby_playbutton = pygame.transform.scale(self.lobby_playbutton, (82, 30))
         self.lobby_playbuttonrect = self.lobby_playbutton.get_rect()
         self.lobby_playbuttonrect.x = 1000
         self.lobby_playbuttonrect.y = 360 - 30
 
-        #Intégration du boutton "CHARGER" -steven
+        # Intégration du boutton "CHARGER" -steven
         self.lobby_loadbutton = pygame.image.load("Assets/Visual/UI/bouton_REPRENDRE.png")
         self.lobby_loadbutton = pygame.transform.scale(self.lobby_loadbutton, (140, 30))
         self.lobby_loadbuttonrect = self.lobby_loadbutton.get_rect()
         self.lobby_loadbuttonrect.x = 1000 - 30
         self.lobby_loadbuttonrect.y = 360
 
-        #Intégration du boutton "QUITTER" -Steven
+        # Intégration du boutton "QUITTER" -Steven
         self.lobby_quitbutton = pygame.image.load("Assets/Visual/UI/bouton_QUITTER.png")
         self.lobby_quitbutton = pygame.transform.scale(self.lobby_quitbutton, (100, 30))
         self.lobby_quitbuttonrect = self.lobby_quitbutton.get_rect()
         self.lobby_quitbuttonrect.x = 1000 - 60
         self.lobby_quitbuttonrect.y = 360 + 30
-
 
 
 """=====  Monstre [7]  ====="""
@@ -386,3 +386,18 @@ class Monster(pygame.sprite.Sprite, Game):
     # Déplacement du monstre vers la gauche -steven
     def Move_Left(self):
         self.rect.x -= self.Speed
+
+
+class Weapon:
+
+    def __init__(self):
+        # Type d'arme Ex: Mitraillette = 3
+        self.MetaType = rd.randrange(1, 5, 1)
+        # Arme en question Ex: Mitraillette.Poison = 3.4
+        self.MetaWeapon = rd.randrange(1, 10, 1)
+        # Rarerté Ex: Mitraillette.Poison.Rare = 3.4.2
+        self.MetaClass = rd.randrange(1, 4, 1)
+        # Stat boost par la rareté Ex: Mitraillette.Poison.Rare.Speed = 3.4.2.3
+        self.MetaCharacteristic = rd.randrange(1, 10, 1)
+        # Donne l'ensemble des propiétées de l'arme  Ex: 3.4.2.3
+        self.MetaName = [self.MetaType, self.MetaWeapon, self.MetaClass, self.MetaCharacteristic]

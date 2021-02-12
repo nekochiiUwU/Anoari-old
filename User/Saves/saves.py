@@ -26,6 +26,7 @@ class SaveSlot:
 
             "NameSave": "Number 1",
             "NamePlayer": "Base",
+            "TypeGame": "History",
 
             # Player
             # Statistiques Player -tremisabdoul
@@ -41,11 +42,14 @@ class SaveSlot:
             "Game.Player.rect.y": 82,
             "Game.Player.LastY": 0,
             "Game.Player.YVector": 0,
+            "Game.Player.Weapon1": None,
+            "Game.Player.Weapon2": None,
 
             # Force
             # Mouvement Actuel de Player -tremisabdoul
-            "Game.Force.lastx" : float(0),
-            "Game.Force.Base_Gravity" : 0,
+            "Game.Force.lastx": 0,
+            "Game.Force.Base_Gravity": 0,
+            "Game.Force.x": 0
 
 
             }
