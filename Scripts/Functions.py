@@ -10,7 +10,7 @@ def Display():
 
     pygame.init()
     pygame.display.set_caption("Anoari")
-    screen = pygame.display.set_mode((1280, 720))#, pygame.FULLSCREEN
+    screen = pygame.display.set_mode((1280, 720))  # , pygame.FULLSCREEN
     return screen
 
 
@@ -262,14 +262,16 @@ def inGame(Game, time, nbframe, Screen, font, police1, tickchecker):
             tickchecker = time.time()
             tickchecker -= tick
 
-def LobbyBlit(Screen, font, Game):
+
+def LobbyBlit(Screen, Game):
     """Fonction d'affichage: Eléments du lobby"""
     Screen.blit(Game.UI.lobbybackground, (0, 0))
     Screen.blit(Game.UI.lobby_loadbutton, Game.UI.lobby_loadbuttonrect)
     Screen.blit(Game.UI.lobby_playbutton, Game.UI.lobby_playbuttonrect)
     Screen.blit(Game.UI.lobby_quitbutton, Game.UI.lobby_quitbuttonrect)
 
-def Lobby(Game, Screen, font, time, police1):
+
+def Lobby(Game, Screen, time, police1):
 
     while Game.Lobby:
         # Initialisation du compteur de temps pour limiter les fps -tremisabdoul
@@ -299,7 +301,7 @@ def Lobby(Game, Screen, font, time, police1):
         tickchecker = time.time()
         tickchecker -= tick
 
-        LobbyBlit(Screen, font, Game)
+        LobbyBlit(Screen, Game)
         MousePriter(Screen, Game)
 
         while tickchecker < 0.017:
