@@ -1,5 +1,5 @@
 
-#Slots de save:
+# Slots de save:
 
 """
 Liste d'infos dans les saves:
@@ -18,40 +18,42 @@ Liste d'infos dans les saves:
 
 """
 
-class SaveSlot():
+
+class SaveSlot:
+
     def __init__(self):
         self.Save1 = {
 
-        "NameSave": "Number 1",
-	"NamePlayer": "Base",
-	
-
-        # Player
-
-        # Statistiques Player -tremisabdoul
-        "Game.Player.Pv" : 50,
-        "Game.Player.MaxPv" : 100,
-        "Game.Player.Damage" : 10,
-        "Game.Player.Speed" : 3,
-        "Game.Player.SpeedY" : 0,
-        "Game.Player.Level" : 0,
-        "Game.Player.Gold" : 0,
-
-        # Position de Player -tremisabdoul
-        "Game.Player.rect.x" : 50,
-        "Game.Player.rect.y" : 82,
-        "Game.Player.LastY" : 0,
-        "Game.Player.YVector" : 0,
+            "NameSave": "Number 1",
+            "NamePlayer": "Base",
 
 
-        # Force
+            # Player
 
-        #Mouvement Actuel de Player -tremisabdoul
-        "Game.Force.lastx" : float(0),
-        "Game.Force.Base_Gravity" : 0,
+            # Statistiques Player -tremisabdoul
+            "Game.Player.Pv" : 50,
+            "Game.Player.MaxPv" : 100,
+            "Game.Player.Damage" : 10,
+            "Game.Player.Speed" : 3,
+            "Game.Player.SpeedY" : 0,
+            "Game.Player.Level" : 0,
+            "Game.Player.Gold" : 0,
+
+            # Position de Player -tremisabdoul
+            "Game.Player.rect.x" : 50,
+            "Game.Player.rect.y" : 82,
+            "Game.Player.LastY" : 0,
+            "Game.Player.YVector" : 0,
 
 
-        }
+            # Force
+
+            #Mouvement Actuel de Player -tremisabdoul
+            "Game.Force.lastx" : float(0),
+            "Game.Force.Base_Gravity" : 0,
+
+
+            }
         self.Save2 = {}
         self.Save3 = {}
         self.Save4 = {}
