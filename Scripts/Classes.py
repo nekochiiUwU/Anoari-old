@@ -391,19 +391,38 @@ class Monster(pygame.sprite.Sprite, Game):
 class Weapon:
 
     def __init__(self):
+
         # Type d'arme Ex: Mitraillette = 3
         self.MetaType = rd.randrange(1, 5, 1)
+
         # Arme en question Ex: Mitraillette.Poison = 3.4
         self.MetaWeapon = rd.randrange(1, 10, 1)
+
         # Rarerté Ex: Mitraillette.Poison.Rare = 3.4.2
         self.MetaClass = rd.randrange(1, 4, 1)
-        # Stat boost par la rareté Ex: Mitraillette.Poison.Rare.Speed = 3.4.2.3
-        self.MetaCharacteristic = rd.randrange(1, 10, 1)
-        # Donne l'ensemble des propiétées de l'arme  Ex: 3.4.2.3
-        self.MetaName = [self.MetaType, self.MetaWeapon, self.MetaClass, self.MetaCharacteristic]
-        self.Damage = rd.randrange(1, 10, 1)
-        self.Speed = rd.randrange(1, 100, 1)/10
-        self.Precision = rd.randrange(1, 100, 1)/100
-        self.Damage = rd.randrange(1, 10, 1)
-        self.Damage = rd.randrange(1, 10, 1)
-        self.Damage = rd.randrange(1, 10, 1)
+
+        # Donne l'ensemble des propiétées de l'arme  Ex: 3.4.2
+        self.MetaName = [self.MetaType, self.MetaWeapon, self.MetaClass]
+
+        self.Damage = rd.randrange(2, 9, 1)
+        self.Speed = rd.randrange(41, 80, 1)/10
+        self.CD = self.MetaWeapon * 3
+
+        self.DamageBuff = 0
+        self.SpeedBuff = 0
+        self.CDR = 0
+        self.tester = self.MetaClass
+
+        while self.tester > 0:
+            self.RandomTest = rd.randrange(1, 3, 1)
+            self.tester -= 1
+            if self.RandomTest == 1:
+                self.DamageBuff += rd.randrange(1, 5, 1)
+            if self.RandomTest == 2:
+                self.SpeedBuff -= rd.randrange(1, 20, 1) / 10
+            if self.RandomTest == 3:
+                self.CDR += rd.randrange(1, 25, 1)
+        del self.tester
+        print("\n\nWeapon:", self.MetaName,"\nRareté:", self.MetaClass,\
+                "\n\tDamage: ", self.Damage,"+", self.DamageBuff,"\n\tSpeed: ", self.Speed,"+", self.SpeedBuff,\
+                    "\n\tCDR: ", self.CD,"* ( 100 / ( 100 +", self.CDR, ")")
