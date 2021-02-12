@@ -401,3 +401,9 @@ class Weapon:
         self.MetaCharacteristic = rd.randrange(1, 10, 1)
         # Donne l'ensemble des propiétées de l'arme  Ex: 3.4.2.3
         self.MetaName = [self.MetaType, self.MetaWeapon, self.MetaClass, self.MetaCharacteristic]
+        self.Damage = rd.randrange(1, 10, 1)
+        self.Speed = rd.randrange(1, 100, 1)/10
+        self.Precision = rd.randrange(1, 100, 1)/100
+        self.Damage = rd.randrange(1, 10, 1)
+        self.Damage = rd.randrange(1, 10, 1)
+        self.Damage = rd.randrange(1, 10, 1)
