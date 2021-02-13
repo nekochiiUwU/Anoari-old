@@ -110,9 +110,10 @@ def pauseblit(Screen, font, Game):
 
     Screen.blit(font, (0, 0))
     Screen.blit(Game.UI.baselayer, (0, 0))
-    Screen.blit(Game.UI.quitbuttun, Game.UI.quitbuttunrect)
-    Screen.blit(Game.UI.resumebuttun, Game.UI.resumebuttunrect)
-    Screen.blit(Game.UI.savebuttun, Game.UI.savebuttunrect)
+    Screen.blit(Game.UI.resumebutton, Game.UI.resumebuttonrect)
+    Screen.blit(Game.UI.savebutton, Game.UI.savebuttonrect)
+    Screen.blit(Game.UI.settingsbutton, Game.UI.settingsbuttonrect)
+    Screen.blit(Game.UI.quitbutton, Game.UI.quitbuttonrect)
 
 
 # Loop de Pause: -tremisabdoul
@@ -198,6 +199,7 @@ def inGame(Game, time, nbframe, Screen, font, police1, tickchecker):
             if event.type == pygame.KEYDOWN:
                 Game.pressed[event.key] = True
 
+                #Changement entre Fullscreen / Window -steven
                 if Game.pressed.get(pygame.K_F11):
                     pygame.display.toggle_fullscreen()
 

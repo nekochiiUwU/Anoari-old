@@ -285,33 +285,33 @@ class UI:
         self.baselayer = pygame.image.load("Assets/Visual/UI/baselayer.png")
         self.baselayer = pygame.transform.scale(self.baselayer, (1280, 720))
 
-        # Boutton "JOUER" -tremisabdoul
-        self.playbuttun = pygame.image.load("Assets/Visual/UI/bouton_JOUER.png")
-        self.playbuttun = pygame.transform.scale(self.playbuttun, (82, 30))
-        self.playbuttunrect = self.playbuttun.get_rect()
-        self.playbuttunrect.x = 640 - 41
-        self.playbuttunrect.y = 360 - 15 - 75
-
         # Boutton "REPRENDRE" -tremisabdoul
-        self.resumebuttun = pygame.image.load("Assets/Visual/UI/bouton_REPRENDRE.png")
-        self.resumebuttun = pygame.transform.scale(self.resumebuttun, (140, 30))
-        self.resumebuttunrect = self.resumebuttun.get_rect()
-        self.resumebuttunrect.x = 640 - 70
-        self.resumebuttunrect.y = 360 - 15 - 25
+        self.resumebutton = pygame.image.load("Assets/Visual/UI/bouton_REPRENDRE.png")
+        self.resumebutton = pygame.transform.scale(self.resumebutton, (140, 30))
+        self.resumebuttonrect = self.resumebutton.get_rect()
+        self.resumebuttonrect.x = 640 - 70
+        self.resumebuttonrect.y = 360 - 40
 
         # Boutton "SAUVEGARDER" -tremisabdoul
-        self.savebuttun = pygame.image.load("Assets/Visual/UI/bouton_SAUVEGARDER.png")
-        self.savebuttun = pygame.transform.scale(self.savebuttun, (172, 30))
-        self.savebuttunrect = self.savebuttun.get_rect()
-        self.savebuttunrect.x = 640 - 86
-        self.savebuttunrect.y = 360 - 15 + 25
+        self.savebutton = pygame.image.load("Assets/Visual/UI/bouton_SAUVEGARDER.png")
+        self.savebutton = pygame.transform.scale(self.savebutton, (172, 30))
+        self.savebuttonrect = self.savebutton.get_rect()
+        self.savebuttonrect.x = 640 - 86
+        self.savebuttonrect.y = 360
+
+        # Boutton "PARAMÈTRE" -steven
+        self.settingsbutton = pygame.image.load("Assets/Visual/UI/bouton_SETTINGS.png")
+        self.settingsbutton = pygame.transform.scale(self.settingsbutton, (100, 30))
+        self.settingsbuttonrect = self.settingsbutton.get_rect()
+        self.settingsbuttonrect.x = 640 - 50
+        self.settingsbuttonrect.y = 360 + 40
 
         # Boutton "QUITER" -tremisabdoul
-        self.quitbuttun = pygame.image.load("Assets/Visual/UI/bouton_QUITTER.png")
-        self.quitbuttun = pygame.transform.scale(self.quitbuttun, (100, 30))
-        self.quitbuttunrect = self.quitbuttun.get_rect()
-        self.quitbuttunrect.x = 640 - 50
-        self.quitbuttunrect.y = 360 - 15 + 75
+        self.quitbutton = pygame.image.load("Assets/Visual/UI/bouton_QUITTER.png")
+        self.quitbutton = pygame.transform.scale(self.quitbutton, (100, 30))
+        self.quitbuttonrect = self.quitbutton.get_rect()
+        self.quitbuttonrect.x = 640 - 50
+        self.quitbuttonrect.y = 360 + 80
 
         """ Catégorie Menu d'accueil """
 
