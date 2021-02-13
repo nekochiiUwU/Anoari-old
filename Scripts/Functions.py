@@ -10,7 +10,8 @@ def Display():
 
     pygame.init()
     pygame.display.set_caption("Anoari")
-    screen = pygame.display.set_mode((1280, 720))  # , pygame.FULLSCREEN
+    size = width, height = 1280,720
+    screen = pygame.display.set_mode((size))
     return screen
 
 
@@ -127,6 +128,9 @@ def pause(Game, Screen, font, time, police1):
             if event.type == pygame.KEYDOWN:
                 Game.pressed[event.key] = True
 
+                if Game.pressed.get(pygame.K_F11):
+                    pygame.display.toggle_fullscreen()
+
                 if Game.pressed.get(pygame.K_ESCAPE):
                     Game.Pause = False
                     Game.InGame = True
@@ -193,6 +197,9 @@ def inGame(Game, time, nbframe, Screen, font, police1, tickchecker):
             # Touches enfoncées -tremisabdoul
             if event.type == pygame.KEYDOWN:
                 Game.pressed[event.key] = True
+
+                if Game.pressed.get(pygame.K_F11):
+                    pygame.display.toggle_fullscreen()
 
                 if Game.pressed.get(pygame.K_ESCAPE):
                     Game.Pause = True
@@ -282,6 +289,9 @@ def Lobby(Game, Screen, time, police1):
             if event.type == pygame.KEYDOWN:
                 Game.pressed[event.key] = True
 
+                if Game.pressed.get(pygame.K_F11):
+                    pygame.display.toggle_fullscreen()
+
             elif event.type == pygame.KEYUP:
                 Game.pressed[event.key] = False
 
@@ -315,3 +325,5 @@ def Lobby(Game, Screen, time, police1):
         Screen.blit(printfps, (6, 34))
 
         pygame.display.flip()
+
+
