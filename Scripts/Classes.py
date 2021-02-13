@@ -369,6 +369,9 @@ class Monster(pygame.sprite.Sprite, Game):
         self.pvfontrect.midbottom = self.rect.midtop
         self.pvfontrect.y += 10
 
+        self.LeftDirection = True
+        self.RightDirection = False
+
     # Dessin concernant la barre de vie du monstre -steven / tremisabdoul
     def Life(self, Screen):
         if self.Pv > 0:

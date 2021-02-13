@@ -249,6 +249,8 @@ def inGame(Game, time, nbframe, Screen, font, police1, tickchecker):
             if not Game.Player.check_collisions(Game.Player, Game.all_Monster):
                 Monster.Move_Left()
 
+
+
         # Print l'interface de jeu -tremisabdoul
         UIPrinter(Screen, police1, Game, tickchecker)
 

@@ -37,3 +37,15 @@ def resp_sorciere(Game):
             Game.Player.image = pygame.image.load("Assets/Visual/Mystique_resp/Frame1.png")
             Game.Player.Actual_image = 1
             Game.Player.rect.y -= 1
+
+for Monster in Game.all_Monster:
+    Monster.Life(Screen)
+    if Game.Monster.LeftDirection :
+        Monster.Move_Left()
+        if Game.Player.check_collisions(Monster, Game.all_platformsub) :
+             Game.Monster.LeftDirection = False
+    else :
+        Monster.Move_Right()
+        if Game.Player.check_collisions(Monster, Game.all_platformsub) :
+            Game.Monster.LeftDirection = True
+            Game.Monster.RightDirection = False
