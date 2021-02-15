@@ -1,3 +1,4 @@
+from User.UserData import *
 import pygame
 import random as rd
 
@@ -8,6 +9,33 @@ class Game:
 
     # Fonction exécutée au démarrage de Game -tremisabdoul
     def __init__(self):
+        # SaveSlot devient une sous-classe de Game -tremisabdoul
+        self.Saves = SaveSlot()
+
+        # UserData devient une sous-classe de Game -tremisabdoul
+        self.UserData = UserData()
+        self.DataY = self.UserData.UserGraphicInfo.current_h
+        self.DataX = self.UserData.UserGraphicInfo.current_w
+
+        # Contient toutes les touches préssées -tremisabdoul
+        self.pressed = {}
+
+        # Variables Générales -tremisabdoul
+        self.InGame = False
+        self.Running = True
+        self.Pause = False
+        self.Lobby = True
+        self.Fullscreen = 0
+        self.Tickchecker = 1
+        self.font = pygame.image.load("Assets/Visual/UI/BGPAINT.jpg")
+
+    def Rescale(self, value, X_or_Y_or_XY):
+        if X_or_Y_or_XY == "X":
+            return round((value / 1280) * self.DataX)
+        elif X_or_Y_or_XY == "Y":
+            return round((value / 720) * self.DataY)
+
+    def init_suite(self):
         # Player devient une sous-classe de Game -tremisabdoul
         self.Player = Player()
         # Sol devient une sous-classe de Game -Steven
@@ -18,7 +46,6 @@ class Game:
         self.UI = UI()
         # Plateforme devient une sous-classe de Game -tremisabdoul
         self.Plateform = Plateform()
-
         # Monster devient une sous-classe de Game - steven
         self.Monster = Monster()
 
@@ -34,15 +61,6 @@ class Game:
         self.all_platform = pygame.sprite.Group()
         self.all_platform.add(self.Sol)
         self.all_platform.add(self.Plateform)
-
-        # Contient toutes les touches préssées -tremisabdoul
-        self.pressed = {}
-
-        # Variables Générales -tremisabdoul
-        self.InGame = False
-        self.Running = True
-        self.Pause = False
-        self.Lobby = True
 
 
 """=====  Game.Player [2.0]  ====="""
@@ -80,6 +98,7 @@ class Player(pygame.sprite.Sprite, Game):
 
         # Définit l'élément visuel en tant que variable et la hitbox de Player -tremisabdoul
         self.image = pygame.image.load("Assets/Visual/Mystique_resp/Frame1.png")
+        self.image = pygame.transform.scale(self.image, (self.image.get_width(), self.image.get_height()))
         self.rect = self.image.get_rect()
         self.rect = self.image.get_rect(bottomleft=self.rect.bottomleft)
 
@@ -194,9 +213,9 @@ class Force:
 
         else:
             Game0.Player.SpeedY = 0  # Cancel le saut
-            Apply = Collide[0].rect.top - Game0.Player.rect.bottom + 1  # Y reset (Premier pixel du rect de plateforme)
+            Game0.Player.rect.bottom = Collide[0].rect.y + 1  # Y reset (Premier pixel du rect de plateforme)
             self.Base_Gravity = 0  # Reset la force du sol (-33)
-            return Apply
+            return 0
 
 
 """=====  Game.Sol [3]  ====="""
@@ -206,6 +225,8 @@ class Sol(pygame.sprite.Sprite):
 
     def __init__(self):
         super().__init__()
+
+        self.UserData = UserData()
 
         # Définit l'élément visuel en tant que variable -steven
         self.image = pygame.image.load("Assets/Visual/plateforme_base.png")
@@ -426,6 +447,6 @@ class Weapon:
             if self.RandomTest == 3:
                 self.CDR += rd.randrange(1, 25, 1)
         del self.tester
-        print("\n\nWeapon:", self.MetaName,"\nRareté:", self.MetaClass,\
-                "\n\tDamage: ", self.Damage,"+", self.DamageBuff,"\n\tSpeed: ", self.Speed,"+", self.SpeedBuff,\
-                    "\n\tCDR: ", self.CD,"* ( 100 / ( 100 +", self.CDR, ")")
+        print("\n\nWeapon:", self.MetaName, "\nRareté:", self.MetaClass,
+              "\n\tDamage: ", self.Damage, "+",  self.DamageBuff, "\n\tSpeed: ", self.Speed, "+", self.SpeedBuff,
+              "\n\tCDR: ", self.CD, "* ( 100 / ( 100 +", self.CDR, "))")

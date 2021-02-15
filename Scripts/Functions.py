@@ -2,6 +2,7 @@
 # Contient toutes les fonctions (pour ne pas envahir les autres fichiers) -tremisabdoul
 
 import pygame
+import os
 
 
 # Crée l'écran -tremisabdoul
@@ -10,16 +11,16 @@ def Display():
 
     pygame.init()
     pygame.display.set_caption("Anoari")
-    size = width, height = 1280,720
-    screen = pygame.display.set_mode((size))
+    size = (1280, 720)
+    screen = pygame.display.set_mode(size, pygame.RESIZABLE)
     return screen
 
 
 # Animation (resp_sorcière) -tremisabdoul
-def resp_sorciere(time, Game, AnimationSorcer):
+def resp_sorciere(time, Game, Animation):
     """Fonction d'animation: resp_mystique"""
 
-    while AnimationSorcer:
+    while Animation:
 
         if not Game.Player.Force.x:
             time.sleep(0.5)
@@ -63,25 +64,25 @@ def MousePriter(Screen, Game):
 
 
 # Print: -tremisabdoul
-def Printer(Screen, Game, font):
+def Printer(Screen, Game):
     """Fonction d'affichage: Eléments in-game"""
 
     # Affiche a l'écran des éléments -tremisabdoul
-    Screen.blit(font, (0, 0))
+    Screen.blit(Game.font, (0, 0))
     Screen.blit(Game.Sol.image, Game.Sol.rect)
-    Screen.blit(Game.Player.image, Game.Player.rect)
     Game.Plateform.NewPlateform(Screen, 200, 700, 500)
-    MousePriter(Screen, Game)
+    Screen.blit(Game.Player.image, Game.Player.rect)
     Screen.blit(Game.Monster.image, Game.Monster.rect)
+    MousePriter(Screen, Game)
 
 
 # Print: -tremisabdoul
-def UIPrinter(Screen, police1, Game, tickchecker):
+def UIPrinter(Screen, police1, Game):
     """Fonction d'affichage: Eléments d'interface in-game"""
 
     # Permet de récupérer le nombre de frames a la seconde -tremisabdoul
     frame = 1
-    fps = frame / tickchecker
+    fps = frame / Game.Tickchecker
     fps = "FPS : " + str(round(fps))
 
     # Transforme une variable en composent graphique -tremisabdoul
@@ -105,11 +106,11 @@ def UIPrinter(Screen, police1, Game, tickchecker):
 
 
 # Print: -tremisabdoul
-def pauseblit(Screen, font, Game):
+def pauseblit(Screen, Game):
     """Fonction d'affichage: Eléments de pause"""
 
-    Screen.blit(font, (0, 0))
-    Screen.blit(Game.UI.baselayer, (0, 0))
+    Screen.blit(Game.font, (0, 0))
+    # Screen.blit(Game.UI.baselayer, (0, 0))
     Screen.blit(Game.UI.resumebutton, Game.UI.resumebuttonrect)
     Screen.blit(Game.UI.savebutton, Game.UI.savebuttonrect)
     Screen.blit(Game.UI.settingsbutton, Game.UI.settingsbuttonrect)
@@ -117,7 +118,7 @@ def pauseblit(Screen, font, Game):
 
 
 # Loop de Pause: -tremisabdoul
-def pause(Game, Screen, font, time, police1):
+def pause(Game, Screen, time, police1):
     """ Loop de pause """
 
     while Game.Pause:
@@ -128,10 +129,8 @@ def pause(Game, Screen, font, time, police1):
 
             if event.type == pygame.KEYDOWN:
                 Game.pressed[event.key] = True
-
                 if Game.pressed.get(pygame.K_F11):
                     pygame.display.toggle_fullscreen()
-
                 if Game.pressed.get(pygame.K_ESCAPE):
                     Game.Pause = False
                     Game.InGame = True
@@ -148,22 +147,24 @@ def pause(Game, Screen, font, time, police1):
                     Game.Pause = False
                     Game.Lobby = True
 
+            # Bouton croix en haut a droite (Fermer le Programme) -tremisabdoul
             if event.type == pygame.QUIT:
+                Game.Pause = False
+                Game.running = False
                 pygame.quit()
-                break
 
         # Permet de récupérer le nombre de frames a la seconde -tremisabdoul
-        tickchecker = time.time()
-        tickchecker -= tick
+        Game.Tickchecker = time.time()
+        Game.Tickchecker -= tick
 
-        pauseblit(Screen, font, Game)
+        pauseblit(Screen, Game)
         MousePriter(Screen, Game)
 
-        while tickchecker < 0.017:
-            tickchecker = time.time()
-            tickchecker -= tick
+        while Game.Tickchecker < 0.017:
+            Game.Tickchecker = time.time()
+            Game.Tickchecker -= tick
 
-        fps = 1 / tickchecker
+        fps = 1 / Game.Tickchecker
         fps = "FPS : " + str(round(fps))
         # Transforme une variable en composent graphique -tremisabdoul
         printfps = police1.render(str(fps), True, (255, 255, 255))
@@ -173,7 +174,7 @@ def pause(Game, Screen, font, time, police1):
 
 
 # Loop de Jeu: -tremisabdoul
-def inGame(Game, time, nbframe, Screen, font, police1, tickchecker):
+def inGame(Game, time, nbframe, Screen, police1):
     """ Loop de Jeu """
 
     while Game.InGame:
@@ -198,27 +199,39 @@ def inGame(Game, time, nbframe, Screen, font, police1, tickchecker):
             # Touches enfoncées -tremisabdoul
             if event.type == pygame.KEYDOWN:
                 Game.pressed[event.key] = True
-
-                #Changement entre Fullscreen / Window -steven
-                if Game.pressed.get(pygame.K_F11):
-                    pygame.display.toggle_fullscreen()
-
+                # Active le Jump() -tremisabdoul
+                if Game.pressed.get(pygame.K_SPACE) \
+                        and Game.Player.check_collisions(Game.Player, Game.all_platform):
+                    Game.Player.SpeedY = -24
+                # Activation de Pause -tremisabdoul
                 if Game.pressed.get(pygame.K_ESCAPE):
                     Game.Pause = True
                     Game.InGame = False
+
+                # Changement entre Fullscreen / Window -steven
+                if Game.pressed.get(pygame.K_F11):
+                    print(pygame.display.Info())
+                    if Game.Fullscreen == 0:
+                        Screen = pygame.display.set_mode((Game.DataX, Game.DataY), pygame.FULLSCREEN)
+                        Game.Fullscreen = 1
+                    else:
+                        Screen = pygame.display.set_mode((1280, 720), pygame.RESIZABLE)
+                        os.environ['SDL_VIDEO_WINDOW_POS'] = "%d,%d" % (0, 60)
+                        Game.Fullscreen = 0
 
             # Touches relachées -tremisabdoul
             elif event.type == pygame.KEYUP:
                 Game.pressed[event.key] = False
 
-            # Active le Jump() -tremisabdoul
-            if Game.pressed.get(pygame.K_SPACE) \
-                    and Game.Player.check_collisions(Game.Player, Game.all_platform):
-                Game.Player.SpeedY = -24
+            #  -tremisabdoul
+            if event.type == pygame.VIDEORESIZE:
+                ReScale(Game, Screen)
 
             # Bouton croix en haut a droite (Fermer le Programme) -tremisabdoul
             if event.type == pygame.QUIT:
                 Game.InGame = False
+                Game.Lobby = False
+                Game.Pause = False
                 Game.running = False
                 pygame.quit()
 
@@ -240,7 +253,7 @@ def inGame(Game, time, nbframe, Screen, font, police1, tickchecker):
         """ ===== Printers ===== """
 
         # Print les elements In-Game du jeu  -tremisabdoul
-        Printer(Screen, Game, font)
+        Printer(Screen, Game)
 
         """ ===== Monster Instruction ===== """
 
@@ -249,15 +262,13 @@ def inGame(Game, time, nbframe, Screen, font, police1, tickchecker):
             if not Game.Player.check_collisions(Game.Player, Game.all_Monster):
                 Monster.Move_Left()
 
-
-
         # Print l'interface de jeu -tremisabdoul
-        UIPrinter(Screen, police1, Game, tickchecker)
+        UIPrinter(Screen, police1, Game)
 
         MousePriter(Screen, Game)
 
         Game.Player.YVector = Game.Player.LastY - Game.Player.rect.y
-        YVector = police1.render("Y Vector checker: " + str(Game.Player.YVector), True, (255, 255, 255))
+        YVector = police1.render("Y Vector checker: " + str(Game.Player.YVector), True, (141, 100, 200))
         Screen.blit(YVector, (100, 34))
 
         # Met a jour l'affichage (rafraîchissement de l'écran) -tremisabdoul
@@ -266,12 +277,12 @@ def inGame(Game, time, nbframe, Screen, font, police1, tickchecker):
         """ ===== Frame Limiter ===== """
 
         # Permet d'avoir des frames régulières -tremisabdoul
-        tickchecker = time.time()
-        tickchecker -= tick
+        Game.Tickchecker = time.time()
+        Game.Tickchecker -= tick
 
-        while tickchecker < 0.017:
-            tickchecker = time.time()
-            tickchecker -= tick
+        while Game.Tickchecker < 0.017:
+            Game.Tickchecker = time.time()
+            Game.Tickchecker -= tick
 
 
 def LobbyBlit(Screen, Game):
@@ -307,9 +318,13 @@ def Lobby(Game, Screen, time, police1):
                     Game.Running = False
                     pygame.quit()
 
+            # Bouton croix en haut a droite (Fermer le Programme) -tremisabdoul
             if event.type == pygame.QUIT:
+                Game.InGame = False
+                Game.Lobby = False
+                Game.Pause = False
+                Game.running = False
                 pygame.quit()
-                break
 
         # Permet de récupérer le nombre de frames a la seconde -tremisabdoul
         tickchecker = time.time()
@@ -331,3 +346,10 @@ def Lobby(Game, Screen, time, police1):
         pygame.display.flip()
 
 
+def ReScale(Game, Screen):
+    Game.DataX = pygame.Surface.get_width(Screen)
+    Game.DataY = pygame.Surface.get_height(Screen)
+    Game.font = pygame.image.load("Assets/Visual/UI/BGPAINT.jpg")
+    Game.Player.image = pygame.image.load("Assets/Visual/Mystique_resp/Frame1.png")
+    Game.font = pygame.transform.scale(Game.font, (Game.Rescale(Game.font.get_width(), "X"), Game.Rescale(Game.font.get_height(), "Y")))
+    Game.Player.image = pygame.transform.scale(Game.Player.image, (Game.Rescale(Game.Player.image.get_width(), "X"), Game.Rescale(Game.Player.image.get_height(), "Y")))

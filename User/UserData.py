@@ -1,4 +1,4 @@
-
+import pygame
 # Slots de save:
 
 """
@@ -19,14 +19,23 @@ Liste d'infos dans les saves:
 """
 
 
+class UserData:
+
+    def __init__(self):
+        self.UserGraphicInfo = pygame.display.Info()
+        self.DataX = self.UserGraphicInfo.current_w
+        self.DataY = self.UserGraphicInfo.current_h
+        self.DataResolution = (self.DataX, self.DataY)
+        print(self.UserGraphicInfo)
+
+
 class SaveSlot:
 
     def __init__(self):
         self.Save1 = {
-
-            "NameSave": "Number 1",
-            "NamePlayer": "Base",
-            "TypeGame": "History",
+            "NameSave": "Save 1",
+            "NamePlayer": "Name",
+            "TypeGame": "Rogue",
 
             # Player
             # Statistiques Player -tremisabdoul
