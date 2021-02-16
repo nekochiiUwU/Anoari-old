@@ -34,6 +34,8 @@ Screen = Display()
 # Définit les polices -tremisabdoul
 police1 = pygame.font.Font("Assets/Font/Retro Gaming.ttf", 10)
 
+police2 = pygame.font.Font("Assets/Font/Retro Gaming.ttf", 30)
+
 '''==================================='''
 
 # Contient tout ce qui est fait pendant que le jeu est run -tremisabdoul
@@ -50,3 +52,6 @@ while Game.Running:
     # Loop de jeu
     if Game.InGame:
         inGame(Game, time, nbframe, Screen, police1)
+
+    if Game.Option:
+        Option(Game, Screen, time, police1, police2)

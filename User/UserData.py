@@ -47,8 +47,7 @@ class SaveSlot:
             "Game.Player.Level": 0,
             "Game.Player.Gold": 0,
             # Position de Player -tremisabdoul
-            "Game.Player.rect.x": 50,
-            "Game.Player.rect.y": 82,
+            "Game.Player.rect": (50, 50),
             "Game.Player.LastY": 0,
             "Game.Player.YVector": 0,
             "Game.Player.Weapon1": None,

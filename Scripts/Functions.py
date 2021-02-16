@@ -140,10 +140,13 @@ def pause(Game, Screen, time, police1):
                 Game.pressed[event.key] = False
 
             elif event.type == pygame.MOUSEBUTTONDOWN:
-                if Game.UI.resumebuttunrect.collidepoint(event.pos):
+                if Game.UI.resumebuttonrect.collidepoint(event.pos):
                     Game.Pause = False
                     Game.InGame = True
-                elif Game.UI.quitbuttunrect.collidepoint(event.pos):
+                elif Game.UI.settingsbuttonrect.collidepoint(event.pos):
+                    Game.Pause = False
+                    Game.Option = True
+                elif Game.UI.quitbuttonrect.collidepoint(event.pos):
                     Game.Pause = False
                     Game.Lobby = True
 
@@ -215,8 +218,9 @@ def inGame(Game, time, nbframe, Screen, police1):
                         Screen = pygame.display.set_mode((Game.DataX, Game.DataY), pygame.FULLSCREEN)
                         Game.Fullscreen = 1
                     else:
+                        pygame.display.toggle_fullscreen()
                         Screen = pygame.display.set_mode((1280, 720), pygame.RESIZABLE)
-                        os.environ['SDL_VIDEO_WINDOW_POS'] = "%d,%d" % (0, 60)
+                        os.environ['SDL_VIDEO_WINDOW_POS'] = "%d,%d" % (10, 60)
                         Game.Fullscreen = 0
 
             # Touches relachées -tremisabdoul
@@ -344,6 +348,66 @@ def Lobby(Game, Screen, time, police1):
         Screen.blit(printfps, (6, 34))
 
         pygame.display.flip()
+
+def Option(Game, Screen, time, police1, police2):
+    while Game.Option:
+        # Initialisation du compteur de temps pour limiter les fps -tremisabdoul
+        tick = time.time()
+
+
+        for event in pygame.event.get():
+
+            if event.type == pygame.KEYDOWN:
+                Game.pressed[event.key] = True
+
+                if Game.pressed.get(pygame.K_ESCAPE):
+                    Game.Pause = True
+                    Game.Option = False
+
+            elif event.type == pygame.KEYUP:
+                Game.pressed[event.key] = False
+
+            # Bouton croix en haut a droite (Fermer le Programme) -tremisabdoul
+            if event.type == pygame.QUIT:
+                Game.InGame = False
+                Game.Lobby = False
+                Game.Pause = False
+                Game.running = False
+                pygame.quit()
+
+        # Permet de récupérer le nombre de frames a la seconde -tremisabdoul
+        tickchecker = time.time()
+        tickchecker -= tick
+
+        MousePriter(Screen, Game)
+
+
+        Screen.fill((0, 0, 0))
+
+        #Affichage du nécessaire pour le texte des Options -steven
+        White = (255, 255, 255)
+        Texte('Résolution : ', police2, White, Screen, 100, 100)
+        Texte('Volume : ', police2, White, Screen, 100, 225)
+        Texte('Contrôle : ', police2, White, Screen, 100, 350)
+
+        while tickchecker < 0.017:
+            tickchecker = time.time()
+            tickchecker -= tick
+
+        fps = 1 / tickchecker
+        fps = "FPS : " + str(round(fps))
+        # Transforme une variable en composent graphique -tremisabdoul
+        printfps = police1.render(str(fps), True, (255, 255, 255))
+        Screen.blit(printfps, (6, 34))
+
+        pygame.display.flip()
+
+#Fonction du texte -steven
+def Texte(text, police2, color, Screen, x, y):
+    Texte_Contenu = police2.render(text, 1, color)
+    Texte_Rect = Texte_Contenu.get_rect()
+    Texte_Rect = (x, y)
+    Screen.blit(Texte_Contenu, Texte_Rect)
 
 
 def ReScale(Game, Screen):

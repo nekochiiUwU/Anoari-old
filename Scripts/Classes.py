@@ -22,6 +22,7 @@ class Game:
 
         # Variables Générales -tremisabdoul
         self.InGame = False
+        self.Option = False
         self.Running = True
         self.Pause = False
         self.Lobby = True
@@ -29,10 +30,10 @@ class Game:
         self.Tickchecker = 1
         self.font = pygame.image.load("Assets/Visual/UI/BGPAINT.jpg")
 
-    def Rescale(self, value, X_or_Y_or_XY):
-        if X_or_Y_or_XY == "X":
+    def Rescale(self, value, XorY):
+        if XorY == "X":
             return round((value / 1280) * self.DataX)
-        elif X_or_Y_or_XY == "Y":
+        elif XorY == "Y":
             return round((value / 720) * self.DataY)
 
     def init_suite(self):
