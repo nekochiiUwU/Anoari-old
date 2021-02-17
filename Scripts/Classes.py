@@ -63,6 +63,7 @@ class Game:
         self.all_platform.add(self.Sol)
         self.all_platform.add(self.Plateform)
 
+        self.Cursor = Cursor()
 
 """=====  Game.Player [2.0]  ====="""
 
@@ -292,7 +293,6 @@ class Mouse(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
         self.rect = self.image.get_rect(center=self.rect.center)
 
-
 """=====  Game.UI [6]  ====="""
 
 
@@ -451,3 +451,8 @@ class Weapon:
         print("\n\nWeapon:", self.MetaName, "\nRareté:", self.MetaClass,
               "\n\tDamage: ", self.Damage, "+",  self.DamageBuff, "\n\tSpeed: ", self.Speed, "+", self.SpeedBuff,
               "\n\tCDR: ", self.CD, "* ( 100 / ( 100 +", self.CDR, "))")
+
+
+
+
+

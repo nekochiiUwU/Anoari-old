@@ -335,6 +335,7 @@ def Lobby(Game, Screen, time, police1):
         tickchecker -= tick
 
         LobbyBlit(Screen, Game)
+        Game.Cursor.Mouvement()
         MousePriter(Screen, Game)
 
         while tickchecker < 0.017:

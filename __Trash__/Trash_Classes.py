@@ -96,3 +96,60 @@
 #
 #
 #spawn_Mob1()
+
+#"""=====  Curseur [9]  ====="""
+#class Cursor(UI, Game):
+#    def __init__(self):
+#        super().__init__()
+#
+#        self.cursor_image = pygame.image.load("Assets/Visual/plateforme_base.png")
+#        self.cursor_image = pygame.transform.scale(self.cursor_image, (20, 20))
+#
+#        self.cursor_imagerect = self.cursor_image.get_rect()
+#        self.cursor_imagerect.x = 1000 - 30
+#        self.cursor_imagerect.y = 330
+#
+#       self.state = 'JOUER'
+#       self.staterect = self.staterect.x, self.staterect.y = self.lobby_playbuttonrect.x, self.lobby_loadbuttonrect.y
+#
+#
+#   def Mouvement(self):
+#
+#       Screen.blit(self.cursor_image, self.cursor_imagerect)
+#
+#       for event in pygame.event.get():
+#
+#            if event.type == pygame.KEYDOWN:
+#
+#                if Game.pressed.get(pygame.K_DOWN):
+#                    if self.state == 'JOUER' :
+#                        self.cursor_imagerect = self.lobby_loadbutton.x - 30, self.lobby_loadbuttonrect.y
+#                        self.state == 'CHARGER'
+#                    elif self.state == 'CHARGER' :
+#                        self.cursor_imagerect = self.lobby_quitbuttonrect.x - 30, self.lobby_quitbuttonrect.y
+#                        self.state == 'QUITTER'
+#                    elif self.state == 'QUITTER' :
+#                        self.cursor_imagerect = self.lobby_playbuttonrect.x - 30, self.lobby_playbuttonrect.y
+#                        self.state == 'JOUER'
+#
+#                if Game.pressed.get(pygame.K_UP) :
+#                    if self.state == 'JOUER' :
+#                        self.cursor_imagerect = self.lobby_quitbuttonrect.x - 30, self.lobby_quitbuttonrect.y
+#                        self.state == 'QUITTER'
+#                    elif self.state == 'CHARGER' :
+#                        self.cursor_imagerect = self.lobby_playbuttonrect.x - 30, self.lobby_playbuttonrect.y
+#                        self.state == 'JOUER'
+#                    elif self.state == 'QUITTER' :
+#                        self.cursor_imagerect = self.lobby_loadbuttonrect.x - 30, self.lobby_loadbuttonrect.y
+#                        self.state == 'CHARGER'
+#
+#                if event.type == pygame.START :
+#                    if self.state == 'JOUER' :
+#                        self.Lobby = False
+#                        self.InGame = True
+#                    elif self.state == 'CHARGER':
+#                        self.Lobby = False
+#                        self.InGame = True
+#                    elif self.state == 'QUITTER':
+#                        self.Running = False
+#                        pygame.quit()
