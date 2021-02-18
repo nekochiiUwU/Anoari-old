@@ -118,7 +118,7 @@ def pauseblit(Screen, Game):
 
 
 # Loop de Pause: -tremisabdoul
-def pause(Game, Screen, time, police1):
+def pause(Game, Screen, time, police1, SaveSlot):
     """ Loop de pause """
 
     while Game.Pause:
@@ -143,6 +143,8 @@ def pause(Game, Screen, time, police1):
                 if Game.UI.resumebuttonrect.collidepoint(event.pos):
                     Game.Pause = False
                     Game.InGame = True
+                elif Game.UI.savebuttonrect.collidepoint(event.pos):
+                    SaveSlot.Save1['Game.Player.rect'] = Game.Player.rect
                 elif Game.UI.settingsbuttonrect.collidepoint(event.pos):
                     Game.Pause = False
                     Game.Option = True
@@ -380,6 +382,7 @@ def Option(Game, Screen, time, police1, police2):
         tickchecker -= tick
 
         MousePriter(Screen, Game)
+        Save_Slot()
 
 
         Screen.fill((0, 0, 0))
@@ -408,6 +411,18 @@ def Texte(text, police2, color, Screen, x, y):
     Texte_Rect = Texte_Contenu.get_rect()
     Texte_Rect = (x, y)
     Screen.blit(Texte_Contenu, Texte_Rect)
+
+def Data_Save(Game) :
+    Game.Saves.Save1['Game.Player.Pv'] = Game.Player.Pv
+    Game.Saves.Save1['Game.Player.MaxPv'] = Game.Player.MaxPv
+    Game.Saves.Save1['Game.Player.Damage'] = Game.Player.Damage
+    Game.Saves.Save1['Game.Player.Speed'] = Game.Player.Speed
+    Game.Saves.Save1['Game.Player.SpeedY'] = Game.Player.SpeedY
+    Game.Saves.Save1['Game.Player.Level'] = Game.Player.Level
+    Game.Saves.Save1['Game.Player.Gold'] = Game.Player.Gold
+    Game.Saves.Save1['Game.Player.rect'] = Game.Player.rect
+    Game.Saves.Save1['Game.Player.LastY'] = Game.Player.LastY
+    Game.Saves.Save1['Game.Player.YVector'] = Game.Player.YVector
 
 
 def ReScale(Game, Screen):

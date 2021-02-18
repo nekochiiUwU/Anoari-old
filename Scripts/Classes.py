@@ -63,7 +63,6 @@ class Game:
         self.all_platform.add(self.Sol)
         self.all_platform.add(self.Plateform)
 
-        self.Cursor = Cursor()
 
 """=====  Game.Player [2.0]  ====="""
 

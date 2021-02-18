@@ -9,6 +9,7 @@
 # Importe les fichier Classes Functions pygame et time -tremisabdoul
 from Scripts.Classes import *
 from Scripts.Functions import *
+from User.UserData import *
 import time
 import pygame
 
@@ -19,6 +20,7 @@ pygame.init()
 
 # Execute les Classes -tremisabdoul
 Game = Game()
+SaveSlot = SaveSlot()
 Game.init_suite()
 
 # Valeurs qui vont servir plus tard
@@ -29,7 +31,6 @@ nbframe = 0
 
 # L'écran est stockée dans une variable -tremisabdoul
 Screen = Display()
-
 
 # Définit les polices -tremisabdoul
 police1 = pygame.font.Font("Assets/Font/Retro Gaming.ttf", 10)
@@ -47,7 +48,7 @@ while Game.Running:
         Lobby(Game, Screen, time, police1)
     # Loop de pause [Escape]
     if Game.Pause:
-        pause(Game, Screen, time, police1)
+        pause(Game, Screen, time, police1, SaveSlot)
 
     # Loop de jeu
     if Game.InGame:
