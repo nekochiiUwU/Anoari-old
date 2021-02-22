@@ -141,10 +141,13 @@ def pause(Game, Screen, time, police1, SaveSlot):
 
             elif event.type == pygame.MOUSEBUTTONDOWN:
                 if Game.UI.resumebuttonrect.collidepoint(event.pos):
+                    Game.Player.rect = SaveSlot.Save1[10]
+                    print("\nLoaded:\t", Game.Player.rect, "\t<==\t", SaveSlot.Save1[10])
                     Game.Pause = False
                     Game.InGame = True
                 elif Game.UI.savebuttonrect.collidepoint(event.pos):
-                    SaveSlot.Save1['Game.Player.rect'] = Game.Player.rect
+                    SaveSlot.Save1[10] = Game.Player.rect
+                    print("\nSaved:/t", Game.Player.rect, "/t==>", SaveSlot.Save1[10])
                 elif Game.UI.settingsbuttonrect.collidepoint(event.pos):
                     Game.Pause = False
                     Game.Option = True
@@ -217,9 +220,10 @@ def inGame(Game, time, nbframe, Screen, police1):
                 if Game.pressed.get(pygame.K_F11):
                     print(pygame.display.Info())
                     if Game.Fullscreen == 0:
-                        Screen = pygame.display.set_mode((Game.DataX, Game.DataY), pygame.FULLSCREEN)
+                        Screen = pygame.display.set_mode((Game.UserData.DataX, Game.UserData.DataY), pygame.FULLSCREEN)
                         Game.Fullscreen = 1
                     else:
+                        Screen = pygame.display.set_mode((Game.DataX, Game.DataY), pygame.RESIZABLE)
                         pygame.display.toggle_fullscreen()
                         Screen = pygame.display.set_mode((1280, 720), pygame.RESIZABLE)
                         os.environ['SDL_VIDEO_WINDOW_POS'] = "%d,%d" % (10, 60)
@@ -382,7 +386,6 @@ def Option(Game, Screen, time, police1, police2):
         tickchecker -= tick
 
         MousePriter(Screen, Game)
-        Save_Slot()
 
 
         Screen.fill((0, 0, 0))
