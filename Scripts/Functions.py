@@ -118,7 +118,7 @@ def pauseblit(Screen, Game):
 
 
 # Loop de Pause: -tremisabdoul
-def pause(Game, Screen, time, police1, SaveSlot):
+def pause(Game, Screen, time, police1):
     """ Loop de pause """
 
     while Game.Pause:
@@ -468,8 +468,24 @@ def Data_Load(Game):
         stripped_line = line.strip()
         list.append(stripped_line)
 
+    for item in range(0, len(list)):
+        try:
+            list[item] = int(list[item])
+        except:
+            try:
+                list[item] = float(list[item])
+            except:
+                try:
+                    list[item] = tuple(list[item])
+                except:
+                    list[item] = str(list[item])
+
+
     print(list)
-    print(Game.Saves.Save1)
+    Game.Saves.Save1[0] = list[0]
+    Game.Saves.Save1[1] = list[1]
+    Game.Saves.Save1[2] = list[2]
+
 
     text_file.close()
 

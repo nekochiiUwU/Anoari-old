@@ -34,9 +34,9 @@ class SaveSlot:
     def __init__(self):
         self.Save1 = [
             # Info -tremisabdoul [0-2]
-            "Save 1",  # NameSave
-            "Name",  # NamePlayer
-            "Rogue", # TypeGame
+            "Sauvegarde 1",  # NameSave
+            "Nom",  # NamePlayer
+            "Histoire", # TypeGame
             ]
         self.Save2 = {}
         self.Save3 = {}

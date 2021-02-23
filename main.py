@@ -48,7 +48,7 @@ while Game.Running:
         Lobby(Game, Screen, time, police1)
     # Loop de pause [Escape]
     if Game.Pause:
-        pause(Game, Screen, time, police1, SaveSlot)
+        pause(Game, Screen, time, police1)
 
     # Loop de jeu
     if Game.InGame:
