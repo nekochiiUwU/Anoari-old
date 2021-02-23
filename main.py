@@ -55,4 +55,4 @@ while Game.Running:
         inGame(Game, time, nbframe, Screen, police1)
 
     if Game.Option:
-        Option(Game, SaveSlot, Screen, time, police1, police2)
+        Option(Game, Screen, time, police1, police2)

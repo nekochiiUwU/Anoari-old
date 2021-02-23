@@ -141,13 +141,11 @@ def pause(Game, Screen, time, police1, SaveSlot):
 
             elif event.type == pygame.MOUSEBUTTONDOWN:
                 if Game.UI.resumebuttonrect.collidepoint(event.pos):
-                    Game.Player.rect = SaveSlot.Save1[10]
-                    print("\nLoaded:\t", Game.Player.rect, "\t<==\t", SaveSlot.Save1[10])
+                    Data_Load(Game)
                     Game.Pause = False
                     Game.InGame = True
                 elif Game.UI.savebuttonrect.collidepoint(event.pos):
-                    SaveSlot.Save1[10] = Game.Player.rect
-                    print("\nSaved:/t", Game.Player.rect, "/t==>", SaveSlot.Save1[10])
+                    Data_Save(Game)
                 elif Game.UI.settingsbuttonrect.collidepoint(event.pos):
                     Game.Pause = False
                     Game.Option = True
@@ -223,9 +221,9 @@ def inGame(Game, time, nbframe, Screen, police1):
                         Screen = pygame.display.set_mode((Game.UserData.DataX, Game.UserData.DataY), pygame.FULLSCREEN)
                         Game.Fullscreen = 1
                     else:
-                        Screen = pygame.display.set_mode((Game.DataX, Game.DataY), pygame.RESIZABLE)
+                        pygame.display.set_mode((Game.DataX, Game.DataY), pygame.RESIZABLE)
                         pygame.display.toggle_fullscreen()
-                        Screen = pygame.display.set_mode((1280, 720), pygame.RESIZABLE)
+                        pygame.display.set_mode((1280, 720), pygame.RESIZABLE)
                         os.environ['SDL_VIDEO_WINDOW_POS'] = "%d,%d" % (10, 60)
                         Game.Fullscreen = 0
 
@@ -355,11 +353,11 @@ def Lobby(Game, Screen, time, police1):
 
         pygame.display.flip()
 
+
 def Option(Game, Screen, time, police1, police2):
     while Game.Option:
         # Initialisation du compteur de temps pour limiter les fps -tremisabdoul
         tick = time.time()
-
 
         for event in pygame.event.get():
 
@@ -387,10 +385,9 @@ def Option(Game, Screen, time, police1, police2):
 
         MousePriter(Screen, Game)
 
-
         Screen.fill((0, 0, 0))
 
-        #Affichage du nécessaire pour le texte des Options -steven
+        # Affichage du nécessaire pour le texte des Options -steven
         White = (255, 255, 255)
         Texte('Résolution : ', police2, White, Screen, 100, 100)
         Texte('Volume : ', police2, White, Screen, 100, 225)
@@ -408,25 +405,73 @@ def Option(Game, Screen, time, police1, police2):
 
         pygame.display.flip()
 
-#Fonction du texte -steven
+
+# Fonction du texte -steven
 def Texte(text, police2, color, Screen, x, y):
     Texte_Contenu = police2.render(text, 1, color)
-    Texte_Rect = Texte_Contenu.get_rect()
     Texte_Rect = (x, y)
     Screen.blit(Texte_Contenu, Texte_Rect)
 
-#Laisser en plan pour l'instant avant de trouver une solution. -steven
-def Data_Save(Game) :
-    Game.Saves.Save1['Game.Player.Pv'] = Game.Player.Pv
-    Game.Saves.Save1['Game.Player.MaxPv'] = Game.Player.MaxPv
-    Game.Saves.Save1['Game.Player.Damage'] = Game.Player.Damage
-    Game.Saves.Save1['Game.Player.Speed'] = Game.Player.Speed
-    Game.Saves.Save1['Game.Player.SpeedY'] = Game.Player.SpeedY
-    Game.Saves.Save1['Game.Player.Level'] = Game.Player.Level
-    Game.Saves.Save1['Game.Player.Gold'] = Game.Player.Gold
-    Game.Saves.Save1['Game.Player.rect'] = Game.Player.rect
-    Game.Saves.Save1['Game.Player.LastY'] = Game.Player.LastY
-    Game.Saves.Save1['Game.Player.YVector'] = Game.Player.YVector
+
+# TKT -tremisabdoul
+def Data_Save(Game):
+    Datalist = [
+        # Info -tremisabdoul [0-2]
+        "Save 1",  # NameSave
+        "Name",  # NamePlayer
+        "Rogue",  # TypeGame
+
+        # Player
+        # Statistiques Player -tremisabdoul [3-9]
+        Game.Player.Pv,  # Game.Player.Pv
+        Game.Player.MaxPv,  # "Game.Player.MaxPv
+        Game.Player.Damage,  # "Game.Player.Damage
+        Game.Player.Speed,  # Game.Player.Speed
+        Game.Player.SpeedY,  # Game.Player.SpeedY
+        Game.Player.Level,  # Game.Player.Level
+        Game.Player.Gold,  # Game.Player.Gold
+
+        # Position de Player -tremisabdoul [10-14]
+        Game.Player.rect,  # Game.Player.rect
+        Game.Player.LastY,  # Game.Player.LastY
+        Game.Player.YVector,  # Game.Player.YVector
+        Game.Player.Weapon1,  # Game.Player.Weapon1
+        Game.Player.Weapon2,  # Game.Player.Weapon2
+
+        # Force
+        # Mouvement Actuel de Player -tremisabdoul [15-17]
+        Game.Player.Force.lastx,  # Game.Force.lastx
+        Game.Player.Force.Base_Gravity,  # Game.Force.Base_Gravity
+        Game.Player.Force.x,  # Game.Force.x
+        "\n\n\t# List information: \
+        \n\t# Info [0-2] \
+        \n\t# Player statistics [3-9] \
+        \n\t# Player position [10-14]\
+        \n\t# Actual movement of Player [15-17]"
+    ]
+
+    text_file = open("save1.txt", "w")
+
+    text = '\n'.join(map(str, Datalist))
+    text_file.write(text)
+
+    text_file.close()
+
+    print("Your Data has been \bsaved\b!\n(", text, ")\n")
+
+
+def Data_Load(Game):
+    text_file = open("save1.txt", "r")
+
+    list = []
+    for line in text_file:
+        stripped_line = line.strip()
+        list.append(stripped_line)
+
+    print(list)
+    print(Game.Saves.Save1)
+
+    text_file.close()
 
 
 def ReScale(Game, Screen):
@@ -434,5 +479,9 @@ def ReScale(Game, Screen):
     Game.DataY = pygame.Surface.get_height(Screen)
     Game.font = pygame.image.load("Assets/Visual/UI/BGPAINT.jpg")
     Game.Player.image = pygame.image.load("Assets/Visual/Mystique_resp/Frame1.png")
-    Game.font = pygame.transform.scale(Game.font, (Game.Rescale(Game.font.get_width(), "X"), Game.Rescale(Game.font.get_height(), "Y")))
-    Game.Player.image = pygame.transform.scale(Game.Player.image, (Game.Rescale(Game.Player.image.get_width(), "X"), Game.Rescale(Game.Player.image.get_height(), "Y")))
+    Game.font = pygame.transform.scale(Game.font,
+                                       (Game.Rescale(Game.font.get_width(), "X"),
+                                        Game.Rescale(Game.font.get_height(), "Y")))
+    Game.Player.image = pygame.transform.scale(Game.Player.image,
+                                               (Game.Rescale(Game.Player.image.get_width(), "X"),
+                                                Game.Rescale(Game.Player.image.get_height(), "Y")))

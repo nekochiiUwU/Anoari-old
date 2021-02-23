@@ -33,38 +33,10 @@ class SaveSlot:
 
     def __init__(self):
         self.Save1 = [
-
             # Info -tremisabdoul [0-2]
             "Save 1",  # NameSave
             "Name",  # NamePlayer
             "Rogue", # TypeGame
-
-
-            # Player
-            # Statistiques Player -tremisabdoul [3-9]
-            50,  # Game.Player.Pv
-            100, #"Game.Player.MaxPv
-            10,  #"Game.Player.Damage
-            3,  # Game.Player.Speed
-            0,  # Game.Player.SpeedY
-            0,  # Game.Player.Level
-            0,  # Game.Player.Gold
-
-            # Position de Player -tremisabdoul [10-14]
-            (50, 50 , 75, 120),  # Game.Player.rect
-            0,  # Game.Player.LastY
-            0,  # Game.Player.YVector
-            None,  # Game.Player.Weapon1
-            None,  # Game.Player.Weapon2
-
-
-            # Force
-            # Mouvement Actuel de Player -tremisabdoul [15-17]
-            0,  # Game.Force.lastx
-            0,  # Game.Force.Base_Gravity
-            0  # Game.Force.x
-
-
             ]
         self.Save2 = {}
         self.Save3 = {}
