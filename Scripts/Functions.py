@@ -415,6 +415,7 @@ def Texte(text, police2, color, Screen, x, y):
     Texte_Rect = (x, y)
     Screen.blit(Texte_Contenu, Texte_Rect)
 
+#Laisser en plan pour l'instant avant de trouver une solution. -steven
 def Data_Save(Game) :
     Game.Saves.Save1['Game.Player.Pv'] = Game.Player.Pv
     Game.Saves.Save1['Game.Player.MaxPv'] = Game.Player.MaxPv
