@@ -1,20 +1,20 @@
 Save 1
 Name
 Rogue
-76
+60
 100
 10
 3
 0
 0
 0
-<rect(50, 602, 75, 120)>
-602
+<rect(50, 2219, 120, 120)>
+2186
+-33
+<Scripts.Classes.Weapon object at 0x00000273D1DA3250>
+<Scripts.Classes.Weapon object at 0x00000273D1DA3310>
 0
-<Scripts.Classes.Weapon object at 0x0000017D1F3E3250>
-<Scripts.Classes.Weapon object at 0x0000017D1F3E3340>
-0
-0
+33
 0
 
 

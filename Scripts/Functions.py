@@ -16,21 +16,6 @@ def Display():
     return screen
 
 
-# Animation (resp_sorcière) -tremisabdoul
-def resp_sorciere(time, Game, Animation):
-    """Fonction d'animation: resp_mystique"""
-
-    while Animation:
-
-        if not Game.Player.Force.x:
-            time.sleep(0.5)
-            return 0
-
-        else:
-            time.sleep(0.5)
-            return 0
-
-
 # Fonction de jump: [ Key: Space ] -tremisabdoul
 def Jump(Game):
     """Fonction de jump: [ Key: Space ]"""
@@ -46,12 +31,15 @@ def Jump(Game):
 def DeplacementX(Game):
     """Fonction de déplacement [gauche/droite] :  [ Left: LEFT / Q ], [ Right: RIGHT / D ]"""
 
+    Game.Player.MovementKey = False
     if Game.pressed.get(pygame.K_d) and Game.Player.rect.x < Game.Player.MaxX \
             or Game.pressed.get(pygame.K_RIGHT) and Game.Player.rect.x < Game.Player.MaxX:
+        Game.Player.MovementKey = True
         Game.Player.Move_Right()
 
     if Game.pressed.get(pygame.K_q) and Game.Player.rect.x > Game.Player.MinX \
             or Game.pressed.get(pygame.K_LEFT) and Game.Player.rect.x > Game.Player.MinX:
+        Game.Player.MovementKey = True
         Game.Player.Move_Left()
 
 
@@ -195,7 +183,7 @@ def inGame(Game, time, nbframe, Screen, police1):
         # Initialisation du compteur de temps pour limiter les fps -tremisabdoul
         tick = time.time()
 
-        nbframe += 1
+        Game.Frame += 1
 
         """ ===== Key Inputs ===== """
 
@@ -205,10 +193,12 @@ def inGame(Game, time, nbframe, Screen, police1):
             # Touches enfoncées -tremisabdoul
             if event.type == pygame.KEYDOWN:
                 Game.pressed[event.key] = True
+
                 # Active le Jump() -tremisabdoul
                 if Game.pressed.get(pygame.K_SPACE) \
                         and Game.Player.check_collisions(Game.Player, Game.all_platform):
                     Game.Player.SpeedY = -24
+
                 # Activation de Pause -tremisabdoul
                 if Game.pressed.get(pygame.K_ESCAPE):
                     Game.Pause = True
@@ -257,6 +247,8 @@ def inGame(Game, time, nbframe, Screen, police1):
         # Déplacements de player -tremisabdoul
         Game.Player.rect.x += Game.Player.Force.AccelerationFunctionX()
         Game.Player.rect.y += Game.Player.Force.Gravity(Game)
+
+        Animation(Game)
 
         """ ===== Printers ===== """
 
@@ -486,7 +478,6 @@ def Data_Load(Game):
     Game.Saves.Save1[1] = list[1]
     Game.Saves.Save1[2] = list[2]
 
-
     text_file.close()
 
 
@@ -494,10 +485,89 @@ def ReScale(Game, Screen):
     Game.DataX = pygame.Surface.get_width(Screen)
     Game.DataY = pygame.Surface.get_height(Screen)
     Game.font = pygame.image.load("Assets/Visual/UI/BGPAINT.jpg")
-    Game.Player.image = pygame.image.load("Assets/Visual/Mystique_resp/Frame1.png")
+    Game.Player.image = pygame.image.load("Assets/Visual/Mystique/resp1.png")
     Game.font = pygame.transform.scale(Game.font,
                                        (Game.Rescale(Game.font.get_width(), "X"),
                                         Game.Rescale(Game.font.get_height(), "Y")))
     Game.Player.image = pygame.transform.scale(Game.Player.image,
                                                (Game.Rescale(Game.Player.image.get_width(), "X"),
                                                 Game.Rescale(Game.Player.image.get_height(), "Y")))
+
+
+def Animation(Game):
+    if Game.Player.YVector:
+        if Game.Player.YVector < 0:
+            FallAnimation(Game)
+        else:
+            JumpAnimation(Game)
+    elif Game.Player.MovementKey:
+        RunAnimation(Game)
+    else:
+        StandAnimation(Game)
+
+
+def FallAnimation(Game):
+    if Game.Player.Movement:
+        Game.Player.image = pygame.image.load("Assets/Visual/Mystique/Jump/Jump2.png")
+        Game.Player.image = pygame.transform.scale(Game.Player.image, (120, 120))
+    else:
+        Game.Player.image = pygame.image.load("Assets/Visual/Mystique/Left/Jump/Jump2.png")
+        Game.Player.image = pygame.transform.scale(Game.Player.image, (120, 120))
+
+
+def JumpAnimation(Game):
+    if Game.Player.Movement:
+        Game.Player.image = pygame.image.load("Assets/Visual/Mystique/Jump/Jump1.png")
+        Game.Player.image = pygame.transform.scale(Game.Player.image, (120, 120))
+    else:
+        Game.Player.image = pygame.image.load("Assets/Visual/Mystique/Left/Jump/Jump1.png")
+        Game.Player.image = pygame.transform.scale(Game.Player.image, (120, 120))
+
+
+def RunAnimation(Game):
+    if Game.Player.Movement:
+        if Game.Frame % 10 == 0:
+            if Game.ActualFrame <= 0:
+                Game.ActualFrame = 1
+                Game.Player.image = pygame.image.load("Assets/Visual/Mystique/Run/Run1.png")
+                Game.Player.image = pygame.transform.scale(Game.Player.image, (120, 120))
+            if Game.ActualFrame >= 1:
+                Game.ActualFrame = 0
+                Game.Player.image = pygame.image.load("Assets/Visual/Mystique/Run/Run2.png")
+                Game.Player.image = pygame.transform.scale(Game.Player.image, (120, 120))
+    else:
+        if Game.ActualFrame <= 0:
+            Game.ActualFrame = 1
+            Game.Player.image = pygame.image.load("Assets/Visual/Mystique/Left/Run/Run1.png")
+            Game.Player.image = pygame.transform.scale(Game.Player.image, (120, 120))
+        if Game.ActualFrame >= 1:
+            Game.ActualFrame = 0
+            Game.Player.image = pygame.image.load("Assets/Visual/Mystique/Left/Run/Run2.png")
+            Game.Player.image = pygame.transform.scale(Game.Player.image, (120, 120))
+
+
+def StandAnimation(Game):
+    if Game.Player.Movement:
+        if Game.Frame % 10 == 0:
+            if Game.ActualFrame == 0:
+                Game.ActualFrame = 1
+                print("Frame")
+                Game.Player.image = pygame.image.load("Assets/Visual/Mystique/resp2.png")
+                Game.Player.image = pygame.transform.scale(Game.Player.image, (120, 120))
+            if Game.ActualFrame == 1:
+                Game.ActualFrame = 0
+                print("Frame")
+                Game.Player.image = pygame.image.load("Assets/Visual/Mystique/resp1.png")
+                Game.Player.image = pygame.transform.scale(Game.Player.image, (120, 120))
+    else:
+        if Game.Frame % 10 == 0:
+            if Game.ActualFrame == 0:
+                Game.ActualFrame = 1
+                print("Frame")
+                Game.Player.image = pygame.image.load("Assets/Visual/Mystique/Left/resp2.png")
+                Game.Player.image = pygame.transform.scale(Game.Player.image, (120, 120))
+            if Game.ActualFrame == 1:
+                Game.ActualFrame = 0
+                print("Frame")
+                Game.Player.image = pygame.image.load("Assets/Visual/Mystique/Left/resp1.png")
+                Game.Player.image = pygame.transform.scale(Game.Player.image, (120, 120))

@@ -29,6 +29,8 @@ class Game:
         self.Fullscreen = 0
         self.Tickchecker = 1
         self.font = pygame.image.load("Assets/Visual/UI/BGPAINT.jpg")
+        self.ActualFrame = 0
+        self.Frame = 0
 
     def Rescale(self, value, XorY):
         if XorY == "X":
@@ -98,8 +100,8 @@ class Player(pygame.sprite.Sprite, Game):
         self.Weapon2 = Weapon()
 
         # Définit l'élément visuel en tant que variable et la hitbox de Player -tremisabdoul
-        self.image = pygame.image.load("Assets/Visual/Mystique_resp/Frame1.png")
-        self.image = pygame.transform.scale(self.image, (self.image.get_width(), self.image.get_height()))
+        self.image = pygame.image.load("Assets/Visual/Mystique/resp1.png")
+        self.image = pygame.transform.scale(self.image, (self.image.get_width() * 2, self.image.get_height() * 2))
         self.rect = self.image.get_rect()
         self.rect = self.image.get_rect(bottomleft=self.rect.bottomleft)
 
@@ -119,6 +121,7 @@ class Player(pygame.sprite.Sprite, Game):
         # Valeurs max et min que Player peut atteindre (Bords de l'écran y) -tremisabdoul
         self.MinY = -20
         self.MaxY = 740
+        self.MovementKey = False
 
     #   def Check_Collisions(rectA, rectB):
     #       if rectB.right < rectA.left:
