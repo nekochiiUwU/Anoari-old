@@ -531,19 +531,20 @@ def RunAnimation(Game):
                 Game.ActualFrame = 1
                 Game.Player.image = pygame.image.load("Assets/Visual/Mystique/Run/Run1.png")
                 Game.Player.image = pygame.transform.scale(Game.Player.image, (120, 120))
-            if Game.ActualFrame >= 1:
+            elif Game.ActualFrame >= 1:
                 Game.ActualFrame = 0
                 Game.Player.image = pygame.image.load("Assets/Visual/Mystique/Run/Run2.png")
                 Game.Player.image = pygame.transform.scale(Game.Player.image, (120, 120))
     else:
-        if Game.ActualFrame <= 0:
-            Game.ActualFrame = 1
-            Game.Player.image = pygame.image.load("Assets/Visual/Mystique/Left/Run/Run1.png")
-            Game.Player.image = pygame.transform.scale(Game.Player.image, (120, 120))
-        if Game.ActualFrame >= 1:
-            Game.ActualFrame = 0
-            Game.Player.image = pygame.image.load("Assets/Visual/Mystique/Left/Run/Run2.png")
-            Game.Player.image = pygame.transform.scale(Game.Player.image, (120, 120))
+        if Game.Frame % 10 == 0:
+            if Game.ActualFrame <= 0:
+                Game.ActualFrame = 1
+                Game.Player.image = pygame.image.load("Assets/Visual/Mystique/Left/Run/Run1.png")
+                Game.Player.image = pygame.transform.scale(Game.Player.image, (120, 120))
+            elif Game.ActualFrame >= 1:
+                Game.ActualFrame = 0
+                Game.Player.image = pygame.image.load("Assets/Visual/Mystique/Left/Run/Run2.png")
+                Game.Player.image = pygame.transform.scale(Game.Player.image, (120, 120))
 
 
 def StandAnimation(Game):
@@ -553,7 +554,7 @@ def StandAnimation(Game):
                 Game.ActualFrame = 1
                 Game.Player.image = pygame.image.load("Assets/Visual/Mystique/resp2.png")
                 Game.Player.image = pygame.transform.scale(Game.Player.image, (120, 120))
-            if Game.ActualFrame == 1:
+            elif Game.ActualFrame == 1:
                 Game.ActualFrame = 0
                 Game.Player.image = pygame.image.load("Assets/Visual/Mystique/resp1.png")
                 Game.Player.image = pygame.transform.scale(Game.Player.image, (120, 120))
@@ -563,7 +564,7 @@ def StandAnimation(Game):
                 Game.ActualFrame = 1
                 Game.Player.image = pygame.image.load("Assets/Visual/Mystique/Left/resp2.png")
                 Game.Player.image = pygame.transform.scale(Game.Player.image, (120, 120))
-            if Game.ActualFrame == 1:
+            elif Game.ActualFrame == 1:
                 Game.ActualFrame = 0
                 Game.Player.image = pygame.image.load("Assets/Visual/Mystique/Left/resp1.png")
                 Game.Player.image = pygame.transform.scale(Game.Player.image, (120, 120))
