@@ -1,5 +1,5 @@
 for Monster in Game.all_Monster:
-    Monster.Life(Screen)
+    Monster.Life(Screen, Game)
     if Game.Monster.LeftDirection :
         Monster.Move_Left()
         if Game.Player.check_collisions(Monster, Game.all_platformsub) :

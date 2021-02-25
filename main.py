@@ -52,7 +52,7 @@ while Game.Running:
 
     # Loop de jeu
     if Game.InGame:
-        inGame(Game, time, nbframe, Screen, police1)
+        inGame(Game, time, Screen, police1)
 
     if Game.Option:
         Option(Game, Screen, time, police1, police2)

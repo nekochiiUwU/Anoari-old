@@ -54,11 +54,14 @@ def MousePriter(Screen, Game):
 # Print: -tremisabdoul
 def Printer(Screen, Game):
     """Fonction d'affichage: Eléments in-game"""
+    Game.Plateform.rect.x -= Game.Position
+    Game.Monster.rect.x -= Game.Position
+    Game.Background.rect.x -= Game.Position
 
     # Affiche a l'écran des éléments -tremisabdoul
-    Screen.blit(Game.font, (0, 0))
+    Screen.blit(Game.Background.image, Game.Background.rect)
     Screen.blit(Game.Sol.image, Game.Sol.rect)
-    Game.Plateform.NewPlateform(Screen, 200, 700, 500)
+    Screen.blit(Game.Plateform.image, Game.Plateform.rect)
     Screen.blit(Game.Player.image, Game.Player.rect)
     Screen.blit(Game.Monster.image, Game.Monster.rect)
     MousePriter(Screen, Game)
@@ -168,7 +171,7 @@ def pause(Game, Screen, time, police1):
 
 
 # Loop de Jeu: -tremisabdoul
-def inGame(Game, time, nbframe, Screen, police1):
+def inGame(Game, time, Screen, police1):
     """ Loop de Jeu """
 
     while Game.InGame:
@@ -241,15 +244,21 @@ def inGame(Game, time, nbframe, Screen, police1):
         if Game.Player.SpeedY:
             Jump(Game)
 
+
         # Fonction de déplacement gauche / droite -tremisabdoul
         DeplacementX(Game)
 
-        # Déplacements de player -tremisabdoul
-        Game.Player.rect.x += Game.Player.Force.AccelerationFunctionX()
+
         Game.Player.rect.y += Game.Player.Force.Gravity(Game)
+
+        # Déplacements de player -tremisabdoul
+        #Game.Player.rect.x += Game.Player.Force.AccelerationFunctionX()
+        Game.Position = round(Game.Player.Force.AccelerationFunctionX())
+        Game.PositonPlayer -= Game.Position
 
         Animation(Game)
 
+        BackgroundScroll(Game)
         """ ===== Printers ===== """
 
         # Print les elements In-Game du jeu  -tremisabdoul
@@ -258,7 +267,7 @@ def inGame(Game, time, nbframe, Screen, police1):
         """ ===== Monster Instruction ===== """
 
         for Monster in Game.all_Monster:
-            Monster.Life(Screen)
+            Monster.Life(Screen, Game)
             if not Game.Player.check_collisions(Game.Player, Game.all_Monster):
                 Monster.Move_Left()
 
@@ -472,12 +481,8 @@ def Data_Load(Game):
                 except:
                     list[item] = str(list[item])
 
-
+    Game.Saves.ActualSave = list
     print(list)
-    Game.Saves.Save1[0] = list[0]
-    Game.Saves.Save1[1] = list[1]
-    Game.Saves.Save1[2] = list[2]
-
     text_file.close()
 
 
@@ -550,21 +555,28 @@ def RunAnimation(Game):
 def StandAnimation(Game):
     if Game.Player.Movement:
         if Game.Frame % 10 == 0:
-            if Game.ActualFrame == 0:
+            if Game.ActualFrame <= 0:
                 Game.ActualFrame = 1
                 Game.Player.image = pygame.image.load("Assets/Visual/Mystique/resp2.png")
                 Game.Player.image = pygame.transform.scale(Game.Player.image, (120, 120))
-            elif Game.ActualFrame == 1:
+            elif Game.ActualFrame >= 1:
                 Game.ActualFrame = 0
                 Game.Player.image = pygame.image.load("Assets/Visual/Mystique/resp1.png")
                 Game.Player.image = pygame.transform.scale(Game.Player.image, (120, 120))
     else:
         if Game.Frame % 10 == 0:
-            if Game.ActualFrame == 0:
+            if Game.ActualFrame <= 0:
                 Game.ActualFrame = 1
                 Game.Player.image = pygame.image.load("Assets/Visual/Mystique/Left/resp2.png")
                 Game.Player.image = pygame.transform.scale(Game.Player.image, (120, 120))
-            elif Game.ActualFrame == 1:
+            elif Game.ActualFrame >= 1:
                 Game.ActualFrame = 0
                 Game.Player.image = pygame.image.load("Assets/Visual/Mystique/Left/resp1.png")
                 Game.Player.image = pygame.transform.scale(Game.Player.image, (120, 120))
+
+
+def BackgroundScroll(Game):
+    print(Game.PositonPlayer)
+    checker = Game.PositonPlayer % 1280
+    if -10 < checker < 10:
+        Game.Background.rect.midtop = (640 + checker, 0)

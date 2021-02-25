@@ -28,9 +28,10 @@ class Game:
         self.Lobby = True
         self.Fullscreen = 0
         self.Tickchecker = 1
-        self.font = pygame.image.load("Assets/Visual/UI/BGPAINT.jpg")
         self.ActualFrame = 0
         self.Frame = 0
+        self.Position = 0
+        self.PositonPlayer = 0
 
     def Rescale(self, value, XorY):
         if XorY == "X":
@@ -51,6 +52,7 @@ class Game:
         self.Plateform = Plateform()
         # Monster devient une sous-classe de Game - steven
         self.Monster = Monster()
+        self.Background = Background()
 
         # Création du groupe composé de tous les monstres -Steven
         self.all_Monster = pygame.sprite.Group()
@@ -106,7 +108,7 @@ class Player(pygame.sprite.Sprite, Game):
         self.rect = self.image.get_rect(bottomleft=self.rect.bottomleft)
 
         # Position de Player -tremisabdoul
-        self.rect.x = 50
+        self.rect.x = 125
         self.rect.y = 82
 
         self.LastY = 0
@@ -141,16 +143,16 @@ class Player(pygame.sprite.Sprite, Game):
 
     @staticmethod
     def check_collisions(sprite, group):
-        return pygame.sprite.spritecollide(sprite, group, False, pygame.sprite.collide_mask)
+        return pygame.sprite.spritecollide(sprite, group, False, pygame.sprite.collide_rect)
 
     # Fonction de mouvement (Droite) -tremisabdoul
     def Move_Right(self):
-        self.Force.x += self.Speed
+        self.Force.xm += self.Speed
         self.Movement = 1
 
     # Fonction de mouvement (Gauche) -tremisabdoul
     def Move_Left(self):
-        self.Force.x -= self.Speed
+        self.Force.xm -= self.Speed
         self.Movement = 0
 
     # Fonction de gain de stat ( valeur placée arbitrairement lol ) - steven
@@ -174,6 +176,7 @@ class Force:
     def __init__(self):
 
         self.x = float(0)
+        self.xm = float(0)
         self.StepX = float(0)
         self.lastx = float(0)
         self.lasty = float(0)
@@ -185,17 +188,19 @@ class Force:
     def AccelerationFunctionX(self):
 
         # Forces appliqués + ((Forces appliqués lors de la dernière frame / 1.3) / 1.1) -tremisabdoul
-        self.StepX = self.x + ((self.lastx / 1.3) / 1.1)
+        self.StepX = self.xm + self.x + ((self.lastx / 1.3) / 1.1)
 
         if round(self.StepX) == 0:
             self.StepX = 0
             self.lastx = self.StepX
             self.x = 0
+            self.xm = 0
             return 0
 
         else:
             self.lastx = self.StepX
             self.x = 0
+            self.xm = 0
             return self.StepX
 
     # Faut se dire que la gravité a une force de 33 et que lorsque
@@ -209,17 +214,21 @@ class Force:
 
             if self.Base_Gravity < 33:  # Si force de sol > 0
                 self.Base_Gravity += 0.66  # Diminution de la force "Sol" (Ratio 0.66)
+                self.xm /= (self.Base_Gravity / 50) + 1
+                print(self.x)
                 return self.Base_Gravity
 
             else:
                 self.Base_Gravity = 33  # Force de sol = 0
+                self.xm /= 1.66
+                print(self.x)
                 return 33
 
         else:
             Game0.Player.SpeedY = 0  # Cancel le saut
-            Game0.Player.rect.bottom = Collide[0].rect.y + 1  # Y reset (Premier pixel du rect de plateforme)
             self.Base_Gravity = 0  # Reset la force du sol (-33)
-            return 0
+            print(self.x)
+            return Collide[0].rect.y - (Game0.Player.rect.bottom - 5)  # Y reset (Premier pixel du rect de plateforme)
 
 
 """=====  Game.Sol [3]  ====="""
@@ -236,14 +245,14 @@ class Sol(pygame.sprite.Sprite):
         self.image = pygame.image.load("Assets/Visual/plateforme_base.png")
 
         # Transforme l'image sol en la résolution indiquée -tremisabdoul
-        self.image = pygame.transform.scale(self.image, (1280, 20))
+        self.image = pygame.transform.scale(self.image, (1280, 34))
 
         # Définit la hitbox de sol -steven
         self.rect = self.image.get_rect()
 
         # Position de la plateforme principale -steven
         self.rect.x = 0
-        self.rect.y = 700
+        self.rect.y = 686
 
 
 """=====  Game.Plateform [4]  ====="""
@@ -264,16 +273,8 @@ class Plateform(pygame.sprite.Sprite, Game):
         self.rect = self.image.get_rect()
 
         # Position de la plateforme -tremisabdoul
-        self.rect.x = 400
-        self.rect.y = 520
-
-    # Création de nouvelles plateformes (semi-fonctionnel) -tremisabdoul
-    def NewPlateform(self, Screen, x1, x2, y):
-        P = [x1, y]
-        self.image = pygame.transform.scale(self.image, (x2 - x1, 20))
-        self.rect.x = x1
-        self.rect.y = y
-        Screen.blit(self.image, P)
+        self.rect.x = 200
+        self.rect.y = 500
 
 
 """=====  Game.Mouse [5]  ====="""
@@ -294,6 +295,7 @@ class Mouse(pygame.sprite.Sprite):
         # Cree la hit-box de l'image -tremisabdoul
         self.rect = self.image.get_rect()
         self.rect = self.image.get_rect(center=self.rect.center)
+
 
 """=====  Game.UI [6]  ====="""
 
@@ -397,14 +399,14 @@ class Monster(pygame.sprite.Sprite, Game):
         self.RightDirection = False
 
     # Dessin concernant la barre de vie du monstre -steven / tremisabdoul
-    def Life(self, Screen):
+    def Life(self, Screen, Game):
         if self.Pv > 0:
             self.pvfontrect = self.image0.get_rect(midbottom=self.pvfontrect.midbottom)
             self.pvfontrect.midbottom = self.rect.midtop
             self.pvfontrect.y -= 7
             self.image0 = pygame.transform.scale(self.image0, (int(self.Pv / self.MaxPv * 64), 8))
             self.Pv -= 0.2
-            Screen.blit(self.image0, self.pvfontrect)
+            Screen.blit(self.image0, (self.pvfontrect.x - Game.Position, self.pvfontrect.y))
 
     # Déplacement du monstre vers la droite -steven
     def Move_Right(self):
@@ -455,6 +457,12 @@ class Weapon:
               "\n\tCDR: ", self.CD, "* ( 100 / ( 100 +", self.CDR, "))")
 
 
+class Background:
 
-
-
+    def __init__(self):
+        super().__init__()
+        self.image = pygame.image.load("Assets/Visual/UI/Background.png")
+        # self.image = pygame.transform.scale(self.image, (3848, 686))
+        self.rect = self.image.get_rect()
+        self.rect = self.image.get_rect(midtop=self.rect.midtop)
+        self.rect.midtop = (640, 0)

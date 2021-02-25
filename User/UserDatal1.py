@@ -32,17 +32,4 @@ class UserData:
 class SaveSlot:
 
     def __init__(self):
-        self.Save1 = [
-            # Info -tremisabdoul [0-2]
-            "Sauvegarde 1",  # NameSave
-            "Nom",  # NamePlayer
-            "Histoire", # TypeGame
-            ]
-        self.Save2 = {}
-        self.Save3 = {}
-        self.Save4 = {}
-        self.Save5 = {}
-        self.Save6 = {}
-        self.Save7 = {}
-        self.Save8 = {}
-        self.Save9 = {}
+        self.ActualSave = ["Void"]
