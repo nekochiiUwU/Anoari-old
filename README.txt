@@ -1,6 +1,6 @@
     Anoari
-
-
+    
+[BINDS : gauche : q|droite : d|saut : espace|quitter le jeu : Echap|mettre le jeu en plein écran : f11]
 Thank you for downloading
 
 
