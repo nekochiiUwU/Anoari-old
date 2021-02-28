@@ -469,7 +469,7 @@ def Data_Load(Game):
         stripped_line = line.strip()
         list.append(stripped_line)
 
-    for item in range(0, len(list)):
+    for item in range(len(list)):
         try:
             list[item] = int(list[item])
         except:
@@ -576,7 +576,6 @@ def StandAnimation(Game):
 
 
 def BackgroundScroll(Game):
-    print(Game.PositonPlayer)
     checker = Game.PositonPlayer % 1280
     if -10 < checker < 10:
         Game.Background.rect.midtop = (640 + checker, 0)

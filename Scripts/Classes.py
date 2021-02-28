@@ -215,19 +215,16 @@ class Force:
             if self.Base_Gravity < 33:  # Si force de sol > 0
                 self.Base_Gravity += 0.66  # Diminution de la force "Sol" (Ratio 0.66)
                 self.xm /= (self.Base_Gravity / 50) + 1
-                print(self.x)
                 return self.Base_Gravity
 
             else:
                 self.Base_Gravity = 33  # Force de sol = 0
                 self.xm /= 1.66
-                print(self.x)
                 return 33
 
         else:
             Game0.Player.SpeedY = 0  # Cancel le saut
             self.Base_Gravity = 0  # Reset la force du sol (-33)
-            print(self.x)
             return Collide[0].rect.y - (Game0.Player.rect.bottom - 5)  # Y reset (Premier pixel du rect de plateforme)
 
 
