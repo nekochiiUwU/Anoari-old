@@ -100,7 +100,7 @@ def UIPrinter(Screen, police1, Game):
 def pauseblit(Screen, Game):
     """Fonction d'affichage: Eléments de pause"""
 
-    Screen.blit(Game.font, (0, 0))
+    Screen.blit(Game.Background.image, Game.Background.rect)
     # Screen.blit(Game.UI.baselayer, (0, 0))
     Screen.blit(Game.UI.resumebutton, Game.UI.resumebuttonrect)
     Screen.blit(Game.UI.savebutton, Game.UI.savebuttonrect)
@@ -458,7 +458,7 @@ def Data_Save(Game):
 
     text_file.close()
 
-    print("Your Data has been \bsaved\b!\n(", text, ")\n")
+    print("Your Data has been\b saved\b! : \n",text, "\n\n")
 
 
 def Data_Load(Game):
@@ -473,13 +473,17 @@ def Data_Load(Game):
         try:
             list[item] = int(list[item])
         except:
-            try:
-                list[item] = float(list[item])
-            except:
+            if type(list[item]) == 'str':
                 try:
-                    list[item] = tuple(list[item])
+                    list[item] = float(list[item])
                 except:
-                    list[item] = str(list[item])
+                    if type(list[item]) == 'str':
+                        try:
+                            list[item] = tuple(list[item])
+                        except:
+                            if type(list[item]) == 'str':
+                                list[item] = str(list[item])
+        print(type(list[item]), " (", list[item], ")")
 
     Game.Saves.ActualSave = list
     print(list)
@@ -489,7 +493,6 @@ def Data_Load(Game):
 def ReScale(Game, Screen):
     Game.DataX = pygame.Surface.get_width(Screen)
     Game.DataY = pygame.Surface.get_height(Screen)
-    Game.font = pygame.image.load("Assets/Visual/UI/BGPAINT.jpg")
     Game.Player.image = pygame.image.load("Assets/Visual/Mystique/resp1.png")
     Game.font = pygame.transform.scale(Game.font,
                                        (Game.Rescale(Game.font.get_width(), "X"),
