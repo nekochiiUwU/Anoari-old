@@ -421,7 +421,6 @@ def Data_Save(Game):
         "Name",  # NamePlayer
         "Rogue",  # TypeGame
         "\n",
-
         # Player
         # Statistiques Player -tremisabdoul [3-9]
         Game.Player.Pv,  # Game.Player.Pv
@@ -432,7 +431,6 @@ def Data_Save(Game):
         Game.Player.Level,  # Game.Player.Level
         Game.Player.Gold,  # Game.Player.Gold
         "\n",
-
         # Position de Player -tremisabdoul [10-14]
         Game.Player.rect,  # Game.Player.rect
         Game.Player.LastY,  # Game.Player.LastY
@@ -440,13 +438,11 @@ def Data_Save(Game):
         Game.Player.Weapon1,  # Game.Player.Weapon1
         Game.Player.Weapon2,  # Game.Player.Weapon2
         "\n",
-
         # Force
         # Mouvement Actuel de Player -tremisabdoul [15-17]
         Game.Player.Force.lastx,  # Game.Force.lastx
         Game.Player.Force.Base_Gravity,  # Game.Force.Base_Gravity
         Game.Player.Force.x,  # Game.Force.x
-        "\n",
     ]
 
     text_file = open("save1.csv", "w+", newline="\n")

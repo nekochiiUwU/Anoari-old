@@ -1,5 +1,4 @@
 "Save 1","Name","Rogue","
-",41,100,10,3,0,0,0,"
-","<rect(125, 106, 120, 120)>",101,-5,"<Scripts.Classes.Weapon object at 0x000002C1B3DBA1C0>","<Scripts.Classes.Weapon object at 0x000002C1B3DBA280>","
-",0,5.94,0,"
-"
+",43,100,10,3,0,0,0,"
+","<rect(125, 96, 120, 120)>",92,-4,"<Scripts.Classes.Weapon object at 0x000001DE11BAA1C0>","<Scripts.Classes.Weapon object at 0x000001DE11BAA280>","
+",0,4.62,0
