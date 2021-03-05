@@ -414,42 +414,40 @@ def Texte(text, police2, color, Screen, x, y):
 
 # TKT -tremisabdoul
 def Data_Save(Game):
+
     import csv
-    Datalist = [
+
+    Datalist = {
         # Info -tremisabdoul [0-2]
-        "Save 1",  # NameSave
-        "Name",  # NamePlayer
-        "Rogue",  # TypeGame
-        "\n",
-        # Player
-        # Statistiques Player -tremisabdoul [3-9]
-        Game.Player.Pv,  # Game.Player.Pv
-        Game.Player.MaxPv,  # "Game.Player.MaxPv
-        Game.Player.Damage,  # "Game.Player.Damage
-        Game.Player.Speed,  # Game.Player.Speed
-        Game.Player.SpeedY,  # Game.Player.SpeedY
-        Game.Player.Level,  # Game.Player.Level
-        Game.Player.Gold,  # Game.Player.Gold
-        "\n",
-        # Position de Player -tremisabdoul [10-14]
-        Game.Player.rect,  # Game.Player.rect
-        Game.Player.LastY,  # Game.Player.LastY
-        Game.Player.YVector,  # Game.Player.YVector
-        Game.Player.Weapon1,  # Game.Player.Weapon1
-        Game.Player.Weapon2,  # Game.Player.Weapon2
-        "\n",
-        # Force
-        # Mouvement Actuel de Player -tremisabdoul [15-17]
-        Game.Player.Force.lastx,  # Game.Force.lastx
-        Game.Player.Force.Base_Gravity,  # Game.Force.Base_Gravity
-        Game.Player.Force.x,  # Game.Force.x
-    ]
+        "# MetaSave": "Infos -tremisabdoul",
+        "SaveName": "Save 1",  # NameSave
+        "PlayerName": "Name",  # NamePlayer
+        "GameType": "Rogue",  # TypeGame
+        "# Player[0]": "Statistics -tremisabdoul",
+        "Game.Player.Pv": Game.Player.Pv,  # Game.Player.Pv
+        "Game.Player.MaxPv": Game.Player.MaxPv,  # "Game.Player.MaxPv
+        "Game.Player.Damage": Game.Player.Damage,  # "Game.Player.Damage
+        "Game.Player.Speed": Game.Player.Speed,  # Game.Player.Speed
+        "Game.Player.SpeedY": Game.Player.SpeedY,  # Game.Player.SpeedY
+        "Game.Player.Level": Game.Player.Level,  # Game.Player.Level
+        "Game.Player.Gold": Game.Player.Gold,  # Game.Player.Gold
+        "# Player[1]": "Position -tremisabdoul",
+        "Game.Player.rect": Game.Player.rect,  # Game.Player.rect
+        "Game.Player.LastY": Game.Player.LastY,  # Game.Player.LastY
+        "Game.Player.YVector": Game.Player.YVector,  # Game.Player.YVector
+        "Game.Player.Weapon1": Game.Player.Weapon1,  # Game.Player.Weapon1
+        "Game.Player.Weapon2": Game.Player.Weapon2,  # Game.Player.Weapon2
+        "# Phisics": "Actual Movement of Player -tremisabdoul",
+        "Game.Player.Force.lastx": Game.Player.Force.lastx,  # Game.Force.lastx
+        "Game.Player.Force.Base_Gravity": Game.Player.Force.Base_Gravity,  # Game.Force.Base_Gravity
+        "Game.Player.Force.x": Game.Player.Force.x  # Game.Force.x
+    }
 
     text_file = open("save1.csv", "w+", newline="\n")
 
     with text_file:
         Writer = csv.writer(text_file, quoting=2)
-        Writer.writerow(Datalist)
+        Writer.writerows(Datalist.items())
 
     text_file.close()
 
@@ -457,7 +455,7 @@ def Data_Save(Game):
 
 
 def Data_Load(Game):
-    text_file = open("save1.txt", "r")
+    text_file = open("save1.csv", "r")
 
     list = []
     for line in text_file:

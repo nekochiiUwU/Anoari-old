@@ -1,4 +1,22 @@
-"Save 1","Name","Rogue","
-",43,100,10,3,0,0,0,"
-","<rect(125, 96, 120, 120)>",92,-4,"<Scripts.Classes.Weapon object at 0x000001DE11BAA1C0>","<Scripts.Classes.Weapon object at 0x000001DE11BAA280>","
-",0,4.62,0
+"# MetaSave","Infos -tremisabdoul"
+"SaveName","Save 1"
+"PlayerName","Name"
+"GameType","Rogue"
+"# Player[0]","Statistics -tremisabdoul"
+"Game.Player.Pv",45
+"Game.Player.MaxPv",100
+"Game.Player.Damage",10
+"Game.Player.Speed",3
+"Game.Player.SpeedY",0
+"Game.Player.Level",0
+"Game.Player.Gold",0
+"# Player[1]","Position -tremisabdoul"
+"Game.Player.rect","<rect(125, 89, 120, 120)>"
+"Game.Player.LastY",86
+"Game.Player.YVector",-3
+"Game.Player.Weapon1","<Scripts.Classes.Weapon object at 0x000002DFEEDBA1C0>"
+"Game.Player.Weapon2","<Scripts.Classes.Weapon object at 0x000002DFEEDBA250>"
+"# Phisics","Actual Movement of Player -tremisabdoul"
+"Game.Player.Force.lastx",0
+"Game.Player.Force.Base_Gravity",3.3000000000000003
+"Game.Player.Force.x",0
