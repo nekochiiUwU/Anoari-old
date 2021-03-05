@@ -1,7 +1,5 @@
-Save 1,Name,Rogue,36,100,10,3,0,0,0,"<rect(125, 143, 120, 120)>",134,-9,<Scripts.Classes.Weapon object at 0x03780670>,<Scripts.Classes.Weapon object at 0x06DD0790>,0,9.24,0,"
-
-	# List information:         
-	# Info [0-2]         
-	# Player statistics [3-9]         
-	# Player position [10-14]        
-	# Actual movement of Player [15-17]"
+"Save 1","Name","Rogue","
+",41,100,10,3,0,0,0,"
+","<rect(125, 106, 120, 120)>",101,-5,"<Scripts.Classes.Weapon object at 0x000002C1B3DBA1C0>","<Scripts.Classes.Weapon object at 0x000002C1B3DBA280>","
+",0,5.94,0,"
+"

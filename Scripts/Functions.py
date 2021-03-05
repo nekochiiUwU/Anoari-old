@@ -420,6 +420,7 @@ def Data_Save(Game):
         "Save 1",  # NameSave
         "Name",  # NamePlayer
         "Rogue",  # TypeGame
+        "\n",
 
         # Player
         # Statistiques Player -tremisabdoul [3-9]
@@ -430,6 +431,7 @@ def Data_Save(Game):
         Game.Player.SpeedY,  # Game.Player.SpeedY
         Game.Player.Level,  # Game.Player.Level
         Game.Player.Gold,  # Game.Player.Gold
+        "\n",
 
         # Position de Player -tremisabdoul [10-14]
         Game.Player.rect,  # Game.Player.rect
@@ -437,23 +439,20 @@ def Data_Save(Game):
         Game.Player.YVector,  # Game.Player.YVector
         Game.Player.Weapon1,  # Game.Player.Weapon1
         Game.Player.Weapon2,  # Game.Player.Weapon2
+        "\n",
 
         # Force
         # Mouvement Actuel de Player -tremisabdoul [15-17]
         Game.Player.Force.lastx,  # Game.Force.lastx
         Game.Player.Force.Base_Gravity,  # Game.Force.Base_Gravity
         Game.Player.Force.x,  # Game.Force.x
-        "\n\n\t# List information: \
-        \n\t# Info [0-2] \
-        \n\t# Player statistics [3-9] \
-        \n\t# Player position [10-14]\
-        \n\t# Actual movement of Player [15-17]"
+        "\n",
     ]
 
-    text_file = open("save1.csv", "w+", newline="")
+    text_file = open("save1.csv", "w+", newline="\n")
 
     with text_file:
-        Writer = csv.writer(text_file)
+        Writer = csv.writer(text_file, quoting=2)
         Writer.writerow(Datalist)
 
     text_file.close()
