@@ -88,7 +88,7 @@ def UIPrinter(Screen, police1, Game):
     opti = str(str(opti) + " / " + str(Game.Player.MaxPv) + " PV")
     opti = police1.render(str(opti), True, LifeColor)
 
-    opti1 = round((Game.Player.Pv / Game.Player.MaxPv) * 100)
+    opti1 = round((Game.Player.Pv / Game.Player.MaxPv) * 75)
     opti1 = opti1 * "♫"
     opti1 = police1.render(str(opti1), True, LifeColor)
 
@@ -244,12 +244,10 @@ def inGame(Game, time, Screen, police1):
         if Game.Player.SpeedY:
             Jump(Game)
 
-
         # Fonction de déplacement gauche / droite -tremisabdoul
         DeplacementX(Game)
 
-
-        Game.Player.rect.y += Game.Player.Force.Gravity(Game)
+        Game.Player.rect.y += Game.Player.Force.Gravity(Game, Game.Player)
 
         # Déplacements de player -tremisabdoul
         #Game.Player.rect.x += Game.Player.Force.AccelerationFunctionX()
@@ -416,6 +414,7 @@ def Texte(text, police2, color, Screen, x, y):
 
 # TKT -tremisabdoul
 def Data_Save(Game):
+    import csv
     Datalist = [
         # Info -tremisabdoul [0-2]
         "Save 1",  # NameSave
@@ -451,14 +450,15 @@ def Data_Save(Game):
         \n\t# Actual movement of Player [15-17]"
     ]
 
-    text_file = open("save1.txt", "w")
+    text_file = open("save1.csv", "w+", newline="")
 
-    text = '\n'.join(map(str, Datalist))
-    text_file.write(text)
+    with text_file:
+        Writer = csv.writer(text_file)
+        Writer.writerow(Datalist)
 
     text_file.close()
 
-    print("Your Data has been\b saved\b! : \n",text, "\n\n")
+    print("Your Data has been\b saved\b! : \n",text_file, "\n\n")
 
 
 def Data_Load(Game):
