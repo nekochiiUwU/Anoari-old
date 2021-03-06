@@ -214,11 +214,17 @@ class Force:
 
             if self.Base_Gravity < 33:  # Si force de sol > 0
                 self.Base_Gravity += 0.66  # Diminution de la force "Sol" (Ratio 0.66)
+                self.lastx /= (self.Base_Gravity / 50) + 1
+                self.lastx *= (self.Base_Gravity / 50) + 1
+                self.xm *= (self.Base_Gravity / 50) + 1
                 self.xm /= (self.Base_Gravity / 50) + 1
                 return self.Base_Gravity
 
             else:
                 self.Base_Gravity = 33  # Force de sol = 0
+                self.lastx /= 1.66
+                self.lastx *= 1.66
+                self.xm *= 1.66
                 self.xm /= 1.66
                 return 33
 
@@ -287,7 +293,7 @@ class Mouse(pygame.sprite.Sprite):
 
         # Definit l'image (emplacent la sourie) -tremisabdoul
         self.image = pygame.image.load("Assets/Visual/UI/Mouse.png")
-        self.image = pygame.transform.scale(self.image, (20, 20))
+        self.image = pygame.transform.scale(self.image, (22, 22))
 
         # Cree la hit-box de l'image -tremisabdoul
         self.rect = self.image.get_rect()

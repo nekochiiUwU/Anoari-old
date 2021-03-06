@@ -173,13 +173,11 @@ def pause(Game, Screen, time, police1):
 # Loop de Jeu: -tremisabdoul
 def inGame(Game, time, Screen, police1):
     """ Loop de Jeu """
+    import random
 
     while Game.InGame:
         """ Sert a rien ! """
-        if Game.Player.Pv < 2:
-            Game.Player.Pv = Game.Player.MaxPv
-        else:
-            Game.Player.Pv -= 1
+        Game.Player.Pv = random.randint(1, Game.Player.MaxPv)
 
         """ ===== __init__ Frame Limiter ===== """
 
@@ -251,8 +249,9 @@ def inGame(Game, time, Screen, police1):
 
         # Déplacements de player -tremisabdoul
         #Game.Player.rect.x += Game.Player.Force.AccelerationFunctionX()
-        Game.Position = round(Game.Player.Force.AccelerationFunctionX())
-        Game.PositonPlayer -= Game.Position
+        Game.Position = Game.Player.Force.AccelerationFunctionX()
+        Game.PositonPlayer += Game.Position
+        print(Game.PositonPlayer)
 
         Animation(Game)
 
@@ -387,10 +386,11 @@ def Option(Game, Screen, time, police1, police2):
         Screen.fill((0, 0, 0))
 
         # Affichage du nécessaire pour le texte des Options -steven
-        White = (255, 255, 255)
-        Texte('Résolution : ', police2, White, Screen, 100, 100)
-        Texte('Volume : ', police2, White, Screen, 100, 225)
-        Texte('Contrôle : ', police2, White, Screen, 100, 350)
+        Texte('Résolution : ', police2, (255, 255, 255), Screen, 100, 100)
+        Texte('Volume : ', police2, (255, 255, 255), Screen, 100, 225)
+        Texte('Controles : ', police2, (255, 255, 255), Screen, 100, 350)
+
+        pygame.display.flip()
 
         while tickchecker < 0.017:
             tickchecker = time.time()
@@ -401,8 +401,6 @@ def Option(Game, Screen, time, police1, police2):
         # Transforme une variable en composent graphique -tremisabdoul
         printfps = police1.render(str(fps), True, (255, 255, 255))
         Screen.blit(printfps, (6, 34))
-
-        pygame.display.flip()
 
 
 # Fonction du texte -steven
@@ -425,23 +423,26 @@ def Data_Save(Game):
         "PlayerName": "Name",  # NamePlayer
         "GameType": "Rogue",  # TypeGame
         "# Player[0]": "# Statistics -tremisabdoul",
-        "Game.Player.Pv": Game.Player.Pv,  # Game.Player.Pv
-        "Game.Player.MaxPv": Game.Player.MaxPv,  # "Game.Player.MaxPv
-        "Game.Player.Damage": Game.Player.Damage,  # "Game.Player.Damage
-        "Game.Player.Speed": Game.Player.Speed,  # Game.Player.Speed
-        "Game.Player.SpeedY": Game.Player.SpeedY,  # Game.Player.SpeedY
-        "Game.Player.Level": Game.Player.Level,  # Game.Player.Level
-        "Game.Player.Gold": Game.Player.Gold,  # Game.Player.Gold
+        "Game.Player.Pv": Game.Player.Pv,
+        "Game.Player.MaxPv": Game.Player.MaxPv,
+        "Game.Player.Damage": Game.Player.Damage,
+        "Game.Player.Speed": Game.Player.Speed,
+        "Game.Player.SpeedY": Game.Player.SpeedY,
+        "Game.Player.Level": Game.Player.Level,
+        "Game.Player.Gold": Game.Player.Gold,
         "# Player[1]": "# Position -tremisabdoul",
-        "Game.Player.rect": Game.Player.rect,  # Game.Player.rect
-        "Game.Player.LastY": Game.Player.LastY,  # Game.Player.LastY
-        "Game.Player.YVector": Game.Player.YVector,  # Game.Player.YVector
-        "Game.Player.Weapon1": Game.Player.Weapon1,  # Game.Player.Weapon1
-        "Game.Player.Weapon2": Game.Player.Weapon2,  # Game.Player.Weapon2
+        "Game.Player.rect.x": Game.Player.rect.x,
+        "Game.Player.rect.y": Game.Player.rect.y,
+        "Game.Player.rect.height": Game.Player.rect.height,
+        "Game.Player.rect.width": Game.Player.rect.width,
+        "Game.Player.LastY": Game.Player.LastY,
+        "Game.Player.YVector": Game.Player.YVector,
+        "Game.Player.Weapon1": Game.Player.Weapon1,
+        "Game.Player.Weapon2": Game.Player.Weapon2,
         "# Phisics": "# Actual Movement of Player -tremisabdoul",
-        "Game.Player.Force.lastx": Game.Player.Force.lastx,  # Game.Force.lastx
-        "Game.Player.Force.Base_Gravity": Game.Player.Force.Base_Gravity,  # Game.Force.Base_Gravity
-        "Game.Player.Force.x": Game.Player.Force.x  # Game.Force.x
+        "Game.Player.Force.lastx": Game.Player.Force.lastx,
+        "Game.Player.Force.Base_Gravity": Game.Player.Force.Base_Gravity,
+        "Game.Player.Force.x": Game.Player.Force.x
     }
 
     text_file = open("save1.csv", "w+", newline="\n")
@@ -456,37 +457,44 @@ def Data_Save(Game):
     print("Your Data has been\b saved\b! : \n",text_file, "\n\n")
 
 
+# TKT -tremisabdoul
 def Data_Load(Game):
+
     import csv
+
+    file = "save1.csv"
+    CSV_file = csv.DictReader(open(file, 'r'))
+
     Load = {}
 
-    CSV_file = csv.DictReader(open("save1.csv", 'r'))
     for lines in CSV_file:
         Load[lines["Variable"]] = lines["Value"]
     print(Load)
-    Game.Player.Pv = int(Load["Game.Player.Pv"])
-    Game.Player.MaxPv = int(Load["Game.Player.MaxPv"])
-    Game.Player.Damage = float(Load["Game.Player.Damage"])
-    Game.Player.Speed = float(Load["Game.Player.Speed"])
-    Game.Player.SpeedY = float(Load["Game.Player.SpeedY"])
-    Game.Player.Level = int(Load["Game.Player.Level"])
-    Game.Player.Gold = int(Load["Game.Player.Gold"])
-    # Game.Player.rect = Load["Game.Player.rect"]
-    Game.Player.LastY = int(Load["Game.Player.LastY"])
-    Game.Player.YVector = int(Load["Game.Player.YVector"])
-    # Game.Player.Weapon1 = Load["Game.Player.Weapon1"]
-    # Game.Player.Weapon2 = Load["Game.Player.Weapon2"]
-    Game.Player.Force.lastx = int(Load["Game.Player.Force.lastx"])
-    Game.Player.Force.Base_Gravity = float(Load["Game.Player.Force.Base_Gravity"])
-    Game.Player.Force.x = float(Load["Game.Player.Force.x"])
+    try:
+        Game.Player.Pv = int(Load["Game.Player.Pv"])
+        Game.Player.MaxPv = int(Load["Game.Player.MaxPv"])
+        Game.Player.Damage = float(Load["Game.Player.Damage"])
+        Game.Player.Speed = float(Load["Game.Player.Speed"])
+        Game.Player.SpeedY = float(Load["Game.Player.SpeedY"])
+        Game.Player.Level = int(Load["Game.Player.Level"])
+        Game.Player.Gold = int(Load["Game.Player.Gold"])
+        Game.Player.rect.x = float(Load["Game.Player.rect.x"])
+        Game.Player.rect.y = float(Load["Game.Player.rect.y"])
+        Game.Player.rect.height = int(Load["Game.Player.rect.height"])
+        Game.Player.rect.width = int(Load["Game.Player.rect.width"])
+        Game.Player.LastY = float(Load["Game.Player.LastY"])
+        Game.Player.YVector = float(Load["Game.Player.YVector"])
+        # Game.Player.Weapon1 = Load["Game.Player.Weapon1"]
+        # Game.Player.Weapon2 = Load["Game.Player.Weapon2"]
+        Game.Player.Force.lastx = float(Load["Game.Player.Force.lastx"])
+        Game.Player.Force.Base_Gravity = float(Load["Game.Player.Force.Base_Gravity"])
+        Game.Player.Force.x = float(Load["Game.Player.Force.x"])
+
+    except:
+        print("Error :/")
 
 
-
-
-
-    del csv
-
-
+# TKT -tremisabdoul
 def ReScale(Game, Screen):
     Game.DataX = pygame.Surface.get_width(Screen)
     Game.DataY = pygame.Surface.get_height(Screen)
@@ -499,6 +507,7 @@ def ReScale(Game, Screen):
                                                 Game.Rescale(Game.Player.image.get_height(), "Y")))
 
 
+# TKT -tremisabdoul
 def Animation(Game):
     if Game.Player.YVector:
         if Game.Player.YVector < 0:
@@ -511,6 +520,7 @@ def Animation(Game):
         StandAnimation(Game)
 
 
+# TKT -tremisabdoul
 def FallAnimation(Game):
     if Game.Player.Movement:
         Game.Player.image = pygame.image.load("Assets/Visual/Mystique/Jump/Jump2.png")
@@ -520,6 +530,7 @@ def FallAnimation(Game):
         Game.Player.image = pygame.transform.scale(Game.Player.image, (120, 120))
 
 
+# TKT -tremisabdoul
 def JumpAnimation(Game):
     if Game.Player.Movement:
         Game.Player.image = pygame.image.load("Assets/Visual/Mystique/Jump/Jump1.png")
@@ -529,6 +540,7 @@ def JumpAnimation(Game):
         Game.Player.image = pygame.transform.scale(Game.Player.image, (120, 120))
 
 
+# TKT -tremisabdoul
 def RunAnimation(Game):
     if Game.Player.Movement:
         if Game.Frame % 10 == 0:
@@ -552,6 +564,7 @@ def RunAnimation(Game):
                 Game.Player.image = pygame.transform.scale(Game.Player.image, (120, 120))
 
 
+# TKT -tremisabdoul
 def StandAnimation(Game):
     if Game.Player.Movement:
         if Game.Frame % 10 == 0:
@@ -575,6 +588,7 @@ def StandAnimation(Game):
                 Game.Player.image = pygame.transform.scale(Game.Player.image, (120, 120))
 
 
+# TKT -tremisabdoul
 def BackgroundScroll(Game):
     checker = Game.PositonPlayer % 1280
     if -10 < checker < 10:
