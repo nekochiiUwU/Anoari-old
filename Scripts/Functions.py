@@ -418,12 +418,13 @@ def Data_Save(Game):
     import csv
 
     Datalist = {
+        "Variable": "Value",
         # Info -tremisabdoul [0-2]
-        "# MetaSave": "Infos -tremisabdoul",
+        "# MetaSave": "# Infos -tremisabdoul",
         "SaveName": "Save 1",  # NameSave
         "PlayerName": "Name",  # NamePlayer
         "GameType": "Rogue",  # TypeGame
-        "# Player[0]": "Statistics -tremisabdoul",
+        "# Player[0]": "# Statistics -tremisabdoul",
         "Game.Player.Pv": Game.Player.Pv,  # Game.Player.Pv
         "Game.Player.MaxPv": Game.Player.MaxPv,  # "Game.Player.MaxPv
         "Game.Player.Damage": Game.Player.Damage,  # "Game.Player.Damage
@@ -431,13 +432,13 @@ def Data_Save(Game):
         "Game.Player.SpeedY": Game.Player.SpeedY,  # Game.Player.SpeedY
         "Game.Player.Level": Game.Player.Level,  # Game.Player.Level
         "Game.Player.Gold": Game.Player.Gold,  # Game.Player.Gold
-        "# Player[1]": "Position -tremisabdoul",
+        "# Player[1]": "# Position -tremisabdoul",
         "Game.Player.rect": Game.Player.rect,  # Game.Player.rect
         "Game.Player.LastY": Game.Player.LastY,  # Game.Player.LastY
         "Game.Player.YVector": Game.Player.YVector,  # Game.Player.YVector
         "Game.Player.Weapon1": Game.Player.Weapon1,  # Game.Player.Weapon1
         "Game.Player.Weapon2": Game.Player.Weapon2,  # Game.Player.Weapon2
-        "# Phisics": "Actual Movement of Player -tremisabdoul",
+        "# Phisics": "# Actual Movement of Player -tremisabdoul",
         "Game.Player.Force.lastx": Game.Player.Force.lastx,  # Game.Force.lastx
         "Game.Player.Force.Base_Gravity": Game.Player.Force.Base_Gravity,  # Game.Force.Base_Gravity
         "Game.Player.Force.x": Game.Player.Force.x  # Game.Force.x
@@ -450,37 +451,40 @@ def Data_Save(Game):
         Writer.writerows(Datalist.items())
 
     text_file.close()
+    del csv
 
     print("Your Data has been\b saved\b! : \n",text_file, "\n\n")
 
 
 def Data_Load(Game):
-    text_file = open("save1.csv", "r")
+    import csv
+    Load = {}
 
-    list = []
-    for line in text_file:
-        stripped_line = line.strip()
-        list.append(stripped_line)
+    CSV_file = csv.DictReader(open("save1.csv", 'r'))
+    for lines in CSV_file:
+        Load[lines["Variable"]] = lines["Value"]
+    print(Load)
+    Game.Player.Pv = int(Load["Game.Player.Pv"])
+    Game.Player.MaxPv = int(Load["Game.Player.MaxPv"])
+    Game.Player.Damage = float(Load["Game.Player.Damage"])
+    Game.Player.Speed = float(Load["Game.Player.Speed"])
+    Game.Player.SpeedY = float(Load["Game.Player.SpeedY"])
+    Game.Player.Level = int(Load["Game.Player.Level"])
+    Game.Player.Gold = int(Load["Game.Player.Gold"])
+    # Game.Player.rect = Load["Game.Player.rect"]
+    Game.Player.LastY = int(Load["Game.Player.LastY"])
+    Game.Player.YVector = int(Load["Game.Player.YVector"])
+    # Game.Player.Weapon1 = Load["Game.Player.Weapon1"]
+    # Game.Player.Weapon2 = Load["Game.Player.Weapon2"]
+    Game.Player.Force.lastx = int(Load["Game.Player.Force.lastx"])
+    Game.Player.Force.Base_Gravity = float(Load["Game.Player.Force.Base_Gravity"])
+    Game.Player.Force.x = float(Load["Game.Player.Force.x"])
 
-    for item in range(len(list)):
-        try:
-            list[item] = int(list[item])
-        except:
-            if type(list[item]) == 'str':
-                try:
-                    list[item] = float(list[item])
-                except:
-                    if type(list[item]) == 'str':
-                        try:
-                            list[item] = tuple(list[item])
-                        except:
-                            if type(list[item]) == 'str':
-                                list[item] = str(list[item])
-        print(type(list[item]), " (", list[item], ")")
 
-    Game.Saves.ActualSave = list
-    print(list)
-    text_file.close()
+
+
+
+    del csv
 
 
 def ReScale(Game, Screen):

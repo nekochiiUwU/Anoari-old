@@ -1,22 +1,23 @@
-"# MetaSave","Infos -tremisabdoul"
+"Variable","Value"
+"# MetaSave","# Infos -tremisabdoul"
 "SaveName","Save 1"
 "PlayerName","Name"
 "GameType","Rogue"
-"# Player[0]","Statistics -tremisabdoul"
-"Game.Player.Pv",45
+"# Player[0]","# Statistics -tremisabdoul"
+"Game.Player.Pv",44
 "Game.Player.MaxPv",100
 "Game.Player.Damage",10
 "Game.Player.Speed",3
 "Game.Player.SpeedY",0
 "Game.Player.Level",0
 "Game.Player.Gold",0
-"# Player[1]","Position -tremisabdoul"
-"Game.Player.rect","<rect(125, 89, 120, 120)>"
-"Game.Player.LastY",86
+"# Player[1]","# Position -tremisabdoul"
+"Game.Player.rect","<rect(125, 92, 120, 120)>"
+"Game.Player.LastY",89
 "Game.Player.YVector",-3
-"Game.Player.Weapon1","<Scripts.Classes.Weapon object at 0x000002DFEEDBA1C0>"
-"Game.Player.Weapon2","<Scripts.Classes.Weapon object at 0x000002DFEEDBA250>"
-"# Phisics","Actual Movement of Player -tremisabdoul"
+"Game.Player.Weapon1","<Scripts.Classes.Weapon object at 0x0000019D5ADBA1C0>"
+"Game.Player.Weapon2","<Scripts.Classes.Weapon object at 0x0000019D5ADBA280>"
+"# Phisics","# Actual Movement of Player -tremisabdoul"
 "Game.Player.Force.lastx",0
-"Game.Player.Force.Base_Gravity",3.3000000000000003
+"Game.Player.Force.Base_Gravity",3.9600000000000004
 "Game.Player.Force.x",0
