@@ -407,9 +407,6 @@ class Monster(pygame.sprite.Sprite, Game):
             self.Pv -= 0.2
             Screen.blit(self.image0, (self.pvfontrect.x - Game.Position, self.pvfontrect.y))
 
-
-
-
     # Déplacement du monstre vers la droite -steven
     def Move_Right(self):
         self.rect.x += self.Speed

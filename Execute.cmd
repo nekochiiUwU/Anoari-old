@@ -1,2 +1,2 @@
-start main.py
+py main.py
 timeout 1
