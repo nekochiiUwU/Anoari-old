@@ -381,7 +381,7 @@ class Monster(pygame.sprite.Sprite, Game):
 
         self.rect = self.image.get_rect()
 
-        self.rect.x = rd.randint(150,1050)
+        self.rect.x = rd.randint(150, 1050)
         self.rect.y = 675
 
         self.rect = self.image.get_rect(midtop=self.rect.midtop)
@@ -406,6 +406,9 @@ class Monster(pygame.sprite.Sprite, Game):
             self.image0 = pygame.transform.scale(self.image0, (int(self.Pv / self.MaxPv * 64), 8))
             self.Pv -= 0.2
             Screen.blit(self.image0, (self.pvfontrect.x - Game.Position, self.pvfontrect.y))
+
+
+
 
     # Déplacement du monstre vers la droite -steven
     def Move_Right(self):

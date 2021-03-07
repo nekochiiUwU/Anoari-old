@@ -98,7 +98,7 @@ def UIPrinter(Screen, police1, Game):
 def pauseblit(Screen, Game):
     """Fonction d'affichage: Eléments de pause -tremisabdoul"""
 
-    Screen.blit(Game.Background.image, Game.Background.rect)
+    # Screen.blit(Game.Background.image, Game.Background.rect)
     # Screen.blit(Game.UI.baselayer, (0, 0))  # << Prends bcp de perf -tremisabdoul
     Screen.blit(Game.UI.resumebutton, Game.UI.resumebuttonrect)
     Screen.blit(Game.UI.savebutton, Game.UI.savebuttonrect)
@@ -132,11 +132,11 @@ def pause(Game, Screen, time, police1):
             # Elements clicables: -tremisabdoul
             elif event.type == pygame.MOUSEBUTTONDOWN:
                 if Game.UI.resumebuttonrect.collidepoint(event.pos):
-                    Data_Load(Game)
+                    Data_Load(Game, Screen, police1)
                     Game.Pause = False
                     Game.InGame = True
                 elif Game.UI.savebuttonrect.collidepoint(event.pos):
-                    Data_Save(Game)
+                    Data_Save(Game, Screen, police1)
                 elif Game.UI.settingsbuttonrect.collidepoint(event.pos):
                     Game.Pause = False
                     Game.Option = True
@@ -253,15 +253,17 @@ def inGame(Game, time, Screen, police1):
         Game.Player.rect.y += Game.Player.Force.Gravity(Game, Game.Player)
 
         # Déplacements de player -tremisabdoul
-        #Game.Player.rect.x += Game.Player.Force.AccelerationFunctionX()
+        # Game.Player.rect.x += Game.Player.Force.AccelerationFunctionX()
         Game.Position = Game.Player.Force.AccelerationFunctionX()
         Game.Position = round(Game.Position)
         Game.PositonPlayer += Game.Position
         print(Game.PositonPlayer)
+
         BackgroundScroll(Game)
-        Animation(Game)
 
         """ ===== Printers ===== """
+
+        Animation(Game)
 
         # Print les elements In-Game du jeu  -tremisabdoul
         Printer(Screen, Game)
@@ -427,9 +429,15 @@ def Texte(text, police2, color, Screen, x, y):
 
 
 # TKT -tremisabdoul
-def Data_Save(Game):
+def Data_Save(Game, Screen, police1):
+
+    Loading = 0
+
+    Loading = LoadingScreen("I'm actually saving your data", Screen, police1, 7, Loading)
 
     import csv
+
+    Loading = LoadingScreen("I'm actually saving your data", Screen, police1, 7, Loading)
 
     Datalist = {
         "Variable": "Value",
@@ -453,61 +461,94 @@ def Data_Save(Game):
         "Game.Player.rect.width": Game.Player.rect.width,
         "Game.Player.LastY": Game.Player.LastY,
         "Game.Player.YVector": Game.Player.YVector,
-        "Game.Player.Weapon1": Game.Player.Weapon1,
-        "Game.Player.Weapon2": Game.Player.Weapon2,
         "# Phisics": "# Actual Movement of Player -tremisabdoul",
         "Game.Player.Force.lastx": Game.Player.Force.lastx,
         "Game.Player.Force.Base_Gravity": Game.Player.Force.Base_Gravity,
         "Game.Player.Force.x": Game.Player.Force.x
     }
 
+    Loading = LoadingScreen("I'm actually saving your data", Screen, police1, 7, Loading)
+
     text_file = open("save1.csv", "w+", newline="\n")
+
+    Loading = LoadingScreen("I'm actually saving your data", Screen, police1, 7, Loading)
 
     with text_file:
         Writer = csv.writer(text_file, quoting=2)
         Writer.writerows(Datalist.items())
 
+        Loading = LoadingScreen("I'm actually saving your data", Screen, police1, 7, Loading)
+
     text_file.close()
+
+    Loading = LoadingScreen("I'm actually saving your data", Screen, police1, 7, Loading)
+
     del csv
 
-    print("Your Data has been\b saved\b! : \n",text_file, "\n\n")
+    LoadingScreen("I'm actually saving your data", Screen, police1, 7, Loading)
+
+    print("Your Data has been saved!\n\n")
+
+    return 0
 
 
 # TKT -tremisabdoul
-def Data_Load(Game):
+def Data_Load(Game, Screen, police1):
 
+    Loading = 0
     import csv
+
+    Loading = LoadingScreen("I'm actually loading your data", Screen, police1, 42, Loading)
 
     file = "save1.csv"
     CSV_file = csv.DictReader(open(file, 'r'))
-
     Load = {}
+
+    Loading = LoadingScreen("I'm actually loading your data", Screen, police1, 42, Loading)
 
     for lines in CSV_file:
         Load[lines["Variable"]] = lines["Value"]
+        Loading = LoadingScreen("I'm actually loading your data", Screen, police1, 42, Loading)
     print(Load)
     try:
+        Loading = LoadingScreen("I'm actually loading your data", Screen, police1, 42, Loading)
         Game.Player.Pv = int(Load["Game.Player.Pv"])
+        Loading = LoadingScreen("I'm actually loading your data", Screen, police1, 42, Loading)
         Game.Player.MaxPv = int(Load["Game.Player.MaxPv"])
+        Loading = LoadingScreen("I'm actually loading your data", Screen, police1, 42, Loading)
         Game.Player.Damage = float(Load["Game.Player.Damage"])
+        Loading = LoadingScreen("I'm actually loading your data", Screen, police1, 42, Loading)
         Game.Player.Speed = float(Load["Game.Player.Speed"])
+        Loading = LoadingScreen("I'm actually loading your data", Screen, police1, 42, Loading)
         Game.Player.SpeedY = float(Load["Game.Player.SpeedY"])
+        Loading = LoadingScreen("I'm actually loading your data", Screen, police1, 42, Loading)
         Game.Player.Level = int(Load["Game.Player.Level"])
+        Loading = LoadingScreen("I'm actually loading your data", Screen, police1, 42, Loading)
         Game.Player.Gold = int(Load["Game.Player.Gold"])
+        Loading = LoadingScreen("I'm actually loading your data", Screen, police1, 42, Loading)
         Game.Player.rect.x = float(Load["Game.Player.rect.x"])
+        Loading = LoadingScreen("I'm actually loading your data", Screen, police1, 42, Loading)
         Game.Player.rect.y = float(Load["Game.Player.rect.y"])
+        Loading = LoadingScreen("I'm actually loading your data", Screen, police1, 42, Loading)
         Game.Player.rect.height = int(Load["Game.Player.rect.height"])
+        Loading = LoadingScreen("I'm actually loading your data", Screen, police1, 42, Loading)
         Game.Player.rect.width = int(Load["Game.Player.rect.width"])
+        Loading = LoadingScreen("I'm actually loading your data", Screen, police1, 42, Loading)
         Game.Player.LastY = float(Load["Game.Player.LastY"])
+        Loading = LoadingScreen("I'm actually loading your data", Screen, police1, 42, Loading)
         Game.Player.YVector = float(Load["Game.Player.YVector"])
-        # Game.Player.Weapon1 = Load["Game.Player.Weapon1"]
-        # Game.Player.Weapon2 = Load["Game.Player.Weapon2"]
+        Loading = LoadingScreen("I'm actually loading your data", Screen, police1, 42, Loading)
         Game.Player.Force.lastx = float(Load["Game.Player.Force.lastx"])
+        Loading = LoadingScreen("I'm actually loading your data", Screen, police1, 42, Loading)
         Game.Player.Force.Base_Gravity = float(Load["Game.Player.Force.Base_Gravity"])
+        Loading = LoadingScreen("I'm actually loading your data", Screen, police1, 42, Loading)
         Game.Player.Force.x = float(Load["Game.Player.Force.x"])
+        Loading = LoadingScreen("I'm actually loading your data", Screen, police1, 42, Loading)
 
     except:
         print("Error :/")
+        Loading = LoadingScreen("ERROR on he loading", Screen, police1, 0, Loading)
+    print(Loading)
 
 
 # TKT -tremisabdoul
@@ -610,3 +651,35 @@ def BackgroundScroll(Game):
     if -10 < checker < 10:
         Game.Background.rect.midtop = 640 - checker, 0
         print(Game.Background.rect.width / 3 + checker, "= 640 + ", checker)
+
+
+def LoadingScreen(Message, Screen, police1, Ratio, Loading):
+    import random
+    Loading += 1
+    Screen.fill((0, 0, 0))
+
+    image = pygame.image.load("Assets/Visual/UI/Load.png")
+    rect = image.get_rect()
+    image = pygame.transform.scale(image, (int(Loading / Ratio * pygame.Surface.get_rect(Screen).width/2), int(pygame.Surface.get_rect(Screen).height/40)))
+    rect = image.get_rect(center=rect.center)
+    rect.center = pygame.Surface.get_rect(Screen).center
+    Screen.blit(image, (rect.x, rect.y))
+
+    Texte("Please Wait: " + str(Loading) + " of " + str(Ratio), police1,
+          (random.randint(128, 255), random.randint(128, 255), random.randint(128, 255)),
+          Screen, random.randint(450, pygame.Surface.get_rect(Screen).width-512),
+          pygame.Surface.get_rect(Screen).height/4)
+
+    Texte(Message, police1,
+          (random.randint(128, 255), random.randint(128, 255), random.randint(128, 255)),
+          Screen, random.randint(450, pygame.Surface.get_rect(Screen).width-512),
+          pygame.Surface.get_rect(Screen).height/3)
+
+    Texte(":)", police1,
+          (random.randint(128, 255), random.randint(128, 255), random.randint(128, 255)),
+          Screen, random.randint(510, pygame.Surface.get_rect(Screen).width-512),
+          pygame.Surface.get_rect(Screen).height/2.5)
+
+    pygame.display.flip()
+
+    return Loading
