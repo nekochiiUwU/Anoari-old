@@ -255,12 +255,11 @@ def inGame(Game, time, Screen, police1):
         # Déplacements de player -tremisabdoul
         #Game.Player.rect.x += Game.Player.Force.AccelerationFunctionX()
         Game.Position = Game.Player.Force.AccelerationFunctionX()
+        Game.Position = round(Game.Position)
         Game.PositonPlayer += Game.Position
         print(Game.PositonPlayer)
-
-        Animation(Game)
-
         BackgroundScroll(Game)
+        Animation(Game)
 
         """ ===== Printers ===== """
 
@@ -609,5 +608,5 @@ def StandAnimation(Game):
 def BackgroundScroll(Game):
     checker = Game.PositonPlayer % 1280
     if -10 < checker < 10:
-        Game.Background.rect.midtop = (680 + checker, 0)
-        print(640 + checker, "= 640 + ", checker)
+        Game.Background.rect.midtop = 640 - checker, 0
+        print(Game.Background.rect.width / 3 + checker, "= 640 + ", checker)

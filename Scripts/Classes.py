@@ -464,4 +464,4 @@ class Background:
         # self.image = pygame.transform.scale(self.image, (3848, 686))
         self.rect = self.image.get_rect()
         self.rect = self.image.get_rect(midtop=self.rect.midtop)
-        self.rect.midtop = (680, 0)
+        self.rect.midtop = (self.rect.width / 3, 0)
