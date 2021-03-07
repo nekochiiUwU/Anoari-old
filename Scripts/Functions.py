@@ -7,7 +7,7 @@ import os
 
 # Crée l'écran -tremisabdoul
 def Display():
-    """Fonction Permettent l'affichage de l'écran"""
+    """Fonction Permettent l'affichage de l'écran -tremisabdoul"""
 
     pygame.init()
     pygame.display.set_caption("Anoari")
@@ -16,9 +16,8 @@ def Display():
     return screen
 
 
-# Fonction de jump: [ Key: Space ] -tremisabdoul
 def Jump(Game):
-    """Fonction de jump: [ Key: Space ]"""
+    """Fonction de jump: [ Key: Space ] -tremisabdoul"""
 
     if Game.Player.SpeedY < 0:
         Game.Player.rect.y += Game.Player.SpeedY
@@ -27,9 +26,8 @@ def Jump(Game):
         Game.Player.SpeedY = 0
 
 
-# Déplacement du joueur (x) (Impossible aux limites de l'écran): Touche q / d et LEFT / RIGHT -tremisabdoul
 def DeplacementX(Game):
-    """Fonction de déplacement [gauche/droite] :  [ Left: LEFT / Q ], [ Right: RIGHT / D ]"""
+    """Fonction de déplacement [gauche/droite] :  [ Left: LEFT / Q ], [ Right: RIGHT / D ] -tremisabdoul"""
 
     Game.Player.MovementKey = False
     if Game.pressed.get(pygame.K_d) and Game.Player.rect.x < Game.Player.MaxX \
@@ -43,17 +41,17 @@ def DeplacementX(Game):
         Game.Player.Move_Left()
 
 
-# Print: -tremisabdoul
 def MousePriter(Screen, Game):
-    """Fonction d'affichage: Mouse"""
+    """Fonction d'affichage: Mouse -tremisabdoul"""
 
     Game.Mouse.rect.center = pygame.mouse.get_pos()
     Screen.blit(Game.Mouse.image, Game.Mouse.rect)
 
 
-# Print: -tremisabdoul
 def Printer(Screen, Game):
-    """Fonction d'affichage: Eléments in-game"""
+    """Fonction d'affichage: Eléments in-game -tremisabdoul"""
+
+    # Déplacement des éléments -tremisabdoul
     Game.Plateform.rect.x -= Game.Position
     Game.Monster.rect.x -= Game.Position
     Game.Background.rect.x -= Game.Position
@@ -69,20 +67,19 @@ def Printer(Screen, Game):
 
 # Print: -tremisabdoul
 def UIPrinter(Screen, police1, Game):
-    """Fonction d'affichage: Eléments d'interface in-game"""
+    """Fonction d'affichage: Eléments d'interface in-game -tremisabdoul"""
 
-    # Permet de récupérer le nombre de frames a la seconde -tremisabdoul
+    # Permet de récupérer le nombre de frames a la seconde -tremisabdoul -tremisabdoul
     frame = 1
     fps = frame / Game.Tickchecker
     fps = "FPS : " + str(round(fps))
 
-    # Transforme une variable en composent graphique -tremisabdoul
-    printfps = police1.render(str(fps), True, (255, 255, 255))
-
-    Screen.blit(printfps, (6, 34))
-
+    # Crée une couleur plus ou moins rouge en fonction des PV restants -tremisabdoul
     Color = (Game.Player.Pv / Game.Player.MaxPv) * 255
     LifeColor = [255, Color, Color]
+
+    # Transforme les variables en composent graphique -tremisabdoul
+    printfps = police1.render(str(fps), True, (255, 255, 255))
 
     opti = str(round(Game.Player.Pv))
     opti = str(str(opti) + " / " + str(Game.Player.MaxPv) + " PV")
@@ -92,25 +89,25 @@ def UIPrinter(Screen, police1, Game):
     opti1 = opti1 * "♫"
     opti1 = police1.render(str(opti1), True, LifeColor)
 
+    # Affiche a l'écran les éléments suivents -tremisabdoul
+    Screen.blit(printfps, (6, 34))
     Screen.blit(opti, (15 + Color / 50, 48 + Color / 50))
     Screen.blit(opti1, (15 + Color / 50, 60 + Color / 50))
 
 
-# Print: -tremisabdoul
 def pauseblit(Screen, Game):
-    """Fonction d'affichage: Eléments de pause"""
+    """Fonction d'affichage: Eléments de pause -tremisabdoul"""
 
     Screen.blit(Game.Background.image, Game.Background.rect)
-    # Screen.blit(Game.UI.baselayer, (0, 0))
+    # Screen.blit(Game.UI.baselayer, (0, 0))  # << Prends bcp de perf -tremisabdoul
     Screen.blit(Game.UI.resumebutton, Game.UI.resumebuttonrect)
     Screen.blit(Game.UI.savebutton, Game.UI.savebuttonrect)
     Screen.blit(Game.UI.settingsbutton, Game.UI.settingsbuttonrect)
     Screen.blit(Game.UI.quitbutton, Game.UI.quitbuttonrect)
 
 
-# Loop de Pause: -tremisabdoul
 def pause(Game, Screen, time, police1):
-    """ Loop de pause """
+    """ Loop de pause -tremisabdoul"""
 
     while Game.Pause:
         # Initialisation du compteur de temps pour limiter les fps -tremisabdoul
@@ -120,8 +117,10 @@ def pause(Game, Screen, time, police1):
 
             if event.type == pygame.KEYDOWN:
                 Game.pressed[event.key] = True
+                # FullScreen -tremisabdoul
                 if Game.pressed.get(pygame.K_F11):
                     pygame.display.toggle_fullscreen()
+                # Revenir en jeu -tremisabdoul
                 if Game.pressed.get(pygame.K_ESCAPE):
                     Game.Pause = False
                     Game.InGame = True
@@ -130,6 +129,7 @@ def pause(Game, Screen, time, police1):
             elif event.type == pygame.KEYUP:
                 Game.pressed[event.key] = False
 
+            # Elements clicables: -tremisabdoul
             elif event.type == pygame.MOUSEBUTTONDOWN:
                 if Game.UI.resumebuttonrect.collidepoint(event.pos):
                     Data_Load(Game)
@@ -154,9 +154,14 @@ def pause(Game, Screen, time, police1):
         Game.Tickchecker = time.time()
         Game.Tickchecker -= tick
 
+        # Affichage des éléments graphiques -tremisabdoul
         pauseblit(Screen, Game)
         MousePriter(Screen, Game)
 
+        # Affichage du rendu graphique sur la fenètre -tremisabdoul
+        pygame.display.flip()
+
+        # Compteur de FPS et lock de FPS -tremisabdoul
         while Game.Tickchecker < 0.017:
             Game.Tickchecker = time.time()
             Game.Tickchecker -= tick
@@ -167,23 +172,22 @@ def pause(Game, Screen, time, police1):
         printfps = police1.render(str(fps), True, (255, 255, 255))
         Screen.blit(printfps, (6, 34))
 
-        pygame.display.flip()
-
 
 # Loop de Jeu: -tremisabdoul
 def inGame(Game, time, Screen, police1):
-    """ Loop de Jeu """
-    import random
+    """ Loop de Jeu -tremisabdoul"""
 
     while Game.InGame:
         """ Sert a rien ! """
-        Game.Player.Pv = random.randint(1, Game.Player.MaxPv)
+        if Game .Player.Pv > 1:
+            Game.Player.Pv -= 1
+        else:
+            Game.Player.Pv = Game.Player.MaxPv
 
         """ ===== __init__ Frame Limiter ===== """
 
         # Initialisation du compteur de temps pour limiter les fps -tremisabdoul
         tick = time.time()
-
         Game.Frame += 1
 
         """ ===== Key Inputs ===== """
@@ -222,7 +226,7 @@ def inGame(Game, time, Screen, police1):
             elif event.type == pygame.KEYUP:
                 Game.pressed[event.key] = False
 
-            #  -tremisabdoul
+            # Permet le resize de l'écran -tremisabdoul
             if event.type == pygame.VIDEORESIZE:
                 ReScale(Game, Screen)
 
@@ -245,6 +249,7 @@ def inGame(Game, time, Screen, police1):
         # Fonction de déplacement gauche / droite -tremisabdoul
         DeplacementX(Game)
 
+        # Gravité -tremisabdoul
         Game.Player.rect.y += Game.Player.Force.Gravity(Game, Game.Player)
 
         # Déplacements de player -tremisabdoul
@@ -256,6 +261,7 @@ def inGame(Game, time, Screen, police1):
         Animation(Game)
 
         BackgroundScroll(Game)
+
         """ ===== Printers ===== """
 
         # Print les elements In-Game du jeu  -tremisabdoul
@@ -265,8 +271,19 @@ def inGame(Game, time, Screen, police1):
 
         for Monster in Game.all_Monster:
             Monster.Life(Screen, Game)
-            if not Game.Player.check_collisions(Game.Player, Game.all_Monster):
-                Monster.Move_Left()
+            Collide = Game.Player.check_collisions(Game.Player, Game.all_Monster)
+            if not Collide:
+                if Monster.Direction:
+                    Monster.Move_Left()
+                else:
+                    Monster.Move_Right()
+            else:
+                if Collide[0].rect.x > Game.Player.rect.x:
+                    Monster.Direction = 0
+                    Monster.Move_Right()
+                else:
+                    Monster.Direction = 1
+                    Monster.Move_Left()
 
         # Print l'interface de jeu -tremisabdoul
         UIPrinter(Screen, police1, Game)
@@ -592,4 +609,5 @@ def StandAnimation(Game):
 def BackgroundScroll(Game):
     checker = Game.PositonPlayer % 1280
     if -10 < checker < 10:
-        Game.Background.rect.midtop = (640 + checker, 0)
+        Game.Background.rect.midtop = (680 + checker, 0)
+        print(640 + checker, "= 640 + ", checker)

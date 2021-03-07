@@ -192,7 +192,7 @@ class Force:
 
         if round(self.StepX) == 0:
             self.StepX = 0
-            self.lastx = self.StepX
+            self.lastx = 0
             self.x = 0
             self.xm = 0
             return 0
@@ -214,18 +214,10 @@ class Force:
 
             if self.Base_Gravity < 33:  # Si force de sol > 0
                 self.Base_Gravity += 0.66  # Diminution de la force "Sol" (Ratio 0.66)
-                self.lastx /= (self.Base_Gravity / 50) + 1
-                self.lastx *= (self.Base_Gravity / 50) + 1
-                self.xm *= (self.Base_Gravity / 50) + 1
-                self.xm /= (self.Base_Gravity / 50) + 1
                 return self.Base_Gravity
 
             else:
                 self.Base_Gravity = 33  # Force de sol = 0
-                self.lastx /= 1.66
-                self.lastx *= 1.66
-                self.xm *= 1.66
-                self.xm /= 1.66
                 return 33
 
         else:
@@ -403,8 +395,7 @@ class Monster(pygame.sprite.Sprite, Game):
         self.pvfontrect.midbottom = self.rect.midtop
         self.pvfontrect.y += 10
 
-        self.LeftDirection = True
-        self.RightDirection = False
+        self.Direction = 1
 
     # Dessin concernant la barre de vie du monstre -steven / tremisabdoul
     def Life(self, Screen, Game):
@@ -473,4 +464,4 @@ class Background:
         # self.image = pygame.transform.scale(self.image, (3848, 686))
         self.rect = self.image.get_rect()
         self.rect = self.image.get_rect(midtop=self.rect.midtop)
-        self.rect.midtop = (640, 0)
+        self.rect.midtop = (680, 0)
