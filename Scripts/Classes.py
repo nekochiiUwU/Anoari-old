@@ -1,4 +1,4 @@
-from User.UserData import *
+from User.UserDatal1 import *
 import pygame
 import random as rd
 
@@ -192,7 +192,7 @@ class Force:
 
         if round(self.StepX) == 0:
             self.StepX = 0
-            self.lastx = self.StepX
+            self.lastx = 0
             self.x = 0
             self.xm = 0
             return 0
@@ -205,27 +205,25 @@ class Force:
 
     # Faut se dire que la gravité a une force de 33 et que lorsque
     # Base_Gravity est a 0 c'est que la force appliquée par le sol est de -33
-    def Gravity(self, Game0):
+    def Gravity(self, Game0, Target):
 
         # Vérification des collisions entre Player et toutes les plateformes
-        Collide = Game0.Player.check_collisions(Game0.Player, Game0.all_platform)
+        Collide = Game0.Player.check_collisions(Target, Game0.all_platform)
 
-        if not Collide or Game0.Player.YVector > 0 or Game0.Player.rect.bottom > Collide[0].rect.top + 33:
+        if not Collide or Target.YVector > 0 or Target.rect.bottom > Collide[0].rect.top + 33:
 
             if self.Base_Gravity < 33:  # Si force de sol > 0
                 self.Base_Gravity += 0.66  # Diminution de la force "Sol" (Ratio 0.66)
-                self.xm /= (self.Base_Gravity / 50) + 1
                 return self.Base_Gravity
 
             else:
                 self.Base_Gravity = 33  # Force de sol = 0
-                self.xm /= 1.66
                 return 33
 
         else:
-            Game0.Player.SpeedY = 0  # Cancel le saut
+            Target.SpeedY = 0  # Cancel le saut
             self.Base_Gravity = 0  # Reset la force du sol (-33)
-            return Collide[0].rect.y - (Game0.Player.rect.bottom - 5)  # Y reset (Premier pixel du rect de plateforme)
+            return Collide[0].rect.y - (Target.rect.bottom - 5)  # Y reset (Premier pixel du rect de plateforme)
 
 
 """=====  Game.Sol [3]  ====="""
@@ -287,7 +285,7 @@ class Mouse(pygame.sprite.Sprite):
 
         # Definit l'image (emplacent la sourie) -tremisabdoul
         self.image = pygame.image.load("Assets/Visual/UI/Mouse.png")
-        self.image = pygame.transform.scale(self.image, (20, 20))
+        self.image = pygame.transform.scale(self.image, (22, 22))
 
         # Cree la hit-box de l'image -tremisabdoul
         self.rect = self.image.get_rect()
@@ -378,22 +376,26 @@ class Monster(pygame.sprite.Sprite, Game):
         self.MaxPv = 100
         self.DamageDealt = 10
         self.Speed = 3
+
         self.image = pygame.image.load("Assets/Visual/slime.png")
+
         self.rect = self.image.get_rect()
-        self.rect.x = 1000
+
+        self.rect.x = rd.randint(150,1050)
         self.rect.y = 675
+
         self.rect = self.image.get_rect(midtop=self.rect.midtop)
 
         # Barre de pv des monstres -tremisabdoul
         self.image0 = pygame.image.load("Assets/Visual/UI/100pv.png")
+        self.image0 = pygame.transform.scale(self.image0, (200, 30))
+
         self.pvfontrect = self.image0.get_rect()
         self.pvfontrect = self.image0.get_rect(midbottom=self.pvfontrect.midbottom)
-        self.image0 = pygame.transform.scale(self.image0, (200, 30))
         self.pvfontrect.midbottom = self.rect.midtop
         self.pvfontrect.y += 10
 
-        self.LeftDirection = True
-        self.RightDirection = False
+        self.Direction = 1
 
     # Dessin concernant la barre de vie du monstre -steven / tremisabdoul
     def Life(self, Screen, Game):
@@ -462,4 +464,4 @@ class Background:
         # self.image = pygame.transform.scale(self.image, (3848, 686))
         self.rect = self.image.get_rect()
         self.rect = self.image.get_rect(midtop=self.rect.midtop)
-        self.rect.midtop = (640, 0)
+        self.rect.midtop = (self.rect.width / 3, 0)

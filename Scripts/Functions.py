@@ -7,7 +7,7 @@ import os
 
 # Crée l'écran -tremisabdoul
 def Display():
-    """Fonction Permettent l'affichage de l'écran"""
+    """Fonction Permettent l'affichage de l'écran -tremisabdoul"""
 
     pygame.init()
     pygame.display.set_caption("Anoari")
@@ -16,9 +16,8 @@ def Display():
     return screen
 
 
-# Fonction de jump: [ Key: Space ] -tremisabdoul
 def Jump(Game):
-    """Fonction de jump: [ Key: Space ]"""
+    """Fonction de jump: [ Key: Space ] -tremisabdoul"""
 
     if Game.Player.SpeedY < 0:
         Game.Player.rect.y += Game.Player.SpeedY
@@ -27,9 +26,8 @@ def Jump(Game):
         Game.Player.SpeedY = 0
 
 
-# Déplacement du joueur (x) (Impossible aux limites de l'écran): Touche q / d et LEFT / RIGHT -tremisabdoul
 def DeplacementX(Game):
-    """Fonction de déplacement [gauche/droite] :  [ Left: LEFT / Q ], [ Right: RIGHT / D ]"""
+    """Fonction de déplacement [gauche/droite] :  [ Left: LEFT / Q ], [ Right: RIGHT / D ] -tremisabdoul"""
 
     Game.Player.MovementKey = False
     if Game.pressed.get(pygame.K_d) and Game.Player.rect.x < Game.Player.MaxX \
@@ -43,17 +41,17 @@ def DeplacementX(Game):
         Game.Player.Move_Left()
 
 
-# Print: -tremisabdoul
 def MousePriter(Screen, Game):
-    """Fonction d'affichage: Mouse"""
+    """Fonction d'affichage: Mouse -tremisabdoul"""
 
     Game.Mouse.rect.center = pygame.mouse.get_pos()
     Screen.blit(Game.Mouse.image, Game.Mouse.rect)
 
 
-# Print: -tremisabdoul
 def Printer(Screen, Game):
-    """Fonction d'affichage: Eléments in-game"""
+    """Fonction d'affichage: Eléments in-game -tremisabdoul"""
+
+    # Déplacement des éléments -tremisabdoul
     Game.Plateform.rect.x -= Game.Position
     Game.Monster.rect.x -= Game.Position
     Game.Background.rect.x -= Game.Position
@@ -69,48 +67,47 @@ def Printer(Screen, Game):
 
 # Print: -tremisabdoul
 def UIPrinter(Screen, police1, Game):
-    """Fonction d'affichage: Eléments d'interface in-game"""
+    """Fonction d'affichage: Eléments d'interface in-game -tremisabdoul"""
 
-    # Permet de récupérer le nombre de frames a la seconde -tremisabdoul
+    # Permet de récupérer le nombre de frames a la seconde -tremisabdoul -tremisabdoul
     frame = 1
     fps = frame / Game.Tickchecker
     fps = "FPS : " + str(round(fps))
 
-    # Transforme une variable en composent graphique -tremisabdoul
-    printfps = police1.render(str(fps), True, (255, 255, 255))
-
-    Screen.blit(printfps, (6, 34))
-
+    # Crée une couleur plus ou moins rouge en fonction des PV restants -tremisabdoul
     Color = (Game.Player.Pv / Game.Player.MaxPv) * 255
     LifeColor = [255, Color, Color]
+
+    # Transforme les variables en composent graphique -tremisabdoul
+    printfps = police1.render(str(fps), True, (255, 255, 255))
 
     opti = str(round(Game.Player.Pv))
     opti = str(str(opti) + " / " + str(Game.Player.MaxPv) + " PV")
     opti = police1.render(str(opti), True, LifeColor)
 
-    opti1 = round((Game.Player.Pv / Game.Player.MaxPv) * 100)
+    opti1 = round((Game.Player.Pv / Game.Player.MaxPv) * 75)
     opti1 = opti1 * "♫"
     opti1 = police1.render(str(opti1), True, LifeColor)
 
+    # Affiche a l'écran les éléments suivents -tremisabdoul
+    Screen.blit(printfps, (6, 34))
     Screen.blit(opti, (15 + Color / 50, 48 + Color / 50))
     Screen.blit(opti1, (15 + Color / 50, 60 + Color / 50))
 
 
-# Print: -tremisabdoul
 def pauseblit(Screen, Game):
-    """Fonction d'affichage: Eléments de pause"""
+    """Fonction d'affichage: Eléments de pause -tremisabdoul"""
 
-    Screen.blit(Game.font, (0, 0))
-    # Screen.blit(Game.UI.baselayer, (0, 0))
+    Screen.blit(Game.Background.image, Game.Background.rect)
+    # Screen.blit(Game.UI.baselayer, (0, 0))  # << Prends bcp de perf -tremisabdoul
     Screen.blit(Game.UI.resumebutton, Game.UI.resumebuttonrect)
     Screen.blit(Game.UI.savebutton, Game.UI.savebuttonrect)
     Screen.blit(Game.UI.settingsbutton, Game.UI.settingsbuttonrect)
     Screen.blit(Game.UI.quitbutton, Game.UI.quitbuttonrect)
 
 
-# Loop de Pause: -tremisabdoul
 def pause(Game, Screen, time, police1):
-    """ Loop de pause """
+    """ Loop de pause -tremisabdoul"""
 
     while Game.Pause:
         # Initialisation du compteur de temps pour limiter les fps -tremisabdoul
@@ -120,8 +117,10 @@ def pause(Game, Screen, time, police1):
 
             if event.type == pygame.KEYDOWN:
                 Game.pressed[event.key] = True
+                # FullScreen -tremisabdoul
                 if Game.pressed.get(pygame.K_F11):
                     pygame.display.toggle_fullscreen()
+                # Revenir en jeu -tremisabdoul
                 if Game.pressed.get(pygame.K_ESCAPE):
                     Game.Pause = False
                     Game.InGame = True
@@ -130,6 +129,7 @@ def pause(Game, Screen, time, police1):
             elif event.type == pygame.KEYUP:
                 Game.pressed[event.key] = False
 
+            # Elements clicables: -tremisabdoul
             elif event.type == pygame.MOUSEBUTTONDOWN:
                 if Game.UI.resumebuttonrect.collidepoint(event.pos):
                     Data_Load(Game)
@@ -154,9 +154,14 @@ def pause(Game, Screen, time, police1):
         Game.Tickchecker = time.time()
         Game.Tickchecker -= tick
 
+        # Affichage des éléments graphiques -tremisabdoul
         pauseblit(Screen, Game)
         MousePriter(Screen, Game)
 
+        # Affichage du rendu graphique sur la fenètre -tremisabdoul
+        pygame.display.flip()
+
+        # Compteur de FPS et lock de FPS -tremisabdoul
         while Game.Tickchecker < 0.017:
             Game.Tickchecker = time.time()
             Game.Tickchecker -= tick
@@ -167,25 +172,22 @@ def pause(Game, Screen, time, police1):
         printfps = police1.render(str(fps), True, (255, 255, 255))
         Screen.blit(printfps, (6, 34))
 
-        pygame.display.flip()
-
 
 # Loop de Jeu: -tremisabdoul
 def inGame(Game, time, Screen, police1):
-    """ Loop de Jeu """
+    """ Loop de Jeu -tremisabdoul"""
 
     while Game.InGame:
         """ Sert a rien ! """
-        if Game.Player.Pv < 2:
-            Game.Player.Pv = Game.Player.MaxPv
-        else:
+        if Game .Player.Pv > 1:
             Game.Player.Pv -= 1
+        else:
+            Game.Player.Pv = Game.Player.MaxPv
 
         """ ===== __init__ Frame Limiter ===== """
 
         # Initialisation du compteur de temps pour limiter les fps -tremisabdoul
         tick = time.time()
-
         Game.Frame += 1
 
         """ ===== Key Inputs ===== """
@@ -224,7 +226,7 @@ def inGame(Game, time, Screen, police1):
             elif event.type == pygame.KEYUP:
                 Game.pressed[event.key] = False
 
-            #  -tremisabdoul
+            # Permet le resize de l'écran -tremisabdoul
             if event.type == pygame.VIDEORESIZE:
                 ReScale(Game, Screen)
 
@@ -244,21 +246,21 @@ def inGame(Game, time, Screen, police1):
         if Game.Player.SpeedY:
             Jump(Game)
 
-
         # Fonction de déplacement gauche / droite -tremisabdoul
         DeplacementX(Game)
 
-
-        Game.Player.rect.y += Game.Player.Force.Gravity(Game)
+        # Gravité -tremisabdoul
+        Game.Player.rect.y += Game.Player.Force.Gravity(Game, Game.Player)
 
         # Déplacements de player -tremisabdoul
         #Game.Player.rect.x += Game.Player.Force.AccelerationFunctionX()
-        Game.Position = round(Game.Player.Force.AccelerationFunctionX())
-        Game.PositonPlayer -= Game.Position
-
+        Game.Position = Game.Player.Force.AccelerationFunctionX()
+        Game.Position = round(Game.Position)
+        Game.PositonPlayer += Game.Position
+        print(Game.PositonPlayer)
+        BackgroundScroll(Game)
         Animation(Game)
 
-        BackgroundScroll(Game)
         """ ===== Printers ===== """
 
         # Print les elements In-Game du jeu  -tremisabdoul
@@ -268,8 +270,19 @@ def inGame(Game, time, Screen, police1):
 
         for Monster in Game.all_Monster:
             Monster.Life(Screen, Game)
-            if not Game.Player.check_collisions(Game.Player, Game.all_Monster):
-                Monster.Move_Left()
+            Collide = Game.Player.check_collisions(Game.Player, Game.all_Monster)
+            if not Collide:
+                if Monster.Direction:
+                    Monster.Move_Left()
+                else:
+                    Monster.Move_Right()
+            else:
+                if Collide[0].rect.x > Game.Player.rect.x:
+                    Monster.Direction = 0
+                    Monster.Move_Right()
+                else:
+                    Monster.Direction = 1
+                    Monster.Move_Left()
 
         # Print l'interface de jeu -tremisabdoul
         UIPrinter(Screen, police1, Game)
@@ -389,10 +402,11 @@ def Option(Game, Screen, time, police1, police2):
         Screen.fill((0, 0, 0))
 
         # Affichage du nécessaire pour le texte des Options -steven
-        White = (255, 255, 255)
-        Texte('Résolution : ', police2, White, Screen, 100, 100)
-        Texte('Volume : ', police2, White, Screen, 100, 225)
-        Texte('Contrôle : ', police2, White, Screen, 100, 350)
+        Texte('Résolution : ', police2, (255, 255, 255), Screen, 100, 100)
+        Texte('Volume : ', police2, (255, 255, 255), Screen, 100, 225)
+        Texte('Controles : ', police2, (255, 255, 255), Screen, 100, 350)
+
+        pygame.display.flip()
 
         while tickchecker < 0.017:
             tickchecker = time.time()
@@ -404,8 +418,6 @@ def Option(Game, Screen, time, police1, police2):
         printfps = police1.render(str(fps), True, (255, 255, 255))
         Screen.blit(printfps, (6, 34))
 
-        pygame.display.flip()
-
 
 # Fonction du texte -steven
 def Texte(text, police2, color, Screen, x, y):
@@ -416,80 +428,92 @@ def Texte(text, police2, color, Screen, x, y):
 
 # TKT -tremisabdoul
 def Data_Save(Game):
-    Datalist = [
+
+    import csv
+
+    Datalist = {
+        "Variable": "Value",
         # Info -tremisabdoul [0-2]
-        "Save 1",  # NameSave
-        "Name",  # NamePlayer
-        "Rogue",  # TypeGame
+        "# MetaSave": "# Infos -tremisabdoul",
+        "SaveName": "Save 1",  # NameSave
+        "PlayerName": "Name",  # NamePlayer
+        "GameType": "Rogue",  # TypeGame
+        "# Player[0]": "# Statistics -tremisabdoul",
+        "Game.Player.Pv": Game.Player.Pv,
+        "Game.Player.MaxPv": Game.Player.MaxPv,
+        "Game.Player.Damage": Game.Player.Damage,
+        "Game.Player.Speed": Game.Player.Speed,
+        "Game.Player.SpeedY": Game.Player.SpeedY,
+        "Game.Player.Level": Game.Player.Level,
+        "Game.Player.Gold": Game.Player.Gold,
+        "# Player[1]": "# Position -tremisabdoul",
+        "Game.Player.rect.x": Game.Player.rect.x,
+        "Game.Player.rect.y": Game.Player.rect.y,
+        "Game.Player.rect.height": Game.Player.rect.height,
+        "Game.Player.rect.width": Game.Player.rect.width,
+        "Game.Player.LastY": Game.Player.LastY,
+        "Game.Player.YVector": Game.Player.YVector,
+        "Game.Player.Weapon1": Game.Player.Weapon1,
+        "Game.Player.Weapon2": Game.Player.Weapon2,
+        "# Phisics": "# Actual Movement of Player -tremisabdoul",
+        "Game.Player.Force.lastx": Game.Player.Force.lastx,
+        "Game.Player.Force.Base_Gravity": Game.Player.Force.Base_Gravity,
+        "Game.Player.Force.x": Game.Player.Force.x
+    }
 
-        # Player
-        # Statistiques Player -tremisabdoul [3-9]
-        Game.Player.Pv,  # Game.Player.Pv
-        Game.Player.MaxPv,  # "Game.Player.MaxPv
-        Game.Player.Damage,  # "Game.Player.Damage
-        Game.Player.Speed,  # Game.Player.Speed
-        Game.Player.SpeedY,  # Game.Player.SpeedY
-        Game.Player.Level,  # Game.Player.Level
-        Game.Player.Gold,  # Game.Player.Gold
+    text_file = open("save1.csv", "w+", newline="\n")
 
-        # Position de Player -tremisabdoul [10-14]
-        Game.Player.rect,  # Game.Player.rect
-        Game.Player.LastY,  # Game.Player.LastY
-        Game.Player.YVector,  # Game.Player.YVector
-        Game.Player.Weapon1,  # Game.Player.Weapon1
-        Game.Player.Weapon2,  # Game.Player.Weapon2
-
-        # Force
-        # Mouvement Actuel de Player -tremisabdoul [15-17]
-        Game.Player.Force.lastx,  # Game.Force.lastx
-        Game.Player.Force.Base_Gravity,  # Game.Force.Base_Gravity
-        Game.Player.Force.x,  # Game.Force.x
-        "\n\n\t# List information: \
-        \n\t# Info [0-2] \
-        \n\t# Player statistics [3-9] \
-        \n\t# Player position [10-14]\
-        \n\t# Actual movement of Player [15-17]"
-    ]
-
-    text_file = open("save1.txt", "w")
-
-    text = '\n'.join(map(str, Datalist))
-    text_file.write(text)
+    with text_file:
+        Writer = csv.writer(text_file, quoting=2)
+        Writer.writerows(Datalist.items())
 
     text_file.close()
+    del csv
 
-    print("Your Data has been \bsaved\b!\n(", text, ")\n")
+    print("Your Data has been\b saved\b! : \n",text_file, "\n\n")
 
 
+# TKT -tremisabdoul
 def Data_Load(Game):
-    text_file = open("save1.txt", "r")
 
-    list = []
-    for line in text_file:
-        stripped_line = line.strip()
-        list.append(stripped_line)
+    import csv
 
-    for item in range(len(list)):
-        try:
-            list[item] = int(list[item])
-        except:
-            try:
-                list[item] = float(list[item])
-            except:
-                try:
-                    list[item] = tuple(list[item])
-                except:
-                    list[item] = str(list[item])
+    file = "save1.csv"
+    CSV_file = csv.DictReader(open(file, 'r'))
 
-    Game.Saves.ActualSave = list
-    print(list)
-    text_file.close()
+    Load = {}
+
+    for lines in CSV_file:
+        Load[lines["Variable"]] = lines["Value"]
+    print(Load)
+    try:
+        Game.Player.Pv = int(Load["Game.Player.Pv"])
+        Game.Player.MaxPv = int(Load["Game.Player.MaxPv"])
+        Game.Player.Damage = float(Load["Game.Player.Damage"])
+        Game.Player.Speed = float(Load["Game.Player.Speed"])
+        Game.Player.SpeedY = float(Load["Game.Player.SpeedY"])
+        Game.Player.Level = int(Load["Game.Player.Level"])
+        Game.Player.Gold = int(Load["Game.Player.Gold"])
+        Game.Player.rect.x = float(Load["Game.Player.rect.x"])
+        Game.Player.rect.y = float(Load["Game.Player.rect.y"])
+        Game.Player.rect.height = int(Load["Game.Player.rect.height"])
+        Game.Player.rect.width = int(Load["Game.Player.rect.width"])
+        Game.Player.LastY = float(Load["Game.Player.LastY"])
+        Game.Player.YVector = float(Load["Game.Player.YVector"])
+        # Game.Player.Weapon1 = Load["Game.Player.Weapon1"]
+        # Game.Player.Weapon2 = Load["Game.Player.Weapon2"]
+        Game.Player.Force.lastx = float(Load["Game.Player.Force.lastx"])
+        Game.Player.Force.Base_Gravity = float(Load["Game.Player.Force.Base_Gravity"])
+        Game.Player.Force.x = float(Load["Game.Player.Force.x"])
+
+    except:
+        print("Error :/")
 
 
+# TKT -tremisabdoul
 def ReScale(Game, Screen):
     Game.DataX = pygame.Surface.get_width(Screen)
     Game.DataY = pygame.Surface.get_height(Screen)
-    Game.font = pygame.image.load("Assets/Visual/UI/BGPAINT.jpg")
     Game.Player.image = pygame.image.load("Assets/Visual/Mystique/resp1.png")
     Game.font = pygame.transform.scale(Game.font,
                                        (Game.Rescale(Game.font.get_width(), "X"),
@@ -499,6 +523,7 @@ def ReScale(Game, Screen):
                                                 Game.Rescale(Game.Player.image.get_height(), "Y")))
 
 
+# TKT -tremisabdoul
 def Animation(Game):
     if Game.Player.YVector:
         if Game.Player.YVector < 0:
@@ -511,6 +536,7 @@ def Animation(Game):
         StandAnimation(Game)
 
 
+# TKT -tremisabdoul
 def FallAnimation(Game):
     if Game.Player.Movement:
         Game.Player.image = pygame.image.load("Assets/Visual/Mystique/Jump/Jump2.png")
@@ -520,6 +546,7 @@ def FallAnimation(Game):
         Game.Player.image = pygame.transform.scale(Game.Player.image, (120, 120))
 
 
+# TKT -tremisabdoul
 def JumpAnimation(Game):
     if Game.Player.Movement:
         Game.Player.image = pygame.image.load("Assets/Visual/Mystique/Jump/Jump1.png")
@@ -529,6 +556,7 @@ def JumpAnimation(Game):
         Game.Player.image = pygame.transform.scale(Game.Player.image, (120, 120))
 
 
+# TKT -tremisabdoul
 def RunAnimation(Game):
     if Game.Player.Movement:
         if Game.Frame % 10 == 0:
@@ -552,6 +580,7 @@ def RunAnimation(Game):
                 Game.Player.image = pygame.transform.scale(Game.Player.image, (120, 120))
 
 
+# TKT -tremisabdoul
 def StandAnimation(Game):
     if Game.Player.Movement:
         if Game.Frame % 10 == 0:
@@ -575,7 +604,9 @@ def StandAnimation(Game):
                 Game.Player.image = pygame.transform.scale(Game.Player.image, (120, 120))
 
 
+# TKT -tremisabdoul
 def BackgroundScroll(Game):
     checker = Game.PositonPlayer % 1280
     if -10 < checker < 10:
-        Game.Background.rect.midtop = (640 + checker, 0)
+        Game.Background.rect.midtop = 640 - checker, 0
+        print(Game.Background.rect.width / 3 + checker, "= 640 + ", checker)
