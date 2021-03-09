@@ -32,6 +32,7 @@ class Game:
         self.Frame = 0
         self.Position = 0
         self.PositonPlayer = 0
+        self.PlateformNumber = 1
 
     def Rescale(self, value, XorY):
         if XorY == "X":
@@ -48,8 +49,6 @@ class Game:
         self.Mouse = Mouse()
         # UI devient une sous-classe de Game -tremisabdoul
         self.UI = UI()
-        # Plateforme devient une sous-classe de Game -tremisabdoul
-        self.Plateform = Plateform()
         # Monster devient une sous-classe de Game - steven
         self.Monster = Monster()
         self.Background = Background()
@@ -63,9 +62,8 @@ class Game:
         self.all_Player.add(self.Player)
 
         # Création du groupe composé de toutes les plateformes -Steven
-        self.all_platform = pygame.sprite.Group()
-        self.all_platform.add(self.Sol)
-        self.all_platform.add(self.Plateform)
+        self.all_plateform = pygame.sprite.Group()
+        self.all_plateform.add(self.Sol)
 
 
 """=====  Game.Player [2.0]  ====="""
@@ -87,7 +85,7 @@ class Player(pygame.sprite.Sprite, Game):
         self.Pv = 50
         self.MaxPv = 100
         self.Damage = 10
-        self.Speed = 3
+        self.Speed = 2
         self.SpeedY = 0
 
         self.Level = 0
@@ -210,10 +208,20 @@ class Force:
     def Gravity(self, Game0, Target):
 
         # Vérification des collisions entre Player et toutes les plateformes
-        Collide = Game0.Player.check_collisions(Target, Game0.all_platform)
+        Collide = Game0.Player.check_collisions(Target, Game0.all_plateform)
 
-        if not Collide or Target.YVector > 0 or Target.rect.bottom > Collide[0].rect.top + 33:
+        for item in Collide:
 
+            if item and Target.YVector < 0 and (Target.rect.bottom < item.rect.top + 33):
+
+                Target.SpeedY = 0  # Cancel le saut
+                self.Base_Gravity = 0  # Reset la force du sol (-33)
+                Replace = item.rect.y - (Target.rect.bottom)  # Y reset (Premier pixel du rect de plateforme)
+                print(Replace)
+                Game0.Player.YVector -= Replace
+                return Replace +1
+
+        if not Collide:
             if self.Base_Gravity < 33:  # Si force de sol > 0
                 self.Base_Gravity += 0.66  # Diminution de la force "Sol" (Ratio 0.66)
                 return self.Base_Gravity
@@ -221,13 +229,7 @@ class Force:
             else:
                 self.Base_Gravity = 33  # Force de sol = 0
                 return 33
-
-        else:
-            Target.SpeedY = 0  # Cancel le saut
-            self.Base_Gravity = 0  # Reset la force du sol (-33)
-            Replace = Collide[0].rect.y - (Target.rect.bottom - 5)  # Y reset (Premier pixel du rect de plateforme)
-            Game0.Player.YVector -= Replace
-            return Replace
+        return 0
 
 
 """=====  Game.Sol [3]  ====="""
@@ -261,6 +263,7 @@ class Plateform(pygame.sprite.Sprite, Game):
 
     def __init__(self):
         super().__init__()
+        import random as rd
 
         # Définit l'élément visuel en tant que variable -tremisabdoul
         self.image = pygame.image.load("Assets/Visual/plateforme_base.png")
@@ -272,8 +275,8 @@ class Plateform(pygame.sprite.Sprite, Game):
         self.rect = self.image.get_rect()
 
         # Position de la plateforme -tremisabdoul
-        self.rect.x = 200
-        self.rect.y = 500
+        self.rect.x = rd.randint(-20, 1900)
+        self.rect.y = rd.randint(100, 600)
 
 
 """=====  Game.Mouse [5]  ====="""

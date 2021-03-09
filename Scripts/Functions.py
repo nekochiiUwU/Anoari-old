@@ -21,7 +21,7 @@ def Jump(Game):
 
     if Game.Player.SpeedY < 0:
         Game.Player.rect.y += Game.Player.SpeedY
-        Game.Player.SpeedY += 0.66
+        Game.Player.SpeedY += 0.33
     else:
         Game.Player.SpeedY = 0
 
@@ -52,7 +52,6 @@ def Printer(Screen, Game):
     """Fonction d'affichage: ElÃ©ments in-game -tremisabdoul"""
 
     # DÃ©placement des Ã©lÃ©ments -tremisabdoul
-    Game.Plateform.rect.x -= Game.Position
     Game.Monster.rect.x -= Game.Position
     Game.Background.rect.x -= Game.Position
 
@@ -60,12 +59,15 @@ def Printer(Screen, Game):
     Screen.fill((60, 60, 120))
     # Screen.blit(Game.Background.image, Game.Background.rect)
     Screen.blit(Game.Sol.image, Game.Sol.rect)
-    Screen.blit(Game.Plateform.image, Game.Plateform.rect)
+    # Screen.blit(Game.Plateform.image, Game.Plateform.rect)
     Screen.blit(Game.Player.image, Game.Player.rect)
     Screen.blit(Game.Monster.image, Game.Monster.rect)
+    for nb in Game.all_plateform:
+        nb.rect.x -= Game.Position
+        Screen.blit(nb.image, nb.rect)
+        Draw_rect(Screen, nb)
     Draw_rect(Screen, Game.Player)
     Draw_rect(Screen, Game.Monster)
-    Draw_rect(Screen, Game.Plateform)
     MousePriter(Screen, Game)
 
 
@@ -206,8 +208,8 @@ def inGame(Game, time, Screen, police1):
 
                 # Active le Jump() -tremisabdoul
                 if Game.pressed.get(pygame.K_SPACE) \
-                        and Game.Player.check_collisions(Game.Player, Game.all_platform):
-                    Game.Player.SpeedY = -24
+                        and Game.Player.check_collisions(Game.Player, Game.all_plateform):
+                    Game.Player.SpeedY = -20
 
                 # Activation de Pause -tremisabdoul
                 if Game.pressed.get(pygame.K_ESCAPE):
@@ -266,14 +268,15 @@ def inGame(Game, time, Screen, police1):
 
         BackgroundScroll(Game)
 
+        if len(Game.all_plateform) < 10:
+            NewPlatform(Game)
+
         """ ===== Printers ===== """
 
         Animation(Game)
 
         # Print les elements In-Game du jeu  -tremisabdoul
         Printer(Screen, Game)
-
-
 
         """ ===== Monster Instruction ===== """
 
@@ -550,10 +553,10 @@ def Data_Load(Game, Screen, police1):
         Loading = LoadingScreen("I'm actually loading your data", Screen, police1, 42, Loading)
         Game.Player.Force.x = float(Load["Game.Player.Force.x"])
         Loading = LoadingScreen("I'm actually loading your data", Screen, police1, 42, Loading)
-
     except:
         print("Error :/")
         Loading = LoadingScreen("ERROR on he loading", Screen, police1, 0, Loading)
+
     print(Loading)
 
 
@@ -666,7 +669,8 @@ def LoadingScreen(Message, Screen, police1, Ratio, Loading):
 
     image = pygame.image.load("Assets/Visual/UI/Load.png")
     rect = image.get_rect()
-    image = pygame.transform.scale(image, (int(Loading / Ratio * pygame.Surface.get_rect(Screen).width/2), int(pygame.Surface.get_rect(Screen).height/40)))
+    image = pygame.transform.scale(image, (int(Loading / Ratio * pygame.Surface.get_rect(Screen).width/2),
+                                           int(pygame.Surface.get_rect(Screen).height/40)))
     rect = image.get_rect(center=rect.center)
     rect.center = pygame.Surface.get_rect(Screen).center
     Screen.blit(image, (rect.x, rect.y))
@@ -690,8 +694,16 @@ def LoadingScreen(Message, Screen, police1, Ratio, Loading):
 
     return Loading
 
+
 def Draw_rect(Screen, Target):
     pygame.draw.lines(Screen, (200, 150, 100), True, (
-    Target.rect.midbottom, Target.rect.midtop, Target.rect.topleft, Target.rect.midleft, Target.rect.bottomleft,
-    Target.rect.bottomright, Target.rect.topright, Target.rect.topleft, Target.rect.midleft, Target.rect.midright,
-    Target.rect.bottomright))
+        Target.rect.midbottom, Target.rect.midtop, Target.rect.topleft, Target.rect.midleft, Target.rect.bottomleft,
+        Target.rect.bottomright, Target.rect.topright, Target.rect.topleft, Target.rect.midleft, Target.rect.midright,
+        Target.rect.bottomright))
+
+
+def NewPlatform(Game):
+    from Scripts.Classes import Plateform
+    Plateform = Plateform()
+    Game.all_plateform.add(Plateform)
+    Game.PlateformNumber += 1
