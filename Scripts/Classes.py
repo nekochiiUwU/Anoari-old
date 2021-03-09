@@ -125,6 +125,8 @@ class Player(pygame.sprite.Sprite, Game):
         self.MaxY = 740
         self.MovementKey = False
 
+
+
     #   def Check_Collisions(rectA, rectB):
     #       if rectB.right < rectA.left:
     #           # rectB est à gauche
@@ -223,7 +225,9 @@ class Force:
         else:
             Target.SpeedY = 0  # Cancel le saut
             self.Base_Gravity = 0  # Reset la force du sol (-33)
-            return Collide[0].rect.y - (Target.rect.bottom - 5)  # Y reset (Premier pixel du rect de plateforme)
+            Replace = Collide[0].rect.y - (Target.rect.bottom - 5)  # Y reset (Premier pixel du rect de plateforme)
+            Game0.Player.YVector -= Replace
+            return Replace
 
 
 """=====  Game.Sol [3]  ====="""
