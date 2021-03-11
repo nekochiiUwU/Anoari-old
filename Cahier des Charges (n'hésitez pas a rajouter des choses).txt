@@ -17,7 +17,7 @@ speedY joueur			    | = Game.Player.SpeedY
 				            |
 niveau joueur?			    | = Game.Player.Level (a finir)
 				            |
-argent joueur?			    | = //////////
+argent joueur?			    | = Game.Player.
 				            |
 arme joueur?			    | = //////////
 				            |

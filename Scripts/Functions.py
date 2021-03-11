@@ -5,9 +5,9 @@ import pygame
 import os
 
 
-# Crée l'écran -tremisabdoul
+# CrÃ©e l'Ã©cran -tremisabdoul
 def Display():
-    """Fonction Permettent l'affichage de l'écran -tremisabdoul"""
+    """Fonction Permettent l'affichage de l'Ã©cran -tremisabdoul"""
 
     pygame.init()
     pygame.display.set_caption("Anoari")
@@ -21,13 +21,13 @@ def Jump(Game):
 
     if Game.Player.SpeedY < 0:
         Game.Player.rect.y += Game.Player.SpeedY
-        Game.Player.SpeedY += 0.66
+        Game.Player.SpeedY += 0.33
     else:
         Game.Player.SpeedY = 0
 
 
 def DeplacementX(Game):
-    """Fonction de déplacement [gauche/droite] :  [ Left: LEFT / Q ], [ Right: RIGHT / D ] -tremisabdoul"""
+    """Fonction de dÃ©placement [gauche/droite] :  [ Left: LEFT / Q ], [ Right: RIGHT / D ] -tremisabdoul"""
 
     Game.Player.MovementKey = False
     if Game.pressed.get(pygame.K_d) and Game.Player.rect.x < Game.Player.MaxX \
@@ -49,32 +49,38 @@ def MousePriter(Screen, Game):
 
 
 def Printer(Screen, Game):
-    """Fonction d'affichage: Eléments in-game -tremisabdoul"""
+    """Fonction d'affichage: ElÃ©ments in-game -tremisabdoul"""
 
-    # Déplacement des éléments -tremisabdoul
-    Game.Plateform.rect.x -= Game.Position
+    # DÃ©placement des Ã©lÃ©ments -tremisabdoul
     Game.Monster.rect.x -= Game.Position
     Game.Background.rect.x -= Game.Position
 
-    # Affiche a l'écran des éléments -tremisabdoul
+    # Affiche a l'Ã©cran des Ã©lÃ©ments -tremisabdoul
+    # Screen.fill((60, 60, 120))
     Screen.blit(Game.Background.image, Game.Background.rect)
     Screen.blit(Game.Sol.image, Game.Sol.rect)
-    Screen.blit(Game.Plateform.image, Game.Plateform.rect)
+    # Screen.blit(Game.Plateform.image, Game.Plateform.rect)
     Screen.blit(Game.Player.image, Game.Player.rect)
     Screen.blit(Game.Monster.image, Game.Monster.rect)
+    for nb in Game.all_plateform:
+        nb.rect.x -= Game.Position
+        Screen.blit(nb.image, nb.rect)
+        Draw_rect(Screen, nb)
+    Draw_rect(Screen, Game.Player)
+    Draw_rect(Screen, Game.Monster)
     MousePriter(Screen, Game)
 
 
 # Print: -tremisabdoul
 def UIPrinter(Screen, police1, Game):
-    """Fonction d'affichage: Eléments d'interface in-game -tremisabdoul"""
+    """Fonction d'affichage: ElÃ©ments d'interface in-game -tremisabdoul"""
 
-    # Permet de récupérer le nombre de frames a la seconde -tremisabdoul -tremisabdoul
+    # Permet de rÃ©cupÃ©rer le nombre de frames a la seconde -tremisabdoul -tremisabdoul
     frame = 1
     fps = frame / Game.Tickchecker
     fps = "FPS : " + str(round(fps))
 
-    # Crée une couleur plus ou moins rouge en fonction des PV restants -tremisabdoul
+    # CrÃ©e une couleur plus ou moins rouge en fonction des PV restants -tremisabdoul
     Color = (Game.Player.Pv / Game.Player.MaxPv) * 255
     LifeColor = [255, Color, Color]
 
@@ -85,20 +91,20 @@ def UIPrinter(Screen, police1, Game):
     opti = str(str(opti) + " / " + str(Game.Player.MaxPv) + " PV")
     opti = police1.render(str(opti), True, LifeColor)
 
-    opti1 = round((Game.Player.Pv / Game.Player.MaxPv) * 75)
-    opti1 = opti1 * "♫"
+    opti1 = round((Game.Player.Pv / Game.Player.MaxPv) * 100)
+    opti1 = opti1 * "|"
     opti1 = police1.render(str(opti1), True, LifeColor)
 
-    # Affiche a l'écran les éléments suivents -tremisabdoul
+    # Affiche a l'Ã©cran les Ã©lÃ©ments suivents -tremisabdoul
     Screen.blit(printfps, (6, 34))
     Screen.blit(opti, (15 + Color / 50, 48 + Color / 50))
     Screen.blit(opti1, (15 + Color / 50, 60 + Color / 50))
 
 
 def pauseblit(Screen, Game):
-    """Fonction d'affichage: Eléments de pause -tremisabdoul"""
+    """Fonction d'affichage: ElÃ©ments de pause -tremisabdoul"""
 
-    Screen.blit(Game.Background.image, Game.Background.rect)
+    # Screen.blit(Game.Background.image, Game.Background.rect)
     # Screen.blit(Game.UI.baselayer, (0, 0))  # << Prends bcp de perf -tremisabdoul
     Screen.blit(Game.UI.resumebutton, Game.UI.resumebuttonrect)
     Screen.blit(Game.UI.savebutton, Game.UI.savebuttonrect)
@@ -132,11 +138,11 @@ def pause(Game, Screen, time, police1):
             # Elements clicables: -tremisabdoul
             elif event.type == pygame.MOUSEBUTTONDOWN:
                 if Game.UI.resumebuttonrect.collidepoint(event.pos):
-                    Data_Load(Game)
+                    Data_Load(Game, Screen, police1)
                     Game.Pause = False
                     Game.InGame = True
                 elif Game.UI.savebuttonrect.collidepoint(event.pos):
-                    Data_Save(Game)
+                    Data_Save(Game, Screen, police1)
                 elif Game.UI.settingsbuttonrect.collidepoint(event.pos):
                     Game.Pause = False
                     Game.Option = True
@@ -150,15 +156,16 @@ def pause(Game, Screen, time, police1):
                 Game.running = False
                 pygame.quit()
 
-        # Permet de récupérer le nombre de frames a la seconde -tremisabdoul
+        # Permet de rÃ©cupÃ©rer le nombre de frames a la seconde -tremisabdoul
         Game.Tickchecker = time.time()
         Game.Tickchecker -= tick
 
-        # Affichage des éléments graphiques -tremisabdoul
+        # Affichage des elements graphiques -tremisabdoul
+        Screen.fill((40, 40, 40))
         pauseblit(Screen, Game)
         MousePriter(Screen, Game)
 
-        # Affichage du rendu graphique sur la fenètre -tremisabdoul
+        # Affichage du rendu graphique sur la fenÃ¨tre -tremisabdoul
         pygame.display.flip()
 
         # Compteur de FPS et lock de FPS -tremisabdoul
@@ -195,14 +202,15 @@ def inGame(Game, time, Screen, police1):
         # Check les input et instances -tremisabdoul
         for event in pygame.event.get():
 
-            # Touches enfoncées -tremisabdoul
+            # Touches enfoncÃ©es -tremisabdoul
             if event.type == pygame.KEYDOWN:
                 Game.pressed[event.key] = True
 
                 # Active le Jump() -tremisabdoul
                 if Game.pressed.get(pygame.K_SPACE) \
-                        and Game.Player.check_collisions(Game.Player, Game.all_platform):
-                    Game.Player.SpeedY = -24
+                        and Game.Player.check_collisions(Game.Player, Game.all_plateform)\
+                                and Game.Player.YVector ==0:
+                    Game.Player.SpeedY = -20
 
                 # Activation de Pause -tremisabdoul
                 if Game.pressed.get(pygame.K_ESCAPE):
@@ -219,14 +227,14 @@ def inGame(Game, time, Screen, police1):
                         pygame.display.set_mode((Game.DataX, Game.DataY), pygame.RESIZABLE)
                         pygame.display.toggle_fullscreen()
                         pygame.display.set_mode((1280, 720), pygame.RESIZABLE)
-                        os.environ['SDL_VIDEO_WINDOW_POS'] = "%d,%d" % (10, 60)
+                        os.environ['SDL_VIDEO_WINDOW_POS'] = "%d,%d" % (10, 10)
                         Game.Fullscreen = 0
 
-            # Touches relachées -tremisabdoul
+            # Touches relachÃ©es -tremisabdoul
             elif event.type == pygame.KEYUP:
                 Game.pressed[event.key] = False
 
-            # Permet le resize de l'écran -tremisabdoul
+            # Permet le resize de l'Ã©cran -tremisabdoul
             if event.type == pygame.VIDEORESIZE:
                 ReScale(Game, Screen)
 
@@ -246,22 +254,27 @@ def inGame(Game, time, Screen, police1):
         if Game.Player.SpeedY:
             Jump(Game)
 
-        # Fonction de déplacement gauche / droite -tremisabdoul
+        # Fonction de dÃ©placement gauche / droite -tremisabdoul
         DeplacementX(Game)
 
-        # Gravité -tremisabdoul
+        # GravitÃ© -tremisabdoul
         Game.Player.rect.y += Game.Player.Force.Gravity(Game, Game.Player)
 
-        # Déplacements de player -tremisabdoul
-        #Game.Player.rect.x += Game.Player.Force.AccelerationFunctionX()
+        # DÃ©placements de player -tremisabdoul
+        # Game.Player.rect.x += Game.Player.Force.AccelerationFunctionX()
         Game.Position = Game.Player.Force.AccelerationFunctionX()
         Game.Position = round(Game.Position)
-        Game.PositonPlayer += Game.Position
-        print(Game.PositonPlayer)
+        Game.PositionPlayer += Game.Position
+        print(Game.PositionPlayer)
+
         BackgroundScroll(Game)
-        Animation(Game)
+
+        if len(Game.all_plateform) < 10:
+            NewPlatform(Game)
 
         """ ===== Printers ===== """
+
+        Animation(Game)
 
         # Print les elements In-Game du jeu  -tremisabdoul
         Printer(Screen, Game)
@@ -277,7 +290,7 @@ def inGame(Game, time, Screen, police1):
                 else:
                     Monster.Move_Right()
             else:
-                if Collide[0].rect.x > Game.Player.rect.x:
+                if Collide[0].rect.center[0] > Game.Player.rect.center[0]:
                     Monster.Direction = 0
                     Monster.Move_Right()
                 else:
@@ -293,12 +306,12 @@ def inGame(Game, time, Screen, police1):
         YVector = police1.render("Y Vector checker: " + str(Game.Player.YVector), True, (141, 100, 200))
         Screen.blit(YVector, (100, 34))
 
-        # Met a jour l'affichage (rafraîchissement de l'écran) -tremisabdoul
+        # Met a jour l'affichage (rafraÃ®chissement de l'Ã©cran) -tremisabdoul
         pygame.display.flip()
 
         """ ===== Frame Limiter ===== """
 
-        # Permet d'avoir des frames régulières -tremisabdoul
+        # Permet d'avoir des frames rÃ©guliÃ¨res -tremisabdoul
         Game.Tickchecker = time.time()
         Game.Tickchecker -= tick
 
@@ -308,7 +321,7 @@ def inGame(Game, time, Screen, police1):
 
 
 def LobbyBlit(Screen, Game):
-    """Fonction d'affichage: Eléments du lobby"""
+    """Fonction d'affichage: ElÃ©ments du lobby"""
     Screen.blit(Game.UI.lobbybackground, (0, 0))
     Screen.blit(Game.UI.lobby_loadbutton, Game.UI.lobby_loadbuttonrect)
     Screen.blit(Game.UI.lobby_playbutton, Game.UI.lobby_playbuttonrect)
@@ -348,7 +361,7 @@ def Lobby(Game, Screen, time, police1):
                 Game.running = False
                 pygame.quit()
 
-        # Permet de récupérer le nombre de frames a la seconde -tremisabdoul
+        # Permet de rÃ©cupÃ©rer le nombre de frames a la seconde -tremisabdoul
         tickchecker = time.time()
         tickchecker -= tick
 
@@ -393,7 +406,7 @@ def Option(Game, Screen, time, police1, police2):
                 Game.running = False
                 pygame.quit()
 
-        # Permet de récupérer le nombre de frames a la seconde -tremisabdoul
+        # Permet de rÃ©cupÃ©rer le nombre de frames a la seconde -tremisabdoul
         tickchecker = time.time()
         tickchecker -= tick
 
@@ -401,8 +414,8 @@ def Option(Game, Screen, time, police1, police2):
 
         Screen.fill((0, 0, 0))
 
-        # Affichage du nécessaire pour le texte des Options -steven
-        Texte('Résolution : ', police2, (255, 255, 255), Screen, 100, 100)
+        # Affichage du nÃ©cessaire pour le texte des Options -steven
+        Texte('RÃ©solution : ', police2, (255, 255, 255), Screen, 100, 100)
         Texte('Volume : ', police2, (255, 255, 255), Screen, 100, 225)
         Texte('Controles : ', police2, (255, 255, 255), Screen, 100, 350)
 
@@ -427,9 +440,15 @@ def Texte(text, police2, color, Screen, x, y):
 
 
 # TKT -tremisabdoul
-def Data_Save(Game):
+def Data_Save(Game, Screen, police1):
+
+    Loading = 0
+
+    Loading = LoadingScreen("I'm actually saving your data", Screen, police1, 7, Loading)
 
     import csv
+
+    Loading = LoadingScreen("I'm actually saving your data", Screen, police1, 7, Loading)
 
     Datalist = {
         "Variable": "Value",
@@ -453,61 +472,110 @@ def Data_Save(Game):
         "Game.Player.rect.width": Game.Player.rect.width,
         "Game.Player.LastY": Game.Player.LastY,
         "Game.Player.YVector": Game.Player.YVector,
-        "Game.Player.Weapon1": Game.Player.Weapon1,
-        "Game.Player.Weapon2": Game.Player.Weapon2,
+        "Game.PositionPlayer": Game.PositionPlayer,
         "# Phisics": "# Actual Movement of Player -tremisabdoul",
         "Game.Player.Force.lastx": Game.Player.Force.lastx,
         "Game.Player.Force.Base_Gravity": Game.Player.Force.Base_Gravity,
         "Game.Player.Force.x": Game.Player.Force.x
     }
 
+    Loading = LoadingScreen("I'm actually saving your data", Screen, police1, 7, Loading)
+
     text_file = open("save1.csv", "w+", newline="\n")
+
+    Loading = LoadingScreen("I'm actually saving your data", Screen, police1, 7, Loading)
 
     with text_file:
         Writer = csv.writer(text_file, quoting=2)
         Writer.writerows(Datalist.items())
 
+        Loading = LoadingScreen("I'm actually saving your data", Screen, police1, 7, Loading)
+
     text_file.close()
+
+    Loading = LoadingScreen("I'm actually saving your data", Screen, police1, 7, Loading)
+
     del csv
 
-    print("Your Data has been\b saved\b! : \n",text_file, "\n\n")
+    LoadingScreen("I'm actually saving your data", Screen, police1, 7, Loading)
+
+    print("Your Data has been saved!\n\n")
+
+    return 0
 
 
 # TKT -tremisabdoul
-def Data_Load(Game):
+def Data_Load(Game, Screen, police1):
 
+    Loading = 0
+    Replace = Game.PositionPlayer
     import csv
+
+    Loading = LoadingScreen("I'm actually loading your data", Screen, police1, 43, Loading)
 
     file = "save1.csv"
     CSV_file = csv.DictReader(open(file, 'r'))
-
     Load = {}
+
+    Loading = LoadingScreen("I'm actually loading your data", Screen, police1, 43, Loading)
 
     for lines in CSV_file:
         Load[lines["Variable"]] = lines["Value"]
-    print(Load)
+        Loading = LoadingScreen("I'm actually loading your data", Screen, police1, 43, Loading)
     try:
+        Loading = LoadingScreen("I'm actually loading your data", Screen, police1, 43, Loading)
         Game.Player.Pv = int(Load["Game.Player.Pv"])
+        Loading = LoadingScreen("I'm actually loading your data", Screen, police1, 43, Loading)
         Game.Player.MaxPv = int(Load["Game.Player.MaxPv"])
+        Loading = LoadingScreen("I'm actually loading your data", Screen, police1, 43, Loading)
         Game.Player.Damage = float(Load["Game.Player.Damage"])
+        Loading = LoadingScreen("I'm actually loading your data", Screen, police1, 43, Loading)
         Game.Player.Speed = float(Load["Game.Player.Speed"])
+        Loading = LoadingScreen("I'm actually loading your data", Screen, police1, 43, Loading)
         Game.Player.SpeedY = float(Load["Game.Player.SpeedY"])
+        Loading = LoadingScreen("I'm actually loading your data", Screen, police1, 43, Loading)
         Game.Player.Level = int(Load["Game.Player.Level"])
+        Loading = LoadingScreen("I'm actually loading your data", Screen, police1, 43, Loading)
         Game.Player.Gold = int(Load["Game.Player.Gold"])
+        Loading = LoadingScreen("I'm actually loading your data", Screen, police1, 43, Loading)
         Game.Player.rect.x = float(Load["Game.Player.rect.x"])
+        Loading = LoadingScreen("I'm actually loading your data", Screen, police1, 43, Loading)
         Game.Player.rect.y = float(Load["Game.Player.rect.y"])
+        Loading = LoadingScreen("I'm actually loading your data", Screen, police1, 43, Loading)
         Game.Player.rect.height = int(Load["Game.Player.rect.height"])
+        Loading = LoadingScreen("I'm actually loading your data", Screen, police1, 43, Loading)
         Game.Player.rect.width = int(Load["Game.Player.rect.width"])
+        Loading = LoadingScreen("I'm actually loading your data", Screen, police1, 43, Loading)
         Game.Player.LastY = float(Load["Game.Player.LastY"])
+        Loading = LoadingScreen("I'm actually loading your data", Screen, police1, 43, Loading)
         Game.Player.YVector = float(Load["Game.Player.YVector"])
-        # Game.Player.Weapon1 = Load["Game.Player.Weapon1"]
-        # Game.Player.Weapon2 = Load["Game.Player.Weapon2"]
+        Loading = LoadingScreen("I'm actually loading your data", Screen, police1, 43, Loading)
+        Game.PositionPlayer = int(Load["Game.PositionPlayer"])
+        Loading = LoadingScreen("I'm actually loading your data", Screen, police1, 43, Loading)
         Game.Player.Force.lastx = float(Load["Game.Player.Force.lastx"])
+        Loading = LoadingScreen("I'm actually loading your data", Screen, police1, 43, Loading)
         Game.Player.Force.Base_Gravity = float(Load["Game.Player.Force.Base_Gravity"])
+        Loading = LoadingScreen("I'm actually loading your data", Screen, police1, 43, Loading)
         Game.Player.Force.x = float(Load["Game.Player.Force.x"])
-
+        Loading = LoadingScreen("I'm actually loading your data", Screen, police1, 43, Loading)
     except:
         print("Error :/")
+        Loading = LoadingScreen("ERROR on the loading", Screen, police1, 0, Loading)
+        return "Error"
+
+    print(Loading)
+    Loading = LoadingScreen("I'm actually loading your data", Screen, police1, 43, Loading)
+
+    for mob in Game.all_Monster:
+        mob.rect.x -= Game.PositionPlayer - Replace
+        Loading = LoadingScreen("I'm actually loading your data", Screen, police1, 43, Loading)
+
+    for plateform in Game.all_plateform:
+        plateform.rect.x -= Game.PositionPlayer - Replace
+        Loading = LoadingScreen("I'm actually loading your data", Screen, police1, 43, Loading)
+    import time
+    time.sleep(1)
+    return 0
 
 
 # TKT -tremisabdoul
@@ -559,7 +627,7 @@ def JumpAnimation(Game):
 # TKT -tremisabdoul
 def RunAnimation(Game):
     if Game.Player.Movement:
-        if Game.Frame % 10 == 0:
+        # if Game.Frame % 10 == 0:
             if Game.ActualFrame <= 0:
                 Game.ActualFrame = 1
                 Game.Player.image = pygame.image.load("Assets/Visual/Mystique/Run/Run1.png")
@@ -569,7 +637,7 @@ def RunAnimation(Game):
                 Game.Player.image = pygame.image.load("Assets/Visual/Mystique/Run/Run2.png")
                 Game.Player.image = pygame.transform.scale(Game.Player.image, (120, 120))
     else:
-        if Game.Frame % 10 == 0:
+        # if Game.Frame % 10 == 0:
             if Game.ActualFrame <= 0:
                 Game.ActualFrame = 1
                 Game.Player.image = pygame.image.load("Assets/Visual/Mystique/Left/Run/Run1.png")
@@ -583,7 +651,7 @@ def RunAnimation(Game):
 # TKT -tremisabdoul
 def StandAnimation(Game):
     if Game.Player.Movement:
-        if Game.Frame % 10 == 0:
+        # if Game.Frame % 10 == 0:
             if Game.ActualFrame <= 0:
                 Game.ActualFrame = 1
                 Game.Player.image = pygame.image.load("Assets/Visual/Mystique/resp2.png")
@@ -593,7 +661,7 @@ def StandAnimation(Game):
                 Game.Player.image = pygame.image.load("Assets/Visual/Mystique/resp1.png")
                 Game.Player.image = pygame.transform.scale(Game.Player.image, (120, 120))
     else:
-        if Game.Frame % 10 == 0:
+        # if Game.Frame % 10 == 0:
             if Game.ActualFrame <= 0:
                 Game.ActualFrame = 1
                 Game.Player.image = pygame.image.load("Assets/Visual/Mystique/Left/resp2.png")
@@ -606,7 +674,53 @@ def StandAnimation(Game):
 
 # TKT -tremisabdoul
 def BackgroundScroll(Game):
-    checker = Game.PositonPlayer % 1280
+    checker = Game.PositionPlayer % 1280
     if -10 < checker < 10:
         Game.Background.rect.midtop = 640 - checker, 0
         print(Game.Background.rect.width / 3 + checker, "= 640 + ", checker)
+
+
+def LoadingScreen(Message, Screen, police1, Ratio, Loading):
+    import random
+    Loading += 1
+    Screen.fill((0, 0, 0))
+
+    image = pygame.image.load("Assets/Visual/UI/Load.png")
+    rect = image.get_rect()
+    image = pygame.transform.scale(image, (int(Loading / Ratio * pygame.Surface.get_rect(Screen).width/2),
+                                           int(pygame.Surface.get_rect(Screen).height/40)))
+    rect = image.get_rect(center=rect.center)
+    rect.center = pygame.Surface.get_rect(Screen).center
+    Screen.blit(image, (rect.x, rect.y))
+
+    Texte("Please Wait: " + str(Loading) + " of " + str(Ratio), police1,
+          (random.randint(128, 255), random.randint(128, 255), random.randint(128, 255)),
+          Screen, random.randint(450, pygame.Surface.get_rect(Screen).width-512),
+          pygame.Surface.get_rect(Screen).height/4)
+
+    Texte(Message, police1,
+          (random.randint(128, 255), random.randint(128, 255), random.randint(128, 255)),
+          Screen, random.randint(450, pygame.Surface.get_rect(Screen).width-512),
+          pygame.Surface.get_rect(Screen).height/3)
+
+    Texte(":)", police1,
+          (random.randint(128, 255), random.randint(128, 255), random.randint(128, 255)),
+          Screen, random.randint(510, pygame.Surface.get_rect(Screen).width-512),
+          pygame.Surface.get_rect(Screen).height/2.5)
+
+    pygame.display.flip()
+
+    return Loading
+
+
+def Draw_rect(Screen, Target):
+    pygame.draw.lines(Screen, (200, 150, 100), True, (
+        Target.rect.midbottom, Target.rect.midtop, Target.rect.topleft, Target.rect.bottomleft, Target.rect.bottomright,
+        Target.rect.topright, Target.rect.topleft, Target.rect.midleft, Target.rect.midright, Target.rect.bottomright))
+
+
+def NewPlatform(Game):
+    from Scripts.Classes import Plateform
+    Plateform = Plateform()
+    Game.all_plateform.add(Plateform)
+    Game.PlateformNumber += 1
