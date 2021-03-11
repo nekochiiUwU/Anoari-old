@@ -56,8 +56,8 @@ def Printer(Screen, Game):
     Game.Background.rect.x -= Game.Position
 
     # Affiche a l'Ã©cran des Ã©lÃ©ments -tremisabdoul
-    Screen.fill((60, 60, 120))
-    # Screen.blit(Game.Background.image, Game.Background.rect)
+    # Screen.fill((60, 60, 120))
+    Screen.blit(Game.Background.image, Game.Background.rect)
     Screen.blit(Game.Sol.image, Game.Sol.rect)
     # Screen.blit(Game.Plateform.image, Game.Plateform.rect)
     Screen.blit(Game.Player.image, Game.Player.rect)
@@ -208,7 +208,8 @@ def inGame(Game, time, Screen, police1):
 
                 # Active le Jump() -tremisabdoul
                 if Game.pressed.get(pygame.K_SPACE) \
-                        and Game.Player.check_collisions(Game.Player, Game.all_plateform):
+                        and Game.Player.check_collisions(Game.Player, Game.all_plateform)\
+                                and Game.Player.YVector ==0:
                     Game.Player.SpeedY = -20
 
                 # Activation de Pause -tremisabdoul
@@ -226,7 +227,7 @@ def inGame(Game, time, Screen, police1):
                         pygame.display.set_mode((Game.DataX, Game.DataY), pygame.RESIZABLE)
                         pygame.display.toggle_fullscreen()
                         pygame.display.set_mode((1280, 720), pygame.RESIZABLE)
-                        os.environ['SDL_VIDEO_WINDOW_POS'] = "%d,%d" % (10, 60)
+                        os.environ['SDL_VIDEO_WINDOW_POS'] = "%d,%d" % (10, 10)
                         Game.Fullscreen = 0
 
             # Touches relachÃ©es -tremisabdoul
@@ -263,8 +264,8 @@ def inGame(Game, time, Screen, police1):
         # Game.Player.rect.x += Game.Player.Force.AccelerationFunctionX()
         Game.Position = Game.Player.Force.AccelerationFunctionX()
         Game.Position = round(Game.Position)
-        Game.PositonPlayer += Game.Position
-        print(Game.PositonPlayer)
+        Game.PositionPlayer += Game.Position
+        print(Game.PositionPlayer)
 
         BackgroundScroll(Game)
 
@@ -471,6 +472,7 @@ def Data_Save(Game, Screen, police1):
         "Game.Player.rect.width": Game.Player.rect.width,
         "Game.Player.LastY": Game.Player.LastY,
         "Game.Player.YVector": Game.Player.YVector,
+        "Game.PositionPlayer": Game.PositionPlayer,
         "# Phisics": "# Actual Movement of Player -tremisabdoul",
         "Game.Player.Force.lastx": Game.Player.Force.lastx,
         "Game.Player.Force.Base_Gravity": Game.Player.Force.Base_Gravity,
@@ -506,58 +508,74 @@ def Data_Save(Game, Screen, police1):
 def Data_Load(Game, Screen, police1):
 
     Loading = 0
+    Replace = Game.PositionPlayer
     import csv
 
-    Loading = LoadingScreen("I'm actually loading your data", Screen, police1, 42, Loading)
+    Loading = LoadingScreen("I'm actually loading your data", Screen, police1, 43, Loading)
 
     file = "save1.csv"
     CSV_file = csv.DictReader(open(file, 'r'))
     Load = {}
 
-    Loading = LoadingScreen("I'm actually loading your data", Screen, police1, 42, Loading)
+    Loading = LoadingScreen("I'm actually loading your data", Screen, police1, 43, Loading)
 
     for lines in CSV_file:
         Load[lines["Variable"]] = lines["Value"]
-        Loading = LoadingScreen("I'm actually loading your data", Screen, police1, 42, Loading)
+        Loading = LoadingScreen("I'm actually loading your data", Screen, police1, 43, Loading)
     try:
-        Loading = LoadingScreen("I'm actually loading your data", Screen, police1, 42, Loading)
+        Loading = LoadingScreen("I'm actually loading your data", Screen, police1, 43, Loading)
         Game.Player.Pv = int(Load["Game.Player.Pv"])
-        Loading = LoadingScreen("I'm actually loading your data", Screen, police1, 42, Loading)
+        Loading = LoadingScreen("I'm actually loading your data", Screen, police1, 43, Loading)
         Game.Player.MaxPv = int(Load["Game.Player.MaxPv"])
-        Loading = LoadingScreen("I'm actually loading your data", Screen, police1, 42, Loading)
+        Loading = LoadingScreen("I'm actually loading your data", Screen, police1, 43, Loading)
         Game.Player.Damage = float(Load["Game.Player.Damage"])
-        Loading = LoadingScreen("I'm actually loading your data", Screen, police1, 42, Loading)
+        Loading = LoadingScreen("I'm actually loading your data", Screen, police1, 43, Loading)
         Game.Player.Speed = float(Load["Game.Player.Speed"])
-        Loading = LoadingScreen("I'm actually loading your data", Screen, police1, 42, Loading)
+        Loading = LoadingScreen("I'm actually loading your data", Screen, police1, 43, Loading)
         Game.Player.SpeedY = float(Load["Game.Player.SpeedY"])
-        Loading = LoadingScreen("I'm actually loading your data", Screen, police1, 42, Loading)
+        Loading = LoadingScreen("I'm actually loading your data", Screen, police1, 43, Loading)
         Game.Player.Level = int(Load["Game.Player.Level"])
-        Loading = LoadingScreen("I'm actually loading your data", Screen, police1, 42, Loading)
+        Loading = LoadingScreen("I'm actually loading your data", Screen, police1, 43, Loading)
         Game.Player.Gold = int(Load["Game.Player.Gold"])
-        Loading = LoadingScreen("I'm actually loading your data", Screen, police1, 42, Loading)
+        Loading = LoadingScreen("I'm actually loading your data", Screen, police1, 43, Loading)
         Game.Player.rect.x = float(Load["Game.Player.rect.x"])
-        Loading = LoadingScreen("I'm actually loading your data", Screen, police1, 42, Loading)
+        Loading = LoadingScreen("I'm actually loading your data", Screen, police1, 43, Loading)
         Game.Player.rect.y = float(Load["Game.Player.rect.y"])
-        Loading = LoadingScreen("I'm actually loading your data", Screen, police1, 42, Loading)
+        Loading = LoadingScreen("I'm actually loading your data", Screen, police1, 43, Loading)
         Game.Player.rect.height = int(Load["Game.Player.rect.height"])
-        Loading = LoadingScreen("I'm actually loading your data", Screen, police1, 42, Loading)
+        Loading = LoadingScreen("I'm actually loading your data", Screen, police1, 43, Loading)
         Game.Player.rect.width = int(Load["Game.Player.rect.width"])
-        Loading = LoadingScreen("I'm actually loading your data", Screen, police1, 42, Loading)
+        Loading = LoadingScreen("I'm actually loading your data", Screen, police1, 43, Loading)
         Game.Player.LastY = float(Load["Game.Player.LastY"])
-        Loading = LoadingScreen("I'm actually loading your data", Screen, police1, 42, Loading)
+        Loading = LoadingScreen("I'm actually loading your data", Screen, police1, 43, Loading)
         Game.Player.YVector = float(Load["Game.Player.YVector"])
-        Loading = LoadingScreen("I'm actually loading your data", Screen, police1, 42, Loading)
+        Loading = LoadingScreen("I'm actually loading your data", Screen, police1, 43, Loading)
+        Game.PositionPlayer = int(Load["Game.PositionPlayer"])
+        Loading = LoadingScreen("I'm actually loading your data", Screen, police1, 43, Loading)
         Game.Player.Force.lastx = float(Load["Game.Player.Force.lastx"])
-        Loading = LoadingScreen("I'm actually loading your data", Screen, police1, 42, Loading)
+        Loading = LoadingScreen("I'm actually loading your data", Screen, police1, 43, Loading)
         Game.Player.Force.Base_Gravity = float(Load["Game.Player.Force.Base_Gravity"])
-        Loading = LoadingScreen("I'm actually loading your data", Screen, police1, 42, Loading)
+        Loading = LoadingScreen("I'm actually loading your data", Screen, police1, 43, Loading)
         Game.Player.Force.x = float(Load["Game.Player.Force.x"])
-        Loading = LoadingScreen("I'm actually loading your data", Screen, police1, 42, Loading)
+        Loading = LoadingScreen("I'm actually loading your data", Screen, police1, 43, Loading)
     except:
         print("Error :/")
-        Loading = LoadingScreen("ERROR on he loading", Screen, police1, 0, Loading)
+        Loading = LoadingScreen("ERROR on the loading", Screen, police1, 0, Loading)
+        return "Error"
 
     print(Loading)
+    Loading = LoadingScreen("I'm actually loading your data", Screen, police1, 43, Loading)
+
+    for mob in Game.all_Monster:
+        mob.rect.x -= Game.PositionPlayer - Replace
+        Loading = LoadingScreen("I'm actually loading your data", Screen, police1, 43, Loading)
+
+    for plateform in Game.all_plateform:
+        plateform.rect.x -= Game.PositionPlayer - Replace
+        Loading = LoadingScreen("I'm actually loading your data", Screen, police1, 43, Loading)
+    import time
+    time.sleep(1)
+    return 0
 
 
 # TKT -tremisabdoul
@@ -656,7 +674,7 @@ def StandAnimation(Game):
 
 # TKT -tremisabdoul
 def BackgroundScroll(Game):
-    checker = Game.PositonPlayer % 1280
+    checker = Game.PositionPlayer % 1280
     if -10 < checker < 10:
         Game.Background.rect.midtop = 640 - checker, 0
         print(Game.Background.rect.width / 3 + checker, "= 640 + ", checker)
@@ -697,9 +715,8 @@ def LoadingScreen(Message, Screen, police1, Ratio, Loading):
 
 def Draw_rect(Screen, Target):
     pygame.draw.lines(Screen, (200, 150, 100), True, (
-        Target.rect.midbottom, Target.rect.midtop, Target.rect.topleft, Target.rect.midleft, Target.rect.bottomleft,
-        Target.rect.bottomright, Target.rect.topright, Target.rect.topleft, Target.rect.midleft, Target.rect.midright,
-        Target.rect.bottomright))
+        Target.rect.midbottom, Target.rect.midtop, Target.rect.topleft, Target.rect.bottomleft, Target.rect.bottomright,
+        Target.rect.topright, Target.rect.topleft, Target.rect.midleft, Target.rect.midright, Target.rect.bottomright))
 
 
 def NewPlatform(Game):

@@ -35,7 +35,7 @@ Screen = Display()
 # Définit les polices -tremisabdoul
 police1 = pygame.font.Font("Assets/Font/Retro Gaming.ttf", 10)
 
-police2 = pygame.font.Font("Assets/Font/Retro Gaming.ttf", 30)
+police2 = pygame.font.Font("Assets/Font/Retro Gaming.ttf", 20)
 
 '''==================================='''
 
