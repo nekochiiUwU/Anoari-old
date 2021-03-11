@@ -32,4 +32,4 @@ class UserData:
 class SaveSlot:
 
     def __init__(self):
-        self.ActualSave = ["Void"]
+        self.ActualSave = ["Default.csv"]
