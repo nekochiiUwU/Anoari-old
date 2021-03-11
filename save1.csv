@@ -4,7 +4,7 @@
 "PlayerName","Name"
 "GameType","Rogue"
 "# Player[0]","# Statistics -tremisabdoul"
-"Game.Player.Pv",61
+"Game.Player.Pv",4
 "Game.Player.MaxPv",100
 "Game.Player.Damage",10
 "Game.Player.Speed",2
@@ -13,13 +13,13 @@
 "Game.Player.Gold",0
 "# Player[1]","# Position -tremisabdoul"
 "Game.Player.rect.x",125
-"Game.Player.rect.y",22011
+"Game.Player.rect.y",9
 "Game.Player.rect.height",120
 "Game.Player.rect.width",120
-"Game.Player.LastY",21978
-"Game.Player.YVector",-33
-"Game.PositionPlayer",345
+"Game.Player.LastY",9
+"Game.Player.YVector",0
+"Game.PositionPlayer",475
 "# Phisics","# Actual Movement of Player -tremisabdoul"
 "Game.Player.Force.lastx",0
-"Game.Player.Force.Base_Gravity",33
+"Game.Player.Force.Base_Gravity",0
 "Game.Player.Force.x",0

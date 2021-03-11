@@ -106,8 +106,7 @@ class Player(pygame.sprite.Sprite, Game):
         self.rect = self.image.get_rect(bottomleft=self.rect.bottomleft)
 
         # Position de Player -tremisabdoul
-        self.rect.x = 125
-        self.rect.y = 82
+        self.rect.center = (640, 82)
 
         self.LastY = 0
         self.YVector = 0
@@ -209,18 +208,21 @@ class Force:
 
         for item in Collide:
 
-            if item and Target.YVector <= 0 and (Target.rect.bottom < item.rect.top + 33):
+            if item and Target.YVector <= 1 and (Target.rect.bottom < item.rect.top + 33):
                 Target.SpeedY = 0  # Cancel le saut
                 self.Base_Gravity = 0  # Reset la force du sol (-33)
-                Replace = item.rect.y - (Target.rect.bottom - 2)  # Y reset (Premier pixel du rect de plateforme)
+                Replace = item.rect.y - (Target.rect.bottom - 1)  # Y reset (Premier pixel du rect de plateforme)
                 # Game0.Player.YVector -= Replace
+                print("Stand: ", Replace)
                 return Replace
-        if self.Base_Gravity < 33:  # Si force de sol > 0
-            self.Base_Gravity += 0.66  # Diminution de la force "Sol" (Ratio 0.66)
-            return self.Base_Gravity
 
+        if self.Base_Gravity < 22:  # Si force de sol > 0
+            self.Base_Gravity += 0.44  # Diminution de la force "Sol" (Ratio 0.66)
+            print("Gravity: ", self.Base_Gravity)
+            return self.Base_Gravity
         else:
-            self.Base_Gravity = 33  # Force de sol = 0
+            self.Base_Gravity = 22  # Force de sol = 0
+            print("Gravity: ", 22)
             return 33
 
 
@@ -408,13 +410,20 @@ class Monster(pygame.sprite.Sprite, Game):
             Screen.blit(self.image0, (self.pvfontrect.x - Game.Position, self.pvfontrect.y))
 
     # Déplacement du monstre vers la droite -steven
-    def Move_Right(self):
-        self.rect.x += self.Speed
+    def Move_Right(self, Game):
+        if Game.Player.check_collisions(self, Game.all_plateform):
+            self.rect.x += self.Speed
+        else:
+            self.rect.x -= int(self.Speed * 1)
+            self.Direction = 1
 
     # Déplacement du monstre vers la gauche -steven
-    def Move_Left(self):
-        self.rect.x -= self.Speed
-
+    def Move_Left(self, Game):
+        if Game.Player.check_collisions(self, Game.all_plateform):
+            self.rect.x -= self.Speed
+        else:
+            self.rect.x += int(self.Speed * 1.5)
+            self.Direction = 0
 
 class Weapon:
 

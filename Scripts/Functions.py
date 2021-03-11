@@ -56,16 +56,16 @@ def Printer(Screen, Game):
     Game.Background.rect.x -= Game.Position
 
     # Affiche a l'Ã©cran des Ã©lÃ©ments -tremisabdoul
-    Screen.fill((60, 60, 120))
-    # Screen.blit(Game.Background.image, Game.Background.rect)
+    # Screen.fill((60, 60, 120))
+    Screen.blit(Game.Background.image, Game.Background.rect)
     Screen.blit(Game.Sol.image, Game.Sol.rect)
-    # Screen.blit(Game.Plateform.image, Game.Plateform.rect)
     Screen.blit(Game.Player.image, Game.Player.rect)
     Screen.blit(Game.Monster.image, Game.Monster.rect)
     for nb in Game.all_plateform:
         nb.rect.x -= Game.Position
         Screen.blit(nb.image, nb.rect)
         Draw_rect(Screen, nb)
+    Game.Sol.rect.x += Game.Position
     Draw_rect(Screen, Game.Player)
     Draw_rect(Screen, Game.Monster)
     MousePriter(Screen, Game)
@@ -227,7 +227,7 @@ def inGame(Game, time, Screen, police1):
                         pygame.display.set_mode((Game.DataX, Game.DataY), pygame.RESIZABLE)
                         pygame.display.toggle_fullscreen()
                         pygame.display.set_mode((1280, 720), pygame.RESIZABLE)
-                        os.environ['SDL_VIDEO_WINDOW_POS'] = "%d,%d" % (10, 10)
+                        os.environ['SDL_VIDEO_WINDOW_POS'] = "%d,%d" % (100, 100)
                         Game.Fullscreen = 0
 
             # Touches relachÃ©es -tremisabdoul
@@ -286,16 +286,16 @@ def inGame(Game, time, Screen, police1):
             Collide = Game.Player.check_collisions(Game.Player, Game.all_Monster)
             if not Collide:
                 if Monster.Direction:
-                    Monster.Move_Left()
+                    Monster.Move_Left(Game)
                 else:
-                    Monster.Move_Right()
+                    Monster.Move_Right(Game)
             else:
                 if Collide[0].rect.center[0] > Game.Player.rect.center[0]:
                     Monster.Direction = 0
-                    Monster.Move_Right()
+                    Monster.Move_Right(Game)
                 else:
                     Monster.Direction = 1
-                    Monster.Move_Left()
+                    Monster.Move_Left(Game)
 
         # Print l'interface de jeu -tremisabdoul
         UIPrinter(Screen, police1, Game)
@@ -583,9 +583,9 @@ def ReScale(Game, Screen):
     Game.DataX = pygame.Surface.get_width(Screen)
     Game.DataY = pygame.Surface.get_height(Screen)
     Game.Player.image = pygame.image.load("Assets/Visual/Mystique/resp1.png")
-    Game.font = pygame.transform.scale(Game.font,
-                                       (Game.Rescale(Game.font.get_width(), "X"),
-                                        Game.Rescale(Game.font.get_height(), "Y")))
+    Game.Background.image = pygame.transform.scale(Game.Background.image,
+                                       (Game.Rescale(Game.Background.image.get_width(), "X"),
+                                        Game.Rescale(Game.Background.image.get_height(), "Y")))
     Game.Player.image = pygame.transform.scale(Game.Player.image,
                                                (Game.Rescale(Game.Player.image.get_width(), "X"),
                                                 Game.Rescale(Game.Player.image.get_height(), "Y")))
