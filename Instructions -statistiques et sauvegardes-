@@ -36,16 +36,16 @@ Les statistiques de base, que TOUS les joueur auront sont : *roulements de tambo
 -le Multiplicateur de damage (en multiplicateur de dégats infligés)
 
 -----------------------------------------------------------------------------
-Ces statistiques composeront près de 100% des calculs effectués par le jeu lors d'un combat, leur fonctionnement et application en détail est juste en bas :-les HP (UA)
+Ces statistiques composeront près de 100% des calculs effectués par le jeu lors d'un combat, leur fonctionnement et application en détail est juste en bas :
 
   -les HP
-Simple nombre de PV du joueur, perd une vie quand il atteint 0, est diminué par les attaques. Les PV Max sont récupérés gratuitement à chaque début de Donjon.
+Simple nombre de PV du joueur, il perd une vie quand ses pv atteignent 0, est diminué par les attaques. Les PV Max sont récupérés gratuitement à chaque début de Donjon.
 
   -l'Attaque 
 Nombre indiquant la puissance des attaques du joueur, les dégats sont un bonus aux dégats de base des sorts (selon un ratio donné) et donne les dégats des attaques de base, à 100% de ratio attaque. Les dégats sont calculés de la manière suivante : (dégats de base + [(Attaque * ratio)/100])*Multiplicateur de dégats
 
   -la Défense
-Nombre indiquant la puissance défensive du joueur, les dégats qu'il prend sont calculés de la manière suivante : [(Total de dégats * 100)/(100 + Défense-Pénetration d'armure adverse)] - Armure
+Nombre indiquant la puissance défensive du joueur, les dégats qu'il prend sont calculés de la manière suivante : [(Total de dégats * 100)/(100 + Défense - Pénetration d'armure adverse)] - Armure
 
   -la Vitesse au sol
 Vitesse de déplacement Maximale de base, elle est atteinte après quelques frames d'accélération et est effective dans les deux sens.
