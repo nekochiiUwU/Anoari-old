@@ -56,8 +56,8 @@ def Printer(Screen, Game):
     Game.Background.rect.x -= Game.Position
 
     # Affiche a l'Ã©cran des Ã©lÃ©ments -tremisabdoul
-    # Screen.fill((60, 60, 120))
-    Screen.blit(Game.Background.image, Game.Background.rect)
+    Screen.fill((60, 60, 120))
+    # Screen.blit(Game.Background.image, Game.Background.rect)
     Screen.blit(Game.Sol.image, Game.Sol.rect)
     # Screen.blit(Game.Plateform.image, Game.Plateform.rect)
     Screen.blit(Game.Player.image, Game.Player.rect)
@@ -209,7 +209,7 @@ def inGame(Game, time, Screen, police1):
                 # Active le Jump() -tremisabdoul
                 if Game.pressed.get(pygame.K_SPACE) \
                         and Game.Player.check_collisions(Game.Player, Game.all_plateform)\
-                                and Game.Player.YVector ==0:
+                        and Game.Player.YVector == 0:
                     Game.Player.SpeedY = -20
 
                 # Activation de Pause -tremisabdoul
@@ -560,7 +560,7 @@ def Data_Load(Game, Screen, police1):
         Loading = LoadingScreen("I'm actually loading your data", Screen, police1, 43, Loading)
     except:
         print("Error :/")
-        Loading = LoadingScreen("ERROR on the loading", Screen, police1, 0, Loading)
+        LoadingScreen("ERROR on the loading", Screen, police1, 0, Loading)
         return "Error"
 
     print(Loading)
@@ -724,3 +724,46 @@ def NewPlatform(Game):
     Plateform = Plateform()
     Game.all_plateform.add(Plateform)
     Game.PlateformNumber += 1
+
+
+Animations = [
+    "Animations[a[b[c[d]]]]: a=Type of Player, b=Animation, c=Directon(0=Right/1=Left), d=Frame",
+    [  # Mystique
+        [  # Stand
+            [  # Animations[1[0[0[x]]]] (Stand Right)
+                pygame.image.load("Assets/Visual/Mystique/resp2.png"),
+                pygame.image.load("Assets/Visual/Mystique/resp1.png")
+            ],
+            [  # Animations[1[0[1[x]]]] (Stand Left)
+                pygame.image.load("Assets/Visual/Mystique/Left/resp1.png"),
+                pygame.image.load("Assets/Visual/Mystique/Left/resp1.png")
+            ]
+        ],
+        [  # Run
+            [  # Animations[1[1[0[x]]]] (Run Right)
+                pygame.image.load("Assets/Visual/Mystique/Run/Run1.png"),
+                pygame.image.load("Assets/Visual/Mystique/Run/Run2.png")
+            ],
+            [  # Animations[1[1[1[x]]]] (Run Left)
+                pygame.image.load("Assets/Visual/Mystique/Left/Run/Run1.png"),
+                pygame.image.load("Assets/Visual/Mystique/Left/Run/Run2.png")
+            ]
+        ],
+        [  # Jump
+            [  # Animations[1[2[0[x]]]] (Jump Right)
+                pygame.image.load("Assets/Visual/Mystique/Jump/Jump1.png")
+            ],
+            [  # Animations[1[2[1[x]]]] (Jump Left)
+                pygame.image.load("Assets/Visual/Mystique/Left/Jump/Jump1.png")
+            ]
+        ],
+        [  # Fall
+            [  # Animations[1[3[0[x]]]] (Fall Right)
+                pygame.image.load("Assets/Visual/Mystique/Jump/Jump2.png")
+            ],
+            [  # Animations[1[3[1[x]]]] (Fall Left)
+                pygame.image.load("Assets/Visual/Mystique/Left/Jump/Jump2.png")
+            ]
+        ]
+    ]
+]

@@ -123,8 +123,6 @@ class Player(pygame.sprite.Sprite, Game):
         self.MaxY = 740
         self.MovementKey = False
 
-
-
     #   def Check_Collisions(rectA, rectB):
     #       if rectB.right < rectA.left:
     #           # rectB est à gauche
@@ -257,7 +255,6 @@ class Plateform(pygame.sprite.Sprite, Game):
 
     def __init__(self):
         super().__init__()
-        import random as rd
 
         # Définit l'élément visuel en tant que variable -tremisabdoul
         self.image = pygame.image.load("Assets/Visual/plateforme_base.png")
@@ -268,9 +265,11 @@ class Plateform(pygame.sprite.Sprite, Game):
         # Définit la hitbox de sol -tremisabdoul
         self.rect = self.image.get_rect()
 
+        import random as random
         # Position de la plateforme -tremisabdoul
-        self.rect.x = rd.randint(-20, 1900)
-        self.rect.y = rd.randint(100, 600)
+        self.rect.x = random.randint(-20, 1900)
+        self.rect.y = random.randint(100, 600)
+        del random
 
 
 """=====  Game.Mouse [5]  ====="""
