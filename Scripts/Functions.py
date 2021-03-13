@@ -56,16 +56,16 @@ def Printer(Screen, Game):
     Game.Background.rect.x -= Game.Position
 
     # Affiche a l'Ã©cran des Ã©lÃ©ments -tremisabdoul
-    # Screen.fill((60, 60, 120))
-    Screen.blit(Game.Background.image, Game.Background.rect)
+    Screen.fill((60, 60, 120))
+    # Screen.blit(Game.Background.image, Game.Background.rect)
     Screen.blit(Game.Sol.image, Game.Sol.rect)
-    # Screen.blit(Game.Plateform.image, Game.Plateform.rect)
     Screen.blit(Game.Player.image, Game.Player.rect)
     Screen.blit(Game.Monster.image, Game.Monster.rect)
     for nb in Game.all_plateform:
         nb.rect.x -= Game.Position
         Screen.blit(nb.image, nb.rect)
         Draw_rect(Screen, nb)
+    Game.Sol.rect.x += Game.Position
     Draw_rect(Screen, Game.Player)
     Draw_rect(Screen, Game.Monster)
     MousePriter(Screen, Game)
@@ -94,6 +94,13 @@ def UIPrinter(Screen, police1, Game):
     opti1 = round((Game.Player.Pv / Game.Player.MaxPv) * 100)
     opti1 = opti1 * "|"
     opti1 = police1.render(str(opti1), True, LifeColor)
+
+    y = 34
+    for Entity in Game.Entities:
+        print(Entity.YVector, "=", Entity.LastY, "-", Entity.rect.y)
+        Entity.YVectorblit = police1.render("Y Vector checker: " + str(Entity.YVector), True, (100, 100, 200))
+        Screen.blit(Entity.YVectorblit, (100, y))
+        y += 10
 
     # Affiche a l'Ã©cran les Ã©lÃ©ments suivents -tremisabdoul
     Screen.blit(printfps, (6, 34))
@@ -209,7 +216,7 @@ def inGame(Game, time, Screen, police1):
                 # Active le Jump() -tremisabdoul
                 if Game.pressed.get(pygame.K_SPACE) \
                         and Game.Player.check_collisions(Game.Player, Game.all_plateform)\
-                                and Game.Player.YVector ==0:
+                        and Game.Player.YVector == 0:
                     Game.Player.SpeedY = -20
 
                 # Activation de Pause -tremisabdoul
@@ -227,7 +234,7 @@ def inGame(Game, time, Screen, police1):
                         pygame.display.set_mode((Game.DataX, Game.DataY), pygame.RESIZABLE)
                         pygame.display.toggle_fullscreen()
                         pygame.display.set_mode((1280, 720), pygame.RESIZABLE)
-                        os.environ['SDL_VIDEO_WINDOW_POS'] = "%d,%d" % (10, 10)
+                        os.environ['SDL_VIDEO_WINDOW_POS'] = "%d,%d" % (100, 100)
                         Game.Fullscreen = 0
 
             # Touches relachÃ©es -tremisabdoul
@@ -248,17 +255,35 @@ def inGame(Game, time, Screen, police1):
 
         """ ===== Movements ===== """
 
-        Game.Player.LastY = Game.Player.rect.y
+        # Fonction de dÃ©placement gauche / droite -tremisabdoul
+        DeplacementX(Game)
+
+        for Entity in Game.Entities:
+            Entity.LastY = Entity.rect.y
+
+        for Monster in Game.all_Monster:
+            Monster.Life(Screen, Game)
+            Collide = Game.Player.check_collisions(Game.Player, Game.all_Monster)
+            if not Collide:
+                if Monster.Direction:
+                    Monster.Move_Left(Game)
+                else:
+                    Monster.Move_Right(Game)
+            else:
+                if Collide[0].rect.center[0] > Game.Player.rect.center[0]:
+                    Monster.Direction = 0
+                    Monster.Move_Right(Game)
+                else:
+                    Monster.Direction = 1
+                    Monster.Move_Left(Game)
 
         # Fonction de Jump -tremisabdoul
         if Game.Player.SpeedY:
             Jump(Game)
 
-        # Fonction de dÃ©placement gauche / droite -tremisabdoul
-        DeplacementX(Game)
-
-        # GravitÃ© -tremisabdoul
-        Game.Player.rect.y += Game.Player.Force.Gravity(Game, Game.Player)
+        for Entity in Game.Entities:
+            Game.Player.Force.Gravity(Game, Entity)
+            Entity.YVector = Entity.LastY - Entity.rect.y
 
         # DÃ©placements de player -tremisabdoul
         # Game.Player.rect.x += Game.Player.Force.AccelerationFunctionX()
@@ -281,30 +306,10 @@ def inGame(Game, time, Screen, police1):
 
         """ ===== Monster Instruction ===== """
 
-        for Monster in Game.all_Monster:
-            Monster.Life(Screen, Game)
-            Collide = Game.Player.check_collisions(Game.Player, Game.all_Monster)
-            if not Collide:
-                if Monster.Direction:
-                    Monster.Move_Left()
-                else:
-                    Monster.Move_Right()
-            else:
-                if Collide[0].rect.center[0] > Game.Player.rect.center[0]:
-                    Monster.Direction = 0
-                    Monster.Move_Right()
-                else:
-                    Monster.Direction = 1
-                    Monster.Move_Left()
-
         # Print l'interface de jeu -tremisabdoul
         UIPrinter(Screen, police1, Game)
 
         MousePriter(Screen, Game)
-
-        Game.Player.YVector = Game.Player.LastY - Game.Player.rect.y
-        YVector = police1.render("Y Vector checker: " + str(Game.Player.YVector), True, (141, 100, 200))
-        Screen.blit(YVector, (100, 34))
 
         # Met a jour l'affichage (rafraÃ®chissement de l'Ã©cran) -tremisabdoul
         pygame.display.flip()
@@ -560,7 +565,7 @@ def Data_Load(Game, Screen, police1):
         Loading = LoadingScreen("I'm actually loading your data", Screen, police1, 43, Loading)
     except:
         print("Error :/")
-        Loading = LoadingScreen("ERROR on the loading", Screen, police1, 0, Loading)
+        LoadingScreen("ERROR on the loading", Screen, police1, 0, Loading)
         return "Error"
 
     print(Loading)
@@ -583,9 +588,9 @@ def ReScale(Game, Screen):
     Game.DataX = pygame.Surface.get_width(Screen)
     Game.DataY = pygame.Surface.get_height(Screen)
     Game.Player.image = pygame.image.load("Assets/Visual/Mystique/resp1.png")
-    Game.font = pygame.transform.scale(Game.font,
-                                       (Game.Rescale(Game.font.get_width(), "X"),
-                                        Game.Rescale(Game.font.get_height(), "Y")))
+    Game.Background.image = pygame.transform.scale(Game.Background.image,
+                                       (Game.Rescale(Game.Background.image.get_width(), "X"),
+                                        Game.Rescale(Game.Background.image.get_height(), "Y")))
     Game.Player.image = pygame.transform.scale(Game.Player.image,
                                                (Game.Rescale(Game.Player.image.get_width(), "X"),
                                                 Game.Rescale(Game.Player.image.get_height(), "Y")))
@@ -724,3 +729,52 @@ def NewPlatform(Game):
     Plateform = Plateform()
     Game.all_plateform.add(Plateform)
     Game.PlateformNumber += 1
+
+
+Animations = [
+    "\nEx of usage:\nGame.Player.image = Animations[a[b[c[d]]]]\n"
+    "\ta=Type of Player (Animatons[0] = Animation Tips), \n"
+    "\tb=Animation, \n"
+    "\tc=Directon(0=Right/1=Left), \n"
+    "\td=Frame\n",
+    [  # Mystique
+        [  # Stand
+            [  # Animations[1[0[0[x]]]] (Stand Right)
+                pygame.image.load("Assets/Visual/Mystique/resp2.png"),
+                pygame.image.load("Assets/Visual/Mystique/resp1.png")
+            ],
+            [  # Animations[1[0[1[x]]]] (Stand Left)
+                pygame.image.load("Assets/Visual/Mystique/Left/resp1.png"),
+                pygame.image.load("Assets/Visual/Mystique/Left/resp1.png")
+            ]
+        ],
+        [  # Run
+            [  # Animations[1[1[0[x]]]] (Run Right)
+                pygame.image.load("Assets/Visual/Mystique/Run/Run1.png"),
+                pygame.image.load("Assets/Visual/Mystique/Run/Run2.png")
+            ],
+            [  # Animations[1[1[1[x]]]] (Run Left)
+                pygame.image.load("Assets/Visual/Mystique/Left/Run/Run1.png"),
+                pygame.image.load("Assets/Visual/Mystique/Left/Run/Run2.png")
+            ]
+        ],
+        [  # Jump
+            [  # Animations[1[2[0[x]]]] (Jump Right)
+                pygame.image.load("Assets/Visual/Mystique/Jump/Jump1.png")
+            ],
+            [  # Animations[1[2[1[x]]]] (Jump Left)
+                pygame.image.load("Assets/Visual/Mystique/Left/Jump/Jump1.png")
+            ]
+        ],
+        [  # Fall
+            [  # Animations[1[3[0[x]]]] (Fall Right)
+                pygame.image.load("Assets/Visual/Mystique/Jump/Jump2.png")
+            ],
+            [  # Animations[1[3[1[x]]]] (Fall Left)
+                pygame.image.load("Assets/Visual/Mystique/Left/Jump/Jump2.png")
+            ]
+        ]
+    ]
+]
+
+print(Animations[0], Animations[1])
