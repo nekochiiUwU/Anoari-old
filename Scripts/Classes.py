@@ -237,10 +237,10 @@ class Sol(pygame.sprite.Sprite):
         self.UserData = UserData()
 
         # Définit l'élément visuel en tant que variable -steven
-        self.image = pygame.image.load("Assets/Visual/plateforme_base.png")
+        self.image = pygame.image.load("Assets/Visual/ground_test.png")
 
         # Transforme l'image sol en la résolution indiquée -tremisabdoul
-        self.image = pygame.transform.scale(self.image, (1280, 34))
+        #self.image = pygame.transform.scale(self.image, (1280, 34))
 
         # Définit la hitbox de sol -steven
         self.rect = self.image.get_rect()
