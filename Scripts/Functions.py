@@ -56,8 +56,8 @@ def Printer(Screen, Game):
     Game.Background.rect.x -= Game.Position
 
     # Affiche a l'Ã©cran des Ã©lÃ©ments -tremisabdoul
-    # Screen.fill((60, 60, 120))
-    Screen.blit(Game.Background.image, Game.Background.rect)
+    Screen.fill((60, 60, 120))
+    # Screen.blit(Game.Background.image, Game.Background.rect)
     Screen.blit(Game.Sol.image, Game.Sol.rect)
     Screen.blit(Game.Player.image, Game.Player.rect)
     Screen.blit(Game.Monster.image, Game.Monster.rect)
@@ -94,6 +94,13 @@ def UIPrinter(Screen, police1, Game):
     opti1 = round((Game.Player.Pv / Game.Player.MaxPv) * 100)
     opti1 = opti1 * "|"
     opti1 = police1.render(str(opti1), True, LifeColor)
+
+    y = 34
+    for Entity in Game.Entities:
+        print(Entity.YVector, "=", Entity.LastY, "-", Entity.rect.y)
+        Entity.YVectorblit = police1.render("Y Vector checker: " + str(Entity.YVector), True, (100, 100, 200))
+        Screen.blit(Entity.YVectorblit, (100, y))
+        y += 10
 
     # Affiche a l'Ã©cran les Ã©lÃ©ments suivents -tremisabdoul
     Screen.blit(printfps, (6, 34))
@@ -248,17 +255,35 @@ def inGame(Game, time, Screen, police1):
 
         """ ===== Movements ===== """
 
-        Game.Player.LastY = Game.Player.rect.y
+        # Fonction de dÃ©placement gauche / droite -tremisabdoul
+        DeplacementX(Game)
+
+        for Entity in Game.Entities:
+            Entity.LastY = Entity.rect.y
+
+        for Monster in Game.all_Monster:
+            Monster.Life(Screen, Game)
+            Collide = Game.Player.check_collisions(Game.Player, Game.all_Monster)
+            if not Collide:
+                if Monster.Direction:
+                    Monster.Move_Left(Game)
+                else:
+                    Monster.Move_Right(Game)
+            else:
+                if Collide[0].rect.center[0] > Game.Player.rect.center[0]:
+                    Monster.Direction = 0
+                    Monster.Move_Right(Game)
+                else:
+                    Monster.Direction = 1
+                    Monster.Move_Left(Game)
 
         # Fonction de Jump -tremisabdoul
         if Game.Player.SpeedY:
             Jump(Game)
 
-        # Fonction de dÃ©placement gauche / droite -tremisabdoul
-        DeplacementX(Game)
-
-        # GravitÃ© -tremisabdoul
-        Game.Player.rect.y += Game.Player.Force.Gravity(Game, Game.Player)
+        for Entity in Game.Entities:
+            Game.Player.Force.Gravity(Game, Entity)
+            Entity.YVector = Entity.LastY - Entity.rect.y
 
         # DÃ©placements de player -tremisabdoul
         # Game.Player.rect.x += Game.Player.Force.AccelerationFunctionX()
@@ -281,30 +306,10 @@ def inGame(Game, time, Screen, police1):
 
         """ ===== Monster Instruction ===== """
 
-        for Monster in Game.all_Monster:
-            Monster.Life(Screen, Game)
-            Collide = Game.Player.check_collisions(Game.Player, Game.all_Monster)
-            if not Collide:
-                if Monster.Direction:
-                    Monster.Move_Left(Game)
-                else:
-                    Monster.Move_Right(Game)
-            else:
-                if Collide[0].rect.center[0] > Game.Player.rect.center[0]:
-                    Monster.Direction = 0
-                    Monster.Move_Right(Game)
-                else:
-                    Monster.Direction = 1
-                    Monster.Move_Left(Game)
-
         # Print l'interface de jeu -tremisabdoul
         UIPrinter(Screen, police1, Game)
 
         MousePriter(Screen, Game)
-
-        Game.Player.YVector = Game.Player.LastY - Game.Player.rect.y
-        YVector = police1.render("Y Vector checker: " + str(Game.Player.YVector), True, (141, 100, 200))
-        Screen.blit(YVector, (100, 34))
 
         # Met a jour l'affichage (rafraÃ®chissement de l'Ã©cran) -tremisabdoul
         pygame.display.flip()
@@ -727,7 +732,11 @@ def NewPlatform(Game):
 
 
 Animations = [
-    "Animations[a[b[c[d]]]]: a=Type of Player, b=Animation, c=Directon(0=Right/1=Left), d=Frame",
+    "\nEx of usage:\nGame.Player.image = Animations[a[b[c[d]]]]\n"
+    "\ta=Type of Player (Animatons[0] = Animation Tips), \n"
+    "\tb=Animation, \n"
+    "\tc=Directon(0=Right/1=Left), \n"
+    "\td=Frame\n",
     [  # Mystique
         [  # Stand
             [  # Animations[1[0[0[x]]]] (Stand Right)
@@ -767,3 +776,5 @@ Animations = [
         ]
     ]
 ]
+
+print(Animations[0], Animations[1])

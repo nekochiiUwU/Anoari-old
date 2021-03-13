@@ -61,6 +61,10 @@ class Game:
         self.all_Player = pygame.sprite.Group()
         self.all_Player.add(self.Player)
 
+        self.Entities = pygame.sprite.Group()
+        self.Entities.add(self.Monster)
+        self.Entities.add(self.Player)
+
         # Création du groupe composé de toutes les plateformes -Steven
         self.all_plateform = pygame.sprite.Group()
         self.all_plateform.add(self.Sol)
@@ -106,10 +110,12 @@ class Player(pygame.sprite.Sprite, Game):
         self.rect = self.image.get_rect(bottomleft=self.rect.bottomleft)
 
         # Position de Player -tremisabdoul
-        self.rect.center = (640, 82)
+        self.rect.center = (430, 600)
 
         self.LastY = 0
         self.YVector = 0
+        self.YVectorblit = 0
+        self.Base_Gravity = 0
 
         self.Movement = 1  # Droite = 1 Gauche = -1
 
@@ -178,7 +184,6 @@ class Force:
         self.lastx = float(0)
         self.lasty = float(0)
 
-        self.Base_Gravity = 0
         self.Game = Game
 
     # Fonction permettant un mouvement fluide -tremisabdoul
@@ -203,27 +208,29 @@ class Force:
     # Faut se dire que la gravité a une force de 33 et que lorsque
     # Base_Gravity est a 0 c'est que la force appliquée par le sol est de -33
     def Gravity(self, Game0, Target):
+        base = Target.rect.y
+        if Target.Base_Gravity < 22:  # Si force de sol > 0
+            Target.Base_Gravity += 0.44  # Diminution de la force "Sol" (Ratio 0.66)
+            # print("Gravity: ", Target.Base_Gravity)
+            Target.rect.y += Target.Base_Gravity
+        else:
+            Target.Base_Gravity = 22  # Force de sol = 0
+            # print("Gravity: ", 22)
+            Target.rect.y += 22
+
         # Vérification des collisions entre Player et toutes les plateformes
         Collide = Game0.Player.check_collisions(Target, Game0.all_plateform)
-
+        print(base, Target.rect.y)
         for item in Collide:
+            print("Collide ? ", bool(item), "\nFall ? ", bool(Target.YVector), "\nBottom Collide ? ", bool(Target.rect.bottom < item.rect.top + 33))
 
-            if item and Target.YVector <= 1 and (Target.rect.bottom < item.rect.top + 33):
+            if item and Target.YVector <= 1 and (Target.rect.bottom < item.rect.top + 22):
+                Target.rect.y = base
+                Replace = item.rect.top - (Target.rect.bottom - 1)  # Y reset (Premier pixel du rect de plateforme)
                 Target.SpeedY = 0  # Cancel le saut
-                self.Base_Gravity = 0  # Reset la force du sol (-33)
-                Replace = item.rect.y - (Target.rect.bottom - 1)  # Y reset (Premier pixel du rect de plateforme)
-                # Game0.Player.YVector -= Replace
+                Target.Base_Gravity = 0  # Reset la force du sol (-33)
                 print("Stand: ", Replace)
-                return Replace
-
-        if self.Base_Gravity < 22:  # Si force de sol > 0
-            self.Base_Gravity += 0.44  # Diminution de la force "Sol" (Ratio 0.66)
-            print("Gravity: ", self.Base_Gravity)
-            return self.Base_Gravity
-        else:
-            self.Base_Gravity = 22  # Force de sol = 0
-            print("Gravity: ", 22)
-            return 33
+                Target.rect.y += Replace
 
 
 """=====  Game.Sol [3]  ====="""
@@ -384,7 +391,12 @@ class Monster(pygame.sprite.Sprite, Game):
         self.rect = self.image.get_rect()
 
         self.rect.x = rd.randint(150, 1050)
-        self.rect.y = 675
+        self.rect.y = 50
+        self.LastY = 675
+
+        self.YVector = 0
+        self.YVectorblit = 0
+        self.Base_Gravity = 0
 
         self.rect = self.image.get_rect(midtop=self.rect.midtop)
 
