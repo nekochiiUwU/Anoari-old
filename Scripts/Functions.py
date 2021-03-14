@@ -630,49 +630,65 @@ def NewPlatform(Game):
 
 
 Animations = [
-    "\nEx of usage:\nGame.Player.image = Animations[a[b[c[d]]]]\n"
-    "\ta=Type of Player (Animatons[0] = Animation Tips), \n"
-    "\tb=Animation, \n"
-    "\tc=Directon(0=Right/1=Left), \n"
-    "\td=Frame\n",
-    [  # Mystique
-        [  # Stand
-            [  # Animations[1[0[0[x]]]] (Stand Right)
-                pygame.image.load("Assets/Visual/Mystique/resp2.png"),
-                pygame.image.load("Assets/Visual/Mystique/resp1.png")
+    "\nEx of usage:\nGame.Player.image = Animations[a[b[c[d[e]]]]]\n"
+    "\ta=Ty pe Of A (Animatons[0] = Animation Tips), \n"
+    "\tb=Specific entity\n"
+    "\tc=Animation, \n"
+    "\td=Directon(0=Right/1=Left), \n"
+    "\te=Frame\n",
+    [  # Player
+        [  # Mystique
+            [  # Stand
+                [  # Animations[1[0[0[0[x]]]]] (Stand Right)
+                    pygame.image.load("Assets/Visual/Mystique/resp2.png"),
+                    pygame.image.load("Assets/Visual/Mystique/resp1.png")
+                ],
+                [  # (Stand Left)
+                    pygame.image.load("Assets/Visual/Mystique/Left/resp1.png"),
+                    pygame.image.load("Assets/Visual/Mystique/Left/resp1.png")
+                ]
             ],
-            [  # Animations[1[0[1[x]]]] (Stand Left)
-                pygame.image.load("Assets/Visual/Mystique/Left/resp1.png"),
-                pygame.image.load("Assets/Visual/Mystique/Left/resp1.png")
+            [  # Run
+                [  # (Run Right)
+                    pygame.image.load("Assets/Visual/Mystique/Run/Run1.png"),
+                    pygame.image.load("Assets/Visual/Mystique/Run/Run2.png")
+                ],
+                [  # (Run Left)
+                    pygame.image.load("Assets/Visual/Mystique/Left/Run/Run1.png"),
+                    pygame.image.load("Assets/Visual/Mystique/Left/Run/Run2.png")
+                ]
+            ],
+            [  # Jump
+                [  # (Jump Right)
+                    pygame.image.load("Assets/Visual/Mystique/Jump/Jump1.png")
+                ],
+                [  # (Jump Left)
+                    pygame.image.load("Assets/Visual/Mystique/Left/Jump/Jump1.png")
+                ]
+            ],
+            [  # Fall
+                [  # (Fall Right)
+                    pygame.image.load("Assets/Visual/Mystique/Jump/Jump2.png")
+                ],
+                [  # Animations[1[0[3[1[x]]]]] (Fall Left)
+                    pygame.image.load("Assets/Visual/Mystique/Left/Jump/Jump2.png")
+                ]
             ]
-        ],
-        [  # Run
-            [  # Animations[1[1[0[x]]]] (Run Right)
-                pygame.image.load("Assets/Visual/Mystique/Run/Run1.png"),
-                pygame.image.load("Assets/Visual/Mystique/Run/Run2.png")
-            ],
-            [  # Animations[1[1[1[x]]]] (Run Left)
-                pygame.image.load("Assets/Visual/Mystique/Left/Run/Run1.png"),
-                pygame.image.load("Assets/Visual/Mystique/Left/Run/Run2.png")
-            ]
-        ],
-        [  # Jump
-            [  # Animations[1[2[0[x]]]] (Jump Right)
-                pygame.image.load("Assets/Visual/Mystique/Jump/Jump1.png")
-            ],
-            [  # Animations[1[2[1[x]]]] (Jump Left)
-                pygame.image.load("Assets/Visual/Mystique/Left/Jump/Jump1.png")
-            ]
-        ],
-        [  # Fall
-            [  # Animations[1[3[0[x]]]] (Fall Right)
-                pygame.image.load("Assets/Visual/Mystique/Jump/Jump2.png")
-            ],
-            [  # Animations[1[3[1[x]]]] (Fall Left)
-                pygame.image.load("Assets/Visual/Mystique/Left/Jump/Jump2.png")
+        ]
+    ],
+    [  # Monster
+        [  # Slime
+            [  # Stand
+                [  # Animations[2[0[0[0[x]]]]] (Stand Right)
+                    pygame.image.load("Assets/Visual/Monster/Slime/Stand1.png")
+                ],
+                [  # Animations[2[0[0[1[x]]]]] (Stand Left)
+                    pygame.image.load("Assets/Visual/Monster/Slime/Left/Stand1.png")
+                ]
             ]
         ]
     ]
+
 ]
 
 print("\n", Animations[0], Animations[1])
