@@ -220,16 +220,19 @@ class Force:
 
         # Vérification des collisions entre Player et toutes les plateformes
         Collide = Game0.Player.check_collisions(Target, Game0.all_plateform)
-        print(base, Target.rect.y)
+        print("\n", base, Target.rect.y)
         for item in Collide:
-            print("Collide ? ", bool(item), "\nFall ? ", bool(Target.YVector), "\nBottom Collide ? ", bool(Target.rect.bottom < item.rect.top + 33))
+            print("\n", Target.Base_Gravity)
+            print("\nCollide ? ", bool(item),
+                  "\nFall ? ", bool(Target.YVector),
+                  "\nBottom Collide ? ", bool(Target.rect.bottom <= item.rect.top + Target.Base_Gravity + 2))
 
-            if item and Target.YVector <= 1 and (Target.rect.bottom < item.rect.top + 22):
+            if item and Target.YVector <= 1 and (Target.rect.bottom <= item.rect.top + Target.Base_Gravity + 2):
                 Target.rect.y = base
                 Replace = item.rect.top - (Target.rect.bottom - 1)  # Y reset (Premier pixel du rect de plateforme)
                 Target.SpeedY = 0  # Cancel le saut
                 Target.Base_Gravity = 0  # Reset la force du sol (-33)
-                print("Stand: ", Replace)
+                print("\nStand: ", Replace)
                 Target.rect.y += Replace
 
 
@@ -472,7 +475,7 @@ class Weapon:
             if self.RandomTest == 3:
                 self.CDR += rd.randrange(1, 25, 1)
         del self.tester
-        print("\n\nWeapon:", self.MetaName, "\nRareté:", self.MetaClass,
+        print("\nWeapon:", self.MetaName, "\nRareté:", self.MetaClass,
               "\n\tDamage: ", self.Damage, "+",  self.DamageBuff, "\n\tSpeed: ", self.Speed, "+", self.SpeedBuff,
               "\n\tCDR: ", self.CD, "* ( 100 / ( 100 +", self.CDR, "))")
 
