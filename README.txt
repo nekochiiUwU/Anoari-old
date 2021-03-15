@@ -1,4 +1,4 @@
-	       「Anoari」
+	     「Anoari」
        	━━━ ∙ ʚ BINDS ɞ ∙ ━━━
 
 Gauche : Q
