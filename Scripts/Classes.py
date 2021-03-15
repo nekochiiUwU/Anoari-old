@@ -61,6 +61,10 @@ class Game:
         self.all_Player = pygame.sprite.Group()
         self.all_Player.add(self.Player)
 
+        self.Entities = pygame.sprite.Group()
+        self.Entities.add(self.Monster)
+        self.Entities.add(self.Player)
+
         # Création du groupe composé de toutes les plateformes -Steven
         self.all_plateform = pygame.sprite.Group()
         self.all_plateform.add(self.Sol)
@@ -106,11 +110,12 @@ class Player(pygame.sprite.Sprite, Game):
         self.rect = self.image.get_rect(bottomleft=self.rect.bottomleft)
 
         # Position de Player -tremisabdoul
-        self.rect.x = 125
-        self.rect.y = 82
+        self.rect.center = (430, 600)
 
         self.LastY = 0
         self.YVector = 0
+        self.YVectorblit = 0
+        self.Base_Gravity = 0
 
         self.Movement = 1  # Droite = 1 Gauche = -1
 
@@ -122,8 +127,6 @@ class Player(pygame.sprite.Sprite, Game):
         self.MinY = -20
         self.MaxY = 740
         self.MovementKey = False
-
-
 
     #   def Check_Collisions(rectA, rectB):
     #       if rectB.right < rectA.left:
@@ -181,7 +184,6 @@ class Force:
         self.lastx = float(0)
         self.lasty = float(0)
 
-        self.Base_Gravity = 0
         self.Game = Game
 
     # Fonction permettant un mouvement fluide -tremisabdoul
@@ -206,24 +208,32 @@ class Force:
     # Faut se dire que la gravité a une force de 33 et que lorsque
     # Base_Gravity est a 0 c'est que la force appliquée par le sol est de -33
     def Gravity(self, Game0, Target):
+        base = Target.rect.y
+        if Target.Base_Gravity < 22:  # Si force de sol > 0
+            Target.Base_Gravity += 0.44  # Diminution de la force "Sol" (Ratio 0.66)
+            # print("Gravity: ", Target.Base_Gravity)
+            Target.rect.y += Target.Base_Gravity
+        else:
+            Target.Base_Gravity = 22  # Force de sol = 0
+            # print("Gravity: ", 22)
+            Target.rect.y += 22
+
         # Vérification des collisions entre Player et toutes les plateformes
         Collide = Game0.Player.check_collisions(Target, Game0.all_plateform)
-
+        print("\n", base, Target.rect.y)
         for item in Collide:
+            print("\n", Target.Base_Gravity)
+            print("\nCollide ? ", bool(item),
+                  "\nFall ? ", bool(Target.YVector),
+                  "\nBottom Collide ? ", bool(Target.rect.bottom <= item.rect.top + Target.Base_Gravity + 2))
 
-            if item and Target.YVector <= 0 and (Target.rect.bottom < item.rect.top + 33):
+            if item and Target.YVector <= 1 and (Target.rect.bottom <= item.rect.top + Target.Base_Gravity + 2):
+                Target.rect.y = base
+                Replace = item.rect.top - (Target.rect.bottom - 1)  # Y reset (Premier pixel du rect de plateforme)
                 Target.SpeedY = 0  # Cancel le saut
-                self.Base_Gravity = 0  # Reset la force du sol (-33)
-                Replace = item.rect.y - (Target.rect.bottom - 2)  # Y reset (Premier pixel du rect de plateforme)
-                # Game0.Player.YVector -= Replace
-                return Replace
-        if self.Base_Gravity < 33:  # Si force de sol > 0
-            self.Base_Gravity += 0.66  # Diminution de la force "Sol" (Ratio 0.66)
-            return self.Base_Gravity
-
-        else:
-            self.Base_Gravity = 33  # Force de sol = 0
-            return 33
+                Target.Base_Gravity = 0  # Reset la force du sol (-33)
+                print("\nStand: ", Replace)
+                Target.rect.y += Replace
 
 
 """=====  Game.Sol [3]  ====="""
@@ -257,7 +267,6 @@ class Plateform(pygame.sprite.Sprite, Game):
 
     def __init__(self):
         super().__init__()
-        import random as rd
 
         # Définit l'élément visuel en tant que variable -tremisabdoul
         self.image = pygame.image.load("Assets/Visual/plateforme_base.png")
@@ -268,9 +277,11 @@ class Plateform(pygame.sprite.Sprite, Game):
         # Définit la hitbox de sol -tremisabdoul
         self.rect = self.image.get_rect()
 
+        import random as random
         # Position de la plateforme -tremisabdoul
-        self.rect.x = rd.randint(-20, 1900)
-        self.rect.y = rd.randint(100, 600)
+        self.rect.x = random.randint(-20, 1900)
+        self.rect.y = random.randint(100, 600)
+        del random
 
 
 """=====  Game.Mouse [5]  ====="""
@@ -383,7 +394,12 @@ class Monster(pygame.sprite.Sprite, Game):
         self.rect = self.image.get_rect()
 
         self.rect.x = rd.randint(150, 1050)
-        self.rect.y = 675
+        self.rect.y = 50
+        self.LastY = 675
+
+        self.YVector = 0
+        self.YVectorblit = 0
+        self.Base_Gravity = 0
 
         self.rect = self.image.get_rect(midtop=self.rect.midtop)
 
@@ -409,13 +425,20 @@ class Monster(pygame.sprite.Sprite, Game):
             Screen.blit(self.image0, (self.pvfontrect.x - Game.Position, self.pvfontrect.y))
 
     # Déplacement du monstre vers la droite -steven
-    def Move_Right(self):
-        self.rect.x += self.Speed
+    def Move_Right(self, Game):
+        if Game.Player.check_collisions(self, Game.all_plateform):
+            self.rect.x += self.Speed
+        else:
+            self.rect.x -= int(self.Speed * 1)
+            self.Direction = 1
 
     # Déplacement du monstre vers la gauche -steven
-    def Move_Left(self):
-        self.rect.x -= self.Speed
-
+    def Move_Left(self, Game):
+        if Game.Player.check_collisions(self, Game.all_plateform):
+            self.rect.x -= self.Speed
+        else:
+            self.rect.x += int(self.Speed * 1.5)
+            self.Direction = 0
 
 class Weapon:
 
@@ -452,7 +475,7 @@ class Weapon:
             if self.RandomTest == 3:
                 self.CDR += rd.randrange(1, 25, 1)
         del self.tester
-        print("\n\nWeapon:", self.MetaName, "\nRareté:", self.MetaClass,
+        print("\nWeapon:", self.MetaName, "\nRareté:", self.MetaClass,
               "\n\tDamage: ", self.Damage, "+",  self.DamageBuff, "\n\tSpeed: ", self.Speed, "+", self.SpeedBuff,
               "\n\tCDR: ", self.CD, "* ( 100 / ( 100 +", self.CDR, "))")
 
