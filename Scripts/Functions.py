@@ -246,6 +246,14 @@ def Lobby(Game, Screen, time, police1):
                 if Game.pressed.get(pygame.K_F11):
                     pygame.display.toggle_fullscreen()
 
+                if Game.pressed.get(pygame.K_ESCAPE):
+                    Game.InGame = False
+                    Game.Lobby = False
+                    Game.Pause = False
+                    Game.running = False
+                    pygame.quit()
+
+
             elif event.type == pygame.KEYUP:
                 Game.pressed[event.key] = False
 
