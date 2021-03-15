@@ -85,10 +85,12 @@ class Player(pygame.sprite.Sprite, Game):
         self.Force = Force()
         self.Game = Game
 
-        # Statistiques -tremisabdoul
+        # Statistiques Basiques -tremisabdoul
         self.Pv = 50
         self.MaxPv = 100
         self.Damage = 10
+        self.Armor = 0
+        self.Mana = 50
         self.Speed = 2
         self.SpeedY = 0
 
@@ -99,6 +101,18 @@ class Player(pygame.sprite.Sprite, Game):
         self.Gain_Stat_Level = 5
         self.Point_Pv = 0
         self.Point_Damage = 0
+
+        # Statistique Variable -steven
+        self.CDR = 0
+        self.AttackSpeed = 0
+        self.CCHit = 0
+        self.CCSpell = 0
+        self.CCDamage = 0
+        self.Penetration = 0
+        self.ManaRegen = 0
+        self.XP_Multiplicator = 0
+        self.Damage_Multiplicator = 0
+
 
         self.Weapon1 = Weapon()
         self.Weapon2 = Weapon()
@@ -389,7 +403,7 @@ class Monster(pygame.sprite.Sprite, Game):
         self.DamageDealt = 10
         self.Speed = 3
 
-        self.image = pygame.image.load("Assets/Visual/slime.png")
+        self.image = pygame.image.load("Assets/Visual/Entities/Monster/Slime/Stand1.png")
 
         self.rect = self.image.get_rect()
 

@@ -362,15 +362,27 @@ def Data_Save(Game, Screen, police1):
         "SaveName": "Save 1",  # NameSave
         "PlayerName": "Name",  # NamePlayer
         "GameType": "Rogue",  # TypeGame
-        "# Player[0]": "# Statistics -tremisabdoul",
+        "# Player[0]": "# Base Statistics -tremisabdoul",
         "Game.Player.Pv": Game.Player.Pv,
         "Game.Player.MaxPv": Game.Player.MaxPv,
         "Game.Player.Damage": Game.Player.Damage,
+        "Game.Player.Armor": Game.Player.Armor,
+        "Game.Player.Mana": Game.Player.Mana,
         "Game.Player.Speed": Game.Player.Speed,
         "Game.Player.SpeedY": Game.Player.SpeedY,
         "Game.Player.Level": Game.Player.Level,
         "Game.Player.Gold": Game.Player.Gold,
-        "# Player[1]": "# Position -tremisabdoul",
+        "# Player[1]": "# Statistique Variable -steven",
+        "Game.Player.CDR": Game.Player.CDR,
+        "Game.Player.AttackSpeed": Game.Player.AttackSpeed,
+        "Game.Player.CCHit": Game.Player.CCHit,
+        "Game.Player.CCSpell": Game.Player.CCSpell,
+        "Game.Player.CCDamage": Game.Player.CCDamage,
+        "Game.Player.Penetration": Game.Player.Penetration,
+        "Game.Player.ManaRegen": Game.Player.ManaRegen,
+        "Game.Player.XP_Multiplicator": Game.Player.XP_Multiplicator,
+        "Game.Player.Damage.Multiplicator": Game.Player.Damage_Multiplicator,
+        "# Player[2]": "# Position -tremisabdoul",
         "Game.Player.rect.x": Game.Player.rect.x,
         "Game.Player.rect.y": Game.Player.rect.y,
         "Game.Player.rect.height": Game.Player.rect.height,
@@ -378,7 +390,7 @@ def Data_Save(Game, Screen, police1):
         "Game.Player.LastY": Game.Player.LastY,
         "Game.Player.YVector": Game.Player.YVector,
         "Game.PositionPlayer": Game.PositionPlayer,
-        "# Phisics": "# Actual Movement of Player -tremisabdoul",
+        "# Physics": "# Actual Movement of Player -tremisabdoul",
         "Game.Player.Force.lastx": Game.Player.Force.lastx,
         "Game.Player.Base_Gravity": Game.Player.Base_Gravity,
         "Game.Monster.Base_Gravity": Game.Monster.Base_Gravity,
@@ -437,6 +449,10 @@ def Data_Load(Game, Screen, police1):
     Loading = LoadingScreen("I'm actually loading your data", Screen, police1, FullLoading, Loading)
     Game.Player.Damage = float(Load["Game.Player.Damage"])
     Loading = LoadingScreen("I'm actually loading your data", Screen, police1, FullLoading, Loading)
+    Game.Player.Armor = int(Load["Game.Player.Armor"])
+    Loading = LoadingScreen("I'm actually loading your data", Screen, police1, FullLoading, Loading)
+    Game.Player.Mana = int(Load["Game.Player.Mana"])
+    Loading = LoadingScreen("I'm actually loading your data", Screen, police1, FullLoading, Loading)
     Game.Player.Speed = float(Load["Game.Player.Speed"])
     Loading = LoadingScreen("I'm actually loading your data", Screen, police1, FullLoading, Loading)
     Game.Player.SpeedY = float(Load["Game.Player.SpeedY"])
@@ -444,6 +460,24 @@ def Data_Load(Game, Screen, police1):
     Game.Player.Level = int(Load["Game.Player.Level"])
     Loading = LoadingScreen("I'm actually loading your data", Screen, police1, FullLoading, Loading)
     Game.Player.Gold = int(Load["Game.Player.Gold"])
+    Loading = LoadingScreen("I'm actually loading your data", Screen, police1, FullLoading, Loading)
+    Game.Player.CDR = float(Load["Game.Player.CDR"])
+    Loading = LoadingScreen("I'm actually loading your data", Screen, police1, FullLoading, Loading)
+    Game.Player.AttackSpeed = int(Load["Game.Player.AttackSpeed"])
+    Loading = LoadingScreen("I'm actually loading your data", Screen, police1, FullLoading, Loading)
+    Game.Player.CCHit = float(Load["Game.Player.CCHit"])
+    Loading = LoadingScreen("I'm actually loading your data", Screen, police1, FullLoading, Loading)
+    Game.Player.CCSpell = float(Load["Game.Player.CCSpell"])
+    Loading = LoadingScreen("I'm actually loading your data", Screen, police1, FullLoading, Loading)
+    Game.Player.CCDamage = float(Load["Game.Player.CCDamage"])
+    Loading = LoadingScreen("I'm actually loading your data", Screen, police1, FullLoading, Loading)
+    Game.Player.Penetration = int(Load["Game.Player.Penetration"])
+    Loading = LoadingScreen("I'm actually loading your data", Screen, police1, FullLoading, Loading)
+    Game.Player.ManaRegen = int(Load["Game.Player.ManaRegen"])
+    Loading = LoadingScreen("I'm actually loading your data", Screen, police1, FullLoading, Loading)
+    Game.Player.XP_Multiplicator = float(Load["Game.Player.XP_Multiplicator"])
+    Loading = LoadingScreen("I'm actually loading your data", Screen, police1, FullLoading, Loading)
+    Game.Player.Damage_Multiplicator = float(Load["Game.Player.Damage.Multiplicator"])
     Loading = LoadingScreen("I'm actually loading your data", Screen, police1, FullLoading, Loading)
     Game.Player.rect.x = float(Load["Game.Player.rect.x"])
     Loading = LoadingScreen("I'm actually loading your data", Screen, police1, FullLoading, Loading)
@@ -680,10 +714,10 @@ Animations = [
         [  # Slime
             [  # Stand
                 [  # Animations[2[0[0[0[x]]]]] (Stand Right)
-                    pygame.image.load("Assets/Visual/Monster/Slime/Stand1.png")
+                    pygame.image.load("Assets/Visual/Entities/Monster/Slime/Stand1.png")
                 ],
                 [  # Animations[2[0[0[1[x]]]]] (Stand Left)
-                    pygame.image.load("Assets/Visual/Monster/Slime/Left/Stand1.png")
+                    pygame.image.load("Assets/Visual/Entities/Monster/Slime/Left/Stand1.png")
                 ]
             ]
         ]
