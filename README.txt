@@ -1,8 +1,14 @@
-    Anoari
-    
-[BINDS : gauche : q|droite : d|saut : espace|quitter le jeu : Echap|mettre le jeu en plein écran : f11]
-Thank you for downloading
+	       「Anoari」
+       	━━━ ∙ ʚ BINDS ɞ ∙ ━━━
 
+Gauche : Q
+Droite : D
+Saut : Espace
+Mettre le jeu en Pause : Echap	/!\ En Jeu
+Quitter le Jeu : Echap		/!\ Dans le menu d'accueil
+Plein écran : F11
+
+  ━━━ ∙ ʚ Thank you for downloading ɞ ∙ ━━━
 
 
 [FR]
