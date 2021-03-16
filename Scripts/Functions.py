@@ -5,9 +5,9 @@ import pygame
 import os
 
 
-# CrÃ©e l'Ã©cran -tremisabdoul
+# CrÃƒÂ©e l'ÃƒÂ©cran -tremisabdoul
 def Display():
-    """Fonction Permettent l'affichage de l'Ã©cran -tremisabdoul"""
+    """Fonction Permettent l'affichage de l'ÃƒÂ©cran -tremisabdoul"""
 
     pygame.init()
     pygame.display.set_caption("Anoari")
@@ -27,7 +27,7 @@ def Jump(Game):
 
 
 def DeplacementX(Game):
-    """Fonction de dÃ©placement [gauche/droite] :  [ Left: LEFT / Q ], [ Right: RIGHT / D ] -tremisabdoul"""
+    """Fonction de dÃƒÂ©placement [gauche/droite] :  [ Left: LEFT / Q ], [ Right: RIGHT / D ] -tremisabdoul"""
 
     Game.Player.MovementKey = False
     if Game.pressed.get(pygame.K_d) and Game.Player.rect.x < Game.Player.MaxX \
@@ -49,13 +49,13 @@ def MousePriter(Screen, Game):
 
 
 def Printer(Screen, Game):
-    """Fonction d'affichage: ElÃ©ments in-game -tremisabdoul"""
+    """Fonction d'affichage: ElÃƒÂ©ments in-game -tremisabdoul"""
 
-    # DÃ©placement des Ã©lÃ©ments -tremisabdoul
+    # DÃƒÂ©placement des ÃƒÂ©lÃƒÂ©ments -tremisabdoul
     Game.Monster.rect.x -= Game.Position
     Game.Background.rect.x -= Game.Position
 
-    # Affiche a l'Ã©cran des Ã©lÃ©ments -tremisabdoul
+    # Affiche a l'ÃƒÂ©cran des ÃƒÂ©lÃƒÂ©ments -tremisabdoul
     Screen.fill((60, 60, 120))
     # Screen.blit(Game.Background.image, Game.Background.rect)
     Screen.blit(Game.Sol.image, Game.Sol.rect)
@@ -73,14 +73,14 @@ def Printer(Screen, Game):
 
 # Print: -tremisabdoul
 def UIPrinter(Screen, police1, Game):
-    """Fonction d'affichage: ElÃ©ments d'interface in-game -tremisabdoul"""
+    """Fonction d'affichage: ElÃƒÂ©ments d'interface in-game -tremisabdoul"""
 
-    # Permet de rÃ©cupÃ©rer le nombre de frames a la seconde -tremisabdoul -tremisabdoul
+    # Permet de rÃƒÂ©cupÃƒÂ©rer le nombre de frames a la seconde -tremisabdoul -tremisabdoul
     frame = 1
     fps = frame / Game.Tickchecker
     fps = "FPS : " + str(round(fps))
 
-    # CrÃ©e une couleur plus ou moins rouge en fonction des PV restants -tremisabdoul
+    # CrÃƒÂ©e une couleur plus ou moins rouge en fonction des PV restants -tremisabdoul
     Color = (Game.Player.Pv / Game.Player.MaxPv) * 255
     LifeColor = [255, Color, Color]
 
@@ -102,14 +102,14 @@ def UIPrinter(Screen, police1, Game):
         Screen.blit(Entity.YVectorblit, (100, y))
         y += 10
 
-    # Affiche a l'Ã©cran les Ã©lÃ©ments suivents -tremisabdoul
+    # Affiche a l'ÃƒÂ©cran les ÃƒÂ©lÃƒÂ©ments suivents -tremisabdoul
     Screen.blit(printfps, (6, 34))
     Screen.blit(opti, (15 + Color / 50, 48 + Color / 50))
     Screen.blit(opti1, (15 + Color / 50, 60 + Color / 50))
 
 
 def pauseblit(Screen, Game):
-    """Fonction d'affichage: ElÃ©ments de pause -tremisabdoul"""
+    """Fonction d'affichage: ElÃƒÂ©ments de pause -tremisabdoul"""
 
     # Screen.blit(Game.Background.image, Game.Background.rect)
     # Screen.blit(Game.UI.baselayer, (0, 0))  # << Prends bcp de perf -tremisabdoul
@@ -163,7 +163,7 @@ def pause(Game, Screen, time, police1):
                 Game.running = False
                 pygame.quit()
 
-        # Permet de rÃ©cupÃ©rer le nombre de frames a la seconde -tremisabdoul
+        # Permet de rÃƒÂ©cupÃƒÂ©rer le nombre de frames a la seconde -tremisabdoul
         Game.Tickchecker = time.time()
         Game.Tickchecker -= tick
 
@@ -172,7 +172,7 @@ def pause(Game, Screen, time, police1):
         pauseblit(Screen, Game)
         MousePriter(Screen, Game)
 
-        # Affichage du rendu graphique sur la fenÃ¨tre -tremisabdoul
+        # Affichage du rendu graphique sur la fenÃƒÂ¨tre -tremisabdoul
         pygame.display.flip()
 
         # Compteur de FPS et lock de FPS -tremisabdoul
@@ -202,11 +202,9 @@ def inGame(Game, time, Screen, police1):
             Game.Player.Pv -= 1
         else:
             Game.Player.Pv = Game.Player.MaxPv
-        # Crée 16 plateformes dans un espace donné (random)
+        # CrÃ©e 16 plateformes dans un espace donnÃ© (random)
         if len(Game.all_plateform) < 16:
             NewPlatform(Game)
-        """ ===== Key Inputs ===== """
-        InGameKeys(Game, Screen)
         """ ===== Movements ====="""
         Movements(Game, Screen)
         """ ===== Printers ===== """
@@ -220,12 +218,14 @@ def inGame(Game, time, Screen, police1):
         MousePriter(Screen, Game)
         # Met a jour l'affichage (Print tout ce qui est blit avant) -tremisabdoul
         pygame.display.flip()
+        """ ===== Key Inputs ===== """
+        InGameKeys(Game, Screen)
         """ ===== Frame Limiter ===== """
         FrameLimiter(Game, time, tick)
 
 
 def LobbyBlit(Screen, Game):
-    """Fonction d'affichage: ElÃ©ments du lobby"""
+    """Fonction d'affichage: ElÃƒÂ©ments du lobby"""
     Screen.blit(Game.UI.lobbybackground, (0, 0))
     Screen.blit(Game.UI.lobby_loadbutton, Game.UI.lobby_loadbuttonrect)
     Screen.blit(Game.UI.lobby_playbutton, Game.UI.lobby_playbuttonrect)
@@ -246,14 +246,6 @@ def Lobby(Game, Screen, time, police1):
                 if Game.pressed.get(pygame.K_F11):
                     pygame.display.toggle_fullscreen()
 
-                if Game.pressed.get(pygame.K_ESCAPE):
-                    Game.InGame = False
-                    Game.Lobby = False
-                    Game.Pause = False
-                    Game.running = False
-                    pygame.quit()
-
-
             elif event.type == pygame.KEYUP:
                 Game.pressed[event.key] = False
 
@@ -273,7 +265,7 @@ def Lobby(Game, Screen, time, police1):
                 Game.running = False
                 pygame.quit()
 
-        # Permet de rÃ©cupÃ©rer le nombre de frames a la seconde -tremisabdoul
+        # Permet de rÃƒÂ©cupÃƒÂ©rer le nombre de frames a la seconde -tremisabdoul
         tickchecker = time.time()
         tickchecker -= tick
 
@@ -318,7 +310,7 @@ def Option(Game, Screen, time, police1, police2):
                 Game.running = False
                 pygame.quit()
 
-        # Permet de rÃ©cupÃ©rer le nombre de frames a la seconde -tremisabdoul
+        # Permet de rÃƒÂ©cupÃƒÂ©rer le nombre de frames a la seconde -tremisabdoul
         tickchecker = time.time()
         tickchecker -= tick
 
@@ -326,8 +318,8 @@ def Option(Game, Screen, time, police1, police2):
 
         Screen.fill((0, 0, 0))
 
-        # Affichage du nÃ©cessaire pour le texte des Options -steven
-        Texte('RÃ©solution : ', police2, (255, 255, 255), Screen, 100, 100)
+        # Affichage du nÃƒÂ©cessaire pour le texte des Options -steven
+        Texte('RÃƒÂ©solution : ', police2, (255, 255, 255), Screen, 100, 100)
         Texte('Volume : ', police2, (255, 255, 255), Screen, 100, 225)
         Texte('Controles : ', police2, (255, 255, 255), Screen, 100, 350)
 
@@ -353,7 +345,6 @@ def Texte(text, police2, color, Screen, x, y):
 
 # TKT -tremisabdoul
 def Data_Save(Game, Screen, police1):
-
     Loading = 0
     FullLoading = 8
 
@@ -367,30 +358,18 @@ def Data_Save(Game, Screen, police1):
         "Variable": "Value",
         # Info -tremisabdoul [0-2]
         "# MetaSave": "# Infos -tremisabdoul",
-        "SaveName": "Save 1",  # NameSave
-        "PlayerName": "Name",  # NamePlayer
-        "GameType": "Rogue",  # TypeGame
-        "# Player[0]": "# Base Statistics -tremisabdoul",
+        "SaveName": "Save 1",
+        "PlayerName": "Name",
+        "GameType": "Rogue",
+        "# Player[0]": "# Statistics -tremisabdoul",
         "Game.Player.Pv": Game.Player.Pv,
         "Game.Player.MaxPv": Game.Player.MaxPv,
         "Game.Player.Damage": Game.Player.Damage,
-        "Game.Player.Armor": Game.Player.Armor,
-        "Game.Player.Mana": Game.Player.Mana,
         "Game.Player.Speed": Game.Player.Speed,
         "Game.Player.SpeedY": Game.Player.SpeedY,
         "Game.Player.Level": Game.Player.Level,
         "Game.Player.Gold": Game.Player.Gold,
-        "# Player[1]": "# Statistique Variable -steven",
-        "Game.Player.CDR": Game.Player.CDR,
-        "Game.Player.AttackSpeed": Game.Player.AttackSpeed,
-        "Game.Player.CCHit": Game.Player.CCHit,
-        "Game.Player.CCSpell": Game.Player.CCSpell,
-        "Game.Player.CCDamage": Game.Player.CCDamage,
-        "Game.Player.Penetration": Game.Player.Penetration,
-        "Game.Player.ManaRegen": Game.Player.ManaRegen,
-        "Game.Player.XP_Multiplicator": Game.Player.XP_Multiplicator,
-        "Game.Player.Damage.Multiplicator": Game.Player.Damage_Multiplicator,
-        "# Player[2]": "# Position -tremisabdoul",
+        "# Player[1]": "# Position -tremisabdoul",
         "Game.Player.rect.x": Game.Player.rect.x,
         "Game.Player.rect.y": Game.Player.rect.y,
         "Game.Player.rect.height": Game.Player.rect.height,
@@ -398,7 +377,7 @@ def Data_Save(Game, Screen, police1):
         "Game.Player.LastY": Game.Player.LastY,
         "Game.Player.YVector": Game.Player.YVector,
         "Game.PositionPlayer": Game.PositionPlayer,
-        "# Physics": "# Actual Movement of Player -tremisabdoul",
+        "# Phisics": "# Actual Movement of Player -tremisabdoul",
         "Game.Player.Force.lastx": Game.Player.Force.lastx,
         "Game.Player.Base_Gravity": Game.Player.Base_Gravity,
         "Game.Monster.Base_Gravity": Game.Monster.Base_Gravity,
@@ -407,12 +386,12 @@ def Data_Save(Game, Screen, police1):
 
     Loading = LoadingScreen("I'm actually saving your data", Screen, police1, FullLoading, Loading)
 
-    text_file = open("save1.csv", "w+", newline="\n")
+    text_file = open("save1.csv", "w+", newline="")
 
     Loading = LoadingScreen("I'm actually saving your data", Screen, police1, FullLoading, Loading)
 
     with text_file:
-        Writer = csv.writer(text_file, quoting=2)
+        Writer = csv.writer(text_file, quoting=0)
         Writer.writerows(Datalist.items())
 
         Loading = LoadingScreen("I'm actually saving your data", Screen, police1, FullLoading, Loading)
@@ -457,10 +436,6 @@ def Data_Load(Game, Screen, police1):
     Loading = LoadingScreen("I'm actually loading your data", Screen, police1, FullLoading, Loading)
     Game.Player.Damage = float(Load["Game.Player.Damage"])
     Loading = LoadingScreen("I'm actually loading your data", Screen, police1, FullLoading, Loading)
-    Game.Player.Armor = int(Load["Game.Player.Armor"])
-    Loading = LoadingScreen("I'm actually loading your data", Screen, police1, FullLoading, Loading)
-    Game.Player.Mana = int(Load["Game.Player.Mana"])
-    Loading = LoadingScreen("I'm actually loading your data", Screen, police1, FullLoading, Loading)
     Game.Player.Speed = float(Load["Game.Player.Speed"])
     Loading = LoadingScreen("I'm actually loading your data", Screen, police1, FullLoading, Loading)
     Game.Player.SpeedY = float(Load["Game.Player.SpeedY"])
@@ -468,24 +443,6 @@ def Data_Load(Game, Screen, police1):
     Game.Player.Level = int(Load["Game.Player.Level"])
     Loading = LoadingScreen("I'm actually loading your data", Screen, police1, FullLoading, Loading)
     Game.Player.Gold = int(Load["Game.Player.Gold"])
-    Loading = LoadingScreen("I'm actually loading your data", Screen, police1, FullLoading, Loading)
-    Game.Player.CDR = float(Load["Game.Player.CDR"])
-    Loading = LoadingScreen("I'm actually loading your data", Screen, police1, FullLoading, Loading)
-    Game.Player.AttackSpeed = int(Load["Game.Player.AttackSpeed"])
-    Loading = LoadingScreen("I'm actually loading your data", Screen, police1, FullLoading, Loading)
-    Game.Player.CCHit = float(Load["Game.Player.CCHit"])
-    Loading = LoadingScreen("I'm actually loading your data", Screen, police1, FullLoading, Loading)
-    Game.Player.CCSpell = float(Load["Game.Player.CCSpell"])
-    Loading = LoadingScreen("I'm actually loading your data", Screen, police1, FullLoading, Loading)
-    Game.Player.CCDamage = float(Load["Game.Player.CCDamage"])
-    Loading = LoadingScreen("I'm actually loading your data", Screen, police1, FullLoading, Loading)
-    Game.Player.Penetration = int(Load["Game.Player.Penetration"])
-    Loading = LoadingScreen("I'm actually loading your data", Screen, police1, FullLoading, Loading)
-    Game.Player.ManaRegen = int(Load["Game.Player.ManaRegen"])
-    Loading = LoadingScreen("I'm actually loading your data", Screen, police1, FullLoading, Loading)
-    Game.Player.XP_Multiplicator = float(Load["Game.Player.XP_Multiplicator"])
-    Loading = LoadingScreen("I'm actually loading your data", Screen, police1, FullLoading, Loading)
-    Game.Player.Damage_Multiplicator = float(Load["Game.Player.Damage.Multiplicator"])
     Loading = LoadingScreen("I'm actually loading your data", Screen, police1, FullLoading, Loading)
     Game.Player.rect.x = float(Load["Game.Player.rect.x"])
     Loading = LoadingScreen("I'm actually loading your data", Screen, police1, FullLoading, Loading)
@@ -737,7 +694,7 @@ print("\n", Animations[0], Animations[1])
 
 
 def Movements(Game, Screen):
-    # Fonction de dÃ©placement gauche / droite -tremisabdoul
+    # Fonction de dÃƒÂ©placement gauche / droite -tremisabdoul
     DeplacementX(Game)
 
     for Entity in Game.Entities:
@@ -767,7 +724,7 @@ def Movements(Game, Screen):
         Game.Player.Force.Gravity(Game, Entity)
         Entity.YVector = Entity.LastY - Entity.rect.y
 
-    # DÃ©placements de player -tremisabdoul
+    # DÃƒÂ©placements de player -tremisabdoul
     # Game.Player.rect.x += Game.Player.Force.AccelerationFunctionX()
     Game.Position = Game.Player.Force.AccelerationFunctionX()
     Game.Position = round(Game.Position)
@@ -781,7 +738,7 @@ def InGameKeys(Game, Screen):
     # Check les input et instances -tremisabdoul
     for event in pygame.event.get():
 
-        # Touches enfoncÃ©es -tremisabdoul
+        # Touches enfoncees -tremisabdoul
         if event.type == pygame.KEYDOWN:
             Game.pressed[event.key] = True
 
@@ -809,11 +766,11 @@ def InGameKeys(Game, Screen):
                     os.environ['SDL_VIDEO_WINDOW_POS'] = "%d,%d" % (100, 100)
                     Game.Fullscreen = 0
 
-        # Touches relachÃ©es -tremisabdoul
+        # Touches relachees -tremisabdoul
         elif event.type == pygame.KEYUP:
             Game.pressed[event.key] = False
 
-        # Permet le resize de l'Ã©cran -tremisabdoul
+        # Permet le resize de l'ecran -tremisabdoul
         if event.type == pygame.VIDEORESIZE:
             ReScale(Game, Screen)
 
@@ -824,10 +781,12 @@ def InGameKeys(Game, Screen):
             Game.Pause = False
             Game.running = False
             pygame.quit()
+            quit()
+            break
 
 
 def FrameLimiter(Game, time, tick):
-    # Permet d'avoir des frames rÃ©guliÃ¨res -tremisabdoul
+    # Permet d'avoir des frames regulieres -tremisabdoul
     Game.Tickchecker = time.time()
     Game.Tickchecker -= tick
 

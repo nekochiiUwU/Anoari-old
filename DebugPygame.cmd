@@ -7,4 +7,5 @@ py -m pip install --upgrade pip
 [Try 2]
 python -m pip install pygame
 python -m pip install --upgrade pip
+
 stop

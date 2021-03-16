@@ -1,14 +1,8 @@
-	     「Anoari」
-       	━━━ ∙ ʚ BINDS ɞ ∙ ━━━
+    Anoari
+    
+[BINDS : gauche : q|droite : d|saut : espace|quitter le jeu : Echap|mettre le jeu en plein écran : f11]
+Thank you for downloading
 
-Gauche : Q
-Droite : D
-Saut : Espace
-Mettre le jeu en Pause : Echap	/!\ En Jeu
-Quitter le Jeu : Echap		/!\ Dans le menu d'accueil
-Plein écran : F11
-
-  ━━━ ∙ ʚ Thank you for downloading ɞ ∙ ━━━
 
 
 [FR]
@@ -29,9 +23,11 @@ est déjà presque terminée, tout comme les plateformes,
 la gravité, la caméra et les interactions entre mobs et joueur, (Load des sauvegardes en cours de développement)
 qui sont déjà prises en compte par le jeu (lorsque que vous entrez en contact avec le slime, il s’arrête d’avancer).
 
-Informations: Fichier de lancement: Execute.cmd
-Si vous ne pouvez pas lancer Execute.cmd, vous devez installer python et lancer DebugPygame.cmd
-Vous pouvez également lancer le jeu avec EduPython a partir du fichier main.py
+Informations: 
+	Fichier de lancement: Execute.cmd
+	Si vous ne pouvez pas lancer Execute.cmd, vous devez installer Python avec PythonInstall 
+	et lancer DebugPygame.cmd pour installer les modules necesaires au jeu
+	Vous pouvez également lancer le jeu avec EduPython a partir du fichier main.py
 
 Bon jeu!
 
@@ -55,9 +51,11 @@ is already almost finished, just like the platforms,
 gravity, camera and interactions between mobs and player, (Load of saves under development)
 which are already taken into account by the game (when you come in contact with the slime, it stops moving forward).
 
-Informations: Lunch file: Execute.cmd
-If you cant launch Execute.cmd you had to insall python and launch DebugPygame.cmd 
-Also  you can launch the gamewith EduPython
+Informations: 
+	Launch file: Execute.cmd
+	If you cant launch Execute.cmd you had to insall python with PythonInstall.cmd 
+	and launch DebugPygame.cmd to install the needed modules for Python
+	Also  you can launch the game with main.py
 
 Good game!
 
