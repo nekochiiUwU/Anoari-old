@@ -7,19 +7,15 @@
 # avec votre pseudo pour qu'on puisse vous demander plus d'infos -tremisabdoul
 
 # Importe les fichier Classes Functions pygame et time -tremisabdoul
-from Scripts.Classes import *
 from Scripts.Functions import *
-from User.UserData import *
+from Scripts.Classes import *
 import time
-import pygame
-
 '''==================================='''
 
 pygame.init()
 
 
 # Execute les Classes -tremisabdoul
-SaveSlot = SaveSlot()
 Game = Game()
 Game.init_suite()
 
