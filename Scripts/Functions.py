@@ -345,13 +345,12 @@ def Texte(text, police2, color, Screen, x, y):
 
 # TKT -tremisabdoul
 def Data_Save(Game, Screen, police1):
+
     Loading = 0
     FullLoading = 8
-
     Loading = LoadingScreen("I'm actually saving your data", Screen, police1, FullLoading, Loading)
 
     import csv
-
     Loading = LoadingScreen("I'm actually saving your data", Screen, police1, FullLoading, Loading)
 
     Datalist = {
@@ -397,27 +396,20 @@ def Data_Save(Game, Screen, police1):
     }
 
     Loading = LoadingScreen("I'm actually saving your data", Screen, police1, FullLoading, Loading)
-
     text_file = open("save1.csv", "w+", newline="")
-
     Loading = LoadingScreen("I'm actually saving your data", Screen, police1, FullLoading, Loading)
 
     with text_file:
         Writer = csv.writer(text_file, quoting=0)
         Writer.writerows(Datalist.items())
-
         Loading = LoadingScreen("I'm actually saving your data", Screen, police1, FullLoading, Loading)
 
     text_file.close()
-
     Loading = LoadingScreen("I'm actually saving your data", Screen, police1, FullLoading, Loading)
-
     del csv
 
     LoadingScreen("I'm actually saving your data", Screen, police1, FullLoading, Loading)
-
     print("\nYour data has been saved!\n", Loading, "/", FullLoading)
-
     return 0
 
 
@@ -425,7 +417,7 @@ def Data_Save(Game, Screen, police1):
 def Data_Load(Game, Screen, police1):
 
     Loading = 0
-    FullLoading = 63
+    FullLoading = 88
     Replace = Game.PositionPlayer
     import csv
 
@@ -456,9 +448,9 @@ def Data_Load(Game, Screen, police1):
     Loading = LoadingScreen("I'm actually loading your data", Screen, police1, FullLoading, Loading)
     Game.Player.Gold = int(Load["Game.Player.Gold"])
     Loading = LoadingScreen("I'm actually loading your data", Screen, police1, FullLoading, Loading)
-    Game.Player.rect.x = float(Load["Game.Player.rect.x"])
+    Game.Player.rect.x = int(Load["Game.Player.rect.x"])
     Loading = LoadingScreen("I'm actually loading your data", Screen, police1, FullLoading, Loading)
-    Game.Player.rect.y = float(Load["Game.Player.rect.y"])
+    Game.Player.rect.y = int(Load["Game.Player.rect.y"])
     Loading = LoadingScreen("I'm actually loading your data", Screen, police1, FullLoading, Loading)
     Game.Player.rect.height = int(Load["Game.Player.rect.height"])
     Loading = LoadingScreen("I'm actually loading your data", Screen, police1, FullLoading, Loading)
@@ -468,7 +460,7 @@ def Data_Load(Game, Screen, police1):
     Loading = LoadingScreen("I'm actually loading your data", Screen, police1, FullLoading, Loading)
     Game.Player.Mana = int(Load["Game.Player.Mana"])
     Loading = LoadingScreen("I'm actually loading your data", Screen, police1, FullLoading, Loading)
-    Game.Player.LastY = float(Load["Game.Player.LastY"])
+    Game.Player.LastY = int(Load["Game.Player.LastY"])
     Loading = LoadingScreen("I'm actually loading your data", Screen, police1, FullLoading, Loading)
     Game.Player.YVector = float(Load["Game.Player.YVector"])
     Loading = LoadingScreen("I'm actually loading your data", Screen, police1, FullLoading, Loading)
@@ -476,15 +468,15 @@ def Data_Load(Game, Screen, police1):
     Loading = LoadingScreen("I'm actually loading your data", Screen, police1, FullLoading, Loading)
     Game.Player.Force.lastx = float(Load["Game.Player.Force.lastx"])
     Loading = LoadingScreen("I'm actually loading your data", Screen, police1, FullLoading, Loading)
-    Game.Player.Base_Gravity = int(Load["Game.Player.Base_Gravity"])
+    Game.Player.Base_Gravity = float(Load["Game.Player.Base_Gravity"])
     Loading = LoadingScreen("I'm actually loading your data", Screen, police1, FullLoading, Loading)
-    Game.Monster.Base_Gravity = int(Load["Game.Monster.Base_Gravity"])
+    Game.Monster.Base_Gravity = float(Load["Game.Monster.Base_Gravity"])
     Loading = LoadingScreen("I'm actually loading your data", Screen, police1, FullLoading, Loading)
     Game.Player.Force.x = float(Load["Game.Player.Force.x"])
     Loading = LoadingScreen("I'm actually loading your data", Screen, police1, FullLoading, Loading)
     Game.Player.CDR = float(Load["Game.Player.CDR"])
     Loading = LoadingScreen("I'm actually loading your data", Screen, police1, FullLoading, Loading)
-    Game.Player.AttackSpeed = int(Load["Game.Player.AttackSpeed"])
+    Game.Player.AttackSpeed = float(Load["Game.Player.AttackSpeed"])
     Loading = LoadingScreen("I'm actually loading your data", Screen, police1, FullLoading, Loading)
     Game.Player.CCHit = float(Load["Game.Player.CCHit"])
     Loading = LoadingScreen("I'm actually loading your data", Screen, police1, FullLoading, Loading)
@@ -494,7 +486,7 @@ def Data_Load(Game, Screen, police1):
     Loading = LoadingScreen("I'm actually loading your data", Screen, police1, FullLoading, Loading)
     Game.Player.Penetration = int(Load["Game.Player.Penetration"])
     Loading = LoadingScreen("I'm actually loading your data", Screen, police1, FullLoading, Loading)
-    Game.Player.ManaRegen = int(Load["Game.Player.ManaRegen"])
+    Game.Player.ManaRegen = float(Load["Game.Player.ManaRegen"])
     Loading = LoadingScreen("I'm actually loading your data", Screen, police1, FullLoading, Loading)
     Game.Player.XP_Multiplicator = float(Load["Game.Player.XP_Multiplicator"])
     Loading = LoadingScreen("I'm actually loading your data", Screen, police1, FullLoading, Loading)
@@ -510,6 +502,9 @@ def Data_Load(Game, Screen, police1):
     for plateform in Game.all_plateform:
         plateform.rect.x -= Game.PositionPlayer - Replace
         Loading = LoadingScreen("I'm actually loading your data", Screen, police1, FullLoading, Loading)
+
+    Game.Sol.rect.x = 0
+    Loading = LoadingScreen("I'm actually loading your data", Screen, police1, FullLoading, Loading)
     print("\nYour data has been loaded!\n", Loading, "/", FullLoading)
     return 0
 

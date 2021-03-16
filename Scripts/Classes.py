@@ -90,6 +90,8 @@ class Player(pygame.sprite.Sprite, Game):
         self.Damage = 10
         self.Speed = 2
         self.SpeedY = 0
+        self.Armor = 0
+        self.Mana = 50
         # Statistique Variable -steven
         self.CDR = 0
         self.AttackSpeed = 0
