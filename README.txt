@@ -1,8 +1,17 @@
-    Anoari
-    
-[BINDS : gauche : q|droite : d|saut : espace|quitter le jeu : Echap|mettre le jeu en plein écran : f11]
-Thank you for downloading
 
+	     「Anoari」
+
+
+       	━━━ ∙ ʚ BINDS ɞ ∙ ━━━
+	      Gauche : Q
+	      Droite : D
+	    Saut : Espace
+      Pause : Echap  /!\ En Jeu
+Quitter le Jeu : Echap  /!\ Dans le menu d'accueil
+	  Plein écran : F11
+
+
+  ━━━ ∙ ʚ Thank you for downloading ɞ ∙ ━━━
 
 
 [FR]
@@ -23,6 +32,8 @@ est déjà presque terminée, tout comme les plateformes,
 la gravité, la caméra et les interactions entre mobs et joueur, (Load des sauvegardes en cours de développement)
 qui sont déjà prises en compte par le jeu (lorsque que vous entrez en contact avec le slime, il s’arrête d’avancer).
 
+━━━ ━━━ ━━━ ━━━ ━━━
+
 Informations: 
 	Fichier de lancement: Execute.cmd
 	Si vous ne pouvez pas lancer Execute.cmd, vous devez installer Python avec PythonInstall 
@@ -31,7 +42,7 @@ Informations:
 
 Bon jeu!
 
------------------------------------------------------------------------
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 [EN]
 Anoari is an action-rpg with rogue-like mechanics,
@@ -51,6 +62,8 @@ is already almost finished, just like the platforms,
 gravity, camera and interactions between mobs and player, (Load of saves under development)
 which are already taken into account by the game (when you come in contact with the slime, it stops moving forward).
 
+━━━ ━━━ ━━━ ━━━ ━━━
+
 Informations: 
 	Launch file: Execute.cmd
 	If you cant launch Execute.cmd you had to insall python with PythonInstall.cmd 
@@ -59,8 +72,14 @@ Informations:
 
 Good game!
 
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
 	This game is developped by 
 
 		nekochiitsu 
 		iRaiZz
 		tremisabdoul
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+uwu
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
