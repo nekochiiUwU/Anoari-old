@@ -56,8 +56,8 @@ def Printer(Screen, Game):
     Game.Background.rect.x -= Game.Position
 
     # Affiche a l'ÃƒÂ©cran des ÃƒÂ©lÃƒÂ©ments -tremisabdoul
-    # Screen.fill((60, 60, 120))
-    Screen.blit(Game.Background.image, Game.Background.rect)
+    Screen.fill((60, 60, 120))
+    # Screen.blit(Game.Background.image, Game.Background.rect)
     Screen.blit(Game.Sol.image, Game.Sol.rect)
     Screen.blit(Game.Player.image, Game.Player.rect)
     Screen.blit(Game.Monster.image, Game.Monster.rect)
@@ -760,8 +760,23 @@ def Movements(Game, Screen):
     # DÃƒÂ©placements de player -tremisabdoul
     # Game.Player.rect.x += Game.Player.Force.AccelerationFunctionX()
     Game.Position = Game.Player.Force.AccelerationFunctionX()
+    for Target in Game.Entities:
+        print(Target, Game.all_wall)
+        Collide = Game.Player.check_collisions(Target, Game.all_wall)
+        print(Collide)
+        for Wall in Collide:
+            print("Collision")
+            if Wall.rect.right > Target.rect.left > Wall.rect.left:
+                print("Gauche")
+                Game.Position = Wall.rect.right - (Target.rect.left - 1)
+            elif Wall.rect.right > Target.rect.right > Wall.rect.left:
+                print("Droite")
+                Game.Position = Wall.rect.left - (Target.rect.right + 1)
+
     Game.Position = round(Game.Position)
+
     Game.PositionPlayer += Game.Position
+
     print("\n", Game.PositionPlayer)
 
     BackgroundScroll(Game)

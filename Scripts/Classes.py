@@ -70,7 +70,6 @@ class Game:
 
         self.all_wall = pygame.sprite.Group()
         self.all_wall.add(self.wall)
-        print(self.wall, "\n", self.all_wall)
 
 
 """=====  Game.Player [2.0]  ====="""
@@ -235,19 +234,13 @@ class Force:
 
         # VÃ©rification des collisions entre Player et toutes les plateformes
         Collide = Game0.Player.check_collisions(Target, Game0.all_plateform)
-        print("\n", base, Target.rect.y)
         for item in Collide:
-            print("\n", Target.Base_Gravity)
-            print("\nCollide ? ", bool(item),
-                  "\nFall ? ", bool(Target.YVector),
-                  "\nBottom Collide ? ", bool(Target.rect.bottom <= item.rect.top + Target.Base_Gravity + 2))
 
             if item and Target.YVector <= 1 and (Target.rect.bottom <= item.rect.top + Target.Base_Gravity + 2):
                 Target.rect.y = base
                 Replace = item.rect.top - (Target.rect.bottom - 1)  # Y reset (Premier pixel du rect de plateforme)
                 Target.SpeedY = 0  # Cancel le saut
                 Target.Base_Gravity = 0  # Reset la force du sol (-33)
-                print("\nStand: ", Replace)
                 Target.rect.y += Replace
 
 
@@ -496,10 +489,10 @@ class Wall(pygame.sprite.Sprite, Game):
     def __init__(self):
         super().__init__()
         self.image = pygame.image.load("Assets/Visual/UI/Load.png")
+        self.image = pygame.transform.scale(self.image, (500, 686))
         self.rect = self.image.get_rect()
-        self.rect.x = - 2021
+        self.rect.x = - 500
         self.rect.y = - 0
-        self.image = pygame.transform.scale(self.image, (2021, 720))
 
 
 class Background:
@@ -511,13 +504,3 @@ class Background:
         self.rect = self.image.get_rect()
         self.rect = self.image.get_rect(midtop=self.rect.midtop)
         self.rect.midtop = (self.rect.width / 3, 0)
-
-
-def FrameLimiter(Game, time, tick):
-    # Permet d'avoir des frames regulieres -tremisabdoul
-    Game.Tickchecker = time.time()
-    Game.Tickchecker -= tick
-
-    while Game.Tickchecker < 0.017:
-        Game.Tickchecker = time.time()
-        Game.Tickchecker -= tick
