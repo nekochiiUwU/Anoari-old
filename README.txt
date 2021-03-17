@@ -2,17 +2,16 @@
 	     「Anoari」
 
 
-       	━━━ ∙ ʚ BINDS ɞ ∙ ━━━
-	      Gauche : Q
-	      Droite : D
-	    Saut : Espace
-      Pause : Echap  /!\ En Jeu
+━━━ ∙ ʚ BINDS ɞ ∙ ━━━
+Gauche : Q
+Droite : D
+Saut : Espace
+Pause : Echap  /!\ En Jeu
 Quitter le Jeu : Echap  /!\ Dans le menu d'accueil
-	  Plein écran : F11
+Plein écran : F11
 
 
-  ━━━ ∙ ʚ Thank you for downloading ɞ ∙ ━━━
-
+━━━ ∙ ʚ Thank you for downloading ɞ ∙ ━━━
 
 [FR]
 Anoari est un action-rpg avec des mécaniques de rogue like, 
@@ -32,7 +31,7 @@ est déjà presque terminée, tout comme les plateformes,
 la gravité, la caméra et les interactions entre mobs et joueur, (Load des sauvegardes en cours de développement)
 qui sont déjà prises en compte par le jeu (lorsque que vous entrez en contact avec le slime, il s’arrête d’avancer).
 
-━━━ ━━━ ━━━ ━━━ ━━━
+━━━
 
 Informations: 
 	Fichier de lancement: Execute.cmd
@@ -62,7 +61,7 @@ is already almost finished, just like the platforms,
 gravity, camera and interactions between mobs and player, (Load of saves under development)
 which are already taken into account by the game (when you come in contact with the slime, it stops moving forward).
 
-━━━ ━━━ ━━━ ━━━ ━━━
+━━━
 
 Informations: 
 	Launch file: Execute.cmd
@@ -72,14 +71,24 @@ Informations:
 
 Good game!
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+━━━ ∙ ʚ Version ɞ ∙ ━━━
 
-	This game is developped by 
+v0.0.0 (uwu)
 
-		nekochiitsu 
-		iRaiZz
-		tremisabdoul
+:::::  Information (Version)  :::::
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-uwu
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+# v0.0.0 (uwu) : no release
+# v0.1.x (Pre-Alpha) : release
+# v0.2.x (Alpha) : levels compleated
+# v1.0.0 (Online Pre-Alpha) : Online release
+# v1.0.1 (Online Alpha) : Online with fixes and optimisations
+...
+
+━━━ ━━━ ━━━ ━━━ ━━━
+
+This game is developped by:
+nekochiitsu
+iRaiZz
+tremisabdoul
+
+━━━ ∙ ʚ                ɞ ∙ ━━━

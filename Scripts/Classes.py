@@ -72,6 +72,7 @@ class Game:
         self.all_wall.add(self.wall)
         print(self.wall, "\n", self.all_wall)
 
+
 """=====  Game.Player [2.0]  ====="""
 
 
@@ -451,10 +452,10 @@ class Monster(pygame.sprite.Sprite, Game):
             self.rect.x += int(self.Speed * 1.5)
             self.Direction = 0
 
+
 class Weapon:
 
     def __init__(self):
-
         # Type d'arme Ex: Mitraillette = 3
         self.MetaType = rd.randrange(1, 5, 1)
 
@@ -499,7 +500,6 @@ class Wall(pygame.sprite.Sprite, Game):
         self.rect.x = - 2021
         self.rect.y = - 0
         self.image = pygame.transform.scale(self.image, (2021, 720))
-
 
 
 class Background:
