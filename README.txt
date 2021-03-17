@@ -82,7 +82,7 @@ v0.0.0 (uwu)
 # v0.2.x (Alpha) : levels compleated
 # v1.0.0 (Online Pre-Alpha) : Online release
 # v1.0.1 (Online Alpha) : Online with fixes and optimisations
-...
+# ...
 
 ━━━ ━━━ ━━━ ━━━ ━━━
 
