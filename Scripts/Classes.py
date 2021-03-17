@@ -50,7 +50,7 @@ class Game:
         # Monster devient une sous-classe de Game - steven
         self.Monster = Monster()
         self.Background = Background()
-        self.Wall = Wall()
+        self.wall = Wall()
 
         # CrÃ©ation du groupe composÃ© de tous les monstres -Steven
         self.all_Monster = pygame.sprite.Group()
@@ -68,6 +68,9 @@ class Game:
         self.all_plateform = pygame.sprite.Group()
         self.all_plateform.add(self.Sol)
 
+        self.all_wall = pygame.sprite.Group()
+        self.all_wall.add(self.wall)
+        print(self.wall, "\n", self.all_wall)
 
 """=====  Game.Player [2.0]  ====="""
 
@@ -203,18 +206,18 @@ class Force:
         # Forces appliquÃ©s + ((Forces appliquÃ©s lors de la derniÃ¨re frame / 1.3) / 1.1) -tremisabdoul
         self.StepX = self.xm + self.x + ((self.lastx / 1.3) / 1.1)
 
-        if round(self.StepX) == 0:
+        """if round(self.StepX) == 0:
             self.StepX = 0
             self.lastx = 0
             self.x = 0
             self.xm = 0
             return 0
 
-        else:
-            self.lastx = self.StepX
-            self.x = 0
-            self.xm = 0
-            return self.StepX
+        else:"""
+        self.lastx = self.StepX
+        self.x = 0
+        self.xm = 0
+        return self.StepX
 
     # Faut se dire que la gravitÃ© a une force de 33 et que lorsque
     # Base_Gravity est a 0 c'est que la force appliquÃ©e par le sol est de -33
@@ -488,11 +491,15 @@ class Weapon:
               "\n\tCD: ", self.CD, "* ( 100 / ( 100 +", "CDR = ", self.CDR, "))")
 
 
-class Wall:
+class Wall(pygame.sprite.Sprite, Game):
     def __init__(self):
-        self.image = pygame.image.load("Assets/Visual/plateforme_base.png")
+        super().__init__()
+        self.image = pygame.image.load("Assets/Visual/UI/Load.png")
         self.rect = self.image.get_rect()
-        self.rect = self.image.get_rect(midtop=self.rect.midtop)
+        self.rect.x = - 2021
+        self.rect.y = - 0
+        self.image = pygame.transform.scale(self.image, (2021, 720))
+
 
 
 class Background:

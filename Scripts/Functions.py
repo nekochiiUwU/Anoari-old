@@ -56,11 +56,15 @@ def Printer(Screen, Game):
     Game.Background.rect.x -= Game.Position
 
     # Affiche a l'ÃƒÂ©cran des ÃƒÂ©lÃƒÂ©ments -tremisabdoul
-    Screen.fill((60, 60, 120))
-    # Screen.blit(Game.Background.image, Game.Background.rect)
+    # Screen.fill((60, 60, 120))
+    Screen.blit(Game.Background.image, Game.Background.rect)
     Screen.blit(Game.Sol.image, Game.Sol.rect)
     Screen.blit(Game.Player.image, Game.Player.rect)
     Screen.blit(Game.Monster.image, Game.Monster.rect)
+    for nb in Game.all_wall:
+        nb.rect.x -= Game.Position
+        Screen.blit(nb.image, nb.rect)
+        Draw_rect(Screen, nb)
     for nb in Game.all_plateform:
         nb.rect.x -= Game.Position
         Screen.blit(nb.image, nb.rect)
