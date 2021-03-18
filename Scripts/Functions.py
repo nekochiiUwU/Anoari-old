@@ -5,9 +5,9 @@ import pygame
 import os
 
 
-# CrÃƒÂ©e l'ÃƒÂ©cran -tremisabdoul
+# CrÃƒÆ’Ã‚Â©e l'ÃƒÆ’Ã‚Â©cran -tremisabdoul
 def Display():
-    """Fonction Permettent l'affichage de l'ÃƒÂ©cran -tremisabdoul"""
+    """Fonction Permettent l'affichage de l'ÃƒÆ’Ã‚Â©cran -tremisabdoul"""
 
     pygame.init()
     pygame.display.set_caption("Anoari")
@@ -27,7 +27,7 @@ def Jump(Game):
 
 
 def DeplacementX(Game):
-    """Fonction de dÃƒÂ©placement [gauche/droite] :  [ Left: LEFT / Q ], [ Right: RIGHT / D ] -tremisabdoul"""
+    """Fonction de dÃƒÆ’Ã‚Â©placement [gauche/droite] :  [ Left: LEFT / Q ], [ Right: RIGHT / D ] -tremisabdoul"""
 
     Game.Player.MovementKey = False
     if Game.pressed.get(pygame.K_d) and Game.Player.rect.x < Game.Player.MaxX \
@@ -49,13 +49,13 @@ def MousePriter(Screen, Game):
 
 
 def Printer(Screen, Game):
-    """Fonction d'affichage: ElÃƒÂ©ments in-game -tremisabdoul"""
+    """Fonction d'affichage: ElÃƒÆ’Ã‚Â©ments in-game -tremisabdoul"""
 
-    # DÃƒÂ©placement des ÃƒÂ©lÃƒÂ©ments -tremisabdoul
+    # DÃƒÆ’Ã‚Â©placement des ÃƒÆ’Ã‚Â©lÃƒÆ’Ã‚Â©ments -tremisabdoul
     Game.Monster.rect.x -= Game.Position
     Game.Background.rect.x -= Game.Position
 
-    # Affiche a l'ÃƒÂ©cran des ÃƒÂ©lÃƒÂ©ments -tremisabdoul
+    # Affiche a l'ÃƒÆ’Ã‚Â©cran des ÃƒÆ’Ã‚Â©lÃƒÆ’Ã‚Â©ments -tremisabdoul
     Screen.fill((60, 60, 120))
     # Screen.blit(Game.Background.image, Game.Background.rect)
     Screen.blit(Game.Sol.image, Game.Sol.rect)
@@ -77,14 +77,14 @@ def Printer(Screen, Game):
 
 # Print: -tremisabdoul
 def UIPrinter(Screen, police1, Game):
-    """Fonction d'affichage: ElÃƒÂ©ments d'interface in-game -tremisabdoul"""
+    """Fonction d'affichage: ElÃƒÆ’Ã‚Â©ments d'interface in-game -tremisabdoul"""
 
-    # Permet de rÃƒÂ©cupÃƒÂ©rer le nombre de frames a la seconde -tremisabdoul -tremisabdoul
+    # Permet de rÃƒÆ’Ã‚Â©cupÃƒÆ’Ã‚Â©rer le nombre de frames a la seconde -tremisabdoul -tremisabdoul
     frame = 1
     fps = frame / Game.Tickchecker
     fps = "FPS : " + str(round(fps))
 
-    # CrÃƒÂ©e une couleur plus ou moins rouge en fonction des PV restants -tremisabdoul
+    # CrÃƒÆ’Ã‚Â©e une couleur plus ou moins rouge en fonction des PV restants -tremisabdoul
     Color = (Game.Player.Pv / Game.Player.MaxPv) * 255
     LifeColor = [255, Color, Color]
 
@@ -106,14 +106,14 @@ def UIPrinter(Screen, police1, Game):
         Screen.blit(Entity.YVectorblit, (100, y))
         y += 10
 
-    # Affiche a l'ÃƒÂ©cran les ÃƒÂ©lÃƒÂ©ments suivents -tremisabdoul
+    # Affiche a l'ÃƒÆ’Ã‚Â©cran les ÃƒÆ’Ã‚Â©lÃƒÆ’Ã‚Â©ments suivents -tremisabdoul
     Screen.blit(printfps, (6, 34))
     Screen.blit(opti, (15 + Color / 50, 48 + Color / 50))
     Screen.blit(opti1, (15 + Color / 50, 60 + Color / 50))
 
 
 def pauseblit(Screen, Game):
-    """Fonction d'affichage: ElÃƒÂ©ments de pause -tremisabdoul"""
+    """Fonction d'affichage: ElÃƒÆ’Ã‚Â©ments de pause -tremisabdoul"""
 
     # Screen.blit(Game.Background.image, Game.Background.rect)
     # Screen.blit(Game.UI.baselayer, (0, 0))  # << Prends bcp de perf -tremisabdoul
@@ -167,7 +167,7 @@ def pause(Game, Screen, time, police1):
                 Game.running = False
                 pygame.quit()
 
-        # Permet de rÃƒÂ©cupÃƒÂ©rer le nombre de frames a la seconde -tremisabdoul
+        # Permet de rÃƒÆ’Ã‚Â©cupÃƒÆ’Ã‚Â©rer le nombre de frames a la seconde -tremisabdoul
         Game.Tickchecker = time.time()
         Game.Tickchecker -= tick
 
@@ -176,7 +176,7 @@ def pause(Game, Screen, time, police1):
         pauseblit(Screen, Game)
         MousePriter(Screen, Game)
 
-        # Affichage du rendu graphique sur la fenÃƒÂ¨tre -tremisabdoul
+        # Affichage du rendu graphique sur la fenÃƒÆ’Ã‚Â¨tre -tremisabdoul
         pygame.display.flip()
 
         # Compteur de FPS et lock de FPS -tremisabdoul
@@ -206,7 +206,7 @@ def inGame(Game, time, Screen, police1):
             Game.Player.Pv -= 1
         else:
             Game.Player.Pv = Game.Player.MaxPv
-        # CrÃ©e 16 plateformes dans un espace donnÃ© (random)
+        # CrÃƒÂ©e 16 plateformes dans un espace donnÃƒÂ© (random)
         if len(Game.all_plateform) < 16:
             NewPlatform(Game)
         """ ===== Movements ====="""
@@ -229,7 +229,7 @@ def inGame(Game, time, Screen, police1):
 
 
 def LobbyBlit(Screen, Game):
-    """Fonction d'affichage: ElÃƒÂ©ments du lobby"""
+    """Fonction d'affichage: ElÃƒÆ’Ã‚Â©ments du lobby"""
     Screen.blit(Game.UI.lobbybackground, (0, 0))
     Screen.blit(Game.UI.lobby_loadbutton, Game.UI.lobby_loadbuttonrect)
     Screen.blit(Game.UI.lobby_playbutton, Game.UI.lobby_playbuttonrect)
@@ -269,7 +269,7 @@ def Lobby(Game, Screen, time, police1):
                 Game.running = False
                 pygame.quit()
 
-        # Permet de rÃƒÂ©cupÃƒÂ©rer le nombre de frames a la seconde -tremisabdoul
+        # Permet de rÃƒÆ’Ã‚Â©cupÃƒÆ’Ã‚Â©rer le nombre de frames a la seconde -tremisabdoul
         tickchecker = time.time()
         tickchecker -= tick
 
@@ -314,7 +314,7 @@ def Option(Game, Screen, time, police1, police2):
                 Game.running = False
                 pygame.quit()
 
-        # Permet de rÃƒÂ©cupÃƒÂ©rer le nombre de frames a la seconde -tremisabdoul
+        # Permet de rÃƒÆ’Ã‚Â©cupÃƒÆ’Ã‚Â©rer le nombre de frames a la seconde -tremisabdoul
         tickchecker = time.time()
         tickchecker -= tick
 
@@ -322,8 +322,8 @@ def Option(Game, Screen, time, police1, police2):
 
         Screen.fill((0, 0, 0))
 
-        # Affichage du nÃƒÂ©cessaire pour le texte des Options -steven
-        Texte('RÃƒÂ©solution : ', police2, (255, 255, 255), Screen, 100, 100)
+        # Affichage du nÃƒÆ’Ã‚Â©cessaire pour le texte des Options -steven
+        Texte('RÃƒÆ’Ã‚Â©solution : ', police2, (255, 255, 255), Screen, 100, 100)
         Texte('Volume : ', police2, (255, 255, 255), Screen, 100, 225)
         Texte('Controles : ', police2, (255, 255, 255), Screen, 100, 350)
 
@@ -727,7 +727,7 @@ print("\n", Animations[0], Animations[1])
 
 
 def Movements(Game, Screen):
-    # Fonction de dÃƒÂ©placement gauche / droite -tremisabdoul
+    # Fonction de dÃƒÆ’Ã‚Â©placement gauche / droite -tremisabdoul
     DeplacementX(Game)
 
     for Entity in Game.Entities:
@@ -757,18 +757,21 @@ def Movements(Game, Screen):
         Game.Player.Force.Gravity(Game, Entity)
         Entity.YVector = Entity.LastY - Entity.rect.y
 
-    # DÃƒÂ©placements de player -tremisabdoul
+    # DÃƒÆ’Ã‚Â©placements de player -tremisabdoul
     # Game.Player.rect.x += Game.Player.Force.AccelerationFunctionX()
     Game.Position = Game.Player.Force.AccelerationFunctionX()
     for Target in Game.Entities:
         print(Target, Game.all_wall)
         Collide = Game.Player.check_collisions(Target, Game.all_wall)
         print(Collide)
+
         for Wall in Collide:
             print("Collision")
+
             if Wall.rect.right > Target.rect.left > Wall.rect.left:
                 print("Gauche")
                 Game.Position = Wall.rect.right - (Target.rect.left - 1)
+
             elif Wall.rect.right > Target.rect.right > Wall.rect.left:
                 print("Droite")
                 Game.Position = Wall.rect.left - (Target.rect.right + 1)
