@@ -1,0 +1,26 @@
+>
+>	Paterns Info:
+>
+>		' '...' '  = Patern
+>
+>		'   >   '  = Skip Line
+>
+>		'   2   '  = Number Of The Patern
+>		'   M9  '  = Number Of Mobs On The Zone
+>
+>		'       '  = Air
+>		'   #   '  = Wall
+>		'   _   '  = Platform
+>		'   :   '  = Next Y Pattern's Line
+>
+>		'   =   '  = Next Patern
+>		'   =7  ' = Specific Next Patern
+>__________________________________________________________
+
+'0
+M2
+# ###     :
+      __  :
+ _____  __:
+ #####  ##:
+='
