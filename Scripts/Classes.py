@@ -368,15 +368,32 @@ class UI:
         self.lobby_loadbutton = pygame.image.load("Assets/Visual/UI/bouton_REPRENDRE.png")
         self.lobby_loadbutton = pygame.transform.scale(self.lobby_loadbutton, (140, 30))
         self.lobby_loadbuttonrect = self.lobby_loadbutton.get_rect()
-        self.lobby_loadbuttonrect.x = -120
+        self.lobby_loadbuttonrect.x = -62
         self.lobby_loadbuttonrect.y = 360
 
         # IntÃƒÂ©gration du boutton "QUITTER" -Steven
         self.lobby_quitbutton = pygame.image.load("Assets/Visual/UI/bouton_QUITTER.png")
         self.lobby_quitbutton = pygame.transform.scale(self.lobby_quitbutton, (100, 30))
         self.lobby_quitbuttonrect = self.lobby_quitbutton.get_rect()
-        self.lobby_quitbuttonrect.x = -80
+        self.lobby_quitbuttonrect.x = -62
         self.lobby_quitbuttonrect.y = 360 + 60
+
+    def TitleMenuButtunDeplacement(self, Game):
+
+        Dep = (self.lobby_loadbuttonrect.y - Game.Mouse.rect.y) / 16
+        if Dep > 0:
+            Dep = -Dep
+        self.lobby_loadbuttonrect.x = Dep * -Dep + 186
+
+        Dep = (self.lobby_quitbuttonrect.y - Game.Mouse.rect.y) / 16
+        if Dep > 0:
+            Dep = -Dep
+        self.lobby_quitbuttonrect.x = Dep * -Dep + 206
+
+        Dep = (self.lobby_playbuttonrect.y - Game.Mouse.rect.y) / 16
+        if Dep > 0:
+            Dep = -Dep
+        self.lobby_playbuttonrect.x = Dep * -Dep + 215
 
 
 """=====  Monstre [7]  ====="""

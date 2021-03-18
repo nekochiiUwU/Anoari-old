@@ -101,7 +101,6 @@ def UIPrinter(Screen, police1, Game):
 
     y = 34
     for Entity in Game.Entities:
-        print("\n", Entity.YVector, "=", Entity.LastY, "-", Entity.rect.y)
         Entity.YVectorblit = police1.render("Y Vector checker: " + str(Entity.YVector), True, (100, 100, 200))
         Screen.blit(Entity.YVectorblit, (100, y))
         y += 10
@@ -273,6 +272,7 @@ def Lobby(Game, Screen, time, police1):
         tickchecker = time.time()
         tickchecker -= tick
 
+        Game.UI.TitleMenuButtunDeplacement(Game)
         LobbyBlit(Screen, Game)
         MousePriter(Screen, Game)
 
@@ -761,19 +761,14 @@ def Movements(Game, Screen):
     # Game.Player.rect.x += Game.Player.Force.AccelerationFunctionX()
     Game.Position = Game.Player.Force.AccelerationFunctionX()
     for Target in Game.Entities:
-        print(Target, Game.all_wall)
         Collide = Game.Player.check_collisions(Target, Game.all_wall)
-        print(Collide)
 
         for Wall in Collide:
-            print("Collision")
 
             if Wall.rect.right > Target.rect.left > Wall.rect.left:
-                print("Gauche")
                 Game.Position = Wall.rect.right - (Target.rect.left - 1)
 
             elif Wall.rect.right > Target.rect.right > Wall.rect.left:
-                print("Droite")
                 Game.Position = Wall.rect.left - (Target.rect.right + 1)
 
     Game.Position = round(Game.Position)
