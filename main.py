@@ -33,6 +33,13 @@ police1 = pygame.font.Font("Assets/Font/Retro Gaming.ttf", 10)
 
 police2 = pygame.font.Font("Assets/Font/Retro Gaming.ttf", 20)
 
+Paterns(Game)
+eval('print("Game.Paterns = [", str(Game.Paterns), "]")')
+for item in range(len(Game.Paterns)):
+    Game.Paterns[item] = Game.Paterns[item].split(":")
+    print("\nID", item, ": ", Game.Paterns[item])
+    for underitem in Game.Paterns[item]:
+        print("\tID", id(underitem), ": ", underitem)
 '''==================================='''
 
 # Contient tout ce qui est fait pendant que le jeu est run -tremisabdoul
