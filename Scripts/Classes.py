@@ -31,6 +31,8 @@ class Game:
         self.Position = 0
         self.PositionPlayer = 0
         self.PlateformNumber = 1
+        Game.WallNumber = 1
+        self.Paterns = {}
 
     def Rescale(self, value, XorY):
         if XorY == "X":
@@ -70,6 +72,8 @@ class Game:
 
         self.all_wall = pygame.sprite.Group()
         self.all_wall.add(self.wall)
+
+        self.AcrossWall = pygame.sprite.Group()
 
 
 """=====  Game.Player [2.0]  ====="""
@@ -277,16 +281,14 @@ class Plateform(pygame.sprite.Sprite, Game):
         self.image = pygame.image.load("Assets/Visual/plateforme_base.png")
 
         # Transforme l'image sol en la rÃƒÂ©solution indiquÃƒÂ©e -tremisabdoul
-        self.image = pygame.transform.scale(self.image, (320, 20))
+        self.image = pygame.transform.scale(self.image, (400, 20))
 
         # DÃƒÂ©finit la hitbox de sol -tremisabdoul
         self.rect = self.image.get_rect()
 
-        import random as random
         # Position de la plateforme -tremisabdoul
-        self.rect.x = random.randint(-20, 1900)
-        self.rect.y = random.randint(100, 600)
-        del random
+        self.rect.x = 0
+        self.rect.y = 0
 
 
 """=====  Game.Mouse [5]  ====="""

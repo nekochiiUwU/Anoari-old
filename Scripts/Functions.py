@@ -5,9 +5,9 @@ import pygame
 import os
 
 
-# CrÃƒÆ’Ã‚Â©e l'ÃƒÆ’Ã‚Â©cran -tremisabdoul
+# CrÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â©e l'ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â©cran -tremisabdoul
 def Display():
-    """Fonction Permettent l'affichage de l'ÃƒÆ’Ã‚Â©cran -tremisabdoul"""
+    """Fonction Permettent l'affichage de l'ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â©cran -tremisabdoul"""
 
     pygame.init()
     pygame.display.set_caption("Anoari")
@@ -27,7 +27,7 @@ def Jump(Game):
 
 
 def DeplacementX(Game):
-    """Fonction de dÃƒÆ’Ã‚Â©placement [gauche/droite] :  [ Left: LEFT / Q ], [ Right: RIGHT / D ] -tremisabdoul"""
+    """Fonction de deplacement [gauche/droite] :  [ Left: LEFT / Q ], [ Right: RIGHT / D ] -tremisabdoul"""
 
     Game.Player.MovementKey = False
     if Game.pressed.get(pygame.K_d) and Game.Player.rect.x < Game.Player.MaxX \
@@ -49,27 +49,27 @@ def MousePriter(Screen, Game):
 
 
 def Printer(Screen, Game):
-    """Fonction d'affichage: ElÃƒÆ’Ã‚Â©ments in-game -tremisabdoul"""
+    """Fonction d'affichage: Elements in-game -tremisabdoul"""
 
-    # DÃƒÆ’Ã‚Â©placement des ÃƒÆ’Ã‚Â©lÃƒÆ’Ã‚Â©ments -tremisabdoul
+    # Deplacement des elements -tremisabdoul
     Game.Monster.rect.x -= Game.Position
     Game.Background.rect.x -= Game.Position
+    Game.Sol.rect.x += Game.Position
 
-    # Affiche a l'ÃƒÆ’Ã‚Â©cran des ÃƒÆ’Ã‚Â©lÃƒÆ’Ã‚Â©ments -tremisabdoul
+    # Affiche a l'ecran les elments graphique -tremisabdoul
     Screen.fill((60, 60, 120))
     # Screen.blit(Game.Background.image, Game.Background.rect)
     Screen.blit(Game.Sol.image, Game.Sol.rect)
     Screen.blit(Game.Player.image, Game.Player.rect)
     Screen.blit(Game.Monster.image, Game.Monster.rect)
-    for nb in Game.all_wall:
-        nb.rect.x -= Game.Position
-        Screen.blit(nb.image, nb.rect)
-        Draw_rect(Screen, nb)
     for nb in Game.all_plateform:
         nb.rect.x -= Game.Position
         Screen.blit(nb.image, nb.rect)
         Draw_rect(Screen, nb)
-    Game.Sol.rect.x += Game.Position
+    for nb in Game.all_wall:
+        nb.rect.x -= Game.Position
+        Screen.blit(nb.image, nb.rect)
+        Draw_rect(Screen, nb)
     Draw_rect(Screen, Game.Player)
     Draw_rect(Screen, Game.Monster)
     MousePriter(Screen, Game)
@@ -77,14 +77,14 @@ def Printer(Screen, Game):
 
 # Print: -tremisabdoul
 def UIPrinter(Screen, police1, Game):
-    """Fonction d'affichage: ElÃƒÆ’Ã‚Â©ments d'interface in-game -tremisabdoul"""
+    """Fonction d'affichage: ElÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â©ments d'interface in-game -tremisabdoul"""
 
-    # Permet de rÃƒÆ’Ã‚Â©cupÃƒÆ’Ã‚Â©rer le nombre de frames a la seconde -tremisabdoul -tremisabdoul
+    # Permet de reglrer le nombre de frames a la seconde -tremisabdoul -tremisabdoul
     frame = 1
     fps = frame / Game.Tickchecker
     fps = "FPS : " + str(round(fps))
 
-    # CrÃƒÆ’Ã‚Â©e une couleur plus ou moins rouge en fonction des PV restants -tremisabdoul
+    # Cree une couleur plus ou moins rouge en fonction des PV restants -tremisabdoul
     Color = (Game.Player.Pv / Game.Player.MaxPv) * 255
     LifeColor = [255, Color, Color]
 
@@ -105,14 +105,14 @@ def UIPrinter(Screen, police1, Game):
         Screen.blit(Entity.YVectorblit, (100, y))
         y += 10
 
-    # Affiche a l'ÃƒÆ’Ã‚Â©cran les ÃƒÆ’Ã‚Â©lÃƒÆ’Ã‚Â©ments suivents -tremisabdoul
+    # Affiche a l'ecran les elements suivents -tremisabdoul
     Screen.blit(printfps, (6, 34))
     Screen.blit(opti, (15 + Color / 50, 48 + Color / 50))
     Screen.blit(opti1, (15 + Color / 50, 60 + Color / 50))
 
 
 def pauseblit(Screen, Game):
-    """Fonction d'affichage: ElÃƒÆ’Ã‚Â©ments de pause -tremisabdoul"""
+    """Fonction d'affichage: ElÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â©ments de pause -tremisabdoul"""
 
     # Screen.blit(Game.Background.image, Game.Background.rect)
     # Screen.blit(Game.UI.baselayer, (0, 0))  # << Prends bcp de perf -tremisabdoul
@@ -166,7 +166,7 @@ def pause(Game, Screen, time, police1):
                 Game.running = False
                 pygame.quit()
 
-        # Permet de rÃƒÆ’Ã‚Â©cupÃƒÆ’Ã‚Â©rer le nombre de frames a la seconde -tremisabdoul
+        # Permet de recuperer le nombre de frames a la seconde -tremisabdoul
         Game.Tickchecker = time.time()
         Game.Tickchecker -= tick
 
@@ -175,7 +175,7 @@ def pause(Game, Screen, time, police1):
         pauseblit(Screen, Game)
         MousePriter(Screen, Game)
 
-        # Affichage du rendu graphique sur la fenÃƒÆ’Ã‚Â¨tre -tremisabdoul
+        # Affichage du rendu graphique sur la fenÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¨tre -tremisabdoul
         pygame.display.flip()
 
         # Compteur de FPS et lock de FPS -tremisabdoul
@@ -193,7 +193,8 @@ def pause(Game, Screen, time, police1):
 # Loop de Jeu: -tremisabdoul
 def inGame(Game, time, Screen, police1):
     """ Loop de Jeu -tremisabdoul"""
-
+    NewPlatform(Game, 400, 450)
+    NewWall(Game, 400, 600)
     while Game.InGame:
         """ ===== Frame Limiter ===== """
         # Initialisation du compteur de temps pour limiter les fps -tremisabdoul
@@ -205,9 +206,7 @@ def inGame(Game, time, Screen, police1):
             Game.Player.Pv -= 1
         else:
             Game.Player.Pv = Game.Player.MaxPv
-        # CrÃƒÂ©e 16 plateformes dans un espace donnÃƒÂ© (random)
-        if len(Game.all_plateform) < 16:
-            NewPlatform(Game)
+
         """ ===== Movements ====="""
         Movements(Game, Screen)
         """ ===== Printers ===== """
@@ -228,7 +227,7 @@ def inGame(Game, time, Screen, police1):
 
 
 def LobbyBlit(Screen, Game):
-    """Fonction d'affichage: ElÃƒÆ’Ã‚Â©ments du lobby"""
+    """Fonction d'affichage: ElÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â©ments du lobby"""
     Screen.blit(Game.UI.lobbybackground, (0, 0))
     Screen.blit(Game.UI.lobby_loadbutton, Game.UI.lobby_loadbuttonrect)
     Screen.blit(Game.UI.lobby_playbutton, Game.UI.lobby_playbuttonrect)
@@ -268,7 +267,7 @@ def Lobby(Game, Screen, time, police1):
                 Game.running = False
                 pygame.quit()
 
-        # Permet de rÃƒÆ’Ã‚Â©cupÃƒÆ’Ã‚Â©rer le nombre de frames a la seconde -tremisabdoul
+        # Permet de recuperer le nombre de frames a la seconde -tremisabdoul
         tickchecker = time.time()
         tickchecker -= tick
 
@@ -314,7 +313,7 @@ def Option(Game, Screen, time, police1, police2):
                 Game.running = False
                 pygame.quit()
 
-        # Permet de rÃƒÆ’Ã‚Â©cupÃƒÆ’Ã‚Â©rer le nombre de frames a la seconde -tremisabdoul
+        # Permet de recuperer le nombre de frames a la seconde -tremisabdoul
         tickchecker = time.time()
         tickchecker -= tick
 
@@ -322,8 +321,8 @@ def Option(Game, Screen, time, police1, police2):
 
         Screen.fill((0, 0, 0))
 
-        # Affichage du nÃƒÆ’Ã‚Â©cessaire pour le texte des Options -steven
-        Texte('RÃƒÆ’Ã‚Â©solution : ', police2, (255, 255, 255), Screen, 100, 100)
+        # Affichage du nÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â©cessaire pour le texte des Options -steven
+        Texte('RÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â©solution : ', police2, (255, 255, 255), Screen, 100, 100)
         Texte('Volume : ', police2, (255, 255, 255), Screen, 100, 225)
         Texte('Controles : ', police2, (255, 255, 255), Screen, 100, 350)
 
@@ -654,80 +653,24 @@ def Draw_rect(Screen, Target):
         Target.rect.topright, Target.rect.topleft, Target.rect.midleft, Target.rect.midright, Target.rect.bottomright))
 
 
-def NewPlatform(Game):
+def NewPlatform(Game, x, y):
     from Scripts.Classes import Plateform
     Plateform = Plateform()
+    Plateform.rect.x, Plateform.rect.y = x, y + 130
     Game.all_plateform.add(Plateform)
     Game.PlateformNumber += 1
 
 
-Animations = [
-    "\nEx of usage:\nGame.Player.image = Animations[a[b[c[d[e]]]]]\n"
-    "\ta=Ty pe Of A (Animatons[0] = Animation Tips), \n"
-    "\tb=Specific entity\n"
-    "\tc=Animation, \n"
-    "\td=Directon(0=Right/1=Left), \n"
-    "\te=Frame\n",
-    [  # Player
-        [  # Mystique
-            [  # Stand
-                [  # Animations[1[0[0[0[x]]]]] (Stand Right)
-                    pygame.image.load("Assets/Visual/Mystique/resp2.png"),
-                    pygame.image.load("Assets/Visual/Mystique/resp1.png")
-                ],
-                [  # (Stand Left)
-                    pygame.image.load("Assets/Visual/Mystique/Left/resp1.png"),
-                    pygame.image.load("Assets/Visual/Mystique/Left/resp1.png")
-                ]
-            ],
-            [  # Run
-                [  # (Run Right)
-                    pygame.image.load("Assets/Visual/Mystique/Run/Run1.png"),
-                    pygame.image.load("Assets/Visual/Mystique/Run/Run2.png")
-                ],
-                [  # (Run Left)
-                    pygame.image.load("Assets/Visual/Mystique/Left/Run/Run1.png"),
-                    pygame.image.load("Assets/Visual/Mystique/Left/Run/Run2.png")
-                ]
-            ],
-            [  # Jump
-                [  # (Jump Right)
-                    pygame.image.load("Assets/Visual/Mystique/Jump/Jump1.png")
-                ],
-                [  # (Jump Left)
-                    pygame.image.load("Assets/Visual/Mystique/Left/Jump/Jump1.png")
-                ]
-            ],
-            [  # Fall
-                [  # (Fall Right)
-                    pygame.image.load("Assets/Visual/Mystique/Jump/Jump2.png")
-                ],
-                [  # Animations[1[0[3[1[x]]]]] (Fall Left)
-                    pygame.image.load("Assets/Visual/Mystique/Left/Jump/Jump2.png")
-                ]
-            ]
-        ]
-    ],
-    [  # Monster
-        [  # Slime
-            [  # Stand
-                [  # Animations[2[0[0[0[x]]]]] (Stand Right)
-                    pygame.image.load("Assets/Visual/Entities/Monster/Slime/Stand1.png")
-                ],
-                [  # Animations[2[0[0[1[x]]]]] (Stand Left)
-                    pygame.image.load("Assets/Visual/Entities/Monster/Slime/Left/Stand1.png")
-                ]
-            ]
-        ]
-    ]
-
-]
-
-print("\n", Animations[0], Animations[1])
+def NewWall(Game, x, y):
+    from Scripts.Classes import Wall
+    Wall = Wall()
+    Wall.rect.x, Wall.rect.y, Wall.rect.height, Wall.rect.width = x, y, 150, 400
+    Game.all_wall.add(Wall)
+    Game.WallNumber += 1
 
 
 def Movements(Game, Screen):
-    # Fonction de dÃƒÆ’Ã‚Â©placement gauche / droite -tremisabdoul
+    # Fonction de dÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â©placement gauche / droite -tremisabdoul
     DeplacementX(Game)
 
     for Entity in Game.Entities:
@@ -757,19 +700,31 @@ def Movements(Game, Screen):
         Game.Player.Force.Gravity(Game, Entity)
         Entity.YVector = Entity.LastY - Entity.rect.y
 
-    # DÃƒÆ’Ã‚Â©placements de player -tremisabdoul
+    # DÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â©placements de player -tremisabdoul
     # Game.Player.rect.x += Game.Player.Force.AccelerationFunctionX()
     Game.Position = Game.Player.Force.AccelerationFunctionX()
     for Target in Game.Entities:
         Collide = Game.Player.check_collisions(Target, Game.all_wall)
 
         for Wall in Collide:
+            if Target == Game.Player:
+                if Wall.rect.right > Target.rect.left > Wall.rect.left:
+                    Game.Position = Wall.rect.right - (Target.rect.left - 1)
 
-            if Wall.rect.right > Target.rect.left > Wall.rect.left:
-                Game.Position = Wall.rect.right - (Target.rect.left - 1)
+                elif Wall.rect.right > Target.rect.right > Wall.rect.left:
+                    Game.Position = Wall.rect.left - (Target.rect.right + 1)
+            elif Target in Game.AcrossWall:
+                if Wall.rect.right > Target.rect.left > Wall.rect.left:
+                    Target.rect.x -= Wall.rect.right - (Target.rect.left - 1)
 
-            elif Wall.rect.right > Target.rect.right > Wall.rect.left:
-                Game.Position = Wall.rect.left - (Target.rect.right + 1)
+                elif Wall.rect.right > Target.rect.right > Wall.rect.left:
+                    Target.rect.x -= Wall.rect.left - (Target.rect.right + 1)
+            else:
+                if Wall.rect.right > Target.rect.left > Wall.rect.left:
+                    Target.rect.x += Wall.rect.right - (Target.rect.left - 1)
+
+                elif Wall.rect.right > Target.rect.right > Wall.rect.left:
+                    Target.rect.x += Wall.rect.left - (Target.rect.right + 1)
 
     Game.Position = round(Game.Position)
 
@@ -839,3 +794,94 @@ def FrameLimiter(Game, time, tick):
     while Game.Tickchecker < 0.017:
         Game.Tickchecker = time.time()
         Game.Tickchecker -= tick
+
+
+def Paterns(Game):
+    Load = []
+    PaternsFile = open('Data\Paterns.txt', 'r')
+    for line in PaternsFile:
+        line = line.strip()
+        Load.append(line)
+    Load = "".join(Load)
+    Load = Load.split(",")
+    Game.Paterns = Load
+
+
+TilesPatern = {'Init':
+                'StepX, StepY = 0, 0',
+                '#':
+                'NewWall(Game, StepX, StepY)'
+                'StepX += 400',
+                '_':
+                'NewPlatform(Game, StepX, StepY)'
+                'StepX += 400',
+                ',':
+                'StepX = 0'
+                'StepY += 150',
+                '=':
+                'StepX = 0'
+                'StepY = 0'}
+
+Animations = [
+    "\nEx of usage:\nGame.Player.image = Animations[a[b[c[d[e]]]]]\n"
+    "\ta=Ty pe Of A (Animatons[0] = Animation Tips), \n"
+    "\tb=Specific entity\n"
+    "\tc=Animation, \n"
+    "\td=Directon(0=Right/1=Left), \n"
+    "\te=Frame\n",
+    [  # Player
+        [  # Mystique
+            [  # Stand
+                [  # Animations[1[0[0[0[x]]]]] (Stand Right)
+                    pygame.image.load("Assets/Visual/Mystique/resp2.png"),
+                    pygame.image.load("Assets/Visual/Mystique/resp1.png")
+                ],
+                [  # (Stand Left)
+                    pygame.image.load("Assets/Visual/Mystique/Left/resp1.png"),
+                    pygame.image.load("Assets/Visual/Mystique/Left/resp1.png")
+                ]
+            ],
+            [  # Run
+                [  # (Run Right)
+                    pygame.image.load("Assets/Visual/Mystique/Run/Run1.png"),
+                    pygame.image.load("Assets/Visual/Mystique/Run/Run2.png")
+                ],
+                [  # (Run Left)
+                    pygame.image.load("Assets/Visual/Mystique/Left/Run/Run1.png"),
+                    pygame.image.load("Assets/Visual/Mystique/Left/Run/Run2.png")
+                ]
+            ],
+            [  # Jump
+                [  # (Jump Right)
+                    pygame.image.load("Assets/Visual/Mystique/Jump/Jump1.png")
+                ],
+                [  # (Jump Left)
+                    pygame.image.load("Assets/Visual/Mystique/Left/Jump/Jump1.png")
+                ]
+            ],
+            [  # Fall
+                [  # (Fall Right)
+                    pygame.image.load("Assets/Visual/Mystique/Jump/Jump2.png")
+                ],
+                [  # Animations[1[0[3[1[x]]]]] (Fall Left)
+                    pygame.image.load("Assets/Visual/Mystique/Left/Jump/Jump2.png")
+                ]
+            ]
+        ]
+    ],
+    [  # Monster
+        [  # Slime
+            [  # Stand
+                [  # Animations[2[0[0[0[x]]]]] (Stand Right)
+                    pygame.image.load("Assets/Visual/Entities/Monster/Slime/Stand1.png")
+                ],
+                [  # Animations[2[0[0[1[x]]]]] (Stand Left)
+                    pygame.image.load("Assets/Visual/Entities/Monster/Slime/Left/Stand1.png")
+                ]
+            ]
+        ]
+    ]
+
+]
+
+print("\n", Animations[0], Animations[1])
