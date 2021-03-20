@@ -1,19 +1,34 @@
-Init:
-Paterns Info:
- Virgule = Next Patern:
- "  2  " = Number Of The Patern:
- " M19 " = Number Of Mobs On The Zone:
- "  .  " = Air:
- "  #  " = Wall:
- "  _  " = Platform:
-2 Points = Next Y Pattern's Line (2-6) / changing Attribute:
- "  =  " = Next Patern,
+'Init':
+'Paterns Info':
+' Virgule = Next Patern':
+' "  2  " = Number of the patern / Number of the next patern':
+' " M19 " = Number Of Mobs On The Zone':
+' "  .  " = Air':
+' "  #  " = Wall':
+' "  _  " = Platform':
+'2 Points = Next Y Pattern's Line (2-6) / changing Attribute':
+' "  =  " = Next Patern',
 
-0:
-"M2":
-#.###.....:
-......__..:
-._____..__:
-_#####..##:
-######..##:
-=
+0:"M2":
+#.###..###:
+.____..###:
+.##_#.....:
+.___#_____:
+.#########:
+=:1,
+
+1:"M2":
+#####.....:
+##......__:
+......____:
+______####:
+##########:
+=:2,
+
+2:"M4":
+##########:
+..........:
+________#.:
+#...##..#.:
+#########.:
+=:0

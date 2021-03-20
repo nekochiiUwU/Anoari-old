@@ -31,8 +31,9 @@ class Game:
         self.Position = 0
         self.PositionPlayer = 0
         self.PlateformNumber = 1
-        Game.WallNumber = 1
+        self.WallNumber = 1
         self.Paterns = {}
+        self.Grid = {}
 
     def Rescale(self, value, XorY):
         if XorY == "X":
@@ -128,14 +129,14 @@ class Player(pygame.sprite.Sprite, Game):
         self.rect = self.image.get_rect(bottomleft=self.rect.bottomleft)
 
         # Position de Player -tremisabdoul
-        self.rect.center = (430, 600)
+        self.rect.center = (320, 600)
 
         self.LastY = 0
         self.YVector = 0
         self.YVectorblit = 0
         self.Base_Gravity = 0
 
-        self.Movement = 1  # Droite = 1 Gauche = -1
+        self.Direction = 1  # Droite = 1 Gauche = -1
 
         # Valeurs max et min que Player peut atteindre (Bords de l'ÃƒÂ©cran x) -tremisabdoul
         self.MinX = 20
@@ -169,12 +170,12 @@ class Player(pygame.sprite.Sprite, Game):
     # Fonction de mouvement (Droite) -tremisabdoul
     def Move_Right(self):
         self.Force.xm += self.Speed
-        self.Movement = 1
+        self.Direction = 1
 
     # Fonction de mouvement (Gauche) -tremisabdoul
     def Move_Left(self):
         self.Force.xm -= self.Speed
-        self.Movement = 0
+        self.Direction = 0
 
     # Fonction de gain de stat ( valeur placÃƒÂ©e arbitrairement lol ) - steven
     def Gain_Stats(self):
@@ -453,7 +454,7 @@ class Monster(pygame.sprite.Sprite, Game):
         if Game.Player.check_collisions(self, Game.all_plateform):
             self.rect.x += self.Speed
         else:
-            self.rect.x -= int(self.Speed * 1)
+            self.rect.x -= int(self.Speed * 2)
             self.Direction = 1
 
     # DÃƒÂ©placement du monstre vers la gauche -steven
@@ -461,7 +462,7 @@ class Monster(pygame.sprite.Sprite, Game):
         if Game.Player.check_collisions(self, Game.all_plateform):
             self.rect.x -= self.Speed
         else:
-            self.rect.x += int(self.Speed * 1.5)
+            self.rect.x += int(self.Speed * 2)
             self.Direction = 0
 
 

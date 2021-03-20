@@ -540,7 +540,7 @@ def Animation(Game):
 
 # TKT -tremisabdoul
 def FallAnimation(Game):
-    if Game.Player.Movement:
+    if Game.Player.Direction:
         Game.Player.image = pygame.image.load("Assets/Visual/Mystique/Jump/Jump2.png")
         Game.Player.image = pygame.transform.scale(Game.Player.image, (120, 120))
     else:
@@ -550,7 +550,7 @@ def FallAnimation(Game):
 
 # TKT -tremisabdoul
 def JumpAnimation(Game):
-    if Game.Player.Movement:
+    if Game.Player.Direction:
         Game.Player.image = pygame.image.load("Assets/Visual/Mystique/Jump/Jump1.png")
         Game.Player.image = pygame.transform.scale(Game.Player.image, (120, 120))
     else:
@@ -560,7 +560,7 @@ def JumpAnimation(Game):
 
 # TKT -tremisabdoul
 def RunAnimation(Game):
-    if Game.Player.Movement:
+    if Game.Player.Direction:
         if Game.Frame % 10 == 0:
             if Game.ActualFrame <= 0:
                 Game.ActualFrame = 1
@@ -584,7 +584,7 @@ def RunAnimation(Game):
 
 # TKT -tremisabdoul
 def StandAnimation(Game):
-    if Game.Player.Movement:
+    if Game.Player.Direction:
         if Game.Frame % 10 == 0:
             if Game.ActualFrame <= 0:
                 Game.ActualFrame = 1
@@ -725,6 +725,10 @@ def Movements(Game, Screen):
 
                 elif Wall.rect.right > Target.rect.right > Wall.rect.left:
                     Target.rect.x += Wall.rect.left - (Target.rect.right + 1)
+            if Target.Direction == 1:
+                Target.Direction = 0
+            else:
+                Target.Direction = 1
 
     Game.Position = round(Game.Position)
 
@@ -797,14 +801,32 @@ def FrameLimiter(Game, time, tick):
 
 
 def Paterns(Game):
+
     Load = []
     PaternsFile = open('Data\Paterns.txt', 'r')
+
     for line in PaternsFile:
         line = line.strip()
         Load.append(line)
+
     Load = "".join(Load)
     Load = Load.split(",")
     Game.Paterns = Load
+
+    for Patern in range(len(Game.Paterns)):
+        print(Patern)
+        Game.Paterns[Patern] = Game.Paterns[Patern].split(":")
+        print("\nID Game.Paterns[", Patern, "] :  ", Game.Paterns[Patern], ": ", sep='')
+
+        for item in range(len(Game.Paterns[Patern])):
+            print("\tID Game.Paterns[", Patern, "][", item, "] :  ", Game.Paterns[Patern][item], sep='')
+    Game.Paterns.pop(0)
+    Game.Grid = {"xTiles": len(str(Game.Paterns[0]).split(None)),
+                 "yTiles": len(Game.Paterns[0]),
+                 "width": 250,
+                 "height": 150,
+                 "x": 0,
+                 "y": 0}
 
 
 TilesPatern = {'Init':
