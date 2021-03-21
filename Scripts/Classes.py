@@ -29,6 +29,7 @@ class Game:
         self.ActualFrame = 0
         self.Frame = 0
         self.Position = 0
+        self.lastPosition = 0
         self.PositionPlayer = 0
         self.PlateformNumber = 1
         self.WallNumber = 1
@@ -136,6 +137,8 @@ class Player(pygame.sprite.Sprite, Game):
         self.YVectorblit = 0
         self.Base_Gravity = 0
 
+        self.LastX = 0
+
         self.Direction = 1  # Droite = 1 Gauche = -1
 
         # Valeurs max et min que Player peut atteindre (Bords de l'ÃƒÂ©cran x) -tremisabdoul
@@ -209,7 +212,7 @@ class Force:
     def AccelerationFunctionX(self):
 
         # Forces appliquÃƒÂ©s + ((Forces appliquÃƒÂ©s lors de la derniÃƒÂ¨re frame / 1.3) / 1.1) -tremisabdoul
-        self.StepX = self.xm + self.x + ((self.lastx / 1.3) / 1.1)
+        self.StepX = self.xm + self.x + ((self.lastx / 1.00001) / 1.4)
 
         """if round(self.StepX) == 0:
             self.StepX = 0

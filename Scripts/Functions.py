@@ -73,6 +73,33 @@ def Printer(Screen, Game):
     Draw_rect(Screen, Game.Player)
     Draw_rect(Screen, Game.Monster)
     MousePriter(Screen, Game)
+    pygame.draw.lines(
+        Screen,
+        (0, 150, 100),
+        True,
+        (
+            (410, 0),
+            (410, 750),
+            (250, 750),
+            (250, 0),
+            (500, 0),
+            (500, 750),
+            (750, 750),
+            (750, 0),
+            (1000, 0),
+            (1000, 750),
+            (1250, 750),
+            (1250, 150),
+            (0, 150),
+            (0, 300),
+            (1250, 300),
+            (1250, 450),
+            (0, 450),
+            (0, 600),
+            (1250, 600),
+            (1250, 0)
+        )
+    )
 
 
 # Print: -tremisabdoul
@@ -212,6 +239,8 @@ def inGame(Game, time, Screen, police1):
         """ ===== Printers ===== """
         # Animation du joueur -tremisabdoul
         Animation(Game)
+        # Camera qui se deplace en fonction du mouvement de Player -tremisabdoul
+        SmoothCamera(Game)
         # Elements de jeu -tremisabdoul
         Printer(Screen, Game)
         # Interface de jeu -tremisabdoul
@@ -708,23 +737,23 @@ def Movements(Game, Screen):
 
         for Wall in Collide:
             if Target == Game.Player:
-                if Wall.rect.right > Target.rect.left > Wall.rect.left:
+                if Wall.rect.center < Target.rect.center:
                     Game.Position = Wall.rect.right - (Target.rect.left - 1)
-
-                elif Wall.rect.right > Target.rect.right > Wall.rect.left:
+                elif Wall.rect.center > Target.rect.center:
                     Game.Position = Wall.rect.left - (Target.rect.right + 1)
+
             elif Target in Game.AcrossWall:
                 if Wall.rect.right > Target.rect.left > Wall.rect.left:
                     Target.rect.x -= Wall.rect.right - (Target.rect.left - 1)
-
                 elif Wall.rect.right > Target.rect.right > Wall.rect.left:
                     Target.rect.x -= Wall.rect.left - (Target.rect.right + 1)
-            else:
-                if Wall.rect.right > Target.rect.left > Wall.rect.left:
-                    Target.rect.x += Wall.rect.right - (Target.rect.left - 1)
 
-                elif Wall.rect.right > Target.rect.right > Wall.rect.left:
+            else:
+                if Wall.rect.center < Target.rect.center:
+                    Target.rect.x += Wall.rect.right - (Target.rect.left - 1)
+                elif Wall.rect.center > Target.rect.center:
                     Target.rect.x += Wall.rect.left - (Target.rect.right + 1)
+
             if Target.Direction == 1:
                 Target.Direction = 0
             else:
@@ -825,7 +854,8 @@ def Paterns(Game):
             print("\tID Game.Paterns[", Patern, "][", item, "] :  ", Game.Paterns[Patern][item], sep='')
             if isinstance(Game.Paterns[Patern][item], list):
                 for Chr in range(len(Game.Paterns[Patern][item])):
-                    print("\t\tID Game.Paterns[", Patern, "][", item, "][", Chr, "] :  ", Game.Paterns[Patern][item][Chr], sep='')
+                    print("\t\tID Game.Paterns[", Patern, "][", item, "][", Chr, "] :  ",
+                          Game.Paterns[Patern][item][Chr], sep='')
     Game.Paterns.pop(0)
     Game.Grid = {"xTiles": len(str(Game.Paterns[0]).split(None)),
                  "yTiles": len(Game.Paterns[0]),
@@ -913,3 +943,11 @@ Animations = [
 ]
 
 print("\n", Animations[0], Animations[1])
+
+
+def SmoothCamera(Game):
+    Game.Player.LastX = Game.Player.rect.x - 350
+    Game.lastPosition = Game.Position
+    print(Game.Position)
+    Game.Player.rect.x = 350
+    Game.Player.rect.x += (Game.Position + (Game.Player.LastX / 1.1) / 2)
