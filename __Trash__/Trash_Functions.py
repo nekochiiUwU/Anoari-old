@@ -9,3 +9,12 @@ for Monster in Game.all_Monster:
         if Game.Player.check_collisions(Monster, Game.all_platformsub) :
             Game.Monster.LeftDirection = True
             Game.Monster.RightDirection = False
+
+
+            # wall tp across (movement())
+            if Wall.rect.right > Target.rect.left > Wall.rect.left:
+                print("Gauche")
+                Game.Position = Wall.rect.left - (Target.rect.right + 1)
+            elif Wall.rect.right > Target.rect.right > Wall.rect.left:
+                print("Droite")
+                Game.Position = Wall.rect.right - (Target.rect.left - 1)

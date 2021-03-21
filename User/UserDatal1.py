@@ -26,7 +26,7 @@ class UserData:
         self.DataX = self.UserGraphicInfo.current_w
         self.DataY = self.UserGraphicInfo.current_h
         self.DataResolution = (self.DataX, self.DataY)
-        print(self.UserGraphicInfo)
+        print("\n", self.UserGraphicInfo)
 
 
 class SaveSlot:

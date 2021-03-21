@@ -7,12 +7,9 @@
 # avec votre pseudo pour qu'on puisse vous demander plus d'infos -tremisabdoul
 
 # Importe les fichier Classes Functions pygame et time -tremisabdoul
-from Scripts.Classes import *
 from Scripts.Functions import *
-from User.UserDatal1 import *
+from Scripts.Classes import *
 import time
-import pygame
-
 '''==================================='''
 
 pygame.init()
@@ -20,7 +17,6 @@ pygame.init()
 
 # Execute les Classes -tremisabdoul
 Game = Game()
-SaveSlot = SaveSlot()
 Game.init_suite()
 
 # Valeurs qui vont servir plus tard
@@ -37,11 +33,12 @@ police1 = pygame.font.Font("Assets/Font/Retro Gaming.ttf", 10)
 
 police2 = pygame.font.Font("Assets/Font/Retro Gaming.ttf", 20)
 
+Paterns(Game)
+
 '''==================================='''
 
 # Contient tout ce qui est fait pendant que le jeu est run -tremisabdoul
 while Game.Running:
-
     """ ===== Loop ===== """
     # Loop du Lobby
     if Game.Lobby:
