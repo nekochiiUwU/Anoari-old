@@ -285,7 +285,7 @@ class Plateform(pygame.sprite.Sprite, Game):
         self.image = pygame.image.load("Assets/Visual/plateforme_base.png")
 
         # Transforme l'image sol en la rÃƒÂ©solution indiquÃƒÂ©e -tremisabdoul
-        self.image = pygame.transform.scale(self.image, (400, 20))
+        self.image = pygame.transform.scale(self.image, (250, 20))
 
         # DÃƒÂ©finit la hitbox de sol -tremisabdoul
         self.rect = self.image.get_rect()
@@ -512,9 +512,9 @@ class Wall(pygame.sprite.Sprite, Game):
     def __init__(self):
         super().__init__()
         self.image = pygame.image.load("Assets/Visual/Structure/Wall.png")
-        self.image = pygame.transform.scale(self.image, (400, 686))
+        self.image = pygame.transform.scale(self.image, (250, 150   ))
         self.rect = self.image.get_rect()
-        self.rect.x = - 500
+        self.rect.x = - 750
         self.rect.y = - 0
 
 

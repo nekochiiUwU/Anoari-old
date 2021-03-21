@@ -75,7 +75,7 @@ def Printer(Screen, Game):
     MousePriter(Screen, Game)
     pygame.draw.lines(
         Screen,
-        (0, 150, 100),
+        (0, 150, 100, 10),
         True,
         (
             (410, 0),
@@ -202,7 +202,7 @@ def pause(Game, Screen, time, police1):
         pauseblit(Screen, Game)
         MousePriter(Screen, Game)
 
-        # Affichage du rendu graphique sur la fenÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¨tre -tremisabdoul
+        # Affichage du rendu graphique sur la fenetre -tremisabdoul
         pygame.display.flip()
 
         # Compteur de FPS et lock de FPS -tremisabdoul
@@ -220,8 +220,12 @@ def pause(Game, Screen, time, police1):
 # Loop de Jeu: -tremisabdoul
 def inGame(Game, time, Screen, police1):
     """ Loop de Jeu -tremisabdoul"""
-    NewPlatform(Game, 400, 450)
-    NewWall(Game, 400, 600)
+    from random import randint
+    for _ in range(5):
+        x = randint(0, 4)
+        y = randint(1, 5)
+        NewPlatform(Game, x, y-1)
+        NewWall(Game, x, y)
     while Game.InGame:
         """ ===== Frame Limiter ===== """
         # Initialisation du compteur de temps pour limiter les fps -tremisabdoul
@@ -685,7 +689,7 @@ def Draw_rect(Screen, Target):
 def NewPlatform(Game, x, y):
     from Scripts.Classes import Plateform
     Plateform = Plateform()
-    Plateform.rect.x, Plateform.rect.y = x, y + 130
+    Plateform.rect.x, Plateform.rect.y = x * 250, y * 150 + 130
     Game.all_plateform.add(Plateform)
     Game.PlateformNumber += 1
 
@@ -693,7 +697,7 @@ def NewPlatform(Game, x, y):
 def NewWall(Game, x, y):
     from Scripts.Classes import Wall
     Wall = Wall()
-    Wall.rect.x, Wall.rect.y, Wall.rect.height, Wall.rect.width = x, y, 150, 400
+    Wall.rect.x, Wall.rect.y, Wall.rect.height, Wall.rect.width = x * 250, y * 150, 150, 250
     Game.all_wall.add(Wall)
     Game.WallNumber += 1
 
@@ -736,28 +740,29 @@ def Movements(Game, Screen):
         Collide = Game.Player.check_collisions(Target, Game.all_wall)
 
         for Wall in Collide:
-            if Target == Game.Player:
-                if Wall.rect.center < Target.rect.center:
-                    Game.Position = Wall.rect.right - (Target.rect.left - 1)
-                elif Wall.rect.center > Target.rect.center:
-                    Game.Position = Wall.rect.left - (Target.rect.right + 1)
+            if not Wall.rect.bottomleft < Target.rect.midtop < Wall.rect.topright:
+                if Target == Game.Player:
+                    if Wall.rect.center < Target.rect.center:
+                        Game.Position = Wall.rect.right - (Target.rect.left - 1)
+                    elif Wall.rect.center > Target.rect.center:
+                        Game.Position = Wall.rect.left - (Target.rect.right + 1)
 
-            elif Target in Game.AcrossWall:
-                if Wall.rect.right > Target.rect.left > Wall.rect.left:
-                    Target.rect.x -= Wall.rect.right - (Target.rect.left - 1)
-                elif Wall.rect.right > Target.rect.right > Wall.rect.left:
-                    Target.rect.x -= Wall.rect.left - (Target.rect.right + 1)
+                elif Target in Game.AcrossWall:
+                    if Wall.rect.right > Target.rect.left > Wall.rect.left:
+                        Target.rect.x -= Wall.rect.right - (Target.rect.left - 1)
+                    elif Wall.rect.right > Target.rect.right > Wall.rect.left:
+                        Target.rect.x -= Wall.rect.left - (Target.rect.right + 1)
 
-            else:
-                if Wall.rect.center < Target.rect.center:
-                    Target.rect.x += Wall.rect.right - (Target.rect.left - 1)
-                elif Wall.rect.center > Target.rect.center:
-                    Target.rect.x += Wall.rect.left - (Target.rect.right + 1)
+                else:
+                    if Wall.rect.center < Target.rect.center:
+                        Target.rect.x += Wall.rect.right - (Target.rect.left - 1)
+                    elif Wall.rect.center > Target.rect.center:
+                        Target.rect.x += Wall.rect.left - (Target.rect.right + 1)
 
-            if Target.Direction == 1:
-                Target.Direction = 0
-            else:
-                Target.Direction = 1
+                if Target.Direction == 1:
+                    Target.Direction = 0
+                else:
+                    Target.Direction = 1
 
     Game.Position = round(Game.Position)
 
@@ -863,6 +868,7 @@ def Paterns(Game):
                  "height": 150,
                  "x": 0,
                  "y": 0}
+
 
 
 TilesPatern = {'Init':
