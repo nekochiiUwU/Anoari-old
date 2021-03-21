@@ -819,7 +819,13 @@ def Paterns(Game):
         print("\nID Game.Paterns[", Patern, "] :  ", Game.Paterns[Patern], ": ", sep='')
 
         for item in range(len(Game.Paterns[Patern])):
+            if 2 <= item <= 6:
+                Game.Paterns[Patern][item] = ",".join(Game.Paterns[Patern][item])
+                Game.Paterns[Patern][item] = Game.Paterns[Patern][item].split(",")
             print("\tID Game.Paterns[", Patern, "][", item, "] :  ", Game.Paterns[Patern][item], sep='')
+            if isinstance(Game.Paterns[Patern][item], list):
+                for Chr in range(len(Game.Paterns[Patern][item])):
+                    print("\t\tID Game.Paterns[", Patern, "][", item, "][", Chr, "] :  ", Game.Paterns[Patern][item][Chr], sep='')
     Game.Paterns.pop(0)
     Game.Grid = {"xTiles": len(str(Game.Paterns[0]).split(None)),
                  "yTiles": len(Game.Paterns[0]),
