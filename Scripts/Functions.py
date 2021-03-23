@@ -5,9 +5,9 @@ import pygame
 import os
 
 
-# CrÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â©e l'ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â©cran -tremisabdoul
+# CrÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Â ÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â©e l'ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Â ÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â©cran -tremisabdoul
 def Display():
-    """Fonction Permettent l'affichage de l'ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â©cran -tremisabdoul"""
+    """Fonction Permettent l'affichage de l'ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Â ÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â©cran -tremisabdoul"""
 
     pygame.init()
     pygame.display.set_caption("Anoari")
@@ -65,15 +65,15 @@ def Printer(Screen, Game):
     for nb in Game.all_plateform:
         nb.rect.x -= Game.Position
         Screen.blit(nb.image, nb.rect)
-        Draw_rect(Screen, nb)
+        """Draw_rect(Screen, nb)"""
     for nb in Game.all_wall:
         nb.rect.x -= Game.Position
         Screen.blit(nb.image, nb.rect)
-        Draw_rect(Screen, nb)
-    Draw_rect(Screen, Game.Player)
-    Draw_rect(Screen, Game.Monster)
+        """Draw_rect(Screen, nb)"""
+    """Draw_rect(Screen, Game.Player)
+    Draw_rect(Screen, Game.Monster)"""
     MousePriter(Screen, Game)
-    pygame.draw.lines(
+    """pygame.draw.lines(
         Screen,
         (0, 150, 100, 10),
         True,
@@ -99,12 +99,12 @@ def Printer(Screen, Game):
             (1250, 600),
             (1250, 0)
         )
-    )
+    )"""
 
 
 # Print: -tremisabdoul
 def UIPrinter(Screen, police1, Game):
-    """Fonction d'affichage: ElÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â©ments d'interface in-game -tremisabdoul"""
+    """Fonction d'affichage: ElÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Â ÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â©ments d'interface in-game -tremisabdoul"""
 
     # Permet de reglrer le nombre de frames a la seconde -tremisabdoul -tremisabdoul
     frame = 1
@@ -139,7 +139,7 @@ def UIPrinter(Screen, police1, Game):
 
 
 def pauseblit(Screen, Game):
-    """Fonction d'affichage: ElÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â©ments de pause -tremisabdoul"""
+    """Fonction d'affichage: ElÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Â ÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â©ments de pause -tremisabdoul"""
 
     # Screen.blit(Game.Background.image, Game.Background.rect)
     # Screen.blit(Game.UI.baselayer, (0, 0))  # << Prends bcp de perf -tremisabdoul
@@ -221,8 +221,8 @@ def pause(Game, Screen, time, police1):
 def inGame(Game, time, Screen, police1):
     """ Loop de Jeu -tremisabdoul"""
     from random import randint
-    for _ in range(5):
-        x = randint(0, 4)
+    for _ in range(15):
+        x = randint(-10, 10)
         y = randint(1, 5)
         NewPlatform(Game, x, y-1)
         NewWall(Game, x, y)
@@ -233,10 +233,10 @@ def inGame(Game, time, Screen, police1):
         Game.Frame += 1
         """ Sert a rien ! """
         # Test de la barre de vie
-        if Game .Player.Pv > 1:
-            Game.Player.Pv -= 1
-        else:
-            Game.Player.Pv = Game.Player.MaxPv
+        # if Game .Player.Pv > 1:
+        #     Game.Player.Pv -= 1
+        # else:
+        #     Game.Player.Pv = Game.Player.MaxPv
 
         """ ===== Movements ====="""
         Movements(Game, Screen)
@@ -260,7 +260,7 @@ def inGame(Game, time, Screen, police1):
 
 
 def LobbyBlit(Screen, Game):
-    """Fonction d'affichage: ElÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â©ments du lobby"""
+    """Fonction d'affichage: ElÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Â ÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â©ments du lobby"""
     Screen.blit(Game.UI.lobbybackground, (0, 0))
     Screen.blit(Game.UI.lobby_loadbutton, Game.UI.lobby_loadbuttonrect)
     Screen.blit(Game.UI.lobby_playbutton, Game.UI.lobby_playbuttonrect)
@@ -354,8 +354,8 @@ def Option(Game, Screen, time, police1, police2):
 
         Screen.fill((0, 0, 0))
 
-        # Affichage du nÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â©cessaire pour le texte des Options -steven
-        Texte('RÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â©solution : ', police2, (255, 255, 255), Screen, 100, 100)
+        # Affichage du nÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Â ÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â©cessaire pour le texte des Options -steven
+        Texte('RÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Â ÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â©solution : ', police2, (255, 255, 255), Screen, 100, 100)
         Texte('Volume : ', police2, (255, 255, 255), Screen, 100, 225)
         Texte('Controles : ', police2, (255, 255, 255), Screen, 100, 350)
 
@@ -703,7 +703,7 @@ def NewWall(Game, x, y):
 
 
 def Movements(Game, Screen):
-    # Fonction de dÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â©placement gauche / droite -tremisabdoul
+    # Fonction de dÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Â ÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â©placement gauche / droite -tremisabdoul
     DeplacementX(Game)
 
     for Entity in Game.Entities:
@@ -733,7 +733,9 @@ def Movements(Game, Screen):
         Game.Player.Force.Gravity(Game, Entity)
         Entity.YVector = Entity.LastY - Entity.rect.y
 
-    # DÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â©placements de player -tremisabdoul
+    print(Game.Player.rect.center[0] - Game.Position)
+
+    # DÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Â ÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â©placements de player -tremisabdoul
     # Game.Player.rect.x += Game.Player.Force.AccelerationFunctionX()
     Game.Position = Game.Player.Force.AccelerationFunctionX()
     for Target in Game.Entities:
@@ -743,26 +745,27 @@ def Movements(Game, Screen):
             if not Wall.rect.bottomleft < Target.rect.midtop < Wall.rect.topright:
                 if Target == Game.Player:
                     if Wall.rect.center < Target.rect.center:
-                        Game.Position = Wall.rect.right - (Target.rect.left - 1)
+                        Game.Position = Wall.rect.right - 409  # A Config
                     elif Wall.rect.center > Target.rect.center:
-                        Game.Position = Wall.rect.left - (Target.rect.right + 1)
+                        Game.Position = Wall.rect.left - 409  # A Config
 
                 elif Target in Game.AcrossWall:
                     if Wall.rect.right > Target.rect.left > Wall.rect.left:
-                        Target.rect.x -= Wall.rect.right - (Target.rect.left - 1)
+                        Target.rect.x -= Wall.rect.right - (Target.rect.left + 33)
                     elif Wall.rect.right > Target.rect.right > Wall.rect.left:
-                        Target.rect.x -= Wall.rect.left - (Target.rect.right + 1)
+                        Target.rect.x -= Wall.rect.left - (Target.rect.right - 33)
 
                 else:
                     if Wall.rect.center < Target.rect.center:
-                        Target.rect.x += Wall.rect.right - (Target.rect.left - 1)
+                        Target.rect.x += Wall.rect.right - (Target.rect.left + 33)
                     elif Wall.rect.center > Target.rect.center:
-                        Target.rect.x += Wall.rect.left - (Target.rect.right + 1)
-
-                if Target.Direction == 1:
-                    Target.Direction = 0
-                else:
-                    Target.Direction = 1
+                        Target.rect.x += Wall.rect.left - (Target.rect.right - 33)
+            else:
+                if Target == Game.Player:
+                    Target.Base_Gravity = Wall.rect.bottom - Target.rect.top
+                    if Target.Base_Gravity < -11:
+                        Target.Base_Gravity = -11
+                    Game.Player.SpeedY = 0
 
     Game.Position = round(Game.Position)
 
