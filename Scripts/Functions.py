@@ -72,7 +72,7 @@ def Printer(Screen, Game):
         Screen.blit(nb.image, nb.rect)
         """ """
         Draw_rect(Screen, nb)
-    # Draw_rect(Screen, Game.Player)
+    Draw_rect(Screen, Game.Player)
     Draw_rect(Screen, Game.Monster)
     """ """
     MousePriter(Screen, Game)
@@ -748,9 +748,9 @@ def Movements(Game, Screen):
             if not Wall.rect.bottomleft < Target.rect.midtop < Wall.rect.topright:
                 if Target == Game.Player:
                     if Wall.rect.center < Target.rect.center:
-                        Game.Position = Wall.rect.right - (Target.rect.left + 1)
+                        Game.Position = Wall.rect.right - (Target.rect.left - 1)
                     elif Wall.rect.center > Target.rect.center:
-                        Game.Position = Wall.rect.left - (Target.rect.right - 1)
+                        Game.Position = Wall.rect.left - (Target.rect.right + 1)
 
                 elif Target in Game.AcrossWall:
                     if Wall.rect.center < Target.rect.center:
