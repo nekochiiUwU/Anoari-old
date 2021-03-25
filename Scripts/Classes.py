@@ -227,18 +227,18 @@ class Force:
         self.xm = 0
         return self.StepX
 
-    # Faut se dire que la gravitÃƒÂ© a une force de 33 et que lorsque
-    # Base_Gravity est a 0 c'est que la force appliquÃƒÂ©e par le sol est de -33
+    # Faut se dire que la gravitÃƒÂ© a une force de 20 et que lorsque
+    # Base_Gravity est a 0 c'est que la force appliquÃƒÂ©e par le sol est de -20
     def Gravity(self, Game0, Target):
         base = Target.rect.y
-        if Target.Base_Gravity < 22:  # Si force de sol > 0
-            Target.Base_Gravity += 0.44  # Diminution de la force "Sol" (Ratio 0.66)
+        if Target.Base_Gravity < 20:  # Si force de sol > 0
+            Target.Base_Gravity += 0.4  # Diminution de la force "Sol" (Ratio 0.4)
             # print("Gravity: ", Target.Base_Gravity)
             Target.rect.y += Target.Base_Gravity
         else:
-            Target.Base_Gravity = 22  # Force de sol = 0
-            # print("Gravity: ", 22)
-            Target.rect.y += 22
+            Target.Base_Gravity = 20  # Force de sol = 0
+            # print("Gravity: ", 20)
+            Target.rect.y += 20
 
         # VÃƒÂ©rification des collisions entre Player et toutes les plateformes
         Collide = Game0.Player.check_collisions(Target, Game0.all_plateform)
@@ -248,7 +248,7 @@ class Force:
                 Target.rect.y = base
                 Replace = item.rect.top - (Target.rect.bottom - 1)  # Y reset (Premier pixel du rect de plateforme)
                 Target.SpeedY = 0  # Cancel le saut
-                Target.Base_Gravity = 0  # Reset la force du sol (-33)
+                Target.Base_Gravity = 0  # Reset la force du sol (-20)
                 Target.rect.y += Replace
 
 

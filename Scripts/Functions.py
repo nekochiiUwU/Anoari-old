@@ -21,7 +21,7 @@ def Jump(Game):
 
     if Game.Player.SpeedY < 0:
         Game.Player.rect.y += Game.Player.SpeedY
-        Game.Player.SpeedY += 0.33
+        Game.Player.SpeedY += 0.4
     else:
         Game.Player.SpeedY = 0
 
@@ -223,12 +223,13 @@ def pause(Game, Screen, time, police1):
 # Loop de Jeu: -tremisabdoul
 def inGame(Game, time, Screen, police1):
     """ Loop de Jeu -tremisabdoul"""
-    from random import randint
-    for _ in range(15):
-        x = randint(-10, 10)
+    for _ in range(100):
+        from random import randint
+        x = randint(0, 100)
         y = randint(1, 5)
         NewPlatform(Game, x, y-1)
         NewWall(Game, x, y)
+        del randint
     while Game.InGame:
         """ ===== Frame Limiter ===== """
         # Initialisation du compteur de temps pour limiter les fps -tremisabdoul
@@ -748,9 +749,9 @@ def Movements(Game, Screen):
             if not Wall.rect.bottomleft < Target.rect.midtop < Wall.rect.topright:
                 if Target == Game.Player:
                     if Wall.rect.center < Target.rect.center:
-                        Game.Position = Wall.rect.right - (Target.rect.left - 1)
+                        Game.Position = Wall.rect.right - Target.rect.left
                     elif Wall.rect.center > Target.rect.center:
-                        Game.Position = Wall.rect.left - (Target.rect.right + 1)
+                        Game.Position = Wall.rect.left - Target.rect.right
 
                 elif Target in Game.AcrossWall:
                     if Wall.rect.center < Target.rect.center:
