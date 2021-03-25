@@ -223,13 +223,7 @@ def pause(Game, Screen, time, police1):
 # Loop de Jeu: -tremisabdoul
 def inGame(Game, time, Screen, police1):
     """ Loop de Jeu -tremisabdoul"""
-    for _ in range(100):
-        from random import randint
-        x = randint(0, 100)
-        y = randint(1, 5)
-        NewPlatform(Game, x, y-1)
-        NewWall(Game, x, y)
-        del randint
+
     while Game.InGame:
         """ ===== Frame Limiter ===== """
         # Initialisation du compteur de temps pour limiter les fps -tremisabdoul
