@@ -57,21 +57,24 @@ def Printer(Screen, Game):
     Game.Sol.rect.x += Game.Position
 
     # Affiche a l'ecran les elments graphique -tremisabdoul
-    Screen.fill((60, 60, 120))
-    # Screen.blit(Game.Background.image, Game.Background.rect)
+    # Screen.fill((60, 60, 120))
+    Screen.blit(Game.Background.image, Game.Background.rect)
     Screen.blit(Game.Sol.image, Game.Sol.rect)
     Screen.blit(Game.Player.image, Game.Player.rect)
     Screen.blit(Game.Monster.image, Game.Monster.rect)
     for nb in Game.all_plateform:
         nb.rect.x -= Game.Position
         Screen.blit(nb.image, nb.rect)
-        """Draw_rect(Screen, nb)"""
+        """ """
+        Draw_rect(Screen, nb)
     for nb in Game.all_wall:
         nb.rect.x -= Game.Position
         Screen.blit(nb.image, nb.rect)
-        """Draw_rect(Screen, nb)"""
-    """Draw_rect(Screen, Game.Player)
-    Draw_rect(Screen, Game.Monster)"""
+        """ """
+        Draw_rect(Screen, nb)
+    # Draw_rect(Screen, Game.Player)
+    Draw_rect(Screen, Game.Monster)
+    """ """
     MousePriter(Screen, Game)
     """pygame.draw.lines(
         Screen,
@@ -260,7 +263,7 @@ def inGame(Game, time, Screen, police1):
 
 
 def LobbyBlit(Screen, Game):
-    """Fonction d'affichage: ElÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Â ÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â©ments du lobby"""
+    """Fonction d'affichage: Elements du lobby"""
     Screen.blit(Game.UI.lobbybackground, (0, 0))
     Screen.blit(Game.UI.lobby_loadbutton, Game.UI.lobby_loadbuttonrect)
     Screen.blit(Game.UI.lobby_playbutton, Game.UI.lobby_playbuttonrect)
@@ -703,7 +706,7 @@ def NewWall(Game, x, y):
 
 
 def Movements(Game, Screen):
-    # Fonction de dÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Â ÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â©placement gauche / droite -tremisabdoul
+    # Fonction de deplacement gauche / droite -tremisabdoul
     DeplacementX(Game)
 
     for Entity in Game.Entities:
@@ -735,7 +738,7 @@ def Movements(Game, Screen):
 
     print(Game.Player.rect.center[0] - Game.Position)
 
-    # DÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Â ÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â©placements de player -tremisabdoul
+    # Deplacements de player -tremisabdoul
     # Game.Player.rect.x += Game.Player.Force.AccelerationFunctionX()
     Game.Position = Game.Player.Force.AccelerationFunctionX()
     for Target in Game.Entities:
@@ -745,21 +748,21 @@ def Movements(Game, Screen):
             if not Wall.rect.bottomleft < Target.rect.midtop < Wall.rect.topright:
                 if Target == Game.Player:
                     if Wall.rect.center < Target.rect.center:
-                        Game.Position = Wall.rect.right - 409  # A Config
+                        Game.Position = Wall.rect.right - (Target.rect.left + 1)
                     elif Wall.rect.center > Target.rect.center:
-                        Game.Position = Wall.rect.left - 409  # A Config
+                        Game.Position = Wall.rect.left - (Target.rect.right - 1)
 
                 elif Target in Game.AcrossWall:
-                    if Wall.rect.right > Target.rect.left > Wall.rect.left:
-                        Target.rect.x -= Wall.rect.right - (Target.rect.left + 33)
-                    elif Wall.rect.right > Target.rect.right > Wall.rect.left:
-                        Target.rect.x -= Wall.rect.left - (Target.rect.right - 33)
+                    if Wall.rect.center < Target.rect.center:
+                        Target.rect.x -= Wall.rect.right - (Target.rect.left - 33)
+                    elif Wall.rect.center > Target.rect.center:
+                        Target.rect.x -= Wall.rect.left - (Target.rect.right + 33)
 
                 else:
                     if Wall.rect.center < Target.rect.center:
-                        Target.rect.x += Wall.rect.right - (Target.rect.left + 33)
+                        Target.rect.x += Wall.rect.right - (Target.rect.left - 33)
                     elif Wall.rect.center > Target.rect.center:
-                        Target.rect.x += Wall.rect.left - (Target.rect.right - 33)
+                        Target.rect.x += Wall.rect.left - (Target.rect.right + 33)
             else:
                 if Target == Game.Player:
                     Target.Base_Gravity = Wall.rect.bottom - Target.rect.top
