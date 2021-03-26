@@ -5,9 +5,9 @@ import pygame
 import os
 
 
-# CrÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â©e l'ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â©cran -tremisabdoul
+# CrÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Â ÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â©e l'ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Â ÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â©cran -tremisabdoul
 def Display():
-    """Fonction Permettent l'affichage de l'ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â©cran -tremisabdoul"""
+    """Fonction Permettent l'affichage de l'ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Â ÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â©cran -tremisabdoul"""
 
     pygame.init()
     pygame.display.set_caption("Anoari")
@@ -21,7 +21,7 @@ def Jump(Game):
 
     if Game.Player.SpeedY < 0:
         Game.Player.rect.y += Game.Player.SpeedY
-        Game.Player.SpeedY += 0.33
+        Game.Player.SpeedY += 0.4
     else:
         Game.Player.SpeedY = 0
 
@@ -57,25 +57,28 @@ def Printer(Screen, Game):
     Game.Sol.rect.x += Game.Position
 
     # Affiche a l'ecran les elments graphique -tremisabdoul
-    Screen.fill((60, 60, 120))
-    # Screen.blit(Game.Background.image, Game.Background.rect)
+    # Screen.fill((60, 60, 120))
+    Screen.blit(Game.Background.image, Game.Background.rect)
     Screen.blit(Game.Sol.image, Game.Sol.rect)
     Screen.blit(Game.Player.image, Game.Player.rect)
     Screen.blit(Game.Monster.image, Game.Monster.rect)
     for nb in Game.all_plateform:
         nb.rect.x -= Game.Position
         Screen.blit(nb.image, nb.rect)
+        """ """
         Draw_rect(Screen, nb)
     for nb in Game.all_wall:
         nb.rect.x -= Game.Position
         Screen.blit(nb.image, nb.rect)
+        """ """
         Draw_rect(Screen, nb)
     Draw_rect(Screen, Game.Player)
     Draw_rect(Screen, Game.Monster)
+    """ """
     MousePriter(Screen, Game)
-    pygame.draw.lines(
+    """pygame.draw.lines(
         Screen,
-        (0, 150, 100),
+        (0, 150, 100, 10),
         True,
         (
             (410, 0),
@@ -99,12 +102,12 @@ def Printer(Screen, Game):
             (1250, 600),
             (1250, 0)
         )
-    )
+    )"""
 
 
 # Print: -tremisabdoul
 def UIPrinter(Screen, police1, Game):
-    """Fonction d'affichage: ElÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â©ments d'interface in-game -tremisabdoul"""
+    """Fonction d'affichage: ElÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Â ÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â©ments d'interface in-game -tremisabdoul"""
 
     # Permet de reglrer le nombre de frames a la seconde -tremisabdoul -tremisabdoul
     frame = 1
@@ -139,7 +142,7 @@ def UIPrinter(Screen, police1, Game):
 
 
 def pauseblit(Screen, Game):
-    """Fonction d'affichage: ElÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â©ments de pause -tremisabdoul"""
+    """Fonction d'affichage: ElÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Â ÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â©ments de pause -tremisabdoul"""
 
     # Screen.blit(Game.Background.image, Game.Background.rect)
     # Screen.blit(Game.UI.baselayer, (0, 0))  # << Prends bcp de perf -tremisabdoul
@@ -202,7 +205,7 @@ def pause(Game, Screen, time, police1):
         pauseblit(Screen, Game)
         MousePriter(Screen, Game)
 
-        # Affichage du rendu graphique sur la fenÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¨tre -tremisabdoul
+        # Affichage du rendu graphique sur la fenetre -tremisabdoul
         pygame.display.flip()
 
         # Compteur de FPS et lock de FPS -tremisabdoul
@@ -220,8 +223,7 @@ def pause(Game, Screen, time, police1):
 # Loop de Jeu: -tremisabdoul
 def inGame(Game, time, Screen, police1):
     """ Loop de Jeu -tremisabdoul"""
-    NewPlatform(Game, 400, 450)
-    NewWall(Game, 400, 600)
+
     while Game.InGame:
         """ ===== Frame Limiter ===== """
         # Initialisation du compteur de temps pour limiter les fps -tremisabdoul
@@ -229,10 +231,10 @@ def inGame(Game, time, Screen, police1):
         Game.Frame += 1
         """ Sert a rien ! """
         # Test de la barre de vie
-        if Game .Player.Pv > 1:
-            Game.Player.Pv -= 1
-        else:
-            Game.Player.Pv = Game.Player.MaxPv
+        # if Game .Player.Pv > 1:
+        #     Game.Player.Pv -= 1
+        # else:
+        #     Game.Player.Pv = Game.Player.MaxPv
 
         """ ===== Movements ====="""
         Movements(Game, Screen)
@@ -256,7 +258,7 @@ def inGame(Game, time, Screen, police1):
 
 
 def LobbyBlit(Screen, Game):
-    """Fonction d'affichage: ElÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â©ments du lobby"""
+    """Fonction d'affichage: Elements du lobby"""
     Screen.blit(Game.UI.lobbybackground, (0, 0))
     Screen.blit(Game.UI.lobby_loadbutton, Game.UI.lobby_loadbuttonrect)
     Screen.blit(Game.UI.lobby_playbutton, Game.UI.lobby_playbuttonrect)
@@ -350,8 +352,8 @@ def Option(Game, Screen, time, police1, police2):
 
         Screen.fill((0, 0, 0))
 
-        # Affichage du nÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â©cessaire pour le texte des Options -steven
-        Texte('RÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â©solution : ', police2, (255, 255, 255), Screen, 100, 100)
+        # Affichage du nÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Â ÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â©cessaire pour le texte des Options -steven
+        Texte('RÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Â ÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â©solution : ', police2, (255, 255, 255), Screen, 100, 100)
         Texte('Volume : ', police2, (255, 255, 255), Screen, 100, 225)
         Texte('Controles : ', police2, (255, 255, 255), Screen, 100, 350)
 
@@ -685,7 +687,7 @@ def Draw_rect(Screen, Target):
 def NewPlatform(Game, x, y):
     from Scripts.Classes import Plateform
     Plateform = Plateform()
-    Plateform.rect.x, Plateform.rect.y = x, y + 130
+    Plateform.rect.x, Plateform.rect.y = x * 250, y * 150 + 130
     Game.all_plateform.add(Plateform)
     Game.PlateformNumber += 1
 
@@ -693,13 +695,13 @@ def NewPlatform(Game, x, y):
 def NewWall(Game, x, y):
     from Scripts.Classes import Wall
     Wall = Wall()
-    Wall.rect.x, Wall.rect.y, Wall.rect.height, Wall.rect.width = x, y, 150, 400
+    Wall.rect.x, Wall.rect.y, Wall.rect.height, Wall.rect.width = x * 250, y * 150, 150, 250
     Game.all_wall.add(Wall)
     Game.WallNumber += 1
 
 
 def Movements(Game, Screen):
-    # Fonction de dÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â©placement gauche / droite -tremisabdoul
+    # Fonction de deplacement gauche / droite -tremisabdoul
     DeplacementX(Game)
 
     for Entity in Game.Entities:
@@ -729,35 +731,39 @@ def Movements(Game, Screen):
         Game.Player.Force.Gravity(Game, Entity)
         Entity.YVector = Entity.LastY - Entity.rect.y
 
-    # DÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â©placements de player -tremisabdoul
+    print(Game.Player.rect.center[0] - Game.Position)
+
+    # Deplacements de player -tremisabdoul
     # Game.Player.rect.x += Game.Player.Force.AccelerationFunctionX()
     Game.Position = Game.Player.Force.AccelerationFunctionX()
     for Target in Game.Entities:
         Collide = Game.Player.check_collisions(Target, Game.all_wall)
 
         for Wall in Collide:
-            if Target == Game.Player:
-                if Wall.rect.center < Target.rect.center:
-                    Game.Position = Wall.rect.right - (Target.rect.left - 1)
-                elif Wall.rect.center > Target.rect.center:
-                    Game.Position = Wall.rect.left - (Target.rect.right + 1)
+            if not Wall.rect.bottomleft < Target.rect.midtop < Wall.rect.topright:
+                if Target == Game.Player:
+                    if Wall.rect.center < Target.rect.center:
+                        Game.Position = Wall.rect.right - Target.rect.left
+                    elif Wall.rect.center > Target.rect.center:
+                        Game.Position = Wall.rect.left - Target.rect.right
 
-            elif Target in Game.AcrossWall:
-                if Wall.rect.right > Target.rect.left > Wall.rect.left:
-                    Target.rect.x -= Wall.rect.right - (Target.rect.left - 1)
-                elif Wall.rect.right > Target.rect.right > Wall.rect.left:
-                    Target.rect.x -= Wall.rect.left - (Target.rect.right + 1)
+                elif Target in Game.AcrossWall:
+                    if Wall.rect.center < Target.rect.center:
+                        Target.rect.x -= Wall.rect.right - (Target.rect.left - 33)
+                    elif Wall.rect.center > Target.rect.center:
+                        Target.rect.x -= Wall.rect.left - (Target.rect.right + 33)
 
+                else:
+                    if Wall.rect.center < Target.rect.center:
+                        Target.rect.x += Wall.rect.right - (Target.rect.left - 33)
+                    elif Wall.rect.center > Target.rect.center:
+                        Target.rect.x += Wall.rect.left - (Target.rect.right + 33)
             else:
-                if Wall.rect.center < Target.rect.center:
-                    Target.rect.x += Wall.rect.right - (Target.rect.left - 1)
-                elif Wall.rect.center > Target.rect.center:
-                    Target.rect.x += Wall.rect.left - (Target.rect.right + 1)
-
-            if Target.Direction == 1:
-                Target.Direction = 0
-            else:
-                Target.Direction = 1
+                if Target == Game.Player:
+                    Target.Base_Gravity = Wall.rect.bottom - Target.rect.top
+                    if Target.Base_Gravity < -11:
+                        Target.Base_Gravity = -11
+                    Game.Player.SpeedY = 0
 
     Game.Position = round(Game.Position)
 
@@ -863,6 +869,7 @@ def Paterns(Game):
                  "height": 150,
                  "x": 0,
                  "y": 0}
+
 
 
 TilesPatern = {'Init':
