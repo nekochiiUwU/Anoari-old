@@ -62,24 +62,21 @@ def Printer(Screen, Game):
     Screen.blit(Game.Sol.image, Game.Sol.rect)
     Screen.blit(Game.Player.image, Game.Player.rect)
     Screen.blit(Game.Monster.image, Game.Monster.rect)
+
     for nb in Game.all_plateform:
         nb.rect.x -= Game.Position
         Screen.blit(nb.image, nb.rect)
-        """ """
         if Game.ShowHitbox:
             Draw_rect(Screen, nb)
+
     for nb in Game.all_wall:
         nb.rect.x -= Game.Position
         Screen.blit(nb.image, nb.rect)
-        """ """
         if Game.ShowHitbox:
             Draw_rect(Screen, nb)
 
-    """ """
     if Game.pressed.get("3"):
         MousePrinter(Screen, Game)
-    else:
-
 
     if Game.ShowHitbox:
         Draw_rect(Screen, Game.Player)
@@ -115,7 +112,7 @@ def Printer(Screen, Game):
 
 # Print: -tremisabdoul
 def UIPrinter(Screen, police1, Game):
-    """Fonction d'affichage: ElÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Â ÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â©ments d'interface in-game -tremisabdoul"""
+    """Fonction d'affichage: Elements d'interface in-game -tremisabdoul"""
 
     # Permet de reglrer le nombre de frames a la seconde -tremisabdoul -tremisabdoul
     frame = 1
@@ -838,6 +835,7 @@ def InGameKeys(Game, Screen):
                 Game.ShowHitbox = not Game.ShowHitbox
             elif event.button == 3:
                 print("Right Click (Mode Visée)")
+                pygame.mouse.set_visible(False)
             elif event.button > 3:
                 if event.button % 2:
                     print("Scroll Down (None) Value =", event.button)
@@ -846,6 +844,8 @@ def InGameKeys(Game, Screen):
         # Boutons souris relaches -nekochii
         elif event.type == pygame.MOUSEBUTTONUP:
             Game.pressed[str(event.button)] = False
+            if event.button == 3:
+                pygame.mouse.set_visible(True)
 
         # Permet le resize de l'ecran -tremisabdoul
         if event.type == pygame.VIDEORESIZE:
