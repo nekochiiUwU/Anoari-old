@@ -66,19 +66,23 @@ def Printer(Screen, Game):
         nb.rect.x -= Game.Position
         Screen.blit(nb.image, nb.rect)
         """ """
-        Draw_rect(Screen, nb)
+        if Game.pressed.get("2"):
+            Draw_rect(Screen, nb)
     for nb in Game.all_wall:
         nb.rect.x -= Game.Position
         Screen.blit(nb.image, nb.rect)
         """ """
-        Draw_rect(Screen, nb)
-    Draw_rect(Screen, Game.Player)
-    Draw_rect(Screen, Game.Monster)
+        if Game.pressed.get("2"):
+            Draw_rect(Screen, nb)
+
     """ """
-    print(Game.pressed.get("3"))
     if Game.pressed.get("3"):
         MousePrinter(Screen, Game)
-        '''pygame.draw.lines(
+
+    if Game.pressed.get("2"):
+        Draw_rect(Screen, Game.Player)
+        Draw_rect(Screen, Game.Monster)
+        pygame.draw.lines(
             Screen,
             (0, 150, 100, 10),
             True,
@@ -104,7 +108,7 @@ def Printer(Screen, Game):
                 (1250, 600),
                 (1250, 0)
             )
-        )'''
+        )
 
 
 # Print: -tremisabdoul
@@ -286,14 +290,20 @@ def Lobby(Game, Screen, time, police1):
 
             elif event.type == pygame.MOUSEBUTTONDOWN:
                 # Boutons souris enfonces -nekochii
-                if event.type == pygame.MOUSEBUTTONDOWN:
-                    Game.pressed[str(event.button)]: True
                 if Game.UI.lobby_playbuttonrect.collidepoint(event.pos):
                     Game.InGame = True
                     Game.Lobby = False
                 elif Game.UI.lobby_quitbuttonrect.collidepoint(event.pos):
                     Game.Running = False
                     pygame.quit()
+
+            # Boutons souris enfonces -nekochii x tremisabdoul
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                print(event.button)
+                Game.pressed[str(event.button)] = True
+            # Boutons souris relaches -nekochii
+            elif event.type == pygame.MOUSEBUTTONUP:
+                Game.pressed[event.button] = False
 
             # Bouton croix en haut a droite (Fermer le Programme) -tremisabdoul
             if event.type == pygame.QUIT:
@@ -817,10 +827,11 @@ def InGameKeys(Game, Screen):
 
         # Boutons souris enfonces -nekochii x tremisabdoul
         if event.type == pygame.MOUSEBUTTONDOWN:
-            Game.pressed[str(event.button)]: True
+            print(event.button)
+            Game.pressed[str(event.button)] = True
         # Boutons souris relaches -nekochii
         elif event.type == pygame.MOUSEBUTTONUP:
-            Game.pressed[event.button] = False
+            Game.pressed[str(event.button)] = False
 
         # Permet le resize de l'ecran -tremisabdoul
         if event.type == pygame.VIDEORESIZE:
