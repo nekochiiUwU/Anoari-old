@@ -18,12 +18,18 @@ def Display():
 
 def Jump(Game):
     """Fonction de jump: [ Key: Space ] -tremisabdoul"""
-
-    if Game.Player.SpeedY < 0:
+    global booleanjump
+    if  Game.Player.SpeedY > -20 and Game.pressed.get(pygame.K_SPACE) and booleanjump:
+        Game.Player.SpeedY -= 2
         Game.Player.rect.y += Game.Player.SpeedY
-        Game.Player.SpeedY += 0.4
+
     else:
-        Game.Player.SpeedY = 0
+        booleanjump = 0
+        if Game.Player.SpeedY < 0:
+            Game.Player.rect.y += Game.Player.SpeedY
+            Game.Player.SpeedY += 0.4
+        else:
+            Game.Player.SpeedY = 0
 
 
 def DeplacementX(Game):
@@ -726,6 +732,7 @@ def NewWall(Game, x, y):
 
 def Movements(Game, Screen):
     # Fonction de deplacement gauche / droite -tremisabdoul
+    global booleanjump
     DeplacementX(Game)
 
     for Entity in Game.Entities:
@@ -751,10 +758,14 @@ def Movements(Game, Screen):
     if Game.pressed.get(pygame.K_SPACE) \
             and Game.Player.check_collisions(Game.Player, Game.all_plateform) \
             and Game.Player.YVector == 0:
-        if Game.Player.SpeedY > -20:
-            Game.Player.SpeedY -= 2
+
+        Game.Player.SpeedY = -5
+        booleanjump = 1
+        Jump(Game)
     elif Game.Player.SpeedY:
         Jump(Game)
+
+
 
     for Entity in Game.Entities:
         Game.Player.Force.Gravity(Game, Entity)
@@ -770,9 +781,9 @@ def Movements(Game, Screen):
             if not Wall.rect.bottomleft < Target.rect.midtop < Wall.rect.topright:
                 if Target == Game.Player:
                     if Wall.rect.center < Target.rect.center:
-                        Game.Position = Wall.rect.right - Target.rect.left
+                        Game.Position = -Game.Position
                     elif Wall.rect.center > Target.rect.center:
-                        Game.Position = Wall.rect.left - Target.rect.right
+                        Game.Position = -Game.Position
 
                 elif Target in Game.AcrossWall:
                     if Wall.rect.center < Target.rect.center:
