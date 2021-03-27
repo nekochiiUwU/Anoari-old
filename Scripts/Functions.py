@@ -75,7 +75,8 @@ def Printer(Screen, Game):
     Draw_rect(Screen, Game.Player)
     Draw_rect(Screen, Game.Monster)
     """ """
-    if True == True:
+    print(Game.pressed.get("3"))
+    if Game.pressed.get("3"):
         MousePrinter(Screen, Game)
         '''pygame.draw.lines(
             Screen,
@@ -284,6 +285,9 @@ def Lobby(Game, Screen, time, police1):
                 Game.pressed[event.key] = False
 
             elif event.type == pygame.MOUSEBUTTONDOWN:
+                # Boutons souris enfonces -nekochii
+                if event.type == pygame.MOUSEBUTTONDOWN:
+                    Game.pressed[str(event.button)]: True
                 if Game.UI.lobby_playbuttonrect.collidepoint(event.pos):
                     Game.InGame = True
                     Game.Lobby = False
@@ -782,8 +786,8 @@ def InGameKeys(Game, Screen):
         # Touches enfoncees -tremisabdoul
         if event.type == pygame.KEYDOWN:
             Game.pressed[event.key] = True
-
             # Active le Jump() -tremisabdoul
+
             if Game.pressed.get(pygame.K_SPACE) \
                     and Game.Player.check_collisions(Game.Player, Game.all_plateform) \
                     and Game.Player.YVector == 0:
@@ -797,6 +801,7 @@ def InGameKeys(Game, Screen):
             # Changement entre Fullscreen / Window -steven
             if Game.pressed.get(pygame.K_F11):
                 print("\n", pygame.display.Info())
+
                 if Game.Fullscreen == 0:
                     Screen = pygame.display.set_mode((Game.UserData.DataX, Game.UserData.DataY), pygame.FULLSCREEN)
                     Game.Fullscreen = 1
@@ -810,18 +815,12 @@ def InGameKeys(Game, Screen):
         elif event.type == pygame.KEYUP:
             Game.pressed[event.key] = False
 
-        # Boutons souris enfonces -nekochii
+        # Boutons souris enfonces -nekochii x tremisabdoul
         if event.type == pygame.MOUSEBUTTONDOWN:
-            global Mouse
-            Mouse = list()
-            Game.pressed[event.button] = True
-            MetaMouse = "Mouse = " + str(Game.pressed[event.button])
-            exec(MetaMouse)
-
+            Game.pressed[str(event.button)]: True
         # Boutons souris relaches -nekochii
         elif event.type == pygame.MOUSEBUTTONUP:
             Game.pressed[event.button] = False
-
 
         # Permet le resize de l'ecran -tremisabdoul
         if event.type == pygame.VIDEORESIZE:
