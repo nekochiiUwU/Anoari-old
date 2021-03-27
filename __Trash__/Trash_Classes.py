@@ -154,38 +154,29 @@
 #                        self.Running = False
 #                        pygame.quit()
 
-
-
-
-
-
-
-
 """
-
 # Gravité kassé
 
 def Gravity(self, Game0, Target):
-    # Vérification des collisions entre Player et toutes les plateformes
     Collide = Game0.Player.check_collisions(Target, Game0.all_plateform)
 
     for item in Collide:
 
         if item and Target.YVector < 0 and (Target.rect.bottom < item.rect.top + 33):
-            Target.SpeedY = 0  # Cancel le saut
-            self.Base_Gravity = 0  # Reset la force du sol (-33)
-            Replace = item.rect.y - (Target.rect.bottom)  # Y reset (Premier pixel du rect de plateforme)
+            Target.SpeedY = 0
+            Target.Base_Gravity = 0
+            Replace = item.rect.y - (Target.rect.bottom)
             print(Replace)
-            Game0.Player.YVector -= Replace
+            Target.YVector -= Replace
             return Replace + 1
 
     if not Collide:
-        if self.Base_Gravity < 33:  # Si force de sol > 0
-            self.Base_Gravity += 0.66  # Diminution de la force "Sol" (Ratio 0.66)
-            return self.Base_Gravity
+        if Target.Base_Gravity < 33:
+            Target.Base_Gravity += 0.66
+            return Target.Base_Gravity
 
         else:
-            self.Base_Gravity = 33  # Force de sol = 0
+            Target.Base_Gravity = 33  # Force de sol = 0
             return 33
     return 0
 

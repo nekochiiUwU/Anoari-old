@@ -33,6 +33,6 @@ Game.Player.YVector,0
 Game.PositionPlayer,0
 # Phisics,# Actual Movement of Player -tremisabdoul
 Game.Player.Force.lastx,0.0
-Game.Player.Base_Gravity,0
-Game.Monster.Base_Gravity,0
+Game.Player.Base_Gravity,183
+Game.Monster.Base_Gravity,4.8
 Game.Player.Force.x,0
