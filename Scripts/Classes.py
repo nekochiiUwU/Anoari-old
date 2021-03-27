@@ -513,7 +513,7 @@ class Wall(pygame.sprite.Sprite, Game):
     def __init__(self):
         super().__init__()
         self.image = pygame.image.load("Assets/Visual/Structure/Wall.png")
-        self.image = pygame.transform.scale(self.image, (250, 150   ))
+        self.image = pygame.transform.scale(self.image, (250, 150))
         self.rect = self.image.get_rect()
         self.rect.x = - 750
         self.rect.y = - 0

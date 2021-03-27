@@ -5,9 +5,9 @@ import pygame
 import os
 
 
-# CrÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Â ÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â©e l'ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Â ÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â©cran -tremisabdoul
+# Creation de l'ecran -tremisabdoul
 def Display():
-    """Fonction Permettent l'affichage de l'ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Â ÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â©cran -tremisabdoul"""
+    """Fonction Permettent l'affichage de l'ecran -tremisabdoul"""
 
     pygame.init()
     pygame.display.set_caption("Anoari")
@@ -362,7 +362,6 @@ def Option(Game, Screen, time, police1, police2):
         # Permet de recuperer le nombre de frames a la seconde -tremisabdoul
         tickchecker = time.time()
         tickchecker -= tick
-
 
         MousePrinter(Screen, Game)
 
@@ -908,21 +907,20 @@ def Paterns(Game):
                  "y": 0}
 
 
-
 TilesPatern = {'Init':
-                'StepX, StepY = 0, 0',
-                '#':
-                'NewWall(Game, StepX, StepY)'
-                'StepX += 400',
-                '_':
-                'NewPlatform(Game, StepX, StepY)'
-                'StepX += 400',
-                ',':
-                'StepX = 0'
-                'StepY += 150',
-                '=':
-                'StepX = 0'
-                'StepY = 0'}
+               'StepX, StepY = 0, 0',
+               '#':
+               'NewWall(Game, StepX, StepY)'
+               'StepX += 400',
+               '_':
+               'NewPlatform(Game, StepX, StepY)'
+               'StepX += 400',
+               ',':
+               'StepX = 0'
+               'StepY += 150',
+               '=':
+               'StepX = 0'
+               'StepY = 0'}
 
 Animations = [
     "\nEx of usage:\nGame.Player.image = Animations[a[b[c[d[e]]]]]\n"
