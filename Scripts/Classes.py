@@ -95,31 +95,43 @@ class Player(pygame.sprite.Sprite, Game):
         self.Game = Game
 
         # Statistiques -tremisabdoul
-        self.Pv = 50
+        self.Pv = 100
         self.MaxPv = 100
         self.Damage = 10
         self.Speed = 2
         self.SpeedY = 0
         self.Armor = 0
-        self.Mana = 50
+        self.Mana = 60
+        self.MaxMana = 60  #####
         # Statistique Variable -steven
         self.CDR = 0
         self.AttackSpeed = 0
-        self.CCHit = 0
-        self.CCSpell = 0
-        self.CCDamage = 0
+        self.CCHit = 130
+        self.CCSpell = 3
+        self.CCDamage = 3
         self.Penetration = 0
-        self.ManaRegen = 0
-        self.XP_Multiplicator = 0
-        self.Damage_Multiplicator = 0
+        self.ManaRegen = 2
+        self.XP_Multiplicator = 1
+        self.Damage_Multiplicator = 1
 
-        self.Level = 0
-        self.Gold = 0
+        self.Level = 1
+        self.Gold = 100
 
         # Statistique gagnÃƒÂ©e par niveau / points -steven
-        self.Gain_Stat_Level = 5
+        self.Gain_Stat_Level = int((self.Level/2)**2+(self.Level/2))
         self.Point_Pv = 0
         self.Point_Damage = 0
+        self.Point_Speed = 2  #####
+        self.Point_Armor = 0  #####
+        self.Point_Mana = 60  #####
+        self.Point_MaxMana = 0  #####
+        self.Point_CDR = 0  #####
+        self.Point_AttackSpeed = 0  #####
+        self.Point_CCHit = 0  #####
+        self.Point_CCSpell = 0  #####
+        self.Point_CCDamage = 0  #####
+        self.Point_Penetration = 0  #####
+        self.Point_ManaRegen = 0  #####
 
         self.Weapon1 = Weapon()
         self.Weapon2 = Weapon()
@@ -248,7 +260,8 @@ class Force:
             if item and Target.YVector <= 1 and (Target.rect.bottom <= item.rect.top + Target.Base_Gravity + 2):
                 Target.rect.y = base
                 Replace = item.rect.top - (Target.rect.bottom - 1)  # Y reset (Premier pixel du rect de plateforme)
-                Target.SpeedY = 0  # Cancel le saut
+                if Target.Base_Gravity > 0.8:
+                    Target.SpeedY = 0  # Cancel le saut
                 Target.Base_Gravity = 0  # Reset la force du sol (-20)
                 Target.rect.y += Replace
 
@@ -513,7 +526,7 @@ class Wall(pygame.sprite.Sprite, Game):
     def __init__(self):
         super().__init__()
         self.image = pygame.image.load("Assets/Visual/Structure/Wall.png")
-        self.image = pygame.transform.scale(self.image, (250, 150   ))
+        self.image = pygame.transform.scale(self.image, (250, 150))
         self.rect = self.image.get_rect()
         self.rect.x = - 750
         self.rect.y = - 0

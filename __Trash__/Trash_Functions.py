@@ -1,3 +1,4 @@
+"""
 for Monster in Game.all_Monster:
     Monster.Life(Screen, Game)
     if Game.Monster.LeftDirection :
@@ -18,3 +19,4 @@ for Monster in Game.all_Monster:
             elif Wall.rect.right > Target.rect.right > Wall.rect.left:
                 print("Droite")
                 Game.Position = Wall.rect.right - (Target.rect.left - 1)
+"""

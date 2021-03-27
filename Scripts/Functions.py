@@ -5,9 +5,9 @@ import pygame
 import os
 
 
-# CrÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Â ÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â©e l'ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Â ÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â©cran -tremisabdoul
+# Creation de l'ecran -tremisabdoul
 def Display():
-    """Fonction Permettent l'affichage de l'ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Â ÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â©cran -tremisabdoul"""
+    """Fonction Permettent l'affichage de l'ecran -tremisabdoul"""
 
     pygame.init()
     pygame.display.set_caption("Anoari")
@@ -57,25 +57,24 @@ def Printer(Screen, Game):
     Game.Sol.rect.x += Game.Position
 
     # Affiche a l'ecran les elments graphique -tremisabdoul
-    # Screen.fill((60, 60, 120))
-    Screen.blit(Game.Background.image, Game.Background.rect)
+    Screen.fill((60, 60, 120))
+    # Screen.blit(Game.Background.image, Game.Background.rect)
     Screen.blit(Game.Sol.image, Game.Sol.rect)
     Screen.blit(Game.Player.image, Game.Player.rect)
     Screen.blit(Game.Monster.image, Game.Monster.rect)
+
     for nb in Game.all_plateform:
         nb.rect.x -= Game.Position
         Screen.blit(nb.image, nb.rect)
-        """ """
-        if Game.ShowHitbox:
-            Draw_rect(Screen, nb)
-    for nb in Game.all_wall:
-        nb.rect.x -= Game.Position
-        Screen.blit(nb.image, nb.rect)
-        """ """
         if Game.ShowHitbox:
             Draw_rect(Screen, nb)
 
-    """ """
+    for nb in Game.all_wall:
+        nb.rect.x -= Game.Position
+        Screen.blit(nb.image, nb.rect)
+        if Game.ShowHitbox:
+            Draw_rect(Screen, nb)
+
     if Game.pressed.get("3"):
         MousePrinter(Screen, Game)
 
@@ -113,38 +112,43 @@ def Printer(Screen, Game):
 
 # Print: -tremisabdoul
 def UIPrinter(Screen, police1, Game):
-    """Fonction d'affichage: ElÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Â ÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â©ments d'interface in-game -tremisabdoul"""
-
-    # Permet de reglrer le nombre de frames a la seconde -tremisabdoul -tremisabdoul
-    frame = 1
-    fps = frame / Game.Tickchecker
-    fps = "FPS : " + str(round(fps))
+    """Fonction d'affichage: Elements d'interface in-game -tremisabdoul"""
 
     # Cree une couleur plus ou moins rouge en fonction des PV restants -tremisabdoul
     Color = (Game.Player.Pv / Game.Player.MaxPv) * 255
     LifeColor = [255, Color, Color]
 
-    # Transforme les variables en composent graphique -tremisabdoul
-    printfps = police1.render(str(fps), True, (255, 255, 255))
-
     opti = str(round(Game.Player.Pv))
     opti = str(str(opti) + " / " + str(Game.Player.MaxPv) + " PV")
     opti = police1.render(str(opti), True, LifeColor)
+    Screen.blit(opti, (15 + Color / 50, 48 + Color / 50))
 
     opti1 = round((Game.Player.Pv / Game.Player.MaxPv) * 100)
     opti1 = opti1 * "|"
     opti1 = police1.render(str(opti1), True, LifeColor)
-
-    y = 34
-    for Entity in Game.Entities:
-        Entity.YVectorblit = police1.render("Y Vector checker: " + str(Entity.YVector), True, (100, 100, 200))
-        Screen.blit(Entity.YVectorblit, (100, y))
-        y += 10
-
-    # Affiche a l'ecran les elements suivents -tremisabdoul
-    Screen.blit(printfps, (6, 34))
-    Screen.blit(opti, (15 + Color / 50, 48 + Color / 50))
     Screen.blit(opti1, (15 + Color / 50, 60 + Color / 50))
+
+    if Game.ShowHitbox:
+        jump = round(Game.Player.SpeedY)
+        print(jump)
+        jump = "|" * jump
+        print(jump)
+        jump = "Jump: " + str(Game.Player.SpeedY) + jump
+        jump = police1.render(str(jump), True, (128, 255, 128))
+        Screen.blit(jump, (15, 80))
+
+        # Permet de voir le nombre de frames a la seconde -tremisabdoul -tremisabdoul
+        frame = 1
+        fps = frame / Game.Tickchecker
+        fps = "FPS : " + str(round(fps))
+        printfps = police1.render(str(fps), True, (255, 255, 255))
+        Screen.blit(printfps, (6, 34))
+
+        y = 34
+        for Entity in Game.Entities:
+            Entity.YVectorblit = police1.render("Y Vector checker: " + str(Entity.YVector), True, (100, 100, 200))
+            Screen.blit(Entity.YVectorblit, (100, y))
+            y += 10
 
 
 def pauseblit(Screen, Game):
@@ -303,7 +307,7 @@ def Lobby(Game, Screen, time, police1):
                 Game.pressed[str(event.button)] = True
             # Boutons souris relaches -nekochii
             elif event.type == pygame.MOUSEBUTTONUP:
-                Game.pressed[event.button] = False
+                Game.pressed[str(event.button)] = False
 
             # Bouton croix en haut a droite (Fermer le Programme) -tremisabdoul
             if event.type == pygame.QUIT:
@@ -363,7 +367,6 @@ def Option(Game, Screen, time, police1, police2):
         # Permet de recuperer le nombre de frames a la seconde -tremisabdoul
         tickchecker = time.time()
         tickchecker -= tick
-
 
         MousePrinter(Screen, Game)
 
@@ -554,6 +557,10 @@ def Data_Load(Game, Screen, police1):
         plateform.rect.x -= Game.PositionPlayer - Replace
         Loading = LoadingScreen("I'm actually loading your data", Screen, police1, FullLoading, Loading)
 
+    for wall in Game.all_wall:
+        wall.rect.x -= Game.PositionPlayer - Replace
+        Loading = LoadingScreen("I'm actually loading your data", Screen, police1, FullLoading, Loading)
+
     Game.Sol.rect.x = 0
     Loading = LoadingScreen("I'm actually loading your data", Screen, police1, FullLoading, Loading)
     print("\nYour data has been loaded!\n", Loading, "/", FullLoading)
@@ -740,8 +747,13 @@ def Movements(Game, Screen):
                 Monster.Direction = 1
                 Monster.Move_Left(Game)
 
-    # Fonction de Jump -tremisabdoul
-    if Game.Player.SpeedY:
+    # Active le Jump() -tremisabdoul
+    if Game.pressed.get(pygame.K_SPACE) \
+            and Game.Player.check_collisions(Game.Player, Game.all_plateform) \
+            and Game.Player.YVector == 0:
+        if Game.Player.SpeedY > -20:
+            Game.Player.SpeedY -= 2
+    elif Game.Player.SpeedY:
         Jump(Game)
 
     for Entity in Game.Entities:
@@ -784,7 +796,8 @@ def Movements(Game, Screen):
 
     Game.PositionPlayer += Game.Position
 
-    print("\n", Game.PositionPlayer)
+    if Game.ShowHitbox:
+        print("\n", Game.PositionPlayer)
 
     BackgroundScroll(Game)
 
@@ -796,12 +809,6 @@ def InGameKeys(Game, Screen):
         # Touches enfoncees -tremisabdoul
         if event.type == pygame.KEYDOWN:
             Game.pressed[event.key] = True
-            # Active le Jump() -tremisabdoul
-
-            if Game.pressed.get(pygame.K_SPACE) \
-                    and Game.Player.check_collisions(Game.Player, Game.all_plateform) \
-                    and Game.Player.YVector == 0:
-                Game.Player.SpeedY = -20
 
             # Activation de Pause -tremisabdoul
             if Game.pressed.get(pygame.K_ESCAPE):
@@ -828,11 +835,24 @@ def InGameKeys(Game, Screen):
         # Boutons souris enfonces -nekochii x tremisabdoul
         if event.type == pygame.MOUSEBUTTONDOWN:
             Game.pressed[str(event.button)] = True
-            if event.button == 2:
+            if event.button == 1:
+                print("Left Click (None)")
+            elif event.button == 2:
+                print("Middle Click (Hitbox + print(Game.PlayerPosition))")
                 Game.ShowHitbox = not Game.ShowHitbox
+            elif event.button == 3:
+                print("Right Click (Mode Visée)")
+                pygame.mouse.set_visible(False)
+            elif event.button > 3:
+                if event.button % 2:
+                    print("Scroll Down (None) Value =", event.button)
+                else:
+                    print("Scroll Up (None) Value =", event.button)
         # Boutons souris relaches -nekochii
         elif event.type == pygame.MOUSEBUTTONUP:
             Game.pressed[str(event.button)] = False
+            if event.button == 3:
+                pygame.mouse.set_visible(True)
 
         # Permet le resize de l'ecran -tremisabdoul
         if event.type == pygame.VIDEORESIZE:
@@ -895,21 +915,20 @@ def Paterns(Game):
                  "y": 0}
 
 
-
 TilesPatern = {'Init':
-                'StepX, StepY = 0, 0',
-                '#':
-                'NewWall(Game, StepX, StepY)'
-                'StepX += 400',
-                '_':
-                'NewPlatform(Game, StepX, StepY)'
-                'StepX += 400',
-                ',':
-                'StepX = 0'
-                'StepY += 150',
-                '=':
-                'StepX = 0'
-                'StepY = 0'}
+               'StepX, StepY = 0, 0',
+               '#':
+               'NewWall(Game, StepX, StepY)'
+               'StepX += 400',
+               '_':
+               'NewPlatform(Game, StepX, StepY)'
+               'StepX += 400',
+               ',':
+               'StepX = 0'
+               'StepY += 150',
+               '=':
+               'StepX = 0'
+               'StepY = 0'}
 
 Animations = [
     "\nEx of usage:\nGame.Player.image = Animations[a[b[c[d[e]]]]]\n"
