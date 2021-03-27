@@ -35,6 +35,7 @@ class Game:
         self.WallNumber = 1
         self.Paterns = {}
         self.Grid = {}
+        self.ShowHitbox = False
 
     def Rescale(self, value, XorY):
         if XorY == "X":
