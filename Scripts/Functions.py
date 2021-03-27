@@ -41,7 +41,7 @@ def DeplacementX(Game):
         Game.Player.Move_Left()
 
 
-def MousePriter(Screen, Game):
+def MousePrinter(Screen, Game):
     """Fonction d'affichage: Mouse -tremisabdoul"""
 
     Game.Mouse.rect.center = pygame.mouse.get_pos()
@@ -75,34 +75,37 @@ def Printer(Screen, Game):
     Draw_rect(Screen, Game.Player)
     Draw_rect(Screen, Game.Monster)
     """ """
-    MousePriter(Screen, Game)
-    """pygame.draw.lines(
-        Screen,
-        (0, 150, 100, 10),
-        True,
-        (
-            (410, 0),
-            (410, 750),
-            (250, 750),
-            (250, 0),
-            (500, 0),
-            (500, 750),
-            (750, 750),
-            (750, 0),
-            (1000, 0),
-            (1000, 750),
-            (1250, 750),
-            (1250, 150),
-            (0, 150),
-            (0, 300),
-            (1250, 300),
-            (1250, 450),
-            (0, 450),
-            (0, 600),
-            (1250, 600),
-            (1250, 0)
-        )
-    )"""
+    print(Game.pressed)
+    if Game.pressed[0] == True:
+        print('uwu')
+        MousePrinter(Screen, Game)
+        '''pygame.draw.lines(
+            Screen,
+            (0, 150, 100, 10),
+            True,
+            (
+                (410, 0),
+                (410, 750),
+                (250, 750),
+                (250, 0),
+                (500, 0),
+                (500, 750),
+                (750, 750),
+                (750, 0),
+                (1000, 0),
+                (1000, 750),
+                (1250, 750),
+                (1250, 150),
+                (0, 150),
+                (0, 300),
+                (1250, 300),
+                (1250, 450),
+                (0, 450),
+                (0, 600),
+                (1250, 600),
+                (1250, 0)
+            )
+        )'''
 
 
 # Print: -tremisabdoul
@@ -142,7 +145,7 @@ def UIPrinter(Screen, police1, Game):
 
 
 def pauseblit(Screen, Game):
-    """Fonction d'affichage: ElÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Â ÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â©ments de pause -tremisabdoul"""
+    """Fonction d'affichage: Elements de pause -tremisabdoul"""
 
     # Screen.blit(Game.Background.image, Game.Background.rect)
     # Screen.blit(Game.UI.baselayer, (0, 0))  # << Prends bcp de perf -tremisabdoul
@@ -203,7 +206,7 @@ def pause(Game, Screen, time, police1):
         # Affichage des elements graphiques -tremisabdoul
         Screen.fill((40, 40, 40))
         pauseblit(Screen, Game)
-        MousePriter(Screen, Game)
+        MousePrinter(Screen, Game)
 
         # Affichage du rendu graphique sur la fenetre -tremisabdoul
         pygame.display.flip()
@@ -247,8 +250,8 @@ def inGame(Game, time, Screen, police1):
         Printer(Screen, Game)
         # Interface de jeu -tremisabdoul
         UIPrinter(Screen, police1, Game)
-        # Sourie -tremisabdoul
-        MousePriter(Screen, Game)
+        # Sourie -tremisabdoul -plus maintenant
+
         # Met a jour l'affichage (Print tout ce qui est blit avant) -tremisabdoul
         pygame.display.flip()
         """ ===== Key Inputs ===== """
@@ -304,7 +307,8 @@ def Lobby(Game, Screen, time, police1):
 
         Game.UI.TitleMenuButtunDeplacement(Game)
         LobbyBlit(Screen, Game)
-        MousePriter(Screen, Game)
+
+        MousePrinter(Screen, Game)
 
         while tickchecker < 0.017:
             tickchecker = time.time()
@@ -348,12 +352,13 @@ def Option(Game, Screen, time, police1, police2):
         tickchecker = time.time()
         tickchecker -= tick
 
-        MousePriter(Screen, Game)
+
+        MousePrinter(Screen, Game)
 
         Screen.fill((0, 0, 0))
 
-        # Affichage du nÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Â ÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â©cessaire pour le texte des Options -steven
-        Texte('RÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Â ÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â©solution : ', police2, (255, 255, 255), Screen, 100, 100)
+        # Affichage du necessaire pour le texte des Options -steven
+        Texte('Resolution : ', police2, (255, 255, 255), Screen, 100, 100)
         Texte('Volume : ', police2, (255, 255, 255), Screen, 100, 225)
         Texte('Controles : ', police2, (255, 255, 255), Screen, 100, 350)
 
@@ -805,10 +810,18 @@ def InGameKeys(Game, Screen):
                     pygame.display.set_mode((1280, 720), pygame.RESIZABLE)
                     os.environ['SDL_VIDEO_WINDOW_POS'] = "%d,%d" % (100, 100)
                     Game.Fullscreen = 0
-
         # Touches relachees -tremisabdoul
         elif event.type == pygame.KEYUP:
             Game.pressed[event.key] = False
+
+        # Boutons souris enfonces -nekochii
+        if event.type == pygame.MOUSEBUTTONDOWN:
+            Game.pressed[event.button] = True
+
+        # Boutons souris relaches -nekochii
+        elif event.type == pygame.MOUSEBUTTONUP:
+            Game.pressed[event.button] = False
+
 
         # Permet le resize de l'ecran -tremisabdoul
         if event.type == pygame.VIDEORESIZE:
