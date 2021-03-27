@@ -57,8 +57,8 @@ def Printer(Screen, Game):
     Game.Sol.rect.x += Game.Position
 
     # Affiche a l'ecran les elments graphique -tremisabdoul
-    # Screen.fill((60, 60, 120))
-    Screen.blit(Game.Background.image, Game.Background.rect)
+    Screen.fill((60, 60, 120))
+    # Screen.blit(Game.Background.image, Game.Background.rect)
     Screen.blit(Game.Sol.image, Game.Sol.rect)
     Screen.blit(Game.Player.image, Game.Player.rect)
     Screen.blit(Game.Monster.image, Game.Monster.rect)
@@ -78,6 +78,8 @@ def Printer(Screen, Game):
     """ """
     if Game.pressed.get("3"):
         MousePrinter(Screen, Game)
+    else:
+
 
     if Game.ShowHitbox:
         Draw_rect(Screen, Game.Player)
@@ -303,7 +305,7 @@ def Lobby(Game, Screen, time, police1):
                 Game.pressed[str(event.button)] = True
             # Boutons souris relaches -nekochii
             elif event.type == pygame.MOUSEBUTTONUP:
-                Game.pressed[event.button] = False
+                Game.pressed[str(event.button)] = False
 
             # Bouton croix en haut a droite (Fermer le Programme) -tremisabdoul
             if event.type == pygame.QUIT:
@@ -784,7 +786,8 @@ def Movements(Game, Screen):
 
     Game.PositionPlayer += Game.Position
 
-    print("\n", Game.PositionPlayer)
+    if Game.ShowHitbox:
+        print("\n", Game.PositionPlayer)
 
     BackgroundScroll(Game)
 
@@ -828,8 +831,18 @@ def InGameKeys(Game, Screen):
         # Boutons souris enfonces -nekochii x tremisabdoul
         if event.type == pygame.MOUSEBUTTONDOWN:
             Game.pressed[str(event.button)] = True
-            if event.button == 2:
+            if event.button == 1:
+                print("Left Click (None)")
+            elif event.button == 2:
+                print("Middle Click (Hitbox + print(Game.PlayerPosition))")
                 Game.ShowHitbox = not Game.ShowHitbox
+            elif event.button == 3:
+                print("Right Click (Mode Visée)")
+            elif event.button > 3:
+                if event.button % 2:
+                    print("Scroll Down (None) Value =", event.button)
+                else:
+                    print("Scroll Up (None) Value =", event.button)
         # Boutons souris relaches -nekochii
         elif event.type == pygame.MOUSEBUTTONUP:
             Game.pressed[str(event.button)] = False
