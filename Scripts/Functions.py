@@ -75,9 +75,7 @@ def Printer(Screen, Game):
     Draw_rect(Screen, Game.Player)
     Draw_rect(Screen, Game.Monster)
     """ """
-    print(Game.pressed)
-    if Game.pressed[0] == True:
-        print('uwu')
+    if True == True:
         MousePrinter(Screen, Game)
         '''pygame.draw.lines(
             Screen,
@@ -736,8 +734,6 @@ def Movements(Game, Screen):
         Game.Player.Force.Gravity(Game, Entity)
         Entity.YVector = Entity.LastY - Entity.rect.y
 
-    print(Game.Player.rect.center[0] - Game.Position)
-
     # Deplacements de player -tremisabdoul
     # Game.Player.rect.x += Game.Player.Force.AccelerationFunctionX()
     Game.Position = Game.Player.Force.AccelerationFunctionX()
@@ -816,7 +812,11 @@ def InGameKeys(Game, Screen):
 
         # Boutons souris enfonces -nekochii
         if event.type == pygame.MOUSEBUTTONDOWN:
+            global Mouse
+            Mouse = list()
             Game.pressed[event.button] = True
+            MetaMouse = "Mouse = " + str(Game.pressed[event.button])
+            exec(MetaMouse)
 
         # Boutons souris relaches -nekochii
         elif event.type == pygame.MOUSEBUTTONUP:
@@ -968,6 +968,5 @@ print("\n", Animations[0], Animations[1])
 def SmoothCamera(Game):
     Game.Player.LastX = Game.Player.rect.x - 350
     Game.lastPosition = Game.Position
-    print(Game.Position)
     Game.Player.rect.x = 350
     Game.Player.rect.x += (Game.Position + (Game.Player.LastX / 1.1) / 2)
