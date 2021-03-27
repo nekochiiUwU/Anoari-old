@@ -66,20 +66,20 @@ def Printer(Screen, Game):
         nb.rect.x -= Game.Position
         Screen.blit(nb.image, nb.rect)
         """ """
-        if Game.pressed.get("2"):
+        if Game.ShowHitbox:
             Draw_rect(Screen, nb)
     for nb in Game.all_wall:
         nb.rect.x -= Game.Position
         Screen.blit(nb.image, nb.rect)
         """ """
-        if Game.pressed.get("2"):
+        if Game.ShowHitbox:
             Draw_rect(Screen, nb)
 
     """ """
     if Game.pressed.get("3"):
         MousePrinter(Screen, Game)
 
-    if Game.pressed.get("2"):
+    if Game.ShowHitbox:
         Draw_rect(Screen, Game.Player)
         Draw_rect(Screen, Game.Monster)
         pygame.draw.lines(
@@ -827,8 +827,9 @@ def InGameKeys(Game, Screen):
 
         # Boutons souris enfonces -nekochii x tremisabdoul
         if event.type == pygame.MOUSEBUTTONDOWN:
-            print(event.button)
             Game.pressed[str(event.button)] = True
+            if event.button == 2:
+                Game.ShowHitbox = not Game.ShowHitbox
         # Boutons souris relaches -nekochii
         elif event.type == pygame.MOUSEBUTTONUP:
             Game.pressed[str(event.button)] = False
