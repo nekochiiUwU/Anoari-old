@@ -4,6 +4,8 @@
 import pygame
 import os
 
+print("/Scripts/Functions: Loading")
+
 
 # Creation de l'ecran -tremisabdoul
 def Display():
@@ -19,8 +21,8 @@ def Display():
 def Jump(Game):
     """Fonction de jump: [ Key: Space ] -tremisabdoul"""
     global booleanjump
-    if  Game.Player.SpeedY > -20 and Game.pressed.get(pygame.K_SPACE) and booleanjump:
-        Game.Player.SpeedY -= 2
+    if Game.Player.SpeedY > -16 and Game.pressed.get(pygame.K_SPACE) and booleanjump:
+        Game.Player.SpeedY -= 4
         Game.Player.rect.y += Game.Player.SpeedY
 
     else:
@@ -63,8 +65,8 @@ def Printer(Screen, Game):
     Game.Sol.rect.x += Game.Position
 
     # Affiche a l'ecran les elments graphique -tremisabdoul
-    Screen.fill((60, 60, 120))
-    # Screen.blit(Game.Background.image, Game.Background.rect)
+    # Screen.fill((60, 60, 120))
+    Screen.blit(Game.Background.image, Game.Background.rect)
     Screen.blit(Game.Sol.image, Game.Sol.rect)
     Screen.blit(Game.Player.image, Game.Player.rect)
     Screen.blit(Game.Monster.image, Game.Monster.rect)
@@ -83,10 +85,21 @@ def Printer(Screen, Game):
 
     if Game.pressed.get("3"):
         MousePrinter(Screen, Game)
+    else:
+        if Game.Player.Direction:
+            Game.Mouse.rect.y = Game.Player.rect.y + 50
+            Game.Mouse.rect.x = Game.Player.rect.x + 220
+        else:
+            Game.Mouse.rect.y = Game.Player.rect.y + 50
+            Game.Mouse.rect.x = Game.Player.rect.x - 100
+
+    Game.Arm.print(Game, Screen)
 
     if Game.ShowHitbox:
-        Draw_rect(Screen, Game.Player)
         Draw_rect(Screen, Game.Monster)
+        Draw_rect(Screen, Game.Player)
+        Draw_rect(Screen, Game.Arm)
+        Draw_rect(Screen, Game.Mouse)
         pygame.draw.lines(
             Screen,
             (0, 150, 100, 10),
@@ -125,7 +138,7 @@ def UIPrinter(Screen, police1, Game):
     LifeColor = [255, Color, Color]
 
     opti = str(round(Game.Player.Pv))
-    opti = str(str(opti) + " / " + str(Game.Player.MaxPv) + " PV")
+    opti = str(str(opti) + " / " + str(Game.Player.MaxPv) + " HP")
     opti = police1.render(str(opti), True, LifeColor)
     Screen.blit(opti, (15 + Color / 50, 48 + Color / 50))
 
@@ -135,13 +148,14 @@ def UIPrinter(Screen, police1, Game):
     Screen.blit(opti1, (15 + Color / 50, 60 + Color / 50))
 
     if Game.ShowHitbox:
-        jump = round(Game.Player.SpeedY)
-        print(jump)
-        jump = "|" * jump
-        print(jump)
-        jump = "Jump: " + str(Game.Player.SpeedY) + jump
+        jump = "Jump: " + str(Game.Player.SpeedY)
         jump = police1.render(str(jump), True, (128, 255, 128))
         Screen.blit(jump, (15, 80))
+
+        jump1 = round((Game.Player.SpeedY / 16) * 100)
+        jump1 = -jump1 * "|"
+        jump1 = police1.render(str(jump1), True, (128, 255, 128))
+        Screen.blit(jump1, (15, 100))
 
         # Permet de voir le nombre de frames a la seconde -tremisabdoul -tremisabdoul
         frame = 1
@@ -759,13 +773,12 @@ def Movements(Game, Screen):
             and Game.Player.check_collisions(Game.Player, Game.all_plateform) \
             and Game.Player.YVector == 0:
 
+        global booleanjump
         Game.Player.SpeedY = -5
         booleanjump = 1
         Jump(Game)
     elif Game.Player.SpeedY:
         Jump(Game)
-
-
 
     for Entity in Game.Entities:
         Game.Player.Force.Gravity(Game, Entity)
@@ -777,31 +790,43 @@ def Movements(Game, Screen):
     for Target in Game.Entities:
         Collide = Game.Player.check_collisions(Target, Game.all_wall)
 
+        if Target == Game.Player:
+            Target.rect.x += Game.Position
+
         for Wall in Collide:
             if not Wall.rect.bottomleft < Target.rect.midtop < Wall.rect.topright:
+
                 if Target == Game.Player:
                     if Wall.rect.center < Target.rect.center:
-                        Game.Position = -Game.Position
+                        if Game.Position < 0:
+                            Game.Position = -Game.Position
                     elif Wall.rect.center > Target.rect.center:
-                        Game.Position = -Game.Position
+                        if Game.Position > 0:
+                            Game.Position = -Game.Position
 
                 elif Target in Game.AcrossWall:
                     if Wall.rect.center < Target.rect.center:
                         Target.rect.x -= Wall.rect.right - (Target.rect.left - 33)
+                        Target.Direction = 1
                     elif Wall.rect.center > Target.rect.center:
                         Target.rect.x -= Wall.rect.left - (Target.rect.right + 33)
+                        Target.Direction = 0
 
                 else:
                     if Wall.rect.center < Target.rect.center:
                         Target.rect.x += Wall.rect.right - (Target.rect.left - 33)
                     elif Wall.rect.center > Target.rect.center:
                         Target.rect.x += Wall.rect.left - (Target.rect.right + 33)
+
             else:
                 if Target == Game.Player:
                     Target.Base_Gravity = Wall.rect.bottom - Target.rect.top
                     if Target.Base_Gravity < -11:
                         Target.Base_Gravity = -11
                     Game.Player.SpeedY = 0
+
+        if Target == Game.Player:
+            Target.rect.x += Game.Position
 
     Game.Position = round(Game.Position)
 
@@ -852,7 +877,7 @@ def InGameKeys(Game, Screen):
                 print("Middle Click (Hitbox + print(Game.PlayerPosition))")
                 Game.ShowHitbox = not Game.ShowHitbox
             elif event.button == 3:
-                print("Right Click (Mode Visée)")
+                print("Right Click (Mode VisÃ©e)")
                 pygame.mouse.set_visible(False)
             elif event.button > 3:
                 if event.button % 2:
@@ -893,7 +918,7 @@ def FrameLimiter(Game, time, tick):
 def Paterns(Game):
 
     Load = []
-    PaternsFile = open('Data\Paterns.txt', 'r')
+    PaternsFile = open('Data/Paterns.txt', 'r')
 
     for line in PaternsFile:
         line = line.strip()
@@ -1011,3 +1036,6 @@ def SmoothCamera(Game):
     Game.lastPosition = Game.Position
     Game.Player.rect.x = 350
     Game.Player.rect.x += (Game.Position + (Game.Player.LastX / 1.1) / 2)
+
+
+print("/Scripts/Functions: Loaded")

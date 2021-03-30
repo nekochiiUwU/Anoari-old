@@ -1,6 +1,9 @@
 from User.UserData import *
 import random as rd
 import pygame
+
+print("/Scripts/Classes: Loading")
+
 """=====  Game [1]  ====="""
 
 
@@ -18,24 +21,31 @@ class Game:
         # Contient toutes les touches prÃƒÂ©ssÃƒÂ©es -tremisabdoul
         self.pressed = {}
 
-        # Variables GÃƒÂ©nÃƒÂ©rales -tremisabdoul
+        # Variables Generales -tremisabdoul
+        from math import atan2
+        self.AngleCalc = atan2
+        del atan2
+        from math import degrees
+        self.Deges = degrees
+        del degrees
+
+        self.ShowHitbox = False
+        self.Running = True
         self.InGame = False
         self.Option = False
-        self.Running = True
         self.Pause = False
         self.Lobby = True
-        self.Fullscreen = 0
-        self.Tickchecker = 1
-        self.ActualFrame = 0
-        self.Frame = 0
-        self.Position = 0
-        self.lastPosition = 0
-        self.PositionPlayer = 0
         self.PlateformNumber = 1
+        self.Tickchecker = 1
         self.WallNumber = 1
+        self.PositionPlayer = 0
+        self.lastPosition = 0
+        self.ActualFrame = 0
+        self.Fullscreen = 0
+        self.Position = 0
+        self.Frame = 0
         self.Paterns = {}
         self.Grid = {}
-        self.ShowHitbox = False
 
     def Rescale(self, value, XorY):
         if XorY == "X":
@@ -46,6 +56,7 @@ class Game:
     def init_suite(self):
         # Player devient une sous-classe de Game -tremisabdoul
         self.Player = Player()
+        self.Arm = Arm()
         # Sol devient une sous-classe de Game -Steven
         self.Sol = Sol()
         # Mouse devient une sous-classe de Game -tremisabdoul
@@ -102,7 +113,7 @@ class Player(pygame.sprite.Sprite, Game):
         self.SpeedY = 0
         self.Armor = 0
         self.Mana = 60
-        self.MaxMana = 60  #####
+        self.MaxMana = 60  # ##### #
         # Statistique Variable -steven
         self.CDR = 0
         self.AttackSpeed = 0
@@ -121,17 +132,17 @@ class Player(pygame.sprite.Sprite, Game):
         self.Gain_Stat_Level = int((self.Level/2)**2+(self.Level/2))
         self.Point_Pv = 0
         self.Point_Damage = 0
-        self.Point_Speed = 2  #####
-        self.Point_Armor = 0  #####
-        self.Point_Mana = 60  #####
-        self.Point_MaxMana = 0  #####
-        self.Point_CDR = 0  #####
-        self.Point_AttackSpeed = 0  #####
-        self.Point_CCHit = 0  #####
-        self.Point_CCSpell = 0  #####
-        self.Point_CCDamage = 0  #####
-        self.Point_Penetration = 0  #####
-        self.Point_ManaRegen = 0  #####
+        self.Point_Speed = 2  # ##### #
+        self.Point_Armor = 0  # ##### #
+        self.Point_Mana = 60  # ##### #
+        self.Point_MaxMana = 0  # ##### #
+        self.Point_CDR = 0  # ##### #
+        self.Point_AttackSpeed = 0  # ##### #
+        self.Point_CCHit = 0  # ##### #
+        self.Point_CCSpell = 0  # ##### #
+        self.Point_CCDamage = 0  # ##### #
+        self.Point_Penetration = 0  # ##### #
+        self.Point_ManaRegen = 0  # ##### #
 
         self.Weapon1 = Weapon()
         self.Weapon2 = Weapon()
@@ -541,3 +552,38 @@ class Background:
         self.rect = self.image.get_rect()
         self.rect = self.image.get_rect(midtop=self.rect.midtop)
         self.rect.midtop = (self.rect.width / 3, 0)
+
+
+class Arm:
+    def __init__(self):
+        super().__init__()
+        self.Game = Game
+
+        self.image = pygame.image.load("Assets/Visual/Mystique/Paint/Bras.png")
+        self.imageDirection = 0
+        self.rect = self.image.get_rect()
+
+        self.rect.x = 100
+        self.rect.y = 100
+        self.rect = self.image.get_rect(center=self.rect.center)
+        self.origin_image = self.image
+        self.angle = 0
+
+    def print(self, Game, Screen):
+        self.rect.center = Game.Player.rect.center
+        if self.rect.y - Game.Mouse.rect.y and self.rect.x - Game.Mouse.rect.x:
+            self.angle = -Game.Deges(Game.AngleCalc(Game.Mouse.rect.center[1]- self.rect.center[1], Game.Mouse.rect.center[0] - self.rect.center[0]))
+
+        if -90 < self.angle < 90 and self.imageDirection:
+            self.origin_image = pygame.image.load("Assets/Visual/Mystique/Paint/Bras.png")
+            self.imageDirection = 0
+        elif not -90 < self.angle < 90 and not self.imageDirection:
+            self.origin_image = pygame.image.load("Assets/Visual/Mystique/Paint/Bras1.png")
+            self.imageDirection = 1
+
+        self.image = pygame.transform.rotozoom(self.origin_image, self.angle, 1)
+        self.rect = self.image.get_rect(center=self.rect.center)
+        Screen.blit(self.image, self.rect)
+
+
+print("/Scripts/Classes: Loaded")
