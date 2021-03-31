@@ -65,8 +65,8 @@ def Printer(Screen, Game):
     Game.Sol.rect.x += Game.Position
 
     # Affiche a l'ecran les elments graphique -tremisabdoul
-    # Screen.fill((60, 60, 120))
-    Screen.blit(Game.Background.image, Game.Background.rect)
+    Screen.fill((60, 60, 120))
+    # Screen.blit(Game.Background.image, Game.Background.rect)
     Screen.blit(Game.Sol.image, Game.Sol.rect)
     Screen.blit(Game.Player.image, Game.Player.rect)
     Screen.blit(Game.Monster.image, Game.Monster.rect)
@@ -1035,7 +1035,11 @@ def SmoothCamera(Game):
     Game.Player.LastX = Game.Player.rect.x - 350
     Game.lastPosition = Game.Position
     Game.Player.rect.x = 350
-    Game.Player.rect.x += (Game.Position + (Game.Player.LastX / 1.1) / 2)
+    # Information Smooth Cam:
+    #   Valeur Numerique n°2: Vitesse de camera ├──────────────────────┬┬┐ (y+1) ex: 0.5 + 1: 1.5
+    #   Valeur Numerique n°1: Décalage max du Player ├──────────┬┬┐    │││ (x+1) ex: 0.9 + 1: 1.9
+    #   ####################################################### ▼▼▼ ## ▼▼▼
+    Game.Player.rect.x += (Game.Position + (Game.Player.LastX / 1.9) / 1.5)
 
 
 print("/Scripts/Functions: Loaded")
