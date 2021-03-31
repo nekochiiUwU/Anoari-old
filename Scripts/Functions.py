@@ -1036,9 +1036,9 @@ def SmoothCamera(Game):
     Game.lastPosition = Game.Position
     Game.Player.rect.x = 350
     # Information Smooth Cam:
-    #   Valeur Numerique n°2: Vitesse de camera ├──────────────────────┬┬┐ (y+1) ex: 0.5 + 1: 1.5
-    #   Valeur Numerique n°1: Décalage max du Player ├──────────┬┬┐    │││ (x+1) ex: 0.9 + 1: 1.9
-    #   ####################################################### ▼▼▼ ## ▼▼▼
+    #   Valeur Numerique n°2: Vitesse de camera ├──────────────────────┬┬┐ (y > 1)
+    #   Valeur Numerique n°1: Décalage max du Player ├──────────┬┬┐    │││ (x > 1)
+    #                                                           ▼▼▼    ▼▼▼
     Game.Player.rect.x += (Game.Position + (Game.Player.LastX / 1.9) / 1.5)
 
 
