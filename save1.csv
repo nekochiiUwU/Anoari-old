@@ -4,35 +4,35 @@ SaveName,Save 1
 PlayerName,Name
 GameType,Rogue
 # Player[0],# Statistics -tremisabdoul
-Game.Player.Pv,50
+Game.Player.Pv,100
 Game.Player.MaxPv,100
 Game.Player.Damage,10
 Game.Player.Speed,2
 Game.Player.SpeedY,0
-Game.Player.Level,0
-Game.Player.Gold,0
+Game.Player.Level,1
+Game.Player.Gold,100
 Game.Player.Armor,0
-Game.Player.Mana,50
+Game.Player.Mana,60
 # Player[1],# Statistique Variable -steven
 Game.Player.CDR,0
 Game.Player.AttackSpeed,0
-Game.Player.CCHit,0
-Game.Player.CCSpell,0
-Game.Player.CCDamage,0
+Game.Player.CCHit,130
+Game.Player.CCSpell,3
+Game.Player.CCDamage,3
 Game.Player.Penetration,0
-Game.Player.ManaRegen,0
-Game.Player.XP_Multiplicator,0
-Game.Player.Damage.Multiplicator,0
+Game.Player.ManaRegen,2
+Game.Player.XP_Multiplicator,1
+Game.Player.Damage.Multiplicator,1
 # Player[2],# Position -tremisabdoul
-Game.Player.rect.x,349
-Game.Player.rect.y,567
+Game.Player.rect.x,350
+Game.Player.rect.y,11
 Game.Player.rect.height,120
 Game.Player.rect.width,120
-Game.Player.LastY,567
+Game.Player.LastY,11
 Game.Player.YVector,0
-Game.PositionPlayer,0
+Game.PositionPlayer,10835
 # Phisics,# Actual Movement of Player -tremisabdoul
-Game.Player.Force.lastx,0.0
-Game.Player.Base_Gravity,183
-Game.Monster.Base_Gravity,4.8
+Game.Player.Force.lastx,1.559878809113653e-08
+Game.Player.Base_Gravity,0
+Game.Monster.Base_Gravity,20
 Game.Player.Force.x,0

@@ -1,5 +1,7 @@
 [PyGame Debug (2 Try)]
 
+where py
+
 [Try 1]
 py -m pip install pygame
 py -m pip install --upgrade pip

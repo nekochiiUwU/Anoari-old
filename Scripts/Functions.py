@@ -824,6 +824,8 @@ def Movements(Game, Screen):
                     if Target.Base_Gravity < -11:
                         Target.Base_Gravity = -11
                     Game.Player.SpeedY = 0
+        
+        print("Gravity: ", Game.Player.Base_Gravity)
 
         if Target == Game.Player:
             Target.rect.x += Game.Position
@@ -833,7 +835,7 @@ def Movements(Game, Screen):
     Game.PositionPlayer += Game.Position
 
     if Game.ShowHitbox:
-        print("\n", Game.PositionPlayer)
+        print("\n Player Posion: ", Game.PositionPlayer)
 
     BackgroundScroll(Game)
 
@@ -927,6 +929,7 @@ def Paterns(Game):
     Load = "".join(Load)
     Load = Load.split(",")
     Game.Paterns = Load
+    Game.Paterns.pop(0)
 
     for Patern in range(len(Game.Paterns)):
         print(Patern)
@@ -937,19 +940,18 @@ def Paterns(Game):
             if 2 <= item <= 6:
                 Game.Paterns[Patern][item] = ",".join(Game.Paterns[Patern][item])
                 Game.Paterns[Patern][item] = Game.Paterns[Patern][item].split(",")
-            print("\tID Game.Paterns[", Patern, "][", item, "] :  ", Game.Paterns[Patern][item], sep='')
+            print("\tID Game.Paterns[", Patern, "][", item, "] :  ", Game.Paterns[Patern][item], "\n", sep='')
             if isinstance(Game.Paterns[Patern][item], list):
                 for Chr in range(len(Game.Paterns[Patern][item])):
                     print("\t\tID Game.Paterns[", Patern, "][", item, "][", Chr, "] :  ",
                           Game.Paterns[Patern][item][Chr], sep='')
-    Game.Paterns.pop(0)
-    Game.Grid = {"xTiles": len(str(Game.Paterns[0]).split(None)),
+
+    Game.Grid = {"xTiles": len(Game.Paterns[0][2]),
                  "yTiles": len(Game.Paterns[0]),
                  "width": 250,
                  "height": 150,
                  "x": 0,
                  "y": 0}
-
 
 TilesPatern = {'Init':
                'StepX, StepY = 0, 0',
@@ -966,70 +968,73 @@ TilesPatern = {'Init':
                'StepX = 0'
                'StepY = 0'}
 
-Animations = [
-    "\nEx of usage:\nGame.Player.image = Animations[a[b[c[d[e]]]]]\n"
-    "\ta=Ty pe Of A (Animatons[0] = Animation Tips), \n"
-    "\tb=Specific entity\n"
-    "\tc=Animation, \n"
-    "\td=Directon(0=Right/1=Left), \n"
-    "\te=Frame\n",
-    [  # Player
-        [  # Mystique
-            [  # Stand
-                [  # Animations[1[0[0[0[x]]]]] (Stand Right)
-                    pygame.image.load("Assets/Visual/Mystique/resp2.png"),
-                    pygame.image.load("Assets/Visual/Mystique/resp1.png")
+def init_anim():
+    global Animations
+    Animations = [
+        "\nEx of usage:\nGame.Player.image = Animations[a[b[c[d[e]]]]]\n"
+        "\ta=Ty pe Of A (Animatons[0] = Animation Tips), \n"
+        "\tb=Specific entity\n"
+        "\tc=Animation, \n"
+        "\td=Directon(0=Right/1=Left), \n"
+        "\te=Frame\n",
+        [  # Player
+            [  # Mystique
+                [  # Stand
+                    [  # Animations[1[0[0[0[x]]]]] (Stand Right)
+                        pygame.image.load("Assets/Visual/Mystique/resp2.png"),
+                        pygame.image.load("Assets/Visual/Mystique/resp1.png")
+                    ],
+                    [  # (Stand Left)
+                        pygame.image.load("Assets/Visual/Mystique/Left/resp1.png"),
+                        pygame.image.load("Assets/Visual/Mystique/Left/resp1.png")
+                    ]
                 ],
-                [  # (Stand Left)
-                    pygame.image.load("Assets/Visual/Mystique/Left/resp1.png"),
-                    pygame.image.load("Assets/Visual/Mystique/Left/resp1.png")
+                [  # Run
+                    [  # (Run Right)
+                        pygame.image.load("Assets/Visual/Mystique/Run/Run1.png"),
+                        pygame.image.load("Assets/Visual/Mystique/Run/Run2.png")
+                    ],
+                    [  # (Run Left)
+                        pygame.image.load("Assets/Visual/Mystique/Left/Run/Run1.png"),
+                        pygame.image.load("Assets/Visual/Mystique/Left/Run/Run2.png")
+                    ]
+                ],
+                [  # Jump
+                    [  # (Jump Right)
+                        pygame.image.load("Assets/Visual/Mystique/Jump/Jump1.png")
+                    ],
+                    [  # (Jump Left)
+                        pygame.image.load("Assets/Visual/Mystique/Left/Jump/Jump1.png")
+                    ]
+                ],
+                [  # Fall
+                    [  # (Fall Right)
+                        pygame.image.load("Assets/Visual/Mystique/Jump/Jump2.png")
+                    ],
+                    [  # Animations[1[0[3[1[x]]]]] (Fall Left)
+                        pygame.image.load("Assets/Visual/Mystique/Left/Jump/Jump2.png")
+                    ]
                 ]
-            ],
-            [  # Run
-                [  # (Run Right)
-                    pygame.image.load("Assets/Visual/Mystique/Run/Run1.png"),
-                    pygame.image.load("Assets/Visual/Mystique/Run/Run2.png")
-                ],
-                [  # (Run Left)
-                    pygame.image.load("Assets/Visual/Mystique/Left/Run/Run1.png"),
-                    pygame.image.load("Assets/Visual/Mystique/Left/Run/Run2.png")
-                ]
-            ],
-            [  # Jump
-                [  # (Jump Right)
-                    pygame.image.load("Assets/Visual/Mystique/Jump/Jump1.png")
-                ],
-                [  # (Jump Left)
-                    pygame.image.load("Assets/Visual/Mystique/Left/Jump/Jump1.png")
-                ]
-            ],
-            [  # Fall
-                [  # (Fall Right)
-                    pygame.image.load("Assets/Visual/Mystique/Jump/Jump2.png")
-                ],
-                [  # Animations[1[0[3[1[x]]]]] (Fall Left)
-                    pygame.image.load("Assets/Visual/Mystique/Left/Jump/Jump2.png")
+            ]
+        ],
+        [  # Monster
+            [  # Slime
+                [  # Stand
+                    [  # Animations[2[0[0[0[x]]]]] (Stand Right)
+                        pygame.image.load("Assets/Visual/Entities/Monster/Slime/Stand1.png")
+                    ],
+                    [  # Animations[2[0[0[1[x]]]]] (Stand Left)
+                        pygame.image.load("Assets/Visual/Entities/Monster/Slime/Left/Stand1.png")
+                    ]
                 ]
             ]
         ]
-    ],
-    [  # Monster
-        [  # Slime
-            [  # Stand
-                [  # Animations[2[0[0[0[x]]]]] (Stand Right)
-                    pygame.image.load("Assets/Visual/Entities/Monster/Slime/Stand1.png")
-                ],
-                [  # Animations[2[0[0[1[x]]]]] (Stand Left)
-                    pygame.image.load("Assets/Visual/Entities/Monster/Slime/Left/Stand1.png")
-                ]
-            ]
-        ]
+
     ]
 
-]
+    print("\n", Animations[0], Animations[1])
 
-print("\n", Animations[0], Animations[1])
-
+init_anim()
 
 def SmoothCamera(Game):
     Game.Player.LastX = Game.Player.rect.x - 350
@@ -1038,7 +1043,7 @@ def SmoothCamera(Game):
     # Information Smooth Cam:
     #   Valeur Numerique n°2: Vitesse de camera ├──────────────────────┬┬┐ (y > 1)
     #   Valeur Numerique n°1: Décalage max du Player ├──────────┬┬┐    │││ (x > 1)
-    #                                                           ▼▼▼    ▼▼▼
+    #   ▬ ▬ ▬ ▬ ▬ ▬ ▬ ▬ ▬ ▬ ▬ ▬ ▬ ▬ ▬ ▬ ▬ ▬ ▬ ▬ ▬  ▼▼▼    ▼▼▼
     Game.Player.rect.x += (Game.Position + (Game.Player.LastX / 1.9) / 1.5)
 
 

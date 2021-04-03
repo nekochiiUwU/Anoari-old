@@ -257,11 +257,9 @@ class Force:
         base = Target.rect.y
         if Target.Base_Gravity < 20:  # Si force de sol > 0
             Target.Base_Gravity += 0.4  # Diminution de la force "Sol" (Ratio 0.4)
-            # print("Gravity: ", Target.Base_Gravity)
             Target.rect.y += Target.Base_Gravity
         else:
             Target.Base_Gravity = 20  # Force de sol = 0
-            # print("Gravity: ", 20)
             Target.rect.y += 20
 
         # VÃƒÂ©rification des collisions entre Player et toutes les plateformes
