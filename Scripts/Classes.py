@@ -35,6 +35,7 @@ class Game:
         self.Option = False
         self.Pause = False
         self.Lobby = True
+        self.PrepaSpell = False
         self.PlateformNumber = 1
         self.Tickchecker = 1
         self.WallNumber = 1
@@ -195,14 +196,16 @@ class Player(pygame.sprite.Sprite, Game):
         return pygame.sprite.spritecollide(sprite, group, False, pygame.sprite.collide_rect)
 
     # Fonction de mouvement (Droite) -tremisabdoul
-    def Move_Right(self):
+    def Move_Right(self, Game):
         self.Force.xm += self.Speed
-        self.Direction = 1
+        if Game.PrepaSpell == False:
+            self.Direction = 1
 
     # Fonction de mouvement (Gauche) -tremisabdoul
-    def Move_Left(self):
+    def Move_Left(self, Game):
         self.Force.xm -= self.Speed
-        self.Direction = 0
+        if Game.PrepaSpell == False:
+            self.Direction = 0
 
     # Fonction de gain de stat ( valeur placÃƒÂ©e arbitrairement lol ) - steven
     def Gain_Stats(self):
@@ -557,7 +560,7 @@ class Arm:
         super().__init__()
         self.Game = Game
 
-        self.image = pygame.image.load("Assets/Visual/Mystique/Paint/Bras.png")
+        self.image = pygame.image.load("Assets/Visual/Mystique/Bras/bras mystique prepa spell.gif")
         self.imageDirection = 0
         self.rect = self.image.get_rect()
 
@@ -573,11 +576,13 @@ class Arm:
             self.angle = -Game.Deges(Game.AngleCalc(Game.Mouse.rect.center[1]- self.rect.center[1], Game.Mouse.rect.center[0] - self.rect.center[0]))
 
         if -90 < self.angle < 90 and self.imageDirection:
-            self.origin_image = pygame.image.load("Assets/Visual/Mystique/Paint/Bras.png")
+            self.origin_image = pygame.image.load("Assets/Visual/Mystique/Bras/bras mystique prepa spell.gif")
             self.imageDirection = 0
+            Game.Player.Direction = 1
         elif not -90 < self.angle < 90 and not self.imageDirection:
-            self.origin_image = pygame.image.load("Assets/Visual/Mystique/Paint/Bras1.png")
+            self.origin_image = pygame.image.load("Assets/Visual/Mystique/Left/bras mystique prepa spell.gif")
             self.imageDirection = 1
+            Game.Player.Direction = 0
 
         self.image = pygame.transform.rotozoom(self.origin_image, self.angle, 1)
         self.rect = self.image.get_rect(center=self.rect.center)

@@ -38,15 +38,16 @@ def DeplacementX(Game):
     """Fonction de deplacement [gauche/droite] :  [ Left: LEFT / Q ], [ Right: RIGHT / D ] -tremisabdoul"""
 
     Game.Player.MovementKey = False
+    print(Game.PrepaSpell)
     if Game.pressed.get(pygame.K_d) and Game.Player.rect.x < Game.Player.MaxX \
             or Game.pressed.get(pygame.K_RIGHT) and Game.Player.rect.x < Game.Player.MaxX:
         Game.Player.MovementKey = True
-        Game.Player.Move_Right()
+        Game.Player.Move_Right(Game)
 
     if Game.pressed.get(pygame.K_q) and Game.Player.rect.x > Game.Player.MinX \
             or Game.pressed.get(pygame.K_LEFT) and Game.Player.rect.x > Game.Player.MinX:
         Game.Player.MovementKey = True
-        Game.Player.Move_Left()
+        Game.Player.Move_Left(Game)
 
 
 def MousePrinter(Screen, Game):
@@ -58,7 +59,6 @@ def MousePrinter(Screen, Game):
 
 def Printer(Screen, Game):
     """Fonction d'affichage: Elements in-game -tremisabdoul"""
-
     # Deplacement des elements -tremisabdoul
     Game.Monster.rect.x -= Game.Position
     Game.Background.rect.x -= Game.Position
@@ -66,10 +66,11 @@ def Printer(Screen, Game):
 
     # Affiche a l'ecran les elments graphique -tremisabdoul
     Screen.fill((60, 60, 120))
+
     # Screen.blit(Game.Background.image, Game.Background.rect)
     Screen.blit(Game.Sol.image, Game.Sol.rect)
-    Screen.blit(Game.Player.image, Game.Player.rect)
     Screen.blit(Game.Monster.image, Game.Monster.rect)
+
 
     for nb in Game.all_plateform:
         nb.rect.x -= Game.Position
@@ -85,6 +86,7 @@ def Printer(Screen, Game):
 
     if Game.pressed.get("3"):
         MousePrinter(Screen, Game)
+        Game.Arm.print(Game, Screen)
     else:
         if Game.Player.Direction:
             Game.Mouse.rect.y = Game.Player.rect.y + 50
@@ -93,7 +95,9 @@ def Printer(Screen, Game):
             Game.Mouse.rect.y = Game.Player.rect.y + 50
             Game.Mouse.rect.x = Game.Player.rect.x - 100
 
-    Game.Arm.print(Game, Screen)
+    print(Game.Player.Direction)
+    Animation(Game)
+    Screen.blit(Game.Player.image, Game.Player.rect)
 
     if Game.ShowHitbox:
         Draw_rect(Screen, Game.Monster)
@@ -270,7 +274,7 @@ def inGame(Game, time, Screen, police1):
         Movements(Game, Screen)
         """ ===== Printers ===== """
         # Animation du joueur -tremisabdoul
-        Animation(Game)
+
         # Camera qui se deplace en fonction du mouvement de Player -tremisabdoul
         SmoothCamera(Game)
         # Elements de jeu -tremisabdoul
@@ -602,7 +606,9 @@ def ReScale(Game, Screen):
 
 # TKT -tremisabdoul
 def Animation(Game):
-    if Game.Player.YVector:
+    if Game.PrepaSpell:
+        PrepaSpellAnimation(Game)
+    elif Game.Player.YVector:
         if Game.Player.YVector < 0:
             FallAnimation(Game)
         else:
@@ -680,6 +686,16 @@ def StandAnimation(Game):
                 Game.Player.image = pygame.image.load("Assets/Visual/Mystique/Left/resp1.png")
                 Game.Player.image = pygame.transform.scale(Game.Player.image, (120, 120))
 
+# TKT -tremisabdoul
+def PrepaSpellAnimation(Game):
+    if Game.Player.Direction:
+        if Game.Frame % 10 == 0:
+            Game.Player.image = pygame.image.load("Assets/Visual/Mystique/Spells/mystique prepa sort.png")
+            Game.Player.image = pygame.transform.scale(Game.Player.image, (120, 120))
+    else:
+        if Game.Frame % 10 == 0:
+            Game.Player.image = pygame.image.load("Assets/Visual/Mystique/Left/mystique prepa sort.png")
+            Game.Player.image = pygame.transform.scale(Game.Player.image, (120, 120))
 
 # TKT -tremisabdoul
 def BackgroundScroll(Game):
@@ -881,6 +897,7 @@ def InGameKeys(Game, Screen):
             elif event.button == 3:
                 print("Right Click (Mode VisÃ©e)")
                 pygame.mouse.set_visible(False)
+                Game.PrepaSpell = True
             elif event.button > 3:
                 if event.button % 2:
                     print("Scroll Down (None) Value =", event.button)
@@ -890,6 +907,7 @@ def InGameKeys(Game, Screen):
         elif event.type == pygame.MOUSEBUTTONUP:
             Game.pressed[str(event.button)] = False
             if event.button == 3:
+                Game.PrepaSpell = False
                 pygame.mouse.set_visible(True)
 
         # Permet le resize de l'ecran -tremisabdoul
@@ -1013,6 +1031,14 @@ def init_anim():
                     ],
                     [  # Animations[1[0[3[1[x]]]]] (Fall Left)
                         pygame.image.load("Assets/Visual/Mystique/Left/Jump/Jump2.png")
+                    ]
+                ],
+                [  # Prepa spell
+                    [  # (Prepa spell Right)
+                        pygame.image.load("Assets/Visual/Mystique/Spells/mystique prepa sort.png")
+                    ],
+                    [  # ((Prepa spell Left))
+                        pygame.image.load("Assets/Visual/Mystique/Left/mystique prepa sort.png")
                     ]
                 ]
             ]
