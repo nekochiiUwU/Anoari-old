@@ -560,7 +560,7 @@ class Arm:
         super().__init__()
         self.Game = Game
 
-        self.image = pygame.image.load("Assets/Visual/Mystique/Bras/bras mystique prepa spell.gif")
+        self.image = pygame.image.load("Assets/Visual/Mystique/Bras/bras mystique prepa spell.png")
         self.imageDirection = 0
         self.rect = self.image.get_rect()
 
@@ -576,11 +576,11 @@ class Arm:
             self.angle = -Game.Deges(Game.AngleCalc(Game.Mouse.rect.center[1]- self.rect.center[1], Game.Mouse.rect.center[0] - self.rect.center[0]))
 
         if -90 < self.angle < 90 and self.imageDirection:
-            self.origin_image = pygame.image.load("Assets/Visual/Mystique/Bras/bras mystique prepa spell.gif")
+            self.origin_image = pygame.image.load("Assets/Visual/Mystique/Bras/bras mystique prepa spell.png")
             self.imageDirection = 0
             Game.Player.Direction = 1
         elif not -90 < self.angle < 90 and not self.imageDirection:
-            self.origin_image = pygame.image.load("Assets/Visual/Mystique/Left/bras mystique prepa spell.gif")
+            self.origin_image = pygame.image.load("Assets/Visual/Mystique/Left/bras mystique prepa spell.png")
             self.imageDirection = 1
             Game.Player.Direction = 0
 
