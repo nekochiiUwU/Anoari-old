@@ -6,7 +6,12 @@ import os
 
 print("/Scripts/Functions: Loading")
 
-
+def Music_Init():
+    pygame.mixer.music.set_volume(0.1)
+    print(pygame.mixer.music.get_volume())
+    pygame.mixer.init()
+    pygame.mixer.music.load("Assets/Audio/Music/DANOARKI.mp3")
+    pygame.mixer.music.play(-1)
 # Creation de l'ecran -tremisabdoul
 def Display():
     """Fonction Permettent l'affichage de l'ecran -tremisabdoul"""
