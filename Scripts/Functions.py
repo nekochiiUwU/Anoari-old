@@ -294,6 +294,7 @@ def inGame(Game, time, Screen, police1):
     """ Loop de Jeu -tremisabdoul"""
 
     while Game.InGame:
+        print(Game.PositionPlayer)
         """ ===== Frame Limiter ===== """
         # Initialisation du compteur de temps pour limiter les fps -tremisabdoul
         tick = time.time()
@@ -1059,6 +1060,8 @@ def Paterns(Game):
                  "height": 150,
                  "x": 0,
                  "y": 0}
+
+
 
 
 
