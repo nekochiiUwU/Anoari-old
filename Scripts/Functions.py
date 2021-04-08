@@ -394,7 +394,7 @@ def Lobby(Game, Screen, time, police1):
 
         MousePrinter(Screen, Game)
 
-        while tickchecker < 0.017:
+        while tickchecker < 0.016:
             tickchecker = time.time()
             tickchecker -= tick
 
