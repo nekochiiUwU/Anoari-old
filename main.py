@@ -25,7 +25,7 @@ Music_Init()
 x = 0
 frame = 0
 nbframe = 0
-
+MusicTime = 0
 # L'écran est stockée dans une variable -tremisabdoul
 Screen = Display()
 
@@ -62,16 +62,20 @@ while Game.Running:
 
     # Loop de jeu
     if Game.InGame:
-        MusicTime = pygame.mixer.music.get_pos() / 1000
+
+        MusicTime = pygame.mixer.music.get_pos() / 1000.0 + MusicTime
+        pygame.mixer.music.unload()
         pygame.mixer.music.load("Assets/Audio/Music/DANOARKI.mp3")
         pygame.mixer.music.rewind()
         pygame.mixer.music.play(-1, MusicTime)
+
         inGame(Game, time, Screen, police1)
 
-    MusicTime = pygame.mixer.music.get_pos() / 1000
-    pygame.mixer.music.load("Assets/Audio/Music/DANOARKI.mp3")
-    pygame.mixer.music.rewind()
-    pygame.mixer.music.play(-1, MusicTime)
+        MusicTime = pygame.mixer.music.get_pos() / 1000.0 + MusicTime
+        pygame.mixer.music.unload()
+        pygame.mixer.music.load("Assets/Audio/Music/DANOARKIout.mp3")
+        pygame.mixer.music.rewind()
+        pygame.mixer.music.play(-1, MusicTime)
 
     if Game.Option:
         Option(Game, Screen, time, police1, police2)
