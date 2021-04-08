@@ -16,17 +16,12 @@ def Music_Init():
 def musicDANOARKI(Game):
     Timer = pygame.mixer.music.get_pos() / 1000.0
 
-    print(Timer, Game.MusicStart, Game.MusicLengh)
     if Timer + Game.MusicStart > Game.MusicLengh:
         #Timer -= Game.MusicLengh
         pygame.mixer.music.rewind()
         Game.MusicStart = 0
 
-    print(Timer, Game.MusicStart, Game.MusicLengh)
-
     Game.MusicStart = Timer + Game.MusicStart
-
-    print(Timer, Game.MusicStart, Game.MusicLengh)
 
     pygame.mixer.music.load("Assets/Audio/Music/DANOARKI.mp3")
     Game.MusicLengh = 300
@@ -35,8 +30,6 @@ def musicDANOARKI(Game):
 
 def musicDANOARKIOUT(Game):
     Timer = pygame.mixer.music.get_pos() / 1000.0
-
-    print(Timer, Game.MusicStart, Game.MusicLengh)
     if Timer + Game.MusicStart > Game.MusicLengh:
         #Timer -= Game.MusicLengh
         pygame.mixer.music.rewind()
@@ -81,7 +74,6 @@ def DeplacementX(Game):
     """Fonction de deplacement [gauche/droite] :  [ Left: LEFT / Q ], [ Right: RIGHT / D ] -tremisabdoul"""
 
     Game.Player.MovementKey = False
-    print(Game.PrepaSpell)
     if Game.pressed.get(pygame.K_d) and Game.Player.rect.x < Game.Player.MaxX \
             or Game.pressed.get(pygame.K_RIGHT) and Game.Player.rect.x < Game.Player.MaxX:
         Game.Player.MovementKey = True
@@ -139,7 +131,6 @@ def Printer(Screen, Game):
             Game.Mouse.rect.y = Game.Player.rect.y + 50
             Game.Mouse.rect.x = Game.Player.rect.x - 100
 
-    print(Game.Player.Direction)
     Animation(Game)
     Screen.blit(Game.Player.image, Game.Player.rect)
 
@@ -941,8 +932,6 @@ def Movements(Game, Screen):
                         Target.Base_Gravity = -11
                     Game.Player.SpeedY = 0
 
-        print("Gravity: ", Game.Player.Base_Gravity)
-
         if Target == Game.Player:
             Target.rect.x += Game.Position
 
@@ -1070,6 +1059,8 @@ def Paterns(Game):
                  "height": 150,
                  "x": 0,
                  "y": 0}
+
+
 
 
 def initF():

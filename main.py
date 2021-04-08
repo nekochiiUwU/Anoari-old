@@ -37,7 +37,7 @@ police2 = pygame.font.Font("Assets/Font/Retro Gaming.ttf", 20)
 Paterns(Game)
 
 # Random Plateform
-for _ in range(1000):
+for _ in range(100):
     from random import randint
 
     x = randint(0, 400)
