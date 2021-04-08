@@ -48,7 +48,8 @@ for _ in range(1000):
     del randint
 
 '''==================================='''
-
+musicDANOARKI(Game)
+musicDANOARKIOUT(Game)
 # Contient tout ce qui est fait pendant que le jeu est run -tremisabdoul
 while Game.Running:
     """ ===== Loop ===== """

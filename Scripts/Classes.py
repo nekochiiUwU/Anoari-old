@@ -36,14 +36,14 @@ class Game:
         self.InGame = False
         self.Option = False
         self.Pause = False
-        self.MusicLengh = 297
-        self.MusicStart = 297
         self.PlateformNumber = 1
         self.Tickchecker = 1
         self.WallNumber = 1
         self.PositionPlayer = 0
         self.lastPosition = 0
         self.ActualFrame = 0
+        self.MusicLengh = 0
+        self.MusicStart = 0
         self.Fullscreen = 0
         self.Position = 0
         self.Frame = 0
@@ -112,7 +112,7 @@ class Player(pygame.sprite.Sprite, Game):
         self.Pv = 100
         self.MaxPv = 100
         self.Damage = 10
-        self.Speed = 2
+        self.Speed = 3
         self.SpeedY = 0
         self.Armor = 0
         self.Mana = 60
