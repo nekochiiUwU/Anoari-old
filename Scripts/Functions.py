@@ -16,16 +16,11 @@ def Music_Init():
 def musicDANOARKI(Game):
     Timer = pygame.mixer.music.get_pos() / 1000.0
 
-    print(Timer, Game.MusicStart, Game.MusicLengh)
     if Timer + Game.MusicStart > Game.MusicLengh:
         pygame.mixer.music.rewind()
         Game.MusicStart = 0
 
-    print(Timer, Game.MusicStart, Game.MusicLengh)
-
     Game.MusicStart = Timer + Game.MusicStart
-
-    print(Timer, Game.MusicStart, Game.MusicLengh)
 
     pygame.mixer.music.load("Assets/Audio/Music/DANOARKI.mp3")
     Game.MusicLengh = 300
@@ -35,7 +30,6 @@ def musicDANOARKI(Game):
 def musicDANOARKIOUT(Game):
     Timer = pygame.mixer.music.get_pos() / 1000.0
 
-    print(Timer, Game.MusicStart, Game.MusicLengh)
     if Timer + Game.MusicStart > Game.MusicLengh:
         pygame.mixer.music.rewind()
         Game.MusicStart = 0
