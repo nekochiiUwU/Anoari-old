@@ -29,13 +29,15 @@ class Game:
         self.Deges = degrees
         del degrees
 
-        self.ShowHitbox = False
         self.Running = True
+        self.Lobby = True
+        self.ShowHitbox = False
+        self.PrepaSpell = False
         self.InGame = False
         self.Option = False
         self.Pause = False
-        self.Lobby = True
-        self.PrepaSpell = False
+        self.MusicLengh = 297
+        self.MusicStart = 297
         self.PlateformNumber = 1
         self.Tickchecker = 1
         self.WallNumber = 1
@@ -198,13 +200,13 @@ class Player(pygame.sprite.Sprite, Game):
     # Fonction de mouvement (Droite) -tremisabdoul
     def Move_Right(self, Game):
         self.Force.xm += self.Speed
-        if Game.PrepaSpell == False:
+        if not Game.PrepaSpell:
             self.Direction = 1
 
     # Fonction de mouvement (Gauche) -tremisabdoul
     def Move_Left(self, Game):
         self.Force.xm -= self.Speed
-        if Game.PrepaSpell == False:
+        if not Game.PrepaSpell:
             self.Direction = 0
 
     # Fonction de gain de stat ( valeur placÃƒÂ©e arbitrairement lol ) - steven
@@ -573,7 +575,8 @@ class Arm:
     def print(self, Game, Screen):
         self.rect.center = Game.Player.rect.center
         if self.rect.y - Game.Mouse.rect.y and self.rect.x - Game.Mouse.rect.x:
-            self.angle = -Game.Deges(Game.AngleCalc(Game.Mouse.rect.center[1]- self.rect.center[1], Game.Mouse.rect.center[0] - self.rect.center[0]))
+            self.angle = -Game.Deges(Game.AngleCalc(Game.Mouse.rect.center[1] - self.rect.center[1],
+                                                    Game.Mouse.rect.center[0] - self.rect.center[0]))
 
         if -90 < self.angle < 90 and self.imageDirection:
             self.origin_image = pygame.image.load("Assets/Visual/Mystique/Bras/bras mystique prepa spell.gif")

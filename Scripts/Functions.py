@@ -13,6 +13,43 @@ def Music_Init():
     pygame.mixer.init()
 
 
+def musicDANOARKI(Game):
+    Timer = pygame.mixer.music.get_pos() / 1000.0
+
+    print(Timer, Game.MusicStart, Game.MusicLengh)
+    if Timer + Game.MusicStart > Game.MusicLengh:
+        Timer -= Game.MusicLengh
+        pygame.mixer.music.rewind()
+        Game.MusicStart = 0
+
+    print(Timer, Game.MusicStart, Game.MusicLengh)
+
+    Game.MusicStart = Timer + Game.MusicStart
+
+    print(Timer, Game.MusicStart, Game.MusicLengh)
+
+    pygame.mixer.music.load("Assets/Audio/Music/DANOARKI.mp3")
+    Game.MusicLengh = 300
+    pygame.mixer.music.play(-1, Game.MusicStart)
+
+
+def musicDANOARKIOUT(Game):
+    Timer = pygame.mixer.music.get_pos() / 1000.0
+
+    print(Timer, Game.MusicStart, Game.MusicLengh)
+    if Timer + Game.MusicStart > Game.MusicLengh:
+        Timer -= Game.MusicLengh
+        pygame.mixer.music.rewind()
+        Game.MusicStart = 0
+
+    Game.MusicStart = Timer + Game.MusicStart
+
+    pygame.mixer.music.load("Assets/Audio/Music/DANOARKIout.mp3")
+    Game.MusicLengh = 300
+    pygame.mixer.music.play(-1, Game.MusicStart)
+
+
+
 # Creation de l'ecran -tremisabdoul
 def Display():
     """Fonction Permettent l'affichage de l'ecran -tremisabdoul"""

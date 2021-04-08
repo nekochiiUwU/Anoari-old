@@ -62,20 +62,9 @@ while Game.Running:
 
     # Loop de jeu
     if Game.InGame:
-
-        MusicTime = pygame.mixer.music.get_pos() / 1000.0 + MusicTime
-        pygame.mixer.music.unload()
-        pygame.mixer.music.load("Assets/Audio/Music/DANOARKI.mp3")
-        pygame.mixer.music.rewind()
-        pygame.mixer.music.play(-1, MusicTime)
-
+        musicDANOARKI(Game)
         inGame(Game, time, Screen, police1)
-
-        MusicTime = pygame.mixer.music.get_pos() / 1000.0 + MusicTime
-        pygame.mixer.music.unload()
-        pygame.mixer.music.load("Assets/Audio/Music/DANOARKIout.mp3")
-        pygame.mixer.music.rewind()
-        pygame.mixer.music.play(-1, MusicTime)
+        musicDANOARKIOUT(Game)
 
     if Game.Option:
         Option(Game, Screen, time, police1, police2)
