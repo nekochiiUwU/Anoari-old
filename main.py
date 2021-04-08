@@ -18,13 +18,14 @@ pygame.init()
 # Execute les Classes -tremisabdoul
 Game = Game()
 Game.init_suite()
+Music_Init()
 
 # Valeurs qui vont servir plus tard
 # (faites gaffe les valeurs peuvent faire crash le jeu si vous en supprimez certeines) -tremisabdoul
 x = 0
 frame = 0
 nbframe = 0
-
+MusicTime = 0
 # L'écran est stockée dans une variable -tremisabdoul
 Screen = Display()
 
@@ -61,7 +62,9 @@ while Game.Running:
 
     # Loop de jeu
     if Game.InGame:
+        musicDANOARKI(Game)
         inGame(Game, time, Screen, police1)
+        musicDANOARKIOUT(Game)
 
     if Game.Option:
         Option(Game, Screen, time, police1, police2)
