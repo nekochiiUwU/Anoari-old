@@ -18,7 +18,7 @@ def musicDANOARKI(Game):
 
     print(Timer, Game.MusicStart, Game.MusicLengh)
     if Timer + Game.MusicStart > Game.MusicLengh:
-        Timer -= Game.MusicLengh
+        #Timer -= Game.MusicLengh
         pygame.mixer.music.rewind()
         Game.MusicStart = 0
 
@@ -38,7 +38,7 @@ def musicDANOARKIOUT(Game):
 
     print(Timer, Game.MusicStart, Game.MusicLengh)
     if Timer + Game.MusicStart > Game.MusicLengh:
-        Timer -= Game.MusicLengh
+        #Timer -= Game.MusicLengh
         pygame.mixer.music.rewind()
         Game.MusicStart = 0
 

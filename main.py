@@ -37,10 +37,10 @@ police2 = pygame.font.Font("Assets/Font/Retro Gaming.ttf", 20)
 Paterns(Game)
 
 # Random Plateform
-for _ in range(100):
+for _ in range(1000):
     from random import randint
 
-    x = randint(0, 100)
+    x = randint(0, 400)
     y = randint(1, 5)
     NewPlatform(Game, x, y - 1)
     NewWall(Game, x, y)
