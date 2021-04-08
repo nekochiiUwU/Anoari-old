@@ -195,7 +195,16 @@ class Player(pygame.sprite.Sprite, Game):
 
     @staticmethod
     def check_collisions(sprite, group):
-        return pygame.sprite.spritecollide(sprite, group, False, pygame.sprite.collide_rect)
+        Pass = pygame.sprite.Group()
+        for item in group:
+            if not -680 < sprite.rect.x - item.rect.x < 680:
+                Pass.add(item)
+                group.remove(item)
+        Return = pygame.sprite.spritecollide(sprite, group, False, pygame.sprite.collide_rect)
+        for item in Pass:
+            group.add(item)
+            Pass.remove(item)
+        return Return
 
     # Fonction de mouvement (Droite) -tremisabdoul
     def Move_Right(self, Game):

@@ -116,15 +116,17 @@ def Printer(Screen, Game):
 
     for nb in Game.all_plateform:
         nb.rect.x -= Game.Position
-        Screen.blit(nb.image, nb.rect)
-        if Game.ShowHitbox:
-            Draw_rect(Screen, nb)
+        if -640 < nb.rect.x < 1280:
+            Screen.blit(nb.image, nb.rect)
+            if Game.ShowHitbox:
+                Draw_rect(Screen, nb)
 
     for nb in Game.all_wall:
         nb.rect.x -= Game.Position
-        Screen.blit(nb.image, nb.rect)
-        if Game.ShowHitbox:
-            Draw_rect(Screen, nb)
+        if -640 < nb.rect.x < 1280:
+            Screen.blit(nb.image, nb.rect)
+            if Game.ShowHitbox:
+                Draw_rect(Screen, nb)
 
     if Game.pressed.get("3"):
         MousePrinter(Screen, Game)
