@@ -18,6 +18,13 @@ pygame.init()
 # Execute les Classes -tremisabdoul
 Game = Game()
 Game.init_suite()
+pygame.init()
+
+#pygame.display.set_mode(pygame.display.list_modes()[-1]) # smallest resolution available
+pygame.mixer.music.set_volume(0.1)
+pygame.mixer.init()
+pygame.mixer.music.load("Assets/Audio/Music/DANOARKI.mp3")
+pygame.mixer.music.play(-1)
 
 # Valeurs qui vont servir plus tard
 # (faites gaffe les valeurs peuvent faire crash le jeu si vous en supprimez certeines) -tremisabdoul
