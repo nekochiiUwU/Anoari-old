@@ -6,12 +6,15 @@ import os
 
 print("/Scripts/Functions: Loading")
 
+
 def Music_Init():
     pygame.mixer.music.set_volume(0.1)
     print(pygame.mixer.music.get_volume())
     pygame.mixer.init()
     pygame.mixer.music.load("Assets/Audio/Music/DANOARKI.mp3")
     pygame.mixer.music.play(-1)
+
+
 # Creation de l'ecran -tremisabdoul
 def Display():
     """Fonction Permettent l'affichage de l'ecran -tremisabdoul"""
@@ -75,7 +78,6 @@ def Printer(Screen, Game):
     # Screen.blit(Game.Background.image, Game.Background.rect)
     Screen.blit(Game.Sol.image, Game.Sol.rect)
     Screen.blit(Game.Monster.image, Game.Monster.rect)
-
 
     for nb in Game.all_plateform:
         nb.rect.x -= Game.Position
@@ -691,6 +693,7 @@ def StandAnimation(Game):
                 Game.Player.image = pygame.image.load("Assets/Visual/Mystique/Left/resp1.png")
                 Game.Player.image = pygame.transform.scale(Game.Player.image, (120, 120))
 
+
 # TKT -tremisabdoul
 def PrepaSpellAnimation(Game):
     if Game.Player.Direction:
@@ -701,6 +704,7 @@ def PrepaSpellAnimation(Game):
         if Game.Frame % 10 == 0:
             Game.Player.image = pygame.image.load("Assets/Visual/Mystique/Left/mystique prepa sort.png")
             Game.Player.image = pygame.transform.scale(Game.Player.image, (120, 120))
+
 
 # TKT -tremisabdoul
 def BackgroundScroll(Game):
@@ -845,7 +849,7 @@ def Movements(Game, Screen):
                     if Target.Base_Gravity < -11:
                         Target.Base_Gravity = -11
                     Game.Player.SpeedY = 0
-        
+
         print("Gravity: ", Game.Player.Base_Gravity)
 
         if Target == Game.Player:
@@ -976,22 +980,8 @@ def Paterns(Game):
                  "x": 0,
                  "y": 0}
 
-TilesPatern = {'Init':
-               'StepX, StepY = 0, 0',
-               '#':
-               'NewWall(Game, StepX, StepY)'
-               'StepX += 400',
-               '_':
-               'NewPlatform(Game, StepX, StepY)'
-               'StepX += 400',
-               ',':
-               'StepX = 0'
-               'StepY += 150',
-               '=':
-               'StepX = 0'
-               'StepY = 0'}
 
-def init_anim():
+def initF():
     global Animations
     Animations = [
         "\nEx of usage:\nGame.Player.image = Animations[a[b[c[d[e]]]]]\n"
@@ -1063,9 +1053,27 @@ def init_anim():
 
     ]
 
+    TilesPatern = {'Init':
+                       'StepX, StepY = 0, 0',
+                   '#':
+                       'NewWall(Game, StepX, StepY)'
+                       'StepX += 400',
+                   '_':
+                       'NewPlatform(Game, StepX, StepY)'
+                       'StepX += 400',
+                   ',':
+                       'StepX = 0'
+                       'StepY += 150',
+                   '=':
+                       'StepX = 0'
+                       'StepY = 0'}
+
+    print("\n", TilesPatern)
     print("\n", Animations[0], Animations[1])
 
-init_anim()
+
+initF()
+
 
 def SmoothCamera(Game):
     Game.Player.LastX = Game.Player.rect.x - 350
