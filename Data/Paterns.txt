@@ -1,14 +1,14 @@
-'Init':
-'Paterns Info':
-' Virgule = Next Patern':
-' "  2  " = Number of the patern / Number of the next patern':
-' " M19 " = Number Of Mobs On The Zone':
-' "  .  " = Air':
-' "  #  " = Wall':
-' "  _  " = Platform':
-'2 Points = Next Y Pattern's Line (2-6) / changing Attribute':
-' "  =  " = Next Patern':
-'(Python Call) >> Game.Paterns[Patern][Line]':,
+Init
+Paterns Info
+ Virgule = Next Patern
+ "  2  " = Number of the patern / Number of the next patern
+ " M19 " = Number Of Mobs On The Zone
+ "  .  " = Air
+ "  #  " = Wall
+ "  _  " = Platform
+2 Points = Next Y Pattern's Line (2-6) / changing Attribute
+ "  =  " = Next Patern
+(Python Call) >> Game.Paterns[Patern][Line],
 
 0:M2:
 #.###..###:
@@ -26,7 +26,7 @@ ______####:
 ##########:
 =:2,
 
-2:M4:
+2:M3:
 ##########:
 ........_.:
 ________#.:
@@ -34,7 +34,7 @@ ________#.:
 #########.:
 =:3,
 
-3:M4:
+3:M2:
 ####.....#:
 ...._..._.:
 .._.......:
@@ -42,10 +42,26 @@ ________#.:
 .####.....:
 =:4,
 
-4:M2:
+4:M4:
 ##########:
 ....__....:
 .___..___.:
 ...____...:
 ...####...:
+=:5,
+
+5:M4:
+..........:
+....__....:
+...____...:
+_..####.._:
+...####...:
+=:6,
+
+6:M4:
+..........:
+..........:
+...____...:
+._.####.__:
+..........:
 =:0

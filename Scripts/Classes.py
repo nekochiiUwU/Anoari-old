@@ -25,6 +25,7 @@ class Game:
         from math import atan2
         self.AngleCalc = atan2
         del atan2
+
         from math import degrees
         self.Deges = degrees
         del degrees
@@ -39,7 +40,8 @@ class Game:
         self.PlateformNumber = 1
         self.Tickchecker = 1
         self.WallNumber = 1
-        self.PositionPlayer = 0
+        self.PositionPlayer = -3900
+        self.PaternNumber = 0
         self.lastPosition = 0
         self.ActualFrame = 0
         self.MusicLengh = 0
@@ -599,6 +601,31 @@ class Arm:
         self.image = pygame.transform.rotozoom(self.origin_image, self.angle, 1)
         self.rect = self.image.get_rect(center=self.rect.center)
         Screen.blit(self.image, self.rect)
+
+
+class Patern:
+    def __init__(self):
+        self.ID = 0
+        self.position = 0
+        self.PaternCode = 0
+
+    def Init(self, Game, NewWall, NewPlatform):
+        self.ID = Game.PaternNumber
+        self.position = Game.PaternNumber * 10 - 10
+        from random import randint
+        self.PaternCode = Game.Paterns[randint(0, 6)]
+        posy = -1
+        for item in range(len(self.PaternCode)):
+            posx = -1
+            if 2 <= item <= 6:
+                posy += 1
+                for tile in self.PaternCode[item]:
+                    posx += 1
+                    if tile == "#":
+                        NewWall(Game, posx + self.position, posy)
+                    elif tile == "_":
+                        NewPlatform(Game, posx + self.position, posy)
+        Game.PaternNumber += 1
 
 
 print("/Scripts/Classes: Loaded")

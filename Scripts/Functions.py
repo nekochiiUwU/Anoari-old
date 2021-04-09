@@ -100,9 +100,9 @@ def Printer(Screen, Game):
     Game.Sol.rect.x += Game.Position
 
     # Affiche a l'ecran les elments graphique -tremisabdoul
-    Screen.fill((60, 60, 120))
+    # Screen.fill((60, 60, 120))
+    Screen.blit(Game.Background.image, Game.Background.rect)
 
-    # Screen.blit(Game.Background.image, Game.Background.rect)
     Screen.blit(Game.Sol.image, Game.Sol.rect)
     Screen.blit(Game.Monster.image, Game.Monster.rect)
 
@@ -1060,6 +1060,42 @@ def Paterns(Game):
                  "height": 150,
                  "x": 0,
                  "y": 0}
+    from Scripts.Classes import Patern
+    global NewWall, NewPlatform
+    Patern = Patern()
+    Patern.Init(Game, NewWall, NewPlatform)
+    from Scripts.Classes import Patern
+    Patern = Patern()
+    Patern.Init(Game, NewWall, NewPlatform)
+    from Scripts.Classes import Patern
+    Patern = Patern()
+    Patern.Init(Game, NewWall, NewPlatform)
+    from Scripts.Classes import Patern
+    Patern = Patern()
+    Patern.Init(Game, NewWall, NewPlatform)
+    from Scripts.Classes import Patern
+    Patern = Patern()
+    Patern.Init(Game, NewWall, NewPlatform)
+    from Scripts.Classes import Patern
+    Patern = Patern()
+    Patern.Init(Game, NewWall, NewPlatform)
+    from Scripts.Classes import Patern
+    Patern = Patern()
+    Patern.Init(Game, NewWall, NewPlatform)
+    from Scripts.Classes import Patern
+    Patern = Patern()
+    Patern.Init(Game, NewWall, NewPlatform)
+    from Scripts.Classes import Patern
+    Patern = Patern()
+    Patern.Init(Game, NewWall, NewPlatform)
+    from Scripts.Classes import Patern
+    Patern = Patern()
+    Patern.Init(Game, NewWall, NewPlatform)
+    from Scripts.Classes import Patern
+    Patern = Patern()
+    Patern.Init(Game, NewWall, NewPlatform)
+
+
 
 
 
@@ -1171,9 +1207,6 @@ def initF():
 
     print("\n", TilesPatern)
     print("\n", Animations[0], Animations[1])
-
-
-initF()
 
 
 def SmoothCamera(Game):
