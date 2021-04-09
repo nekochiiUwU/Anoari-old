@@ -129,6 +129,13 @@ def Printer(Screen, Game):
             if Game.ShowHitbox:
                 Draw_rect(Screen, nb)
 
+    for nb in Game.Projectiles:
+        nb.rect.x -= Game.Position
+        nb.move(Game)
+        Screen.blit(nb.image, nb.rect)
+        if Game.ShowHitbox:
+            Draw_rect(Screen, nb)
+
     Test += time.time() - start
 
     if Game.pressed.get("3"):
@@ -992,6 +999,7 @@ def InGameKeys(Game, Screen):
         if event.type == pygame.MOUSEBUTTONDOWN:
             Game.pressed[str(event.button)] = True
             if event.button == 1:
+                Lunch_Projectile(Game)
                 print("Left Click (None)")
             elif event.button == 2:
                 print("Middle Click (Hitbox + print(Game.PlayerPosition))")
@@ -1034,9 +1042,7 @@ def FrameLimiter(Game, time, tick):
     Game.Tickchecker = time.time()
     Game.Tickchecker -= tick
     global Test
-    print("", round((Game.Tickchecker - Test) / 0.00017), "\t% of 60 FPS Framerate without Test\n",
-          round(Game.Tickchecker / 0.00017), "\t% of 60 FPS Framerate\n",
-          round((Test) / 0.00017), "\t% of 60 FPS : Test\n")
+    # print("", round((Game.Tickchecker - Test) / 0.00017), "\t% of 60 FPS Framerate without Test\n", round(Game.Tickchecker / 0.00017), "\t% of 60 FPS Framerate\n", round((Test) / 0.00017), "\t% of 60 FPS : Test\n")
 
     while Game.Tickchecker < 0.017:
         Game.Tickchecker = time.time()
@@ -1204,5 +1210,9 @@ def SmoothCamera(Game):
     #   ▬ ▬ ▬ ▬ ▬ ▬ ▬ ▬ ▬ ▬ ▬ ▬ ▬ ▬ ▬ ▬ ▬ ▬ ▬ ▬ ▬  ▼▼▼    ▼▼▼
     Game.Player.rect.x += (Game.Position + (Game.Player.LastX / 1.9) / 1.5)
 
+
+def Lunch_Projectile(Game):
+    from Scripts.Classes import Projectile
+    Game.Projectiles.add(Projectile(Game))
 
 print("/Scripts/Functions: Loaded")

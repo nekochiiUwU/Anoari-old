@@ -12,29 +12,19 @@
 #        self.speed = 4
 #        self.Game = Game()
 #        self.image = pygame.image.load("Assets/Visual/projectile.png")
-#        self.image = pygame.transform.scale(self.image, (10, 10))
+#        # self.image = pygame.transform.scale(self.image, (10, 10))
 #        self.rect = self.image.get_rect()
-#        self.rect.x = self.Game.Player.rect.x + 80
-#        self.rect.y = self.Game.Player.rect.y + 45
-#        self.origin_image = self.image
-#        self.angle = 0
+#        self.rect.x = Game.Player.rect.x + 80
+#        self.rect.y = Game.Player.rect.y + 45
 #
-#    def rotation(self):
-#        self.angle += 5
-#        self.image = pygame.transform.rotozoom(self.origin_image, self.angle, 1)
-#        self.rect = self.image.get_rect(center=self.rect.center)
-#
-#    def remove(self):
-#        Projectiles.remove(self)
-#
-#    def move(self):
+#    def move(self, Game):
 #        self.rect.x += self.speed
 #        self.rotation()
 #
-#        if self.rect.x > 640 or self.rect.x < 0 \
-#                or self.rect.y > 480 or self.rect.y < 0:
+#        if -1280 < self.rect.x - Game.Player.rect.x < 1280\
+#                or not 0 < self.rect.y - Game.Player.rect.y < 1280:
 #
-#            self.remove()
+#            Projectiles.remove(self)
 #
 #
 #Projectiles = pygame.sprite.Group()

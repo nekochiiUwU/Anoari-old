@@ -78,28 +78,26 @@ class Game:
         self.Monster = Monster()
         self.Background = Background()
         self.wall = Wall()
+        self.Projectile = Projectile(self)
 
         # CrÃƒÂ©ation du groupe composÃƒÂ© de tous les monstres -Steven
         self.all_Monster = pygame.sprite.Group()
         self.all_Monster.add(self.Monster)
-
         # CrÃƒÂ©ation du groupe composÃƒÂ© de tous les joueurs -Steven
         self.all_Player = pygame.sprite.Group()
         self.all_Player.add(self.Player)
-
         self.Entities = pygame.sprite.Group()
         self.Entities.add(self.Monster)
         self.Entities.add(self.Player)
-
         # CrÃƒÂ©ation du groupe composÃƒÂ© de toutes les plateformes -Steven
         self.all_plateform = pygame.sprite.Group()
         self.all_plateform.add(self.Sol)
-
         self.all_wall = pygame.sprite.Group()
         self.all_wall.add(self.wall)
-
         self.AcrossWall = pygame.sprite.Group()
         self.ApplyedPatens = pygame.sprite.Group()
+        self.Projectiles = pygame.sprite.Group()
+
 
 
 """=====  Game.Player [2.0]  ====="""
@@ -644,3 +642,46 @@ class Patern(pygame.sprite.Sprite, Game):
 
 
 print("/Scripts/Classes: Loaded")
+
+class Projectile(pygame.sprite.Sprite):
+
+    def __init__(self, Game):
+        super().__init__()
+
+        self.Speed = 15
+        self.image = pygame.image.load("Assets/Visual/Spells/FireBall/Nion1.png")
+        self.origin_image = pygame.image.load("Assets/Visual/Spells/FireBall/Nion1.png")
+        # self.image = pygame.transform.scale(self.image, (10, 10))
+        self.rect = self.image.get_rect()
+        self.rect.x = Game.Player.rect.x + 80
+        self.rect.y = Game.Player.rect.y + 45
+        self.DistanceX = Game.Mouse.rect.center[0] - self.rect.center[0]
+        self.DistanceY = Game.Mouse.rect.center[1] - self.rect.center[1]
+
+        if self.DistanceY == 0:
+            self.DistanceY = 0.01
+        from math import sqrt
+
+        self.norm = sqrt(self.DistanceX ** 2 + self.DistanceY ** 2)
+        self.DirectionX = self.DistanceX / self.norm
+        self.DirectionY = self.DistanceY / self.norm
+        self.DirectionX = self.DirectionX * sqrt(2)
+        self.DirectionY = self.DirectionY * sqrt(2)
+
+        self.DirectionX, self.DirectionY = self.DirectionX * self.Speed, self.DirectionY * self.Speed
+
+        self.angle = -Game.Deges(Game.AngleCalc(Game.Mouse.rect.center[1] - self.rect.center[1],
+                                                Game.Mouse.rect.center[0] - self.rect.center[0]))
+        self.imageDirection = 0
+        Game.Player.Direction = 1
+
+        self.image = pygame.transform.rotozoom(self.origin_image, self.angle, 1)
+        self.rect = self.image.get_rect(center=self.rect.center)
+
+
+    def move(self, Game):
+        self.rect.x += self.DirectionX
+        self.rect.y += self.DirectionY
+        if not -1280 < self.rect.x - Game.Player.rect.x < 1280\
+                or not -720 < self.rect.y < 720:
+            Game.Projectiles.remove(self)
