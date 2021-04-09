@@ -344,7 +344,7 @@ class Mouse(pygame.sprite.Sprite):
         super().__init__()
 
         # Rends la sourie windows invisible -tremisabdoul
-        pygame.mouse.set_visible(False)
+        pygame.mouse.set_visible(True)
 
         # Definit l'image (emplacent la sourie) -tremisabdoul
         self.image = pygame.image.load("Assets/Visual/UI/Mouse.png")

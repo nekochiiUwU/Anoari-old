@@ -99,34 +99,35 @@ def Printer(Screen, Game):
     Game.Monster.rect.x -= Game.Position
     Game.Background.rect.x -= Game.Position
     Game.Sol.rect.x += Game.Position
+
     start = time.time()
 
     # Affiche a l'ecran les elments graphique -tremisabdoul
     # Screen.fill((60, 60, 120))
     Screen.blit(Game.Background.image, Game.Background.rect)
 
+    global Test
+    Test = time.time() - start
+
     Screen.blit(Game.Sol.image, Game.Sol.rect)
     Screen.blit(Game.Monster.image, Game.Monster.rect)
 
-    print(time.time() - start)
-
+    start = time.time()
     for nb in Game.all_plateform:
         nb.rect.x -= Game.Position
-        if -640 < nb.rect.x < 1280:
+        if -250 < nb.rect.x < 1280:
             Screen.blit(nb.image, nb.rect)
             if Game.ShowHitbox:
                 Draw_rect(Screen, nb)
-
-    start = time.time()
 
     for nb in Game.all_wall:
         nb.rect.x -= Game.Position
-        if -640 < nb.rect.x < 1280:
+        if -250 < nb.rect.x < 1280:
             Screen.blit(nb.image, nb.rect)
             if Game.ShowHitbox:
                 Draw_rect(Screen, nb)
 
-    print(time.time() - start)
+    Test += time.time() - start
 
     if Game.pressed.get("3"):
         MousePrinter(Screen, Game)
@@ -302,7 +303,6 @@ def inGame(Game, time, Screen, police1):
     """ Loop de Jeu -tremisabdoul"""
 
     while Game.InGame:
-        print(Game.PositionPlayer)
         """ ===== Frame Limiter ===== """
         # Initialisation du compteur de temps pour limiter les fps -tremisabdoul
         tick = time.time()
@@ -797,7 +797,6 @@ def BackgroundScroll(Game):
     checker = Game.PositionPlayer % 1280
     if -10 < checker < 10:
         Game.Background.rect.midtop = 640 - checker, 0
-        print("\n", Game.Background.rect.width / 3 + checker, "= 640 + ", checker)
 
 
 def LoadingScreen(Message, Screen, police1, Ratio, Loading):
@@ -1022,6 +1021,10 @@ def FrameLimiter(Game, time, tick):
     # Permet d'avoir des frames regulieres -tremisabdoul
     Game.Tickchecker = time.time()
     Game.Tickchecker -= tick
+    global Test
+    print("", round((Game.Tickchecker - Test) / 0.00017), "\t% of 60 FPS Framerate without Test\n",
+          round(Game.Tickchecker / 0.00017), "\t% of 60 FPS Framerate\n",
+          round((Test) / 0.00017), "\t% of 60 FPS : Test\n")
 
     while Game.Tickchecker < 0.017:
         Game.Tickchecker = time.time()
@@ -1070,12 +1073,6 @@ def Paterns(Game):
         Patern = Patern()
         Patern.Init(Game, NewWall, NewPlatform)
         Game.ApplyedPatens.add(Patern)
-
-
-
-
-
-
 
 
 def initF():
