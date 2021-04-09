@@ -95,9 +95,11 @@ def MousePrinter(Screen, Game):
 def Printer(Screen, Game):
     """Fonction d'affichage: Elements in-game -tremisabdoul"""
     # Deplacement des elements -tremisabdoul
+    import time
     Game.Monster.rect.x -= Game.Position
     Game.Background.rect.x -= Game.Position
     Game.Sol.rect.x += Game.Position
+    start = time.time()
 
     # Affiche a l'ecran les elments graphique -tremisabdoul
     # Screen.fill((60, 60, 120))
@@ -106,6 +108,8 @@ def Printer(Screen, Game):
     Screen.blit(Game.Sol.image, Game.Sol.rect)
     Screen.blit(Game.Monster.image, Game.Monster.rect)
 
+    print(time.time() - start)
+
     for nb in Game.all_plateform:
         nb.rect.x -= Game.Position
         if -640 < nb.rect.x < 1280:
@@ -113,12 +117,16 @@ def Printer(Screen, Game):
             if Game.ShowHitbox:
                 Draw_rect(Screen, nb)
 
+    start = time.time()
+
     for nb in Game.all_wall:
         nb.rect.x -= Game.Position
         if -640 < nb.rect.x < 1280:
             Screen.blit(nb.image, nb.rect)
             if Game.ShowHitbox:
                 Draw_rect(Screen, nb)
+
+    print(time.time() - start)
 
     if Game.pressed.get("3"):
         MousePrinter(Screen, Game)
@@ -305,20 +313,15 @@ def inGame(Game, time, Screen, police1):
         #     Game.Player.Pv -= 1
         # else:
         #     Game.Player.Pv = Game.Player.MaxPv
-
         """ ===== Movements ====="""
         Movements(Game, Screen)
         """ ===== Printers ===== """
-        # Animation du joueur -tremisabdoul
-
         # Camera qui se deplace en fonction du mouvement de Player -tremisabdoul
         SmoothCamera(Game)
         # Elements de jeu -tremisabdoul
         Printer(Screen, Game)
         # Interface de jeu -tremisabdoul
         UIPrinter(Screen, police1, Game)
-        # Sourie -tremisabdoul -plus maintenant
-
         # Met a jour l'affichage (Print tout ce qui est blit avant) -tremisabdoul
         pygame.display.flip()
         """ ===== Key Inputs ===== """
@@ -1060,6 +1063,7 @@ def Paterns(Game):
                  "height": 150,
                  "x": 0,
                  "y": 0}
+
     for _ in range(30):
         from Scripts.Classes import Patern
         global NewWall, NewPlatform

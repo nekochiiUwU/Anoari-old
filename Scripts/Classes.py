@@ -614,11 +614,9 @@ class Patern(pygame.sprite.Sprite, Game):
     def Init(self, Game, NewWall, NewPlatform):
         self.ID = Game.PaternNumber
         self.position = Game.PaternNumber * 10 - 10
-        from random import randint
         Id = len(Game.ApplyedPatens)
-        while Id > 6:
-            Id -= 7
-        print(Id)
+        while Id > len(Game.Paterns) - 1:
+            Id -= len(Game.Paterns)
 
         self.PaternCode = Game.Paterns[Id]
         posy = -1
