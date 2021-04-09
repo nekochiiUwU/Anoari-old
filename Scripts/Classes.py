@@ -40,7 +40,7 @@ class Game:
         self.PlateformNumber = 1
         self.Tickchecker = 1
         self.WallNumber = 1
-        self.PositionPlayer = -3900
+        self.PositionPlayer = 0
         self.PaternNumber = 0
         self.lastPosition = 0
         self.ActualFrame = 0
@@ -93,6 +93,7 @@ class Game:
         self.all_wall.add(self.wall)
 
         self.AcrossWall = pygame.sprite.Group()
+        self.ApplyedPatens = pygame.sprite.Group()
 
 
 """=====  Game.Player [2.0]  ====="""
@@ -115,7 +116,7 @@ class Player(pygame.sprite.Sprite, Game):
         self.MaxPv = 100
         self.Damage = 10
         self.Speed = 3
-        self.SpeedY = 0
+        self.SpeedY = 60
         self.Armor = 0
         self.Mana = 60
         self.MaxMana = 60  # ##### #
@@ -603,8 +604,9 @@ class Arm:
         Screen.blit(self.image, self.rect)
 
 
-class Patern:
+class Patern(pygame.sprite.Sprite, Game):
     def __init__(self):
+        super().__init__()
         self.ID = 0
         self.position = 0
         self.PaternCode = 0
@@ -613,7 +615,12 @@ class Patern:
         self.ID = Game.PaternNumber
         self.position = Game.PaternNumber * 10 - 10
         from random import randint
-        self.PaternCode = Game.Paterns[randint(0, 6)]
+        Id = len(Game.ApplyedPatens)
+        while Id > 6:
+            Id -= 7
+        print(Id)
+
+        self.PaternCode = Game.Paterns[Id]
         posy = -1
         for item in range(len(self.PaternCode)):
             posx = -1

@@ -1060,40 +1060,12 @@ def Paterns(Game):
                  "height": 150,
                  "x": 0,
                  "y": 0}
-    from Scripts.Classes import Patern
-    global NewWall, NewPlatform
-    Patern = Patern()
-    Patern.Init(Game, NewWall, NewPlatform)
-    from Scripts.Classes import Patern
-    Patern = Patern()
-    Patern.Init(Game, NewWall, NewPlatform)
-    from Scripts.Classes import Patern
-    Patern = Patern()
-    Patern.Init(Game, NewWall, NewPlatform)
-    from Scripts.Classes import Patern
-    Patern = Patern()
-    Patern.Init(Game, NewWall, NewPlatform)
-    from Scripts.Classes import Patern
-    Patern = Patern()
-    Patern.Init(Game, NewWall, NewPlatform)
-    from Scripts.Classes import Patern
-    Patern = Patern()
-    Patern.Init(Game, NewWall, NewPlatform)
-    from Scripts.Classes import Patern
-    Patern = Patern()
-    Patern.Init(Game, NewWall, NewPlatform)
-    from Scripts.Classes import Patern
-    Patern = Patern()
-    Patern.Init(Game, NewWall, NewPlatform)
-    from Scripts.Classes import Patern
-    Patern = Patern()
-    Patern.Init(Game, NewWall, NewPlatform)
-    from Scripts.Classes import Patern
-    Patern = Patern()
-    Patern.Init(Game, NewWall, NewPlatform)
-    from Scripts.Classes import Patern
-    Patern = Patern()
-    Patern.Init(Game, NewWall, NewPlatform)
+    for _ in range(30):
+        from Scripts.Classes import Patern
+        global NewWall, NewPlatform
+        Patern = Patern()
+        Patern.Init(Game, NewWall, NewPlatform)
+        Game.ApplyedPatens.add(Patern)
 
 
 
