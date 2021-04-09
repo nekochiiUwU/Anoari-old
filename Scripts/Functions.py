@@ -144,6 +144,10 @@ def Printer(Screen, Game):
 
     Animation(Game)
     Screen.blit(Game.Player.image, Game.Player.rect)
+    for Particle in Game.Particles.Particles:
+        Particle[0][0] -= Game.Position
+    Game.Particles.Print(Screen)
+
 
     if Game.ShowHitbox:
         Draw_rect(Screen, Game.Monster)

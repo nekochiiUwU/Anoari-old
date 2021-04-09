@@ -79,6 +79,7 @@ class Game:
         self.Background = Background()
         self.wall = Wall()
         self.Projectile = Projectile(self)
+        self.Particles = Particles()
 
         # CrÃƒÂ©ation du groupe composÃƒÂ© de tous les monstres -Steven
         self.all_Monster = pygame.sprite.Group()
@@ -677,10 +678,36 @@ class Projectile(pygame.sprite.Sprite):
 
         self.rect.x += self.DirectionX
         self.rect.y += self.DirectionY
-        self.DirectionX /= 1.001
-        self.DirectionY += 0.01
+        self.DirectionX /= 1.005
+        self.DirectionY += 0.05
+        self.angle = -Game.Deges(Game.AngleCalc(self.DirectionY, self.DirectionX))
+        self.image = pygame.transform.rotozoom(self.origin_image, self.angle, 1)
+        self.rect = self.image.get_rect(center=self.rect.center)
+        if not Game.Frame % 2:
+         Game.Particles.Add(self.rect.center, 'red')
 
         if not -1280 < self.rect.x - Game.Player.rect.x < 1280\
                 or not -720 < self.rect.y < 720\
                 or Game.Player.check_collisions(self, Game.all_wall):
             Game.Projectiles.remove(self)
+
+class Particles:
+    def __init__(self):
+        self.Particles = []
+    def Print(self, Screen):
+        if self.Particles:
+            for Particle in self.Particles:
+                Particle[0][1] += Particle[2]
+                Particle[0][0] += Particle[3]
+                Particle[1] -= 0.2
+                pygame.draw.circle(Screen, Particle[4], Particle[0], Particle[1])
+
+    def Add(self, Position, Color):
+        Radius = 4
+        from random import randint
+        DirectionX = randint(-3, 3)
+        DirectionY = randint(-3, 3)
+        Particle = [[Position[0], Position[1]], Radius, DirectionX, DirectionY,Color]
+        self.Particles.append(Particle)
+    def Del(self):
+        pass
