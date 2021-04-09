@@ -60,8 +60,6 @@ def Jump(Game):
     if Game.Player.SpeedY > -17 and Game.pressed.get(pygame.K_SPACE) and booleanjump:
         Game.Player.SpeedY -= 3.4
         Game.Player.rect.y += Game.Player.SpeedY
-        Game.Jump.stop()
-        Game.Jump.play()
 
     else:
         booleanjump = 0
@@ -97,24 +95,18 @@ def MousePrinter(Screen, Game):
 def Printer(Screen, Game):
     """Fonction d'affichage: Elements in-game -tremisabdoul"""
     # Deplacement des elements -tremisabdoul
-    import time
     Game.Monster.rect.x -= Game.Position
     Game.Background.rect.x -= Game.Position
     Game.Sol.rect.x += Game.Position
 
-    start = time.time()
+
 
     # Affiche a l'ecran les elments graphique -tremisabdoul
     # Screen.fill((60, 60, 120))
     Screen.blit(Game.Background.image, Game.Background.rect)
-
-    global Test
-    Test = time.time() - start
-
     Screen.blit(Game.Sol.image, Game.Sol.rect)
     Screen.blit(Game.Monster.image, Game.Monster.rect)
 
-    start = time.time()
     for nb in Game.all_plateform:
         nb.rect.x -= Game.Position
         if -250 < nb.rect.x < 1280:
@@ -128,6 +120,9 @@ def Printer(Screen, Game):
             Screen.blit(nb.image, nb.rect)
             if Game.ShowHitbox:
                 Draw_rect(Screen, nb)
+    import time
+    global Test
+    start = time.time()
 
     for nb in Game.Projectiles:
         nb.rect.x -= Game.Position
@@ -135,9 +130,7 @@ def Printer(Screen, Game):
         Screen.blit(nb.image, nb.rect)
         if Game.ShowHitbox:
             Draw_rect(Screen, nb)
-
-    Test += time.time() - start
-
+    Test = time.time() - start
     if Game.pressed.get("3"):
         MousePrinter(Screen, Game)
         Game.Arm.print(Game, Screen)
@@ -265,15 +258,19 @@ def pause(Game, Screen, time, police1):
             # Elements clicables: -tremisabdoul
             elif event.type == pygame.MOUSEBUTTONDOWN:
                 if Game.UI.resumebuttonrect.collidepoint(event.pos):
+                    Game.Click.play()
                     Data_Load(Game, Screen, police1)
                     Game.Pause = False
                     Game.InGame = True
                 elif Game.UI.savebuttonrect.collidepoint(event.pos):
+                    Game.Click.play()
                     Data_Save(Game, Screen, police1)
                 elif Game.UI.settingsbuttonrect.collidepoint(event.pos):
+                    Game.Click.play()
                     Game.Pause = False
                     Game.Option = True
                 elif Game.UI.quitbuttonrect.collidepoint(event.pos):
+                    Game.Click.play()
                     Game.Pause = False
                     Game.Lobby = True
 
@@ -367,9 +364,11 @@ def Lobby(Game, Screen, time, police1):
             elif event.type == pygame.MOUSEBUTTONDOWN:
                 # Boutons souris enfonces -nekochii
                 if Game.UI.lobby_playbuttonrect.collidepoint(event.pos):
+                    Game.Click.play()
                     Game.InGame = True
                     Game.Lobby = False
                 elif Game.UI.lobby_quitbuttonrect.collidepoint(event.pos):
+                    Game.Click.play()
                     Game.Running = False
                     pygame.quit()
 
@@ -700,8 +699,6 @@ def JumpAnimation(Game):
 def RunAnimation(Game):
     if Game.Player.Direction:
         if Game.Frame % 8 == 0:
-            Game.Pas.stop()
-            Game.Pas.play()
             if Game.ActualFrame <= 0:
                 Game.ActualFrame = 1
                 Game.Player.image = pygame.image.load("Assets/Visual/Mystique/Run/Run1.png")
@@ -712,8 +709,6 @@ def RunAnimation(Game):
                 Game.Player.image = pygame.transform.scale(Game.Player.image, (120, 120))
     else:
         if Game.Frame % 8 == 0:
-            Game.Pas.stop()
-            Game.Pas.play()
             if Game.ActualFrame <= 0:
                 Game.ActualFrame = 1
                 Game.Player.image = pygame.image.load("Assets/Visual/Mystique/Left/Run/Run1.png")
@@ -728,8 +723,6 @@ def RunAnimation(Game):
 def StandAnimation(Game):
     if Game.Player.Direction:
         if Game.Frame % 8 == 0:
-            Game.resp.stop()
-            Game.resp.play()
             if Game.ActualFrame <= 0:
                 Game.ActualFrame = 1
                 Game.Player.image = pygame.image.load("Assets/Visual/Mystique/resp2.png")
@@ -740,8 +733,6 @@ def StandAnimation(Game):
                 Game.Player.image = pygame.transform.scale(Game.Player.image, (120, 120))
     else:
         if Game.Frame % 8 == 0:
-            Game.resp.stop()
-            Game.resp.play()
             if Game.ActualFrame <= 0:
                 Game.ActualFrame = 1
                 Game.Player.image = pygame.image.load("Assets/Visual/Mystique/Left/resp2.png")
@@ -1042,7 +1033,13 @@ def FrameLimiter(Game, time, tick):
     Game.Tickchecker = time.time()
     Game.Tickchecker -= tick
     global Test
-    print("", round((Game.Tickchecker - Test) / 0.00017), "\t% of 60 FPS Framerate without Test\n", round(Game.Tickchecker / 0.00017), "\t% of 60 FPS Framerate\n", round((Test) / 0.00017), "\t% of 60 FPS : Test\n")
+    try:
+        print("",
+              round((Game.Tickchecker - Test) / 0.00017), "\t% of 60 FPS: Framerate without Test\n",
+              round(Game.Tickchecker / 0.00017), "\t% of 60 FPS: Framerate\n",
+              round((Test) / 0.00017), "\t% of 60 FPS : Test\n")
+    except:
+        Test = 0
 
     while Game.Tickchecker < 0.017:
         Game.Tickchecker = time.time()

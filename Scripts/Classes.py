@@ -294,8 +294,6 @@ class Force:
                     Target.SpeedY = 0  # Cancel le saut
                 Target.Base_Gravity = 0  # Reset la force du sol (-20)
                 Target.rect.y += Replace
-                if Target.rect.y != base:
-                    Game0.atterissage.play()
 
 
 """=====  Game.Sol [3]  ====="""
@@ -670,15 +668,19 @@ class Projectile(pygame.sprite.Sprite):
 
         self.DirectionX, self.DirectionY = self.DirectionX * self.Speed, self.DirectionY * self.Speed
 
-        self.angle = -Game.Deges(Game.AngleCalc(Game.Mouse.rect.center[1] - self.rect.center[1],
-                                                Game.Mouse.rect.center[0] - self.rect.center[0]))
+        self.angle = -Game.Deges(Game.AngleCalc(self.DirectionY, self.DirectionX))
 
         self.image = pygame.transform.rotozoom(self.origin_image, self.angle, 1)
         self.rect = self.image.get_rect(center=self.rect.center)
 
     def move(self, Game):
+
         self.rect.x += self.DirectionX
         self.rect.y += self.DirectionY
+        self.DirectionX /= 1.001
+        self.DirectionY += 0.01
+
         if not -1280 < self.rect.x - Game.Player.rect.x < 1280\
-                or not -720 < self.rect.y < 720:
+                or not -720 < self.rect.y < 720\
+                or Game.Player.check_collisions(self, Game.all_wall):
             Game.Projectiles.remove(self)
