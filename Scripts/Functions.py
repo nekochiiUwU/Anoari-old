@@ -1042,7 +1042,7 @@ def FrameLimiter(Game, time, tick):
     Game.Tickchecker = time.time()
     Game.Tickchecker -= tick
     global Test
-    # print("", round((Game.Tickchecker - Test) / 0.00017), "\t% of 60 FPS Framerate without Test\n", round(Game.Tickchecker / 0.00017), "\t% of 60 FPS Framerate\n", round((Test) / 0.00017), "\t% of 60 FPS : Test\n")
+    print("", round((Game.Tickchecker - Test) / 0.00017), "\t% of 60 FPS Framerate without Test\n", round(Game.Tickchecker / 0.00017), "\t% of 60 FPS Framerate\n", round((Test) / 0.00017), "\t% of 60 FPS : Test\n")
 
     while Game.Tickchecker < 0.017:
         Game.Tickchecker = time.time()

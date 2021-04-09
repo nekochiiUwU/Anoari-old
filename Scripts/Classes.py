@@ -672,12 +672,9 @@ class Projectile(pygame.sprite.Sprite):
 
         self.angle = -Game.Deges(Game.AngleCalc(Game.Mouse.rect.center[1] - self.rect.center[1],
                                                 Game.Mouse.rect.center[0] - self.rect.center[0]))
-        self.imageDirection = 0
-        Game.Player.Direction = 1
 
         self.image = pygame.transform.rotozoom(self.origin_image, self.angle, 1)
         self.rect = self.image.get_rect(center=self.rect.center)
-
 
     def move(self, Game):
         self.rect.x += self.DirectionX
