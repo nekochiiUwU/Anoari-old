@@ -692,7 +692,7 @@ def JumpAnimation(Game):
 # TKT -tremisabdoul
 def RunAnimation(Game):
     if Game.Player.Direction:
-        if Game.Frame % 4 == 0:
+        if Game.Frame % 8 == 0:
             Game.Pas.stop()
             Game.Pas.play()
             if Game.ActualFrame <= 0:
@@ -704,7 +704,7 @@ def RunAnimation(Game):
                 Game.Player.image = pygame.image.load("Assets/Visual/Mystique/Run/Run2.png")
                 Game.Player.image = pygame.transform.scale(Game.Player.image, (120, 120))
     else:
-        if Game.Frame % 4 == 0:
+        if Game.Frame % 8 == 0:
             Game.Pas.stop()
             Game.Pas.play()
             if Game.ActualFrame <= 0:
@@ -720,7 +720,7 @@ def RunAnimation(Game):
 # TKT -tremisabdoul
 def StandAnimation(Game):
     if Game.Player.Direction:
-        if Game.Frame % 10 == 0:
+        if Game.Frame % 8 == 0:
             Game.resp.stop()
             Game.resp.play()
             if Game.ActualFrame <= 0:
@@ -732,7 +732,7 @@ def StandAnimation(Game):
                 Game.Player.image = pygame.image.load("Assets/Visual/Mystique/resp1.png")
                 Game.Player.image = pygame.transform.scale(Game.Player.image, (120, 120))
     else:
-        if Game.Frame % 10 == 0:
+        if Game.Frame % 8 == 0:
             Game.resp.stop()
             Game.resp.play()
             if Game.ActualFrame <= 0:
