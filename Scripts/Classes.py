@@ -49,6 +49,7 @@ class Game:
         self.Fullscreen = 0
         self.Position = 0
         self.Frame = 0
+        self.Pas = None
         self.Paterns = {}
         self.Grid = {}
 
@@ -631,6 +632,8 @@ class Patern(pygame.sprite.Sprite, Game):
                     elif tile == "_":
                         NewPlatform(Game, posx + self.position, posy)
         Game.PaternNumber += 1
+
+
 
 
 print("/Scripts/Classes: Loaded")

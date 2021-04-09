@@ -50,6 +50,8 @@ initF()
 '''==================================='''
 musicDANOARKI(Game)
 musicDANOARKIOUT(Game)
+Game.Pas = pygame.mixer.Sound("Assets/Audio/FX/pas.mp3")
+
 # Contient tout ce qui est fait pendant que le jeu est run -tremisabdoul
 while Game.Running:
     """ ===== Loop ===== """
