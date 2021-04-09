@@ -49,9 +49,14 @@ class Game:
         self.Fullscreen = 0
         self.Position = 0
         self.Frame = 0
-        self.Pas = None
         self.Paterns = {}
         self.Grid = {}
+
+        self.Pas = None
+        self.Jump = None
+        self.data = None
+        self.atterissage = None
+        self.resp = None
 
     def Rescale(self, value, XorY):
         if XorY == "X":
@@ -291,6 +296,8 @@ class Force:
                     Target.SpeedY = 0  # Cancel le saut
                 Target.Base_Gravity = 0  # Reset la force du sol (-20)
                 Target.rect.y += Replace
+                if Target.rect.y != base:
+                    Game0.atterissage.play()
 
 
 """=====  Game.Sol [3]  ====="""
