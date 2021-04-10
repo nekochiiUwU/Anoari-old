@@ -91,4 +91,22 @@ nekochiitsu
 iRaiZz
 tremisabdoul
 
-━━━ ∙ ʚ                ɞ ∙ ━━━
+        ━━━ ∙ ʚ  Graphics:  ɞ ∙ ━━━
+
+                nekochiitsu
+
+
+    ━━━ ∙ ʚ  Sound Design / FX:  ɞ ∙ ━━━
+
+               tremisabdoul
+
+
+         ━━━ ∙ ʚ  Code:  ɞ ∙ ━━━
+
+              tremisabdoul
+
+                  Ok...
+
+              nekochiitsu
+                 iRaiZz
+              tremisabdoul
