@@ -17,7 +17,6 @@ def musicDANOARKI(Game):
     Timer = pygame.mixer.music.get_pos() / 1000.0
 
     if Timer + Game.MusicStart > Game.MusicLengh:
-        #Timer -= Game.MusicLengh
         pygame.mixer.music.rewind()
         Game.MusicStart = 0
 
@@ -31,7 +30,6 @@ def musicDANOARKI(Game):
 def musicDANOARKIOUT(Game):
     Timer = pygame.mixer.music.get_pos() / 1000.0
     if Timer + Game.MusicStart > Game.MusicLengh:
-        #Timer -= Game.MusicLengh
         pygame.mixer.music.rewind()
         Game.MusicStart = 0
 
@@ -40,7 +38,6 @@ def musicDANOARKIOUT(Game):
     pygame.mixer.music.load("Assets/Audio/Music/DANOARKIout.mp3")
     Game.MusicLengh = 300
     pygame.mixer.music.play(-1, Game.MusicStart)
-
 
 
 # Creation de l'ecran -tremisabdoul
@@ -99,8 +96,6 @@ def Printer(Screen, Game):
     Game.Background.rect.x -= Game.Position
     Game.Sol.rect.x += Game.Position
 
-
-
     # Affiche a l'ecran les elments graphique -tremisabdoul
     # Screen.fill((60, 60, 120))
     Screen.blit(Game.Background.image, Game.Background.rect)
@@ -120,17 +115,7 @@ def Printer(Screen, Game):
             Screen.blit(nb.image, nb.rect)
             if Game.ShowHitbox:
                 Draw_rect(Screen, nb)
-    import time
-    global Test
-    start = time.time()
 
-    for nb in Game.Projectiles:
-        nb.rect.x -= Game.Position
-        nb.move(Game)
-        Screen.blit(nb.image, nb.rect)
-        if Game.ShowHitbox:
-            Draw_rect(Screen, nb)
-    Test = time.time() - start
     if Game.pressed.get("3"):
         MousePrinter(Screen, Game)
         Game.Arm.print(Game, Screen)
@@ -144,10 +129,23 @@ def Printer(Screen, Game):
 
     Animation(Game)
     Screen.blit(Game.Player.image, Game.Player.rect)
+
+    for nb in Game.Projectiles:
+        nb.rect.x -= Game.Position
+        nb.move(Game)
+        Screen.blit(nb.image, nb.rect)
+        if Game.ShowHitbox:
+            Draw_rect(Screen, nb)
+
+    if not Game.Frame % 2:
+        Game.Particles.Add((Game.Player.rect.center[0] - 35, Game.Player.rect.center[1] - 20), 'purple')
+        Game.Particles.Add((Game.Player.rect.center[0] - 35, Game.Player.rect.center[1] - 20), 'black')
+        Game.Particles.Add((Game.Player.rect.center[0] - 35, Game.Player.rect.center[1] - 20), 'black')
+        Game.Particles.Add((Game.Player.rect.center[0] - 35, Game.Player.rect.center[1] - 20), 'black')
+
     for Particle in Game.Particles.Particles:
         Particle[0][0] -= Game.Position
-    Game.Particles.Print(Screen)
-
+    Game.Particles.Print(Game, Screen)
 
     if Game.ShowHitbox:
         Draw_rect(Screen, Game.Monster)
@@ -323,6 +321,7 @@ def inGame(Game, time, Screen, police1):
         #     Game.Player.Pv -= 1
         # else:
         #     Game.Player.Pv = Game.Player.MaxPv
+        Lunch_Projectile(Game)
         """ ===== Movements ====="""
         Movements(Game, Screen)
         """ ===== Printers ===== """
@@ -702,7 +701,7 @@ def JumpAnimation(Game):
 # TKT -tremisabdoul
 def RunAnimation(Game):
     if Game.Player.Direction:
-        if Game.Frame % 8 == 0:
+        if Game.Frame % 4 == 0:
             if Game.ActualFrame <= 0:
                 Game.ActualFrame = 1
                 Game.Player.image = pygame.image.load("Assets/Visual/Mystique/Run/Run1.png")
@@ -712,7 +711,7 @@ def RunAnimation(Game):
                 Game.Player.image = pygame.image.load("Assets/Visual/Mystique/Run/Run2.png")
                 Game.Player.image = pygame.transform.scale(Game.Player.image, (120, 120))
     else:
-        if Game.Frame % 8 == 0:
+        if Game.Frame % 4 == 0:
             if Game.ActualFrame <= 0:
                 Game.ActualFrame = 1
                 Game.Player.image = pygame.image.load("Assets/Visual/Mystique/Left/Run/Run1.png")
@@ -726,7 +725,7 @@ def RunAnimation(Game):
 # TKT -tremisabdoul
 def StandAnimation(Game):
     if Game.Player.Direction:
-        if Game.Frame % 8 == 0:
+        if Game.Frame % 4 == 0:
             if Game.ActualFrame <= 0:
                 Game.ActualFrame = 1
                 Game.Player.image = pygame.image.load("Assets/Visual/Mystique/resp2.png")
@@ -736,7 +735,7 @@ def StandAnimation(Game):
                 Game.Player.image = pygame.image.load("Assets/Visual/Mystique/resp1.png")
                 Game.Player.image = pygame.transform.scale(Game.Player.image, (120, 120))
     else:
-        if Game.Frame % 8 == 0:
+        if Game.Frame % 4 == 0:
             if Game.ActualFrame <= 0:
                 Game.ActualFrame = 1
                 Game.Player.image = pygame.image.load("Assets/Visual/Mystique/Left/resp2.png")
@@ -750,29 +749,29 @@ def StandAnimation(Game):
 # TKT -tremisabdoul
 def PrepaSpellJumpAnimation(Game):
     if Game.Player.Direction:
-        #if Game.Frame % 10 == 0:
+        if Game.Frame % 4 == 0:
             Game.Player.image = pygame.image.load("Assets/Visual/Mystique/Spells/mystique prepa sort Jump.png")
             Game.Player.image = pygame.transform.scale(Game.Player.image, (120, 120))
     else:
-        #if Game.Frame % 10 == 0:
+        if Game.Frame % 4 == 0:
             Game.Player.image = pygame.image.load("Assets/Visual/Mystique/Left/Spells/mystique prepa sort Jump.png")
             Game.Player.image = pygame.transform.scale(Game.Player.image, (120, 120))
 
 # TKT -tremisabdoul
 def PrepaSpellFallAnimation(Game):
     if Game.Player.Direction:
-        #if Game.Frame % 10 == 0:
+        if Game.Frame % 4 == 0:
             Game.Player.image = pygame.image.load("Assets/Visual/Mystique/Spells/mystique prepa sort Fall.png")
             Game.Player.image = pygame.transform.scale(Game.Player.image, (120, 120))
     else:
-        #if Game.Frame % 10 == 0:
+        if Game.Frame % 4 == 0:
             Game.Player.image = pygame.image.load("Assets/Visual/Mystique/Left/Spells/mystique prepa sort Fall.png")
             Game.Player.image = pygame.transform.scale(Game.Player.image, (120, 120))
 
 # TKT -tremisabdoul
 def PrepaSpellRunAnimation(Game):
     if Game.Player.Direction:
-        #if Game.Frame % 10 == 0:
+        if Game.Frame % 4 == 0:
             if Game.ActualFrame <= 0:
                 Game.ActualFrame = 1
                 Game.Player.image = pygame.image.load("Assets/Visual/Mystique/Spells/mystique prepa sort marche.png")
@@ -782,7 +781,7 @@ def PrepaSpellRunAnimation(Game):
                 Game.Player.image = pygame.image.load("Assets/Visual/Mystique/Spells/mystique prepa sort marche 2.png")
                 Game.Player.image = pygame.transform.scale(Game.Player.image, (120, 120))
     else:
-       #if Game.Frame % 10 == 0:
+       if Game.Frame % 4 == 0:
             if Game.ActualFrame <= 0:
                 Game.ActualFrame = 1
                 Game.Player.image = pygame.image.load("Assets/Visual/Mystique/Left/Spells/mystique prepa sort marche.png")
@@ -795,11 +794,11 @@ def PrepaSpellRunAnimation(Game):
 # TKT -tremisabdoul
 def PrepaSpellAnimation(Game):
     if Game.Player.Direction:
-        #if Game.Frame % 10 == 0:
+        if Game.Frame % 4 == 0:
             Game.Player.image = pygame.image.load("Assets/Visual/Mystique/Spells/mystique prepa sort.png")
             Game.Player.image = pygame.transform.scale(Game.Player.image, (120, 120))
     else:
-        #if Game.Frame % 10 == 0:
+        if Game.Frame % 4 == 0:
             Game.Player.image = pygame.image.load("Assets/Visual/Mystique/Left/Spells/mystique prepa sort.png")
             Game.Player.image = pygame.transform.scale(Game.Player.image, (120, 120))
 
@@ -954,9 +953,6 @@ def Movements(Game, Screen):
 
     Game.PositionPlayer += Game.Position
 
-    if Game.ShowHitbox:
-        print("\n Player Posion: ", Game.PositionPlayer)
-
     BackgroundScroll(Game)
 
 
@@ -1037,13 +1033,19 @@ def FrameLimiter(Game, time, tick):
     Game.Tickchecker = time.time()
     Game.Tickchecker -= tick
     global Test
-    try:
-        print("",
-              round((Game.Tickchecker - Test) / 0.00017), "\t% of 60 FPS: Framerate without Test\n",
-              round(Game.Tickchecker / 0.00017), "\t% of 60 FPS: Framerate\n",
-              round((Test) / 0.00017), "\t% of 60 FPS : Test\n")
-    except:
-        Test = 0
+    if Game.ShowHitbox:
+        import time
+        global Test
+        start = time.time()
+        Test = time.time() - start
+        print("\n Player Posion: ", Game.PositionPlayer)
+        try:
+            print("",
+                  round((Game.Tickchecker - Test) / 0.00017), "\t% of 60 FPS: Framerate without Test\n",
+                  round(Game.Tickchecker / 0.00017), "\t% of 60 FPS: Framerate\n",
+                  round((Test) / 0.00017), "\t% of 60 FPS : Test\n")
+        except:
+            Test = 0
 
     while Game.Tickchecker < 0.017:
         Game.Tickchecker = time.time()
