@@ -138,10 +138,10 @@ def Printer(Screen, Game):
             Draw_rect(Screen, nb)
 
     if not Game.Frame % 2:
-        Game.Particles.Add((Game.Player.rect.center[0] - 35, Game.Player.rect.center[1] - 20), 'purple')
-        Game.Particles.Add((Game.Player.rect.center[0] - 35, Game.Player.rect.center[1] - 20), 'black')
-        Game.Particles.Add((Game.Player.rect.center[0] - 35, Game.Player.rect.center[1] - 20), 'black')
-        Game.Particles.Add((Game.Player.rect.center[0] - 35, Game.Player.rect.center[1] - 20), 'black')
+        Game.Particles.Add((Game.Player.rect.center[0] - 35, Game.Player.rect.center[1] - 20), 'purple', 6)
+        Game.Particles.Add((Game.Player.rect.center[0] - 35, Game.Player.rect.center[1] - 20), 'black', 6)
+        Game.Particles.Add((Game.Player.rect.center[0] - 35, Game.Player.rect.center[1] - 20), 'black', 6)
+        Game.Particles.Add((Game.Player.rect.center[0] - 35, Game.Player.rect.center[1] - 20), 'black', 6)
 
     for Particle in Game.Particles.Particles:
         Particle[0][0] -= Game.Position
@@ -321,7 +321,6 @@ def inGame(Game, time, Screen, police1):
         #     Game.Player.Pv -= 1
         # else:
         #     Game.Player.Pv = Game.Player.MaxPv
-        Lunch_Projectile(Game)
         """ ===== Movements ====="""
         Movements(Game, Screen)
         """ ===== Printers ===== """
