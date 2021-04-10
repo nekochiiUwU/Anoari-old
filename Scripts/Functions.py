@@ -138,10 +138,10 @@ def Printer(Screen, Game):
             Draw_rect(Screen, nb)
 
     if not Game.Frame % 2:
-        Game.Particles.Add((Game.Player.rect.center[0] - 35, Game.Player.rect.center[1] - 20), 'purple', 6)
-        Game.Particles.Add((Game.Player.rect.center[0] - 35, Game.Player.rect.center[1] - 20), 'black', 6)
-        Game.Particles.Add((Game.Player.rect.center[0] - 35, Game.Player.rect.center[1] - 20), 'black', 6)
-        Game.Particles.Add((Game.Player.rect.center[0] - 35, Game.Player.rect.center[1] - 20), 'black', 6)
+        Game.Particles.Add((Game.Player.rect.center[0] - 35, Game.Player.rect.center[1] - 20), 'red', 6)
+        Game.Particles.Add((Game.Player.rect.center[0] - 35, Game.Player.rect.center[1] - 20), 'orangered', 6)
+        Game.Particles.Add((Game.Player.rect.center[0] - 35, Game.Player.rect.center[1] - 20), 'darkred', 6)
+        Game.Particles.Add((Game.Player.rect.center[0] - 35, Game.Player.rect.center[1] - 20), 'red3', 6)
 
     for Particle in Game.Particles.Particles:
         Particle[0][0] -= Game.Position
@@ -226,8 +226,14 @@ def UIPrinter(Screen, police1, Game):
 def pauseblit(Screen, Game):
     """Fonction d'affichage: Elements de pause -tremisabdoul"""
 
-    # Screen.blit(Game.Background.image, Game.Background.rect)
-    # Screen.blit(Game.UI.baselayer, (0, 0))  # << Prends bcp de perf -tremisabdoul
+    Screen.blit(Game.Background.image, Game.Background.rect)
+    Screen.blit(Game.UI.baselayer, (0, 0))
+    from random import randint
+    Game.Particles.Add(Game.Mouse.rect.center, 'white', 10)
+    Game.Particles.Add(Game.Mouse.rect.center, 'grey', 10)
+    Game.Particles.Add(Game.Mouse.rect.center, 'black', 10)
+    Game.Particles.Print(Game, Screen)
+    del randint
     Screen.blit(Game.UI.resumebutton, Game.UI.resumebuttonrect)
     Screen.blit(Game.UI.savebutton, Game.UI.savebuttonrect)
     Screen.blit(Game.UI.settingsbutton, Game.UI.settingsbuttonrect)
@@ -1033,16 +1039,19 @@ def FrameLimiter(Game, time, tick):
     Game.Tickchecker -= tick
     global Test
     if Game.ShowHitbox:
-        import time
-        global Test
-        start = time.time()
-        Test = time.time() - start
+
+
+
         print("\n Player Posion: ", Game.PositionPlayer)
         try:
+            import time
+            global Test
+            start = time.time()
             print("",
                   round((Game.Tickchecker - Test) / 0.00017), "\t% of 60 FPS: Framerate without Test\n",
                   round(Game.Tickchecker / 0.00017), "\t% of 60 FPS: Framerate\n",
                   round((Test) / 0.00017), "\t% of 60 FPS : Test\n")
+            Test = time.time() - start
         except:
             Test = 0
 

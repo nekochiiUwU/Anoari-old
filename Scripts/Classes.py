@@ -203,16 +203,7 @@ class Player(pygame.sprite.Sprite, Game):
 
     @staticmethod
     def check_collisions(sprite, group):
-        Pass = pygame.sprite.Group()
-        for item in group:
-            if not -400 < sprite.rect.x - item.rect.x < 400:
-                Pass.add(item)
-                group.remove(item)
-        Return = pygame.sprite.spritecollide(sprite, group, False, pygame.sprite.collide_rect)
-        for item in Pass:
-            group.add(item)
-            Pass.remove(item)
-        return Return
+        return pygame.sprite.spritecollide(sprite, group, False, pygame.sprite.collide_rect)
 
     # Fonction de mouvement (Droite) -tremisabdoul
     def Move_Right(self, Game):
@@ -405,7 +396,7 @@ class UI:
         """ CatÃƒÂ©gorie Menu d'accueil """
 
         # IntÃƒÂ©gration de l'image qui apparaitrera du menu d'accueil -steven
-        self.lobbybackground = pygame.image.load("Assets/Visual/background.jpg")
+        self.lobbybackground = pygame.image.load("Assets/Visual/background.png")
         self.lobbybackground = pygame.transform.scale(self.lobbybackground, (1280, 720))
 
         # IntÃƒÂ©gration du boutton "JOUER" -steven
@@ -648,9 +639,9 @@ class Projectile(pygame.sprite.Sprite):
         super().__init__()
 
         self.Speed = 15
-        self.Frames = [pygame.image.load("Assets/Visual/Spells/FireBall/Nion1.png"),
-                       pygame.image.load("Assets/Visual/Spells/FireBall/Nion2.png"),
-                       pygame.image.load("Assets/Visual/Spells/FireBall/Nion3.png")]
+        self.Frames = ["Assets/Visual/Spells/FireBall/Nion1.png",
+                       "Assets/Visual/Spells/FireBall/Nion2.png",
+                       "Assets/Visual/Spells/FireBall/Nion3.png"]
         self.Frame = 0
         self.origin_image = pygame.image.load("Assets/Visual/Spells/FireBall/Nion1.png")
         # self.image = pygame.transform.scale(self.image, (10, 10))
@@ -674,7 +665,7 @@ class Projectile(pygame.sprite.Sprite):
 
         self.angle = -Game.Deges(Game.AngleCalc(self.DirectionY, self.DirectionX))
 
-        self.image = pygame.transform.rotozoom(self.origin_image, self.angle, 3.5)
+        self.image = pygame.transform.rotozoom(self.origin_image, self.angle, 1)
         self.rect = self.image.get_rect(center=self.rect.center)
 
     def move(self, Game):
@@ -682,13 +673,13 @@ class Projectile(pygame.sprite.Sprite):
         if Game.Frame % 2:
             if self.Frame == 0:
                 self.Frame = 1
-                self.origin_image = self.Frames[1]
+                self.origin_image = pygame.image.load(self.Frames[1])
             if self.Frame == 1:
                 self.Frame = 2
-                self.origin_image = self.Frames[2]
+                self.origin_image = pygame.image.load(self.Frames[2])
             if self.Frame == 2:
                 self.Frame = 0
-                self.origin_image = self.Frames[0]
+                self.origin_image = pygame.image.load(self.Frames[0])
 
 
 
@@ -696,9 +687,9 @@ class Projectile(pygame.sprite.Sprite):
         self.rect.y += self.DirectionY
         self.DirectionY += 0.05
         self.angle = -Game.Deges(Game.AngleCalc(self.DirectionY, self.DirectionX))
-        self.image = pygame.transform.rotozoom(self.origin_image, self.angle, 3.5)
+        self.image = pygame.transform.rotozoom(self.origin_image, self.angle, 1)
         self.rect = self.image.get_rect(center=self.rect.center)
-        Game.Particles.Add(self.rect.center, 'red', 8)
+        Game.Particles.Add(self.rect.center, 'red', 4)
 
         if not -1280 < self.rect.x - Game.Player.rect.x < 1280\
                 or not -720 < self.rect.y < 720\
@@ -706,10 +697,14 @@ class Projectile(pygame.sprite.Sprite):
                 or Game.Player.check_collisions(self, Game.all_plateform):
             Game.Projectiles.remove(self)
             for _ in range(5):
-                Game.Particles.Add(self.rect.center, 'red', 32)
-                Game.Particles.Add(self.rect.center, 'red', 24)
-                Game.Particles.Add(self.rect.center, 'brown1', 16)
-                Game.Particles.Add(self.rect.center, 'tomato', 8)
+                Game.Particles.Add(self.rect.center, 'Grey80', 32)
+            for _ in range(5):
+                Game.Particles.Add(self.rect.center, 'Grey70', 24)
+            for _ in range(5):
+                Game.Particles.Add(self.rect.center, 'Grey60', 16)
+            for _ in range(5):
+                Game.Particles.Add(self.rect.center, 'Grey50', 8)
+
 
 
 class Particles:
@@ -720,7 +715,6 @@ class Particles:
         if self.Particles:
             for Particle in self.Particles:
                 if not Game.Frame % 2:
-                    print(len(self.Particles))
                     Particle[0][1] += Particle[3]
                     Particle[0][0] += Particle[2]
                 Particle[1] -= Particle[5]
@@ -730,11 +724,10 @@ class Particles:
 
     def Add(self, Position, Color, Radius):
         from random import randint
+        x = Position[0] + randint(-Radius / 2, Radius / 2)
+        y = Position[1] + randint(-Radius / 2, Radius / 2)
         DirectionX = randint(-2, 2)
         DirectionY = randint(-2, 2)
-        x =Position[0] + randint(-2, 2)
-        y =Position[1] + randint(-2, 2)
-        print(type(Color))
         Particle = [[x, y], Radius, DirectionX, DirectionY, Color, Radius / 20]
         self.Particles.append(Particle)
 
