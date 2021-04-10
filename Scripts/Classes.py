@@ -205,7 +205,7 @@ class Player(pygame.sprite.Sprite, Game):
     def check_collisions(sprite, group):
         Pass = pygame.sprite.Group()
         for item in group:
-            if not -680 < sprite.rect.x - item.rect.x < 680:
+            if not -400 < sprite.rect.x - item.rect.x < 400:
                 Pass.add(item)
                 group.remove(item)
         Return = pygame.sprite.spritecollide(sprite, group, False, pygame.sprite.collide_rect)
@@ -308,7 +308,7 @@ class Sol(pygame.sprite.Sprite):
         self.image = pygame.image.load("Assets/Visual/plateforme_base.png")
 
         # Transforme l'image sol en la rÃƒÂ©solution indiquÃƒÂ©e -tremisabdoul
-        self.image = pygame.transform.scale(self.image, (1280, 34))
+        self.image = pygame.transform.scale(self.image, (2560, 34))
 
         # DÃƒÂ©finit la hitbox de sol -steven
         self.rect = self.image.get_rect()
@@ -595,11 +595,11 @@ class Arm:
             self.angle = -Game.Deges(Game.AngleCalc(Game.Mouse.rect.center[1] - self.rect.center[1],
                                                     Game.Mouse.rect.center[0] - self.rect.center[0]))
 
-        if -90 < self.angle < 90 and self.imageDirection:
+        if -90 < self.angle < 90: #and self.imageDirection:
             self.origin_image = pygame.image.load("Assets/Visual/Mystique/Bras/bras mystique prepa spell.png")
             self.imageDirection = 0
             Game.Player.Direction = 1
-        elif not -90 < self.angle < 90 and not self.imageDirection:
+        elif not -90 < self.angle < 90: #and not self.imageDirection:
             self.origin_image = pygame.image.load("Assets/Visual/Mystique/Left/bras mystique prepa spell.png")
             self.imageDirection = 1
             Game.Player.Direction = 0
@@ -679,7 +679,7 @@ class Projectile(pygame.sprite.Sprite):
 
     def move(self, Game):
 
-        if Game.Frame % 10:
+        if Game.Frame % 2:
             if self.Frame == 0:
                 self.Frame = 1
                 self.origin_image = self.Frames[1]
@@ -706,19 +706,21 @@ class Projectile(pygame.sprite.Sprite):
                 or Game.Player.check_collisions(self, Game.all_plateform):
             Game.Projectiles.remove(self)
             for _ in range(5):
-                Game.Particles.Add(self.rect.center, 'red', 28)
-                Game.Particles.Add(self.rect.center, 'red', 16)
                 Game.Particles.Add(self.rect.center, 'red', 32)
-                Game.Particles.Add(self.rect.center, 'red', 6)
+                Game.Particles.Add(self.rect.center, 'red', 24)
+                Game.Particles.Add(self.rect.center, 'brown1', 16)
+                Game.Particles.Add(self.rect.center, 'tomato', 8)
 
 
 class Particles:
     def __init__(self):
         self.Particles = []
+
     def Print(self, Game, Screen):
         if self.Particles:
             for Particle in self.Particles:
                 if not Game.Frame % 2:
+                    print(len(self.Particles))
                     Particle[0][1] += Particle[3]
                     Particle[0][0] += Particle[2]
                 Particle[1] -= Particle[5]
@@ -726,13 +728,13 @@ class Particles:
                     self.Particles.remove(Particle)
                 pygame.draw.circle(Screen, Particle[4], [Particle[0][0], Particle[0][1]], Particle[1])
 
-
     def Add(self, Position, Color, Radius):
         from random import randint
         DirectionX = randint(-2, 2)
         DirectionY = randint(-2, 2)
         x =Position[0] + randint(-2, 2)
         y =Position[1] + randint(-2, 2)
+        print(type(Color))
         Particle = [[x, y], Radius, DirectionX, DirectionY, Color, Radius / 20]
         self.Particles.append(Particle)
 

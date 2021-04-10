@@ -51,7 +51,8 @@ musicDANOARKI(Game)
 musicDANOARKIOUT(Game)
 Game.Click = pygame.mixer.Sound("Assets/Audio/FX/pas.mp3")
 Game.data = pygame.mixer.Sound("Assets/Audio/FX/DATA.mp3")
-
+for item in pygame.colordict.THECOLORS.items():
+      print(item)
 Test = 1
 
 # Contient tout ce qui est fait pendant que le jeu est run -tremisabdoul
