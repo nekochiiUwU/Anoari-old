@@ -476,7 +476,7 @@ def Option(Game, Screen, time, police1, police2):
         printfps = police1.render(str(fps), True, (255, 255, 255))
         Screen.blit(printfps, (6, 34))
 
-# Classe du menu des sauvegardes -steven
+# Fonction du menu des sauvegardes -steven
 def SaveMenu(Game, Screen, time, police1, police2):
     while Game.SaveMenu:
         # Initialisation du compteur de temps pour limiter les fps -tremisabdoul
@@ -546,9 +546,11 @@ def SaveMenu(Game, Screen, time, police1, police2):
 
             # Bouton croix en haut a droite (Fermer le Programme) -tremisabdoul
             if event.type == pygame.QUIT:
+                Game.SaveValue = 0
                 Game.InGame = False
                 Game.Lobby = False
                 Game.Pause = False
+                Game.SaveMenu = False
                 Game.running = False
                 pygame.quit()
 
