@@ -484,8 +484,8 @@ def SaveMenu(Game, Screen, time, police1, police2):
                 Game.pressed[event.key] = True
 
                 if Game.pressed.get(pygame.K_ESCAPE):
+                    Game.SaveMenu = False
                     Game.Pause = True
-                    Game.Option = False
 
             elif event.type == pygame.MOUSEBUTTONDOWN:
 
