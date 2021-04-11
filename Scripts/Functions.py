@@ -450,8 +450,9 @@ def Option(Game, Screen, time, police1, police2):
 
         MousePrinter(Screen, Game)
 
-        White = (255,255,255)
-        Screen.fill((0, 0, 0))
+        White = (255, 255, 255)
+        Screen.blit(Game.Background.image, (0, 0))
+        Screen.blit(Game.UI.baselayer, (0, 0))
         pygame.draw.rect(Screen, White, pygame.Rect(600, 200, 100, 60),  2)
 
         # Affichage du necessaire pour le texte des Options -steven
@@ -471,12 +472,19 @@ def Option(Game, Screen, time, police1, police2):
         printfps = police1.render(str(fps), True, (255, 255, 255))
         Screen.blit(printfps, (6, 34))
 
+
 def SaveMenu(Game, Screen, time, police1, police2):
     while Game.SaveMenu:
         # Initialisation du compteur de temps pour limiter les fps -tremisabdoul
         tick = time.time()
         State = ["save1.csv", "save2.csv", "save3.csv", "save4.csv", "save5.csv"]
         SaveState = 0
+
+        # Position des rectangles de sauvegarde -steven
+        SaveButton1 = pygame.Rect(125, 50, 500, 100)
+        SaveButton2 = pygame.Rect(125, 200, 500, 100)
+        SaveButton3 = pygame.Rect(125, 350, 500, 100)
+
 
         for event in pygame.event.get():
 
@@ -489,7 +497,7 @@ def SaveMenu(Game, Screen, time, police1, police2):
 
             elif event.type == pygame.MOUSEBUTTONDOWN:
 
-                #Recuperation des positions de chaque rectangle pour leur attribuer une save correspondante -steven
+                # Recuperation des positions de chaque rectangle pour leur attribuer une save correspondante -steven
                 if SaveButton1.collidepoint(event.pos):
                     Game.Click.play()
                     SaveState = State[0]
@@ -520,13 +528,8 @@ def SaveMenu(Game, Screen, time, police1, police2):
 
         MousePrinter(Screen, Game)
 
-        White = (255,255,255)
+        White = (255, 255, 255)
         Screen.fill((0, 0, 0))
-
-        # Position des rectangles de sauvegarde -steven
-        SaveButton1 = pygame.Rect(125, 50, 500, 100)
-        SaveButton2 = pygame.Rect(125, 200, 500, 100)
-        SaveButton3 = pygame.Rect(125, 350, 500, 100)
 
         # Creation des rectangles
         Rectangle(Screen, White, SaveButton1, 2)
