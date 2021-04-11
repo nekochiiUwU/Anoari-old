@@ -74,3 +74,6 @@ while Game.Running:
 
     if Game.Option:
         Option(Game, Screen, time, police1, police2)
+
+    if Game.SaveMenu:
+        SaveMenu(Game, Screen, time, police1, police2)

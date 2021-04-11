@@ -272,7 +272,8 @@ def pause(Game, Screen, time, police1):
                     Game.InGame = True
                 elif Game.UI.savebuttonrect.collidepoint(event.pos):
                     Game.Click.play()
-                    Data_Save(Game, Screen, police1)
+                    Game.Pause = False
+                    Game.SaveMenu = True
                 elif Game.UI.settingsbuttonrect.collidepoint(event.pos):
                     Game.Click.play()
                     Game.Pause = False
@@ -449,12 +450,70 @@ def Option(Game, Screen, time, police1, police2):
 
         MousePrinter(Screen, Game)
 
+        White = (255,255,255)
         Screen.fill((0, 0, 0))
+        pygame.draw.rect(Screen, White, pygame.Rect(600, 200, 100, 60),  2)
 
         # Affichage du necessaire pour le texte des Options -steven
         Texte('Resolution : ', police2, (255, 255, 255), Screen, 100, 100)
         Texte('Volume : ', police2, (255, 255, 255), Screen, 100, 225)
         Texte('Controles : ', police2, (255, 255, 255), Screen, 100, 350)
+
+        pygame.display.flip()
+
+        while tickchecker < 0.017:
+            tickchecker = time.time()
+            tickchecker -= tick
+
+        fps = 1 / tickchecker
+        fps = "FPS : " + str(round(fps))
+        # Transforme une variable en composent graphique -tremisabdoul
+        printfps = police1.render(str(fps), True, (255, 255, 255))
+        Screen.blit(printfps, (6, 34))
+
+def SaveMenu(Game, Screen, time, police1, police2):
+    while Game.SaveMenu:
+        # Initialisation du compteur de temps pour limiter les fps -tremisabdoul
+        tick = time.time()
+        State = ["save1.csv", "save2.csv", "save3.csv", "save4.csv", "save5.csv"]
+        SaveState = 0
+
+        for event in pygame.event.get():
+
+            if event.type == pygame.KEYDOWN:
+                Game.pressed[event.key] = True
+
+                if Game.pressed.get(pygame.K_ESCAPE):
+                    Game.Pause = True
+                    Game.Option = False
+
+            elif event.type == pygame.MOUSEBUTTONDOWN:
+                if SaveButton1.collidepoint(event.pos):
+                    Game.Click.play()
+                    SaveState = State[0]
+                    Data_Save(Game, Screen, police1, SaveState)
+
+            elif event.type == pygame.KEYUP:
+                Game.pressed[event.key] = False
+
+            # Bouton croix en haut a droite (Fermer le Programme) -tremisabdoul
+            if event.type == pygame.QUIT:
+                Game.InGame = False
+                Game.Lobby = False
+                Game.Pause = False
+                Game.running = False
+                pygame.quit()
+
+        # Permet de recuperer le nombre de frames a la seconde -tremisabdoul
+        tickchecker = time.time()
+        tickchecker -= tick
+
+        MousePrinter(Screen, Game)
+
+        White = (255,255,255)
+        Screen.fill((0, 0, 0))
+        SaveButton1 = pygame.Rect(125, 50, 500, 100)
+        Save1 = pygame.draw.rect(Screen, White, SaveButton1,  2)
 
         pygame.display.flip()
 
@@ -475,9 +534,11 @@ def Texte(text, police2, color, Screen, x, y):
     Texte_Rect = (x, y)
     Screen.blit(Texte_Contenu, Texte_Rect)
 
+def Rectangle(Screen, color, x, y, width, border_radius):
+    pygame.draw.rect(Screen, color, x, y, width, border_radius=1)
 
 # TKT -tremisabdoul
-def Data_Save(Game, Screen, police1):
+def Data_Save(Game, Screen, police1, SaveState):
 
     Loading = 0
     FullLoading = 8
@@ -529,7 +590,7 @@ def Data_Save(Game, Screen, police1):
     }
 
     Loading = LoadingScreen("I'm actually saving your data", Screen, police1, FullLoading, Loading)
-    text_file = open("save1.csv", "w+", newline="")
+    text_file = open(SaveState, "w+", newline="")
     Loading = LoadingScreen("I'm actually saving your data", Screen, police1, FullLoading, Loading)
 
     with text_file:
