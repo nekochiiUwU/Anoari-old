@@ -96,17 +96,21 @@ tremisabdoul
                 nekochiitsu
 
 
-    ━━━ ∙ ʚ  Sound Design / FX:  ɞ ∙ ━━━
+━━━ ∙ ʚ  Musics / Sound Design / FX:  ɞ ∙ ━━━
 
                tremisabdoul
 
+   ━━━ ∙ ʚ  In Colaboration with:  ɞ ∙ ━━━
+			
+		    
 
-         ━━━ ∙ ʚ  Code:  ɞ ∙ ━━━
 
-              tremisabdoul
+           ━━━ ∙ ʚ  Code:  ɞ ∙ ━━━
 
-                  Ok...
+                tremisabdoul
 
-              nekochiitsu
-                 iRaiZz
-              tremisabdoul
+                   Ok...
+
+                nekochiitsu
+                  iRaiZz
+               tremisabdoul

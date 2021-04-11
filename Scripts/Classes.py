@@ -689,7 +689,8 @@ class Projectile(pygame.sprite.Sprite):
         self.angle = -Game.Deges(Game.AngleCalc(self.DirectionY, self.DirectionX))
         self.image = pygame.transform.rotozoom(self.origin_image, self.angle, 1)
         self.rect = self.image.get_rect(center=self.rect.center)
-        Game.Particles.Add(self.rect.center, 'red', 4)
+        Game.Particles.Add(self.rect.center, 'red', 8)
+        Game.Particles.Add(self.rect.center, 'orangered', 8)
 
         if not -1280 < self.rect.x - Game.Player.rect.x < 1280\
                 or not -720 < self.rect.y < 720\
@@ -703,7 +704,7 @@ class Projectile(pygame.sprite.Sprite):
             for _ in range(5):
                 Game.Particles.Add(self.rect.center, 'Grey60', 16)
             for _ in range(5):
-                Game.Particles.Add(self.rect.center, 'Grey50', 8)
+                Game.Particles.Add(self.rect.center, 'Grey50', 12)
 
 
 class Particles:
