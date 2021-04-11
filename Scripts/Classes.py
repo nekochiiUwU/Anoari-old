@@ -162,7 +162,6 @@ class Player(pygame.sprite.Sprite, Game):
 
         # DÃƒÂ©finit l'ÃƒÂ©lÃƒÂ©ment visuel en tant que variable et la hitbox de Player -tremisabdoul
         self.image = pygame.image.load("Assets/Visual/Mystique/resp1.png")
-        self.image = pygame.transform.scale(self.image, (self.image.get_width() * 2, self.image.get_height() * 2))
         self.rect = self.image.get_rect()
         self.rect = self.image.get_rect(bottomleft=self.rect.bottomleft)
 
@@ -301,7 +300,7 @@ class Sol(pygame.sprite.Sprite):
         self.image = pygame.image.load("Assets/Visual/plateforme_base.png")
 
         # Transforme l'image sol en la rÃƒÂ©solution indiquÃƒÂ©e -tremisabdoul
-        self.image = pygame.transform.scale(self.image, (2560, 34))
+        self.image = pygame.transform.scale(self.image, (1280, 34))
 
         # DÃƒÂ©finit la hitbox de sol -steven
         self.rect = self.image.get_rect()

@@ -1,8 +1,8 @@
+         53026043 function calls (53021796 primitive calls) in 25.503 seconds
+
+   Ordered by: internal time
+
    ncalls  tottime  percall  cumtime  percall filename:lineno(function)
-   214621   10.256    0.000   10.256    0.000 {method 'blit' of 'pygame.Surface' objects}
-  8145582    6.852    0.000   11.254    0.000 sprite.py:421(add)
-  8131293    6.528    0.000   10.676    0.000 sprite.py:456(remove)
-    13411    5.031    0.000   27.195    0.002 Classes.py:204(check_collisions)
-        1    4.819    4.819    8.365    8.365 Functions.py:350(Lobby)
-   163965    4.463    0.000    4.463    0.000 {built-in method pygame.transform.rotozoom}
-  3722168    3.567    0.000    3.567    0.000 {built-in method pygame.draw.circle}
+     1207    9.510    0.008   12.655    0.010 Functions.py:1117(FrameLimiter)
+    40981    7.039    0.000    7.039    0.000 {method 'blit' of 'pygame.Surface' objects}
+ 43955435    3.198    0.000    3.198    0.000 {built-in method time.time}

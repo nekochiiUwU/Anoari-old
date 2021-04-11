@@ -95,6 +95,7 @@ def Printer(Screen, Game):
     Game.Monster.rect.x -= Game.Position
     Game.Background.rect.x -= Game.Position
     Game.Sol.rect.x += Game.Position
+    print(Game.Sol.rect)
 
     # Affiche a l'ecran les elments graphique -tremisabdoul
     # Screen.fill((60, 60, 120))
@@ -140,7 +141,7 @@ def Printer(Screen, Game):
     if not Game.Frame % 2:
         Game.Particles.Add((Game.Player.rect.center[0] - 35, Game.Player.rect.center[1] - 20), 'red', 6)
         Game.Particles.Add((Game.Player.rect.center[0] - 35, Game.Player.rect.center[1] - 20), 'orangered', 6)
-        Game.Particles.Add((Game.Player.rect.center[0] - 35, Game.Player.rect.center[1] - 20), 'darkred', 6)
+        Game.Particles.Add((Game.Player.rect.center[0] - 35, Game.Player.rect.center[1] - 20), 'orangered4', 6)
         Game.Particles.Add((Game.Player.rect.center[0] - 35, Game.Player.rect.center[1] - 20), 'red3', 6)
 
     for Particle in Game.Particles.Particles:
@@ -807,20 +808,16 @@ def Animation(Game):
 def FallAnimation(Game):
     if Game.Player.Direction:
         Game.Player.image = pygame.image.load("Assets/Visual/Mystique/Jump/Jump2.png")
-        Game.Player.image = pygame.transform.scale(Game.Player.image, (120, 120))
     else:
         Game.Player.image = pygame.image.load("Assets/Visual/Mystique/Left/Jump/Jump2.png")
-        Game.Player.image = pygame.transform.scale(Game.Player.image, (120, 120))
 
 
 # TKT -tremisabdoul
 def JumpAnimation(Game):
     if Game.Player.Direction:
         Game.Player.image = pygame.image.load("Assets/Visual/Mystique/Jump/Jump1.png")
-        Game.Player.image = pygame.transform.scale(Game.Player.image, (120, 120))
     else:
         Game.Player.image = pygame.image.load("Assets/Visual/Mystique/Left/Jump/Jump1.png")
-        Game.Player.image = pygame.transform.scale(Game.Player.image, (120, 120))
 
 
 # TKT -tremisabdoul
@@ -830,21 +827,17 @@ def RunAnimation(Game):
             if Game.ActualFrame <= 0:
                 Game.ActualFrame = 1
                 Game.Player.image = pygame.image.load("Assets/Visual/Mystique/Run/Run1.png")
-                Game.Player.image = pygame.transform.scale(Game.Player.image, (120, 120))
             elif Game.ActualFrame >= 1:
                 Game.ActualFrame = 0
                 Game.Player.image = pygame.image.load("Assets/Visual/Mystique/Run/Run2.png")
-                Game.Player.image = pygame.transform.scale(Game.Player.image, (120, 120))
     else:
         if Game.Frame % 4 == 0:
             if Game.ActualFrame <= 0:
                 Game.ActualFrame = 1
                 Game.Player.image = pygame.image.load("Assets/Visual/Mystique/Left/Run/Run1.png")
-                Game.Player.image = pygame.transform.scale(Game.Player.image, (120, 120))
             elif Game.ActualFrame >= 1:
                 Game.ActualFrame = 0
                 Game.Player.image = pygame.image.load("Assets/Visual/Mystique/Left/Run/Run2.png")
-                Game.Player.image = pygame.transform.scale(Game.Player.image, (120, 120))
 
 
 # TKT -tremisabdoul
@@ -854,21 +847,17 @@ def StandAnimation(Game):
             if Game.ActualFrame <= 0:
                 Game.ActualFrame = 1
                 Game.Player.image = pygame.image.load("Assets/Visual/Mystique/resp2.png")
-                Game.Player.image = pygame.transform.scale(Game.Player.image, (120, 120))
             elif Game.ActualFrame >= 1:
                 Game.ActualFrame = 0
                 Game.Player.image = pygame.image.load("Assets/Visual/Mystique/resp1.png")
-                Game.Player.image = pygame.transform.scale(Game.Player.image, (120, 120))
     else:
         if Game.Frame % 4 == 0:
             if Game.ActualFrame <= 0:
                 Game.ActualFrame = 1
                 Game.Player.image = pygame.image.load("Assets/Visual/Mystique/Left/resp2.png")
-                Game.Player.image = pygame.transform.scale(Game.Player.image, (120, 120))
             elif Game.ActualFrame >= 1:
                 Game.ActualFrame = 0
                 Game.Player.image = pygame.image.load("Assets/Visual/Mystique/Left/resp1.png")
-                Game.Player.image = pygame.transform.scale(Game.Player.image, (120, 120))
 
 
 # TKT -tremisabdoul
@@ -876,22 +865,18 @@ def PrepaSpellJumpAnimation(Game):
     if Game.Player.Direction:
         if Game.Frame % 4 == 0:
             Game.Player.image = pygame.image.load("Assets/Visual/Mystique/Spells/mystique prepa sort Jump.png")
-            Game.Player.image = pygame.transform.scale(Game.Player.image, (120, 120))
     else:
         if Game.Frame % 4 == 0:
             Game.Player.image = pygame.image.load("Assets/Visual/Mystique/Left/Spells/mystique prepa sort Jump.png")
-            Game.Player.image = pygame.transform.scale(Game.Player.image, (120, 120))
 
 # TKT -tremisabdoul
 def PrepaSpellFallAnimation(Game):
     if Game.Player.Direction:
         if Game.Frame % 4 == 0:
             Game.Player.image = pygame.image.load("Assets/Visual/Mystique/Spells/mystique prepa sort Fall.png")
-            Game.Player.image = pygame.transform.scale(Game.Player.image, (120, 120))
     else:
         if Game.Frame % 4 == 0:
             Game.Player.image = pygame.image.load("Assets/Visual/Mystique/Left/Spells/mystique prepa sort Fall.png")
-            Game.Player.image = pygame.transform.scale(Game.Player.image, (120, 120))
 
 # TKT -tremisabdoul
 def PrepaSpellRunAnimation(Game):
@@ -900,32 +885,26 @@ def PrepaSpellRunAnimation(Game):
             if Game.ActualFrame <= 0:
                 Game.ActualFrame = 1
                 Game.Player.image = pygame.image.load("Assets/Visual/Mystique/Spells/mystique prepa sort marche.png")
-                Game.Player.image = pygame.transform.scale(Game.Player.image, (120, 120))
             elif Game.ActualFrame >= 1:
                 Game.ActualFrame = 0
                 Game.Player.image = pygame.image.load("Assets/Visual/Mystique/Spells/mystique prepa sort marche 2.png")
-                Game.Player.image = pygame.transform.scale(Game.Player.image, (120, 120))
     else:
        if Game.Frame % 4 == 0:
             if Game.ActualFrame <= 0:
                 Game.ActualFrame = 1
                 Game.Player.image = pygame.image.load("Assets/Visual/Mystique/Left/Spells/mystique prepa sort marche.png")
-                Game.Player.image = pygame.transform.scale(Game.Player.image, (120, 120))
             elif Game.ActualFrame >= 1:
                 Game.ActualFrame = 0
                 Game.Player.image = pygame.image.load("Assets/Visual/Mystique/Left/Spells/mystique prepa sort marche 2.png")
-                Game.Player.image = pygame.transform.scale(Game.Player.image, (120, 120))
 
 # TKT -tremisabdoul
 def PrepaSpellAnimation(Game):
     if Game.Player.Direction:
         if Game.Frame % 4 == 0:
             Game.Player.image = pygame.image.load("Assets/Visual/Mystique/Spells/mystique prepa sort.png")
-            Game.Player.image = pygame.transform.scale(Game.Player.image, (120, 120))
     else:
         if Game.Frame % 4 == 0:
             Game.Player.image = pygame.image.load("Assets/Visual/Mystique/Left/Spells/mystique prepa sort.png")
-            Game.Player.image = pygame.transform.scale(Game.Player.image, (120, 120))
 
 
 # TKT -tremisabdoul
