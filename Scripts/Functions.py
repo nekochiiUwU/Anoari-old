@@ -1056,8 +1056,10 @@ def Movements(Game, Screen):
                 else:
                     if Wall.rect.center < Target.rect.center:
                         Target.rect.x += Wall.rect.right - (Target.rect.left - 33)
+                        Target.Direction = 0
                     elif Wall.rect.center > Target.rect.center:
                         Target.rect.x += Wall.rect.left - (Target.rect.right + 33)
+                        Target.Direction = 1
 
             else:
                 if Target == Game.Player:
@@ -1102,6 +1104,10 @@ def InGameKeys(Game, Screen):
                     pygame.display.set_mode((1280, 720), pygame.RESIZABLE)
                     os.environ['SDL_VIDEO_WINDOW_POS'] = "%d,%d" % (100, 100)
                     Game.Fullscreen = 0
+
+            if Game.pressed.get(pygame.K_F10):
+                pygame.image.save(Screen, "screenshot.jpg")
+
         # Touches relachees -tremisabdoul
         elif event.type == pygame.KEYUP:
             Game.pressed[event.key] = False
@@ -1114,8 +1120,8 @@ def InGameKeys(Game, Screen):
                 print("Left Click (None)")
             elif event.button == 2:
                 print("Middle Click (Hitbox + print(Game.PlayerPosition))")
-                Game.data.stop()
-                Game.data.play()
+                #Game.data.stop()
+                #Game.data.play()
                 Game.ShowHitbox = not Game.ShowHitbox
             elif event.button == 3:
                 print("Right Click (Mode VisÃ©e)")
@@ -1158,6 +1164,7 @@ def FrameLimiter(Game, time, tick):
 
 
         print("\n Player Posion: ", Game.PositionPlayer)
+        """
         try:
             import time
             global Test
@@ -1169,6 +1176,7 @@ def FrameLimiter(Game, time, tick):
             Test = time.time() - start
         except:
             Test = 0
+        """
 
     while Game.Tickchecker < 0.017:
         Game.Tickchecker = time.time()
