@@ -630,9 +630,8 @@ class Patern(pygame.sprite.Sprite, Game):
         Game.PaternNumber += 1
 
 
-
-
 print("/Scripts/Classes: Loaded")
+
 
 class Projectile(pygame.sprite.Sprite):
 
@@ -705,7 +704,6 @@ class Projectile(pygame.sprite.Sprite):
                 Game.Particles.Add(self.rect.center, 'Grey60', 16)
             for _ in range(5):
                 Game.Particles.Add(self.rect.center, 'Grey50', 8)
-
 
 
 class Particles:

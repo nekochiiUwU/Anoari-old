@@ -24,15 +24,15 @@ Game.Player.ManaRegen,2
 Game.Player.XP_Multiplicator,1
 Game.Player.Damage.Multiplicator,1
 # Player[2],# Position -tremisabdoul
-Game.Player.rect.x,349
-Game.Player.rect.y,551
+Game.Player.rect.x,350
+Game.Player.rect.y,461
 Game.Player.rect.height,120
 Game.Player.rect.width,120
-Game.Player.LastY,548
-Game.Player.YVector,-3
-Game.PositionPlayer,0
+Game.Player.LastY,461
+Game.Player.YVector,0
+Game.PositionPlayer,-126
 # Phisics,# Actual Movement of Player -tremisabdoul
-Game.Player.Force.lastx,0.0
-Game.Player.Base_Gravity,3.1999999999999997
-Game.Monster.Base_Gravity,3.1999999999999997
+Game.Player.Force.lastx,5.125733632597193e-07
+Game.Player.Base_Gravity,0
+Game.Monster.Base_Gravity,0
 Game.Player.Force.x,0
