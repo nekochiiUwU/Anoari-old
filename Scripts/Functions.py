@@ -488,9 +488,19 @@ def SaveMenu(Game, Screen, time, police1, police2):
                     Game.Option = False
 
             elif event.type == pygame.MOUSEBUTTONDOWN:
+
+                #Recuperation des positions de chaque rectangle pour leur attribuer une save correspondante -steven
                 if SaveButton1.collidepoint(event.pos):
                     Game.Click.play()
                     SaveState = State[0]
+                    Data_Save(Game, Screen, police1, SaveState)
+                elif SaveButton2.collidepoint(event.pos):
+                    Game.Click.play()
+                    SaveState = State[1]
+                    Data_Save(Game, Screen, police1, SaveState)
+                elif SaveButton3.collidepoint(event.pos):
+                    Game.Click.play()
+                    SaveState = State[2]
                     Data_Save(Game, Screen, police1, SaveState)
 
             elif event.type == pygame.KEYUP:
@@ -512,8 +522,16 @@ def SaveMenu(Game, Screen, time, police1, police2):
 
         White = (255,255,255)
         Screen.fill((0, 0, 0))
+
+        # Position des rectangles de sauvegarde -steven
         SaveButton1 = pygame.Rect(125, 50, 500, 100)
-        Save1 = pygame.draw.rect(Screen, White, SaveButton1,  2)
+        SaveButton2 = pygame.Rect(125, 200, 500, 100)
+        SaveButton3 = pygame.Rect(125, 350, 500, 100)
+
+        # Creation des rectangles
+        Rectangle(Screen, White, SaveButton1, 2)
+        Rectangle(Screen, White, SaveButton2, 2)
+        Rectangle(Screen, White, SaveButton3, 2)
 
         pygame.display.flip()
 
@@ -534,8 +552,8 @@ def Texte(text, police2, color, Screen, x, y):
     Texte_Rect = (x, y)
     Screen.blit(Texte_Contenu, Texte_Rect)
 
-def Rectangle(Screen, color, x, y, width, border_radius):
-    pygame.draw.rect(Screen, color, x, y, width, border_radius=1)
+def Rectangle(Screen, color, rect, border_radius):
+    pygame.draw.rect(Screen, color, rect, border_radius)
 
 # TKT -tremisabdoul
 def Data_Save(Game, Screen, police1, SaveState):
