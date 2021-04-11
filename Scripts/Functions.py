@@ -529,7 +529,8 @@ def SaveMenu(Game, Screen, time, police1, police2):
         MousePrinter(Screen, Game)
 
         White = (255, 255, 255)
-        Screen.fill((0, 0, 0))
+        Screen.blit(Game.Background.image, (0, 0))
+        Screen.blit(Game.UI.baselayer, (0, 0))
 
         # Creation des rectangles
         Rectangle(Screen, White, SaveButton1, 2)
