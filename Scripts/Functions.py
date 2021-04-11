@@ -267,7 +267,6 @@ def pause(Game, Screen, time, police1):
             elif event.type == pygame.MOUSEBUTTONDOWN:
                 if Game.UI.resumebuttonrect.collidepoint(event.pos):
                     Game.Click.play()
-                    Data_Load(Game, Screen, police1)
                     Game.Pause = False
                     Game.InGame = True
                 elif Game.UI.savebuttonrect.collidepoint(event.pos):
@@ -477,11 +476,14 @@ def Option(Game, Screen, time, police1, police2):
         printfps = police1.render(str(fps), True, (255, 255, 255))
         Screen.blit(printfps, (6, 34))
 
+# Classe du menu des sauvegardes -steven
 def SaveMenu(Game, Screen, time, police1, police2):
     while Game.SaveMenu:
         # Initialisation du compteur de temps pour limiter les fps -tremisabdoul
         tick = time.time()
-        State = ["save1.csv", "save2.csv", "save3.csv", "save4.csv", "save5.csv"]
+
+        # Liste regroupant les noms des sauvegardes
+        State = ["Save/save1.csv", "Save/save2.csv", "Save/save3.csv", "Save/save4.csv", "Save/save5.csv"]
         SaveState = 0
 
         for event in pygame.event.get():
@@ -499,8 +501,8 @@ def SaveMenu(Game, Screen, time, police1, police2):
                         Game.Pause = True
                         Game.SaveValue = 0
 
+            #Sauvegarde des donnees du joueurs (SaveValue == 2 signifie qu'il est rentré par le menu pause) -steven
             elif event.type == pygame.MOUSEBUTTONDOWN and Game.SaveValue == 2:
-                #Recuperation des positions de chaque rectangle pour leur attribuer une save correspondante -steven
                 if SaveButton1.collidepoint(event.pos):
                     Game.Click.play()
                     SaveState = State[0]
@@ -516,8 +518,8 @@ def SaveMenu(Game, Screen, time, police1, police2):
                     SaveState = State[2]
                     Data_Save(Game, Screen, police1, SaveState)
 
+            # Chargement des donnees du joueurs (SaveValue == 1 signifie qu'il est rentré par le menu d'accueil) -steven
             elif event.type == pygame.MOUSEBUTTONDOWN and Game.SaveValue == 1:
-                #Recuperation des positions de chaque rectangle pour leur attribuer une save correspondante -steven
                 if SaveButton1.collidepoint(event.pos):
                     Game.Click.play()
                     SaveState = State[0]
@@ -564,7 +566,7 @@ def SaveMenu(Game, Screen, time, police1, police2):
         SaveButton2 = pygame.Rect(125, 200, 500, 100)
         SaveButton3 = pygame.Rect(125, 350, 500, 100)
 
-        # Creation des rectangles
+        # Creation des rectangles -steven
         Rectangle(Screen, White, SaveButton1, 2)
         Rectangle(Screen, White, SaveButton2, 2)
         Rectangle(Screen, White, SaveButton3, 2)
@@ -588,6 +590,7 @@ def Texte(text, police2, color, Screen, x, y):
     Texte_Rect = (x, y)
     Screen.blit(Texte_Contenu, Texte_Rect)
 
+# Fonction des rectangles -steven
 def Rectangle(Screen, color, rect, border_radius):
     pygame.draw.rect(Screen, color, rect, border_radius)
 
