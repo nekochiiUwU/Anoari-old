@@ -38,6 +38,7 @@ class Game:
         self.Option = False
         self.Pause = False
         self.SaveMenu = False
+        self.SaveValue = 0
         self.PlateformNumber = 1
         self.Tickchecker = 1
         self.WallNumber = 1

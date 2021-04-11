@@ -274,6 +274,7 @@ def pause(Game, Screen, time, police1):
                     Game.Click.play()
                     Game.Pause = False
                     Game.SaveMenu = True
+                    Game.SaveValue = 2
                 elif Game.UI.settingsbuttonrect.collidepoint(event.pos):
                     Game.Click.play()
                     Game.Pause = False
@@ -376,6 +377,11 @@ def Lobby(Game, Screen, time, police1):
                     Game.Click.play()
                     Game.InGame = True
                     Game.Lobby = False
+                elif Game.UI.lobby_loadbuttonrect.collidepoint(event.pos):
+                    Game.Click.play()
+                    Game.Lobby = False
+                    Game.SaveMenu = True
+                    Game.SaveValue = 1
                 elif Game.UI.lobby_quitbuttonrect.collidepoint(event.pos):
                     Game.Click.play()
                     Game.Running = False
@@ -484,24 +490,54 @@ def SaveMenu(Game, Screen, time, police1, police2):
                 Game.pressed[event.key] = True
 
                 if Game.pressed.get(pygame.K_ESCAPE):
-                    Game.SaveMenu = False
-                    Game.Pause = True
+                    if Game.SaveValue == 1:
+                        Game.SaveMenu = False
+                        Game.Lobby = True
+                        Game.SaveValue = 0
+                    elif Game.SaveValue == 2:
+                        Game.SaveMenu = False
+                        Game.Pause = True
+                        Game.SaveValue = 0
 
-            elif event.type == pygame.MOUSEBUTTONDOWN:
-
+            elif event.type == pygame.MOUSEBUTTONDOWN and Game.SaveValue == 2:
                 #Recuperation des positions de chaque rectangle pour leur attribuer une save correspondante -steven
                 if SaveButton1.collidepoint(event.pos):
                     Game.Click.play()
                     SaveState = State[0]
                     Data_Save(Game, Screen, police1, SaveState)
+
                 elif SaveButton2.collidepoint(event.pos):
                     Game.Click.play()
                     SaveState = State[1]
                     Data_Save(Game, Screen, police1, SaveState)
+
                 elif SaveButton3.collidepoint(event.pos):
                     Game.Click.play()
                     SaveState = State[2]
                     Data_Save(Game, Screen, police1, SaveState)
+
+            elif event.type == pygame.MOUSEBUTTONDOWN and Game.SaveValue == 1:
+                #Recuperation des positions de chaque rectangle pour leur attribuer une save correspondante -steven
+                if SaveButton1.collidepoint(event.pos):
+                    Game.Click.play()
+                    SaveState = State[0]
+                    Data_Load(Game, Screen, police1, SaveState)
+                    Game.SaveMenu = False
+                    Game.InGame = True
+
+                elif SaveButton2.collidepoint(event.pos):
+                    Game.Click.play()
+                    SaveState = State[1]
+                    Data_Load(Game, Screen, police1, SaveState)
+                    Game.SaveMenu = False
+                    Game.InGame = True
+
+                elif SaveButton3.collidepoint(event.pos):
+                    Game.Click.play()
+                    SaveState = State[2]
+                    Data_Load(Game, Screen, police1, SaveState)
+                    Game.SaveMenu = False
+                    Game.InGame = True
 
             elif event.type == pygame.KEYUP:
                 Game.pressed[event.key] = False
@@ -626,7 +662,7 @@ def Data_Save(Game, Screen, police1, SaveState):
 
 
 # TKT -tremisabdoul
-def Data_Load(Game, Screen, police1):
+def Data_Load(Game, Screen, police1, SaveState):
 
     Loading = 0
     FullLoading = 88
@@ -635,7 +671,7 @@ def Data_Load(Game, Screen, police1):
 
     Loading = LoadingScreen("I'm actually loading your data", Screen, police1, FullLoading, Loading)
 
-    file = "save1.csv"
+    file = SaveState
     CSV_file = csv.DictReader(open(file, 'r'))
     Load = {}
 
