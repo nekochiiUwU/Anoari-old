@@ -541,11 +541,11 @@ def Rectangle(Screen, color, rect, border_radius):
 def Data_Save(Game, Screen, SaveState):
 
     Loading = 0
-    FullLoading = 8
-    Loading = LoadingScreen("I'm actually saving your data", Screen, FullLoading, Loading)
+    FullLoading = 4
 
     import csv
-    Loading = LoadingScreen("I'm actually saving your data", Screen, FullLoading, Loading)
+
+    Loading = LoadingScreen(Game, "I'm actually loading your data", Screen, FullLoading, Loading)
 
     Datalist = {
         "Variable": "Value",
@@ -589,21 +589,21 @@ def Data_Save(Game, Screen, SaveState):
         "Game.Player.Force.x": Game.Player.Force.x
     }
 
-    Loading = LoadingScreen("I'm actually saving your data", Screen, police1, FullLoading, Loading)
+    Loading = LoadingScreen(Game, "I'm actually opening your data file", Screen, FullLoading, Loading)
+
     text_file = open(SaveState, "w+", newline="")
-    Loading = LoadingScreen("I'm actually saving your data", Screen, police1, FullLoading, Loading)
+
+    Loading = LoadingScreen(Game, "I'm actually writing your data file ()", Screen, FullLoading, Loading)
 
     with text_file:
         Writer = csv.writer(text_file, quoting=0)
         Writer.writerows(Datalist.items())
-        Loading = LoadingScreen("I'm actually saving your data", Screen, police1, FullLoading, Loading)
 
     text_file.close()
-    Loading = LoadingScreen("I'm actually saving your data", Screen, police1, FullLoading, Loading)
     del csv
 
-    LoadingScreen("I'm actually saving your data", Screen, police1, FullLoading, Loading)
-    print("\nYour data has been saved!\n", Loading, "/", FullLoading)
+    LoadingScreen(Game, "I saved your data", Screen, FullLoading, Loading)
+
     return 0
 
 
@@ -611,7 +611,7 @@ def Data_Save(Game, Screen, SaveState):
 def Data_Load(Game, Screen, SaveState):
 
     Loading = 0
-    FullLoading = 6
+    FullLoading = 7
     Replace = Game.PositionPlayer
     import csv
 
@@ -667,9 +667,8 @@ def Data_Load(Game, Screen, SaveState):
     Loading = LoadingScreen(Game, "I'm actually loading your walls", Screen, FullLoading, Loading)
     for wall in Game.all_wall:
         wall.rect.x -= Game.PositionPlayer - Replace
-    Loading = LoadingScreen(Game, "Your data has been loaded", Screen, FullLoading, Loading)
+    LoadingScreen(Game, "Your data has been loaded", Screen, FullLoading, Loading)
     Game.Sol.rect.x = 0
-    print("\nYour data has been loaded!\n", Loading, "/", FullLoading)
     return 0
 
 
@@ -838,10 +837,10 @@ def LoadingScreen(Game, Message, Screen, Ratio, Loading):
     Screen.blit(image, (rect.x, rect.y))
 
     Texte(Game.police1, "Please Wait: " + str((Loading / Ratio) * 100) + "%", (255, 255, 255),
-          Screen, (450, pygame.Surface.get_rect(Screen).width-512, pygame.Surface.get_rect(Screen).height/4))
+          Screen, (pygame.Surface.get_rect(Screen).width-512, pygame.Surface.get_rect(Screen).height/4))
 
     Texte(Game.police1, Message, (255, 255, 255), Screen,
-          (450, pygame.Surface.get_rect(Screen).width-512, pygame.Surface.get_rect(Screen).height/3))
+          (pygame.Surface.get_rect(Screen).width-512, pygame.Surface.get_rect(Screen).height/3))
 
     pygame.display.flip()
 
