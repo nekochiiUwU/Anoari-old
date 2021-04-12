@@ -49,6 +49,7 @@ class Game:
         self.Fullscreen = 0
         self.Position = 0
         self.Frame = 0
+        self.Tick = 0
 
         # Listes -tremisabdoul
         self.pressed = {}
