@@ -113,7 +113,12 @@ def Printer(Screen, Game):
 
     Game.Particles.Print(Game, Screen)
 
-    for Structure in Game.all_plateform, Game.all_wall:
+    for Structure in Game.all_plateform:
+        Structure.rect.x -= Game.Position
+        if -250 < Structure.rect.x < 1280:
+            Screen.blit(Structure.image, Structure.rect)
+
+    for Structure in Game.all_wall:
         Structure.rect.x -= Game.Position
         if -250 < Structure.rect.x < 1280:
             Screen.blit(Structure.image, Structure.rect)
@@ -135,14 +140,20 @@ def Printer(Screen, Game):
     Screen.blit(Game.Player.image, Game.Player.rect)
 
     if Game.Frame % 2:
-        Game.Particles.Add((Game.Player.rect.center[0] - 35, Game.Player.rect.center[1] - 20), 'red', 6)
-        Game.Particles.Add((Game.Player.rect.center[0] - 35, Game.Player.rect.center[1] - 20), 'orangered', 6)
-        Game.Particles.Add((Game.Player.rect.center[0] - 35, Game.Player.rect.center[1] - 20), 'orangered4', 6)
-        Game.Particles.Add((Game.Player.rect.center[0] - 35, Game.Player.rect.center[1] - 20), 'red3', 6)
+        Game.Particles.Add(Game, (Game.Player.rect.center[0] - 35, Game.Player.rect.center[1] - 20), 'red', 6)
+        Game.Particles.Add(Game, (Game.Player.rect.center[0] - 35, Game.Player.rect.center[1] - 20), 'orangered', 6)
+        Game.Particles.Add(Game, (Game.Player.rect.center[0] - 35, Game.Player.rect.center[1] - 20), 'orangered4', 6)
+        Game.Particles.Add(Game, (Game.Player.rect.center[0] - 35, Game.Player.rect.center[1] - 20), 'red3', 6)
 
     if Game.ShowHitbox:
-        for Object in Game.Entities, Game.all_wall, Game.all_plateform:
-            Draw_rect(Screen, Game.Object)
+        for Object in Game.Entities:
+            Draw_rect(Screen, Object)
+
+        for Object in Game.all_wall:
+            Draw_rect(Screen, Object)
+
+        for Object in Game.all_plateform:
+            Draw_rect(Screen, Object)
 
     UIPrinter(Screen, Game)
 
@@ -291,13 +302,13 @@ def LobbyBlit(Screen, Game):
     Screen.blit(Game.UI.lobby_loadbutton, Game.UI.lobby_loadbuttonrect)
     Screen.blit(Game.UI.lobby_playbutton, Game.UI.lobby_playbuttonrect)
     Screen.blit(Game.UI.lobby_quitbutton, Game.UI.lobby_quitbuttonrect)
+    MousePrinter(Screen, Game)
 
 
 def Lobby(Game, Screen):
     """Loop d'ecran d'acceuil -steven"""
 
     while Game.Lobby:
-        # Initialisation du compteur de temps pour limiter les fps -tremisabdoul
         tick = Game.time()
 
         for event in pygame.event.get():
@@ -312,7 +323,8 @@ def Lobby(Game, Screen):
                 Game.pressed[event.key] = False
 
             elif event.type == pygame.MOUSEBUTTONDOWN:
-                # Boutons souris enfonces -nekochii
+                Game.pressed[str(event.button)] = True
+
                 if Game.UI.lobby_playbuttonrect.collidepoint(event.pos):
                     Game.Click.play()
                     Game.InGame = True
@@ -327,15 +339,9 @@ def Lobby(Game, Screen):
                     Game.Running = False
                     pygame.quit()
 
-            # Boutons souris enfonces -nekochii x tremisabdoul
-            if event.type == pygame.MOUSEBUTTONDOWN:
-                print(event.button)
-                Game.pressed[str(event.button)] = True
-            # Boutons souris relaches -nekochii
             elif event.type == pygame.MOUSEBUTTONUP:
                 Game.pressed[str(event.button)] = False
 
-            # Bouton croix en haut a droite (Fermer le Programme) -tremisabdoul
             if event.type == pygame.QUIT:
                 Game.InGame = False
                 Game.Lobby = False
@@ -343,23 +349,16 @@ def Lobby(Game, Screen):
                 Game.running = False
                 pygame.quit()
 
-        # Permet de recuperer le nombre de frames a la seconde -tremisabdoul
-        tickchecker = Game.time()
-        tickchecker -= tick
-
         Game.UI.TitleMenuButtunDeplacement(Game)
+
         LobbyBlit(Screen, Game)
 
-        MousePrinter(Screen, Game)
-
-        while tickchecker < 0.016:
-            tickchecker = Game.time()
-            tickchecker -= tick
-
+        tickchecker = Game.time()
+        tickchecker -= tick
         fps = 1 / tickchecker
         fps = "FPS : " + str(round(fps))
-        # Transforme une variable en composent graphique -tremisabdoul
-        printfps = police1.render(str(fps), True, (255, 255, 255))
+
+        printfps = Game.police1.render(str(fps), True, (255, 255, 255))
         Screen.blit(printfps, (6, 34))
 
         pygame.display.flip()

@@ -56,7 +56,7 @@ class Game:
         self.Grid = {}
 
         # Audio -tremisabdoul
-        self.Pas = pygame.mixer.Sound("Assets/Audio/FX/pas.mp3")
+        self.Click = pygame.mixer.Sound("Assets/Audio/FX/pas.mp3")
         self.data = pygame.mixer.Sound("Assets/Audio/FX/DATA.mp3")
 
         # Polices -tremisabdoul
