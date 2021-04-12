@@ -8,28 +8,24 @@ print("/Scripts/Classes: Loading")
 
 
 class Game:
-
-    # Fonction exÃƒÂ©cutÃƒÂ©e au dÃƒÂ©marrage de Game -tremisabdoul
     def __init__(self):
-        # SaveSlot devient une sous-classe de Game -tremisabdoul
+
+        # LocalImport -tremisabdoul
         self.Saves = SaveSlot()
-        # UserData devient une sous-classe de Game -tremisabdoul
         self.UserData = UserData()
+
+        # Resolution actuelle-tremisabdoul
         self.DataY = self.UserData.UserGraphicInfo.current_h
         self.DataX = self.UserData.UserGraphicInfo.current_w
 
-        # Contient toutes les touches prÃƒÂ©ssÃƒÂ©es -tremisabdoul
-        self.pressed = {}
+        # import -tremisabdoul
+        from math import atan2, degrees
+        from time import time
+        from random import randint
+        self.AngleCalc, self.Deges, self.time, self.randint = atan2, degrees, time, randint
+        del atan2, degrees, time, randint
 
-        # Variables Generales -tremisabdoul
-        from math import atan2
-        self.AngleCalc = atan2
-        del atan2
-
-        from math import degrees
-        self.Deges = degrees
-        del degrees
-
+        # Booleens -tremisabdoul
         self.Running = True
         self.Lobby = True
         self.ShowHitbox = False
@@ -38,6 +34,8 @@ class Game:
         self.Option = False
         self.Pause = False
         self.SaveMenu = False
+
+        # Game Variables -tremisabdoul
         self.SaveValue = 0
         self.PlateformNumber = 1
         self.Tickchecker = 1
@@ -51,55 +49,58 @@ class Game:
         self.Fullscreen = 0
         self.Position = 0
         self.Frame = 0
+
+        # Listes -tremisabdoul
+        self.pressed = {}
         self.Paterns = {}
         self.Grid = {}
 
-        self.Pas = None
-        self.Jump = None
-        self.data = None
-        self.atterissage = None
-        self.resp = None
+        # Audio -tremisabdoul
+        self.Pas = pygame.mixer.Sound("Assets/Audio/FX/pas.mp3")
+        self.data = pygame.mixer.Sound("Assets/Audio/FX/DATA.mp3")
 
-    def Rescale(self, value, XorY):
-        if XorY == "X":
-            return round((value / 1280) * self.DataX)
-        elif XorY == "Y":
-            return round((value / 720) * self.DataY)
+        # Polices -tremisabdoul
+        self.police1 = pygame.font.Font("Assets/Font/Retro Gaming.ttf", 10)
+        self.police2 = pygame.font.Font("Assets/Font/Retro Gaming.ttf", 20)
 
-    def init_suite(self):
-        # Player devient une sous-classe de Game -tremisabdoul
+        # Classes -tremisabdoul
         self.Player = Player()
         self.Arm = Arm()
-        # Sol devient une sous-classe de Game -Steven
-        self.Sol = Sol()
-        # Mouse devient une sous-classe de Game -tremisabdoul
-        self.Mouse = Mouse()
-        # UI devient une sous-classe de Game -tremisabdoul
-        self.UI = UI()
-        # Monster devient une sous-classe de Game - steven
+
         self.Monster = Monster()
-        self.Background = Background()
+
         self.wall = Wall()
+        self.Sol = Sol()
+        self.Background = Background()
+
+        self.Mouse = Mouse()
+        self.UI = UI()
+
         self.Projectile = Projectile(self)
+
         self.Particles = Particles()
 
-        # CrÃƒÂ©ation du groupe composÃƒÂ© de tous les monstres -Steven
+        # Groupes -tremisabdoul
         self.all_Monster = pygame.sprite.Group()
-        self.all_Monster.add(self.Monster)
-        # CrÃƒÂ©ation du groupe composÃƒÂ© de tous les joueurs -Steven
         self.all_Player = pygame.sprite.Group()
-        self.all_Player.add(self.Player)
         self.Entities = pygame.sprite.Group()
-        self.Entities.add(self.Monster)
-        self.Entities.add(self.Player)
-        # CrÃƒÂ©ation du groupe composÃƒÂ© de toutes les plateformes -Steven
         self.all_plateform = pygame.sprite.Group()
-        self.all_plateform.add(self.Sol)
         self.all_wall = pygame.sprite.Group()
-        self.all_wall.add(self.wall)
         self.AcrossWall = pygame.sprite.Group()
         self.ApplyedPatens = pygame.sprite.Group()
         self.Projectiles = pygame.sprite.Group()
+        self.all_Monster.add(self.Monster)
+        self.Entities.add(self.Monster)
+        self.Entities.add(self.Player)
+        self.all_plateform.add(self.Sol)
+        self.all_wall.add(self.wall)
+        self.all_Player.add(self.Player)
+
+    def Rescale(self, value, XorY):
+        if XorY == "X":
+            return round((value / self.UserData.DataX) * self.DataX)
+        elif XorY == "Y":
+            return round((value / self.UserData.DataY) * self.DataY)
 
 
 
@@ -687,10 +688,12 @@ class Projectile(pygame.sprite.Sprite):
         self.rect.y += self.DirectionY
         self.DirectionY += 0.05
         self.angle = -Game.Deges(Game.AngleCalc(self.DirectionY, self.DirectionX))
+
         self.image = pygame.transform.rotozoom(self.origin_image, self.angle, 1)
         self.rect = self.image.get_rect(center=self.rect.center)
-        Game.Particles.Add(self.rect.center, 'red', 8)
-        Game.Particles.Add(self.rect.center, 'orangered', 8)
+
+        Game.Particles.Add(Game, self.rect.center, 'red', 8)
+        Game.Particles.Add(Game, self.rect.center, 'orangered', 8)
 
         if not -1280 < self.rect.x - Game.Player.rect.x < 1280\
                 or not -720 < self.rect.y < 720\
@@ -698,13 +701,13 @@ class Projectile(pygame.sprite.Sprite):
                 or Game.Player.check_collisions(self, Game.all_plateform):
             Game.Projectiles.remove(self)
             for _ in range(5):
-                Game.Particles.Add(self.rect.center, 'Grey80', 32)
+                Game.Particles.Add(Game, self.rect.center, 'Grey80', 32)
             for _ in range(5):
-                Game.Particles.Add(self.rect.center, 'Grey70', 24)
+                Game.Particles.Add(Game, self.rect.center, 'Grey70', 24)
             for _ in range(5):
-                Game.Particles.Add(self.rect.center, 'Grey60', 16)
+                Game.Particles.Add(Game, self.rect.center, 'Grey60', 16)
             for _ in range(5):
-                Game.Particles.Add(self.rect.center, 'Grey50', 12)
+                Game.Particles.Add(Game, self.rect.center, 'Grey50', 12)
 
 
 class Particles:
@@ -714,20 +717,24 @@ class Particles:
     def Print(self, Game, Screen):
         if self.Particles:
             for Particle in self.Particles:
+                Particle[0][0] -= Game.Position
+
                 if not Game.Frame % 2:
                     Particle[0][1] += Particle[3]
                     Particle[0][0] += Particle[2]
+
                 Particle[1] -= Particle[5]
+
                 if Particle[1] < 0.1:
                     self.Particles.remove(Particle)
                 pygame.draw.circle(Screen, Particle[4], [Particle[0][0], Particle[0][1]], Particle[1])
 
-    def Add(self, Position, Color, Radius):
-        from random import randint
-        x = Position[0] + randint(-Radius / 2, Radius / 2)
-        y = Position[1] + randint(-Radius / 2, Radius / 2)
-        DirectionX = randint(-2, 2)
-        DirectionY = randint(-2, 2)
+    def Add(self, Game, Position, Color, Radius):
+        x = Position[0] + Game.randint(-Radius / 2, Radius / 2)
+        y = Position[1] + Game.randint(-Radius / 2, Radius / 2)
+
+        DirectionX = Game.randint(-2, 2)
+        DirectionY = Game.randint(-2, 2)
+
         Particle = [[x, y], Radius, DirectionX, DirectionY, Color, Radius / 20]
         self.Particles.append(Particle)
-
