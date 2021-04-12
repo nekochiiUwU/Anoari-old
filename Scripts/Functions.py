@@ -274,7 +274,6 @@ def pause(Game, Screen):
         FrameLimiter(Game, tick)
 
 
-# Loop de Jeu: -tremisabdoul
 def inGame(Game, Screen):
     """ Loop de Jeu -tremisabdoul"""
 
@@ -364,6 +363,19 @@ def Lobby(Game, Screen):
         pygame.display.flip()
 
 
+def OptionPrinter(Game, Screen):
+    """Affichage des options -steven"""
+    White = (255, 255, 255)
+    Screen.fill((0, 0, 0))
+    pygame.draw.rect(Screen, White, pygame.Rect(600, 200, 100, 60), 2)
+
+    Texte(Game.police2, 'Resolution : ', (255, 255, 255), Screen, (100, 100))
+    Texte(Game.police2, 'Volume : ', (255, 255, 255), Screen, (100, 225))
+    Texte(Game.police2, 'Controles : ', (255, 255, 255), Screen, (100, 350))
+
+    MousePrinter(Screen, Game)
+
+
 def Option(Game, Screen):
     """Loop des options -steven"""
     while Game.Option:
@@ -392,19 +404,6 @@ def Option(Game, Screen):
         tickchecker = Game.time()
         tickchecker -= tick
 
-        MousePrinter(Screen, Game)
-
-        White = (255, 255, 255)
-        Screen.fill((0, 0, 0))
-        pygame.draw.rect(Screen, White, pygame.Rect(600, 200, 100, 60),  2)
-
-        Texte(Game.police2, 'Resolution : ', (255, 255, 255), Screen, (100, 100))
-        Texte(Game.police2, 'Volume : ', (255, 255, 255), Screen, (100, 225))
-        Texte(Game.police2, 'Controles : ', (255, 255, 255), Screen, (100, 350))
-
-        tickchecker = Game.time()
-        tickchecker -= tick
-
         if tickchecker:
             fps = 1 / tickchecker
             fps = "FPS : " + str(round(fps))
@@ -416,20 +415,30 @@ def Option(Game, Screen):
         pygame.display.flip()
 
 
-# Fonction du menu des sauvegardes -steven
+def SaveMenuPrinter(Game, Screen, SaveButton1, SaveButton2, SaveButton3):
+    """Affichage dans la Loop SaveMenu -steven"""
+    MousePrinter(Screen, Game)
+
+    White = (255, 255, 255)
+    Screen.fill((0, 0, 0))
+
+    # Creation des rectangles -steven
+    Rectangle(Screen, White, SaveButton1, 2)
+    Rectangle(Screen, White, SaveButton2, 2)
+    Rectangle(Screen, White, SaveButton3, 2)
+
+
 def SaveMenu(Game, Screen):
+    """Loop de menu de save -steven"""
+
+    SaveButton1 = pygame.Rect(125, 50, 500, 100)
+    SaveButton2 = pygame.Rect(125, 200, 500, 100)
+    SaveButton3 = pygame.Rect(125, 350, 500, 100)
+
     while Game.SaveMenu:
-        # Initialisation du compteur de temps pour limiter les fps -tremisabdoul
         tick = Game.time()
 
-        # Position des rectangles de sauvegarde -steven
-        SaveButton1 = pygame.Rect(125, 50, 500, 100)
-        SaveButton2 = pygame.Rect(125, 200, 500, 100)
-        SaveButton3 = pygame.Rect(125, 350, 500, 100)
-
-        # Liste regroupant les noms des sauvegardes
         State = ["Save/save1.csv", "Save/save2.csv", "Save/save3.csv", "Save/save4.csv", "Save/save5.csv"]
-        # SaveState = 0
 
         for event in pygame.event.get():
 
@@ -499,46 +508,24 @@ def SaveMenu(Game, Screen):
                 Game.running = False
                 pygame.quit()
 
-        # Permet de recuperer le nombre de frames a la seconde -tremisabdoul
         tickchecker = Game.time()
         tickchecker -= tick
 
-        MousePrinter(Screen, Game)
+        if tickchecker:
+            fps = 1 / tickchecker
+            fps = "FPS : " + str(round(fps))
+        else:
+            fps = "Il n'as meme pas eu le temps de compter..."
 
-        White = (255, 255, 255)
-        Screen.fill((0, 0, 0))
+        Texte(Game.police1, fps, (255, 255, 255), Screen, (6, 34))
 
-        # Creation des rectangles -steven
-        Rectangle(Screen, White, SaveButton1, 2)
-        Rectangle(Screen, White, SaveButton2, 2)
-        Rectangle(Screen, White, SaveButton3, 2)
+        SaveMenuPrinter(Game, Screen, SaveButton1, SaveButton2, SaveButton3)
 
         pygame.display.flip()
 
-        while tickchecker < 0.017:
-            tickchecker = Game.time()
-            tickchecker -= tick
 
-        fps = 1 / tickchecker
-        fps = "FPS : " + str(round(fps))
-        # Transforme une variable en composent graphique -tremisabdoul
-        printfps = Game.police1.render(str(fps), True, (255, 255, 255))
-        Screen.blit(printfps, (6, 34))
-
-
-# Fonction du texte -steven
-def Texte(Police, text, color, Screen, Position):
-    Texte_Contenu = Police.render(text, 1, color)
-    Screen.blit(Texte_Contenu, Position)
-
-
-# Fonction des rectangles -steven
-def Rectangle(Screen, color, rect, border_radius):
-    pygame.draw.rect(Screen, color, rect, border_radius)
-
-
-# TKT -tremisabdoul
 def Data_Save(Game, Screen, SaveState):
+    """Save des données -tremisabdoul"""
 
     Loading = 0
     FullLoading = 4
@@ -607,8 +594,8 @@ def Data_Save(Game, Screen, SaveState):
     return 0
 
 
-# TKT -tremisabdoul
 def Data_Load(Game, Screen, SaveState):
+    """Load des données -tremisabdoul"""
 
     Loading = 0
     FullLoading = 7
@@ -672,8 +659,8 @@ def Data_Load(Game, Screen, SaveState):
     return 0
 
 
-# TKT -tremisabdoul
 def ReScale(Game, Screen):
+    """PAS FINI    Rescale Trop la flemme le le finir je vais le faire vous inquétez pas -tremisabdoul    PAS FINI"""
     Game.DataX = pygame.Surface.get_width(Screen)
     Game.DataY = pygame.Surface.get_height(Screen)
     Game.Player.image = pygame.image.load("Assets/Visual/Mystique/resp1.png")
@@ -685,8 +672,8 @@ def ReScale(Game, Screen):
                                                 Game.Rescale(Game.Player.image.get_height(), "Y")))
 
 
-# TKT -tremisabdoul
 def Animation(Game):
+    """Animations (base par tremisabdoul) (PrepaSpell par nekochii) (Déssinées par nekochii)"""
     if Game.PrepaSpell:
         if Game.Player.YVector:
             if Game.Player.YVector < 0:
@@ -709,7 +696,6 @@ def Animation(Game):
         StandAnimation(Game)
 
 
-# TKT -tremisabdoul
 def FallAnimation(Game):
     if Game.Player.Direction:
         Game.Player.image = pygame.image.load("Assets/Visual/Mystique/Jump/Jump2.png")
@@ -717,7 +703,6 @@ def FallAnimation(Game):
         Game.Player.image = pygame.image.load("Assets/Visual/Mystique/Left/Jump/Jump2.png")
 
 
-# TKT -tremisabdoul
 def JumpAnimation(Game):
     if Game.Player.Direction:
         Game.Player.image = pygame.image.load("Assets/Visual/Mystique/Jump/Jump1.png")
@@ -725,7 +710,6 @@ def JumpAnimation(Game):
         Game.Player.image = pygame.image.load("Assets/Visual/Mystique/Left/Jump/Jump1.png")
 
 
-# TKT -tremisabdoul
 def RunAnimation(Game):
     if Game.Player.Direction:
         if Game.Frame % 4 == 0:
@@ -745,7 +729,6 @@ def RunAnimation(Game):
                 Game.Player.image = pygame.image.load("Assets/Visual/Mystique/Left/Run/Run2.png")
 
 
-# TKT -tremisabdoul
 def StandAnimation(Game):
     if Game.Player.Direction:
         if Game.Frame % 4 == 0:
@@ -765,7 +748,6 @@ def StandAnimation(Game):
                 Game.Player.image = pygame.image.load("Assets/Visual/Mystique/Left/resp1.png")
 
 
-# TKT -tremisabdoul
 def PrepaSpellJumpAnimation(Game):
     if Game.Player.Direction:
         if Game.Frame % 4 == 0:
@@ -775,7 +757,6 @@ def PrepaSpellJumpAnimation(Game):
             Game.Player.image = pygame.image.load("Assets/Visual/Mystique/Left/Spells/mystique prepa sort Jump.png")
 
 
-# TKT -tremisabdoul
 def PrepaSpellFallAnimation(Game):
     if Game.Player.Direction:
         if Game.Frame % 4 == 0:
@@ -785,7 +766,6 @@ def PrepaSpellFallAnimation(Game):
             Game.Player.image = pygame.image.load("Assets/Visual/Mystique/Left/Spells/mystique prepa sort Fall.png")
 
 
-# TKT -tremisabdoul
 def PrepaSpellRunAnimation(Game):
     if Game.Player.Direction:
         if Game.Frame % 4 == 0:
@@ -807,7 +787,6 @@ def PrepaSpellRunAnimation(Game):
                 ("Assets/Visual/Mystique/Left/Spells/mystique prepa sort marche 2.png")
 
 
-# TKT -tremisabdoul
 def PrepaSpellAnimation(Game):
     if Game.Player.Direction:
         if Game.Frame % 4 == 0:
@@ -817,14 +796,15 @@ def PrepaSpellAnimation(Game):
             Game.Player.image = pygame.image.load("Assets/Visual/Mystique/Left/Spells/mystique prepa sort.png")
 
 
-# TKT -tremisabdoul
 def BackgroundScroll(Game):
+    """Déplacement du Background -tremisabdoul"""
     checker = Game.PositionPlayer % 1280
     if -10 < checker < 10:
         Game.Background.rect.midtop = 640 - checker, 0
 
 
 def LoadingScreen(Game, Message, Screen, Ratio, Loading):
+    """Affichage d'un écran de chargement -tremisabdoul"""
     Loading += 1
     Screen.fill((0, 0, 0))
 
@@ -848,12 +828,14 @@ def LoadingScreen(Game, Message, Screen, Ratio, Loading):
 
 
 def Draw_rect(Screen, Target):
+    """Affiche le canevas / la HitBox de l'élément appellé -tremisabdoul"""
     pygame.draw.lines(Screen, (200, 150, 100), True, (
         Target.rect.midbottom, Target.rect.midtop, Target.rect.topleft, Target.rect.bottomleft, Target.rect.bottomright,
         Target.rect.topright, Target.rect.topleft, Target.rect.midleft, Target.rect.midright, Target.rect.bottomright))
 
 
 def NewPlatform(Game, x, y):
+    """Création d'une plateforme -tremisabdoul"""
     from Scripts.Classes import Plateform
     Plateform = Plateform()
     Plateform.rect.x, Plateform.rect.y = x * 250, y * 150 + 130
@@ -862,6 +844,7 @@ def NewPlatform(Game, x, y):
 
 
 def NewWall(Game, x, y):
+    """Création d'un mur -tremisabdoul"""
     from Scripts.Classes import Wall
     Wall = Wall()
     Wall.rect.x, Wall.rect.y, Wall.rect.height, Wall.rect.width = x * 250, y * 150, 150, 250
@@ -870,8 +853,9 @@ def NewWall(Game, x, y):
 
 
 def Movements(Game, Screen):
-    # Fonction de deplacement gauche / droite -tremisabdoul
+    """Contiens tout les mouvements ingame -tremisabdoul"""
     global booleanjump
+
     DeplacementX(Game)
 
     for Entity in Game.Entities:
@@ -893,15 +877,13 @@ def Movements(Game, Screen):
                 Monster.Direction = 1
                 Monster.Move_Left(Game)
 
-    # Active le Jump() -tremisabdoul
     if Game.pressed.get(pygame.K_SPACE) \
             and Game.Player.check_collisions(Game.Player, Game.all_plateform) \
             and Game.Player.YVector == 0:
-
-        global booleanjump
         Game.Player.SpeedY = -5
         booleanjump = 1
         Jump(Game)
+
     elif Game.Player.SpeedY:
         Jump(Game)
 
@@ -909,8 +891,6 @@ def Movements(Game, Screen):
         Game.Player.Force.Gravity(Game, Entity)
         Entity.YVector = Entity.LastY - Entity.rect.y
 
-    # Deplacements de player -tremisabdoul
-    # Game.Player.rect.x += Game.Player.Force.AccelerationFunctionX()
     Game.Position = Game.Player.Force.AccelerationFunctionX()
     for Target in Game.Entities:
         Collide = Game.Player.check_collisions(Target, Game.all_wall)
@@ -963,7 +943,7 @@ def Movements(Game, Screen):
 
 
 def InGameKeys(Game, Screen):
-    # Check les input et instances -tremisabdoul
+    """Check des input et instances -tremisabdoul"""
     for event in pygame.event.get():
 
         # Touches enfoncees -tremisabdoul
@@ -1039,13 +1019,12 @@ def InGameKeys(Game, Screen):
 
 
 def FrameLimiter(Game, Screen):
-    # Permet d'avoir des frames regulieres -tremisabdoul
+    """Limiteur de FPS -tremisabdoul"""
     Game.Tickchecker = Game.time()
     Game.Tickchecker -= Game.Tick
     if Game.ShowHitbox:
         print("\n Player Posion: ", Game.PositionPlayer)
         try:
-            global Test
             start = Game.time()
             Test = Game.time() - start
             TestL1 = str(round((Game.Tickchecker - Test) / 0.00017)) + "    % of 60 FPS: Framerate without Test"
@@ -1054,7 +1033,7 @@ def FrameLimiter(Game, Screen):
             Texte(Game.police1, TestL1, (255, 255, 255), Screen, (1000, 20))
             Texte(Game.police1, TestL2, (255, 255, 255), Screen, (1000, 40))
             Texte(Game.police1, TestL3, (255, 255, 255), Screen, (1000, 60))
-        except:
+        finally:
             Test = 0
 
     while Game.Tickchecker < 0.017:
@@ -1062,51 +1041,7 @@ def FrameLimiter(Game, Screen):
         Game.Tickchecker -= Game.Tick
 
 
-
-
-def Paterns(Game, NewWall, NewPlatform):
-
-    Load = []
-    PaternsFile = open('Data/Paterns.txt', 'r')
-
-    for line in PaternsFile:
-        line = line.strip()
-        Load.append(line)
-
-    Load = "".join(Load)
-    Load = Load.split(",")
-    Game.Paterns = Load
-    Game.Paterns.pop(0)
-
-    for Patern in range(len(Game.Paterns)):
-        print(Patern)
-        Game.Paterns[Patern] = Game.Paterns[Patern].split(":")
-        print("\nID Game.Paterns[", Patern, "] :  ", Game.Paterns[Patern], ": ", sep='')
-
-        for item in range(len(Game.Paterns[Patern])):
-            if 2 <= item <= 6:
-                Game.Paterns[Patern][item] = ",".join(Game.Paterns[Patern][item])
-                Game.Paterns[Patern][item] = Game.Paterns[Patern][item].split(",")
-            print("\tID Game.Paterns[", Patern, "][", item, "] :  ", Game.Paterns[Patern][item], "\n", sep='')
-            if isinstance(Game.Paterns[Patern][item], list):
-                for Chr in range(len(Game.Paterns[Patern][item])):
-                    print("\t\tID Game.Paterns[", Patern, "][", item, "][", Chr, "] :  ",
-                          Game.Paterns[Patern][item][Chr], sep='')
-
-    Game.Grid = {"xTiles": len(Game.Paterns[0][2]),
-                 "yTiles": len(Game.Paterns[0]),
-                 "width": 250,
-                 "height": 150,
-                 "x": 0,
-                 "y": 0}
-
-    for _ in range(30):
-        from Scripts.Classes import Patern
-        Patern = Patern()
-        Patern.Init(Game, NewWall, NewPlatform)
-        Game.ApplyedPatens.add(Patern)
-
-
+"""
 def initF():
     Animations = [
         "\nEx of usage:\nGame.Player.image = Animations[a[b[c[d[e]]]]]\n"
@@ -1208,9 +1143,11 @@ def initF():
                    '=':
                    'StepX = 0'
                    'StepY = 0'}
+"""
 
 
 def SmoothCamera(Game):
+    """Mouvements de Caméra -tremisabdoul"""
     Game.Player.LastX = Game.Player.rect.x - 350
     Game.lastPosition = Game.Position
     Game.Player.rect.x = 350
@@ -1222,8 +1159,63 @@ def SmoothCamera(Game):
 
 
 def Lunch_Projectile(Game):
+    """Lancement de Projectiles -tremisabdoul"""
     from Scripts.Classes import Projectile
     Game.Projectiles.add(Projectile(Game))
+
+
+def Texte(Police, text, color, Screen, Position):
+    """Creation de texte -steven"""
+    Texte_Contenu = Police.render(text, 1, color)
+    Screen.blit(Texte_Contenu, Position)
+
+
+def Rectangle(Screen, color, rect, border_radius):
+    """Creation de rectangle -steven"""
+    pygame.draw.rect(Screen, color, rect, border_radius)
+
+
+def Paterns(Game, NewWall, NewPlatform):
+    """Initialisation: Paterns -tremisabdoul"""
+    Load = []
+    PaternsFile = open('Data/Paterns.txt', 'r')
+
+    for line in PaternsFile:
+        line = line.strip()
+        Load.append(line)
+
+    Load = "".join(Load)
+    Load = Load.split(",")
+    Game.Paterns = Load
+    Game.Paterns.pop(0)
+
+    for Patern in range(len(Game.Paterns)):
+        print(Patern)
+        Game.Paterns[Patern] = Game.Paterns[Patern].split(":")
+        print("\nID Game.Paterns[", Patern, "] :  ", Game.Paterns[Patern], ": ", sep='')
+
+        for item in range(len(Game.Paterns[Patern])):
+            if 2 <= item <= 6:
+                Game.Paterns[Patern][item] = ",".join(Game.Paterns[Patern][item])
+                Game.Paterns[Patern][item] = Game.Paterns[Patern][item].split(",")
+            print("\tID Game.Paterns[", Patern, "][", item, "] :  ", Game.Paterns[Patern][item], "\n", sep='')
+            if isinstance(Game.Paterns[Patern][item], list):
+                for Chr in range(len(Game.Paterns[Patern][item])):
+                    print("\t\tID Game.Paterns[", Patern, "][", item, "][", Chr, "] :  ",
+                          Game.Paterns[Patern][item][Chr], sep='')
+
+    Game.Grid = {"xTiles": len(Game.Paterns[0][2]),
+                 "yTiles": len(Game.Paterns[0]),
+                 "width": 250,
+                 "height": 150,
+                 "x": 0,
+                 "y": 0}
+
+    for _ in range(30):
+        from Scripts.Classes import Patern
+        Patern = Patern()
+        Patern.Init(Game, NewWall, NewPlatform)
+        Game.ApplyedPatens.add(Patern)
 
 
 print("/Scripts/Functions: Loaded")
