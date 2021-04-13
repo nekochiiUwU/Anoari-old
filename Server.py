@@ -14,18 +14,19 @@ try:
 except socket.error as error:
     print(str(error))
 
-s.listen(4)  # Limite d'utulisateurs sur le serveur
+s.listen(10)  # Limite d'utulisateurs sur le serveur
 
 print("Connection...")
 
 """ ==================== """
 
 
-def Client(Connection):
+def Client(conn):
+    conn.send(str.encode("Connected"))
     reply = ""
     while True:
         try:
-            data = Connection.recv(2048) # Taille ded infos que je récupère
+            data = conn.recv(2048) # Taille ded infos que je récupère
             reply = data.decode("utf-8")
 
             if not data:
@@ -34,15 +35,16 @@ def Client(Connection):
             else:
                 print("Recived informations", reply)
                 print("Sending informations", reply)
-            Connection.sendall(str.encode(reply))
+            conn.sendall(str.encode(reply))
         except:
             break
+    print("Lost Connection")
 
 
 """ ==================== """
 
 while True:
     conn, addr = s.accept()
-    print("Connected to:", Addr)
+    print("Connected to:", addr)
 
     start_new_thread(Client, (conn,))  # Run en parallèle sur un autre thread
