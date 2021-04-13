@@ -98,11 +98,11 @@ class Game:
         self.all_Player.add(self.Player)
 
     def Rescale(self, value, XorY):
+        print("===\nx", self.UserData.DataX, ">>>", self.DataX, "\ny", self.UserData.DataY, ">>>", self.DataY)
         if XorY == "X":
             return round((value / self.UserData.DataX) * self.DataX)
         elif XorY == "Y":
             return round((value / self.UserData.DataY) * self.DataY)
-
 
 
 """=====  Game.Player [2.0]  ====="""
@@ -573,7 +573,7 @@ class Arm:
         super().__init__()
         self.Game = Game
 
-        self.image = pygame.image.load("Assets/Visual/Mystique/Bras/bras mystique prepa spell.png")
+        self.image = pygame.image.load("Assets/Visual/Mystique/Spells/bras mystique prepa spell.png")
         self.imageDirection = 0
         self.rect = self.image.get_rect()
 
@@ -589,12 +589,12 @@ class Arm:
             self.angle = -Game.Deges(Game.AngleCalc(Game.Mouse.rect.center[1] - self.rect.center[1],
                                                     Game.Mouse.rect.center[0] - self.rect.center[0]))
 
-        if -90 < self.angle < 90: #and self.imageDirection:
-            self.origin_image = pygame.image.load("Assets/Visual/Mystique/Bras/bras mystique prepa spell.png")
+        if -90 < self.angle < 90:
+            self.origin_image = pygame.image.load("Assets/Visual/Mystique/Spells/bras mystique prepa spell.png")
             self.imageDirection = 0
             Game.Player.Direction = 1
-        elif not -90 < self.angle < 90: #and not self.imageDirection:
-            self.origin_image = pygame.image.load("Assets/Visual/Mystique/Left/bras mystique prepa spell.png")
+        elif not -90 < self.angle < 90:
+            self.origin_image = pygame.image.load("Assets/Visual/Mystique/Left/Spells/bras mystique prepa spell.png")
             self.imageDirection = 1
             Game.Player.Direction = 0
 
@@ -646,7 +646,6 @@ class Projectile(pygame.sprite.Sprite):
                        "Assets/Visual/Spells/FireBall/Nion3.png"]
         self.Frame = 0
         self.origin_image = pygame.image.load("Assets/Visual/Spells/FireBall/Nion1.png")
-        # self.image = pygame.transform.scale(self.image, (10, 10))
         self.rect = self.origin_image.get_rect()
         self.rect.x = Game.Player.rect.x + 80
         self.rect.y = Game.Player.rect.y + 45

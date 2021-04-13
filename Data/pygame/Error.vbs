@@ -1,1 +1,0 @@
-MsgBox "-tremisabdoul",0,"Installation PyGame"

@@ -97,14 +97,13 @@ def Printer(Screen, Game):
     Game.Background.rect.x -= Game.Position
     Game.Sol.rect.x += Game.Position
 
-    print(Game.Sol.rect)
-
     Screen.blit(Game.Background.image, Game.Background.rect)
 
     for Entity in Game.Entities:
         if Entity != Game.Player:
             Entity.rect.x -= Game.Position
             Screen.blit(Entity.image, Entity.rect)
+            Entity.Life(Screen, Game)
 
     for Projectile in Game.Projectiles:
         Projectile.rect.x -= Game.Position
@@ -354,11 +353,14 @@ def Lobby(Game, Screen):
 
         tickchecker = Game.time()
         tickchecker -= tick
-        fps = 1 / tickchecker
-        fps = "FPS : " + str(round(fps))
 
-        printfps = Game.police1.render(str(fps), True, (255, 255, 255))
-        Screen.blit(printfps, (6, 34))
+        if tickchecker:
+            fps = 1 / tickchecker
+            fps = "FPS : " + str(round(fps))
+        else:
+            fps = "Il n'as meme pas eu le temps de compter..."
+
+        Texte(Game.police1, fps, (255, 255, 255), Screen, (6, 34))
 
         pygame.display.flip()
 
@@ -400,6 +402,8 @@ def Option(Game, Screen):
                 Game.Pause = False
                 Game.running = False
                 pygame.quit()
+
+        OptionPrinter(Game, Screen)
 
         tickchecker = Game.time()
         tickchecker -= tick
@@ -779,12 +783,12 @@ def PrepaSpellRunAnimation(Game):
         if Game.Frame % 4 == 0:
             if Game.ActualFrame <= 0:
                 Game.ActualFrame = 1
-                Game.Player.image = pygame.image.load\
-                ("Assets/Visual/Mystique/Left/Spells/mystique prepa sort marche.png")
+                Game.Player.image = \
+                    pygame.image.load("Assets/Visual/Mystique/Left/Spells/mystique prepa sort marche.png")
             elif Game.ActualFrame >= 1:
                 Game.ActualFrame = 0
-                Game.Player.image = pygame.image.load\
-                ("Assets/Visual/Mystique/Left/Spells/mystique prepa sort marche 2.png")
+                Game.Player.image = \
+                    pygame.image.load("Assets/Visual/Mystique/Left/Spells/mystique prepa sort marche 2.png")
 
 
 def PrepaSpellAnimation(Game):
@@ -862,7 +866,6 @@ def Movements(Game, Screen):
         Entity.LastY = Entity.rect.y
 
     for Monster in Game.all_Monster:
-        Monster.Life(Screen, Game)
         Collide = Game.Player.check_collisions(Game.Player, Game.all_Monster)
         if not Collide:
             if Monster.Direction:

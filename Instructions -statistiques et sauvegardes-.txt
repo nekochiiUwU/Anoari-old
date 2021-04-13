@@ -1,0 +1,141 @@
+-----Sauvegardes------
+Sauvegarder la position du joueur ne sera dans le futur pas utile. En effet, permettre au joueur de quitter le niveau comme bon lui semble impliquerait la nécessité de sauvegarder le niveau en lui même, ce qui est en soit très long et pourrait poser problème dans le futur. 
+Aussi, une telle possibilité casse le rythme du jeu et diminue l'implication du joueur dans ce qu'il est en train de faire
+Aussi, les informations présentes dans les sauvegardes seront :
+
+Nom
+Classe
+Niveau
+Golds
+
+Statistiques
+
+Armes
+
+Equipements
+
+la manière de sauvegarder armes et équipements est encore à définir. 
+=====================================================================================================================================================================
+-Statistiques :
+Les statistiques de base, que TOUS les joueur auront sont : *roulements de tambour*
+-les HP (UA)
+-l'Attaque (UA)
+-la Défense (UA)
+-la Vitesse au sol (en px/frame)
+-la Cooldown reduction (fonctionnement = ah)
+-la Vitesse d'Attaque (en x attaques/seconde)
+-les Chances de coup critique (en %)
+-les Chances de Spell crit (en %)
+-l'Agilité (en Multiplicateur de la vitesse au sol de base)
+-le Mana Max (UA)
+-la regen de Mana (en Mana/seconde)
+-les Dégats de coup critique (s'appliquent aux crits et aux spellcrits en %)
+-la Pénétration d'armure (UA)
+-le Multiplicateur d'exp (en multiplicateur du nombre d'exp reçue)
+-l'Armure (UA)
+-le Multiplicateur de damage (en multiplicateur de dégats infligés)
+
+-----------------------------------------------------------------------------
+Ces statistiques composeront près de 100% des calculs effectués par le jeu lors d'un combat, leur fonctionnement et application en détail est juste en bas :
+
+  -les HP
+Simple nombre de PV du joueur, il perd une vie quand ses pv atteignent 0, est diminué par les attaques. Les PV Max sont récupérés gratuitement à chaque début de Donjon.
+
+  -l'Attaque 
+Nombre indiquant la puissance des attaques du joueur, les dégats sont un bonus aux dégats de base des sorts (selon un ratio donné) et donne les dégats des attaques de base, à 100% de ratio attaque. Les dégats sont calculés de la manière suivante : (dégats de base + [(Attaque * ratio)/100])*Multiplicateur de dégats
+
+  -la Défense
+Nombre indiquant la puissance défensive du joueur, les dégats qu'il prend sont calculés de la manière suivante : [(Total de dégats * 100)/(100 + Défense - Pénetration d'armure adverse)] - Armure
+
+  -la Vitesse au sol
+Vitesse de déplacement Maximale de base, elle est atteinte après quelques frames d'accélération et est effective dans les deux sens.
+
+  -la Cooldown reduction
+PAS CALCULÉE EN % (nous appellerons la cdr en % True CDR), la Cooldown Reduction des statistiques de base est calcée sur l'AH. le cooldown d'un spell est donc donné par la formule : CooldownSpell * True CDR (donnée par l'arme, c'est en dessous) * (100/[100 + CDRstats])
+
+  -la Vitesse d'Attaque
+Nombre d'attaques par seconde, Permet de lancer une attaque de base toutes les (1/AttackSpeed) secondes.
+
+  -les Chances de coup critique 
+Donne une chance à chaque attaque lancée d'infliger DégatsCrit% de ses dégats totaux (=DégatsCrit*Attaque; les dégats des attaques de base = Attaque).
+
+  -les Chances de Spell crit 
+Donne une chance à chaque attaque lancée d'infliger DégatsCrit% de ses dégats totaux.
+
+  -l'Agilité
+En l'air, définit l'aisance du joueur à se déplacer plus ou moins vite. <1, les mouvements aériens du joueur sont ralentis, L'ACCÉLÉRATION du joueur est moins grande, SA VITESSE MAX NE CHANGE PAS. >1, le joueur se déplace plus aisément dans les airs que sur terre.
+
+  -le Mana Max 
+Définit le nombre de spells que le joueur peut lancer avant de ne plus pouvoir. Chaque spell a un coût en mana bien défini selon sa puissance.
+
+  -la regen de Mana
+Définit la vitesse à laquelle le joueur récupère son mana et redeviens capable de lancer des spells.
+
+  -les Dégats de coup critique
+Dégats en % des coups critiques infligés. Un crit pourra  infliger 130% des dégats ou 250% selon cette statistique. Elle s'applique autant aux coups critiques qu'aux spellsCrits
+
+  -la Pénétration d'armure 
+Ignore un nombre fixe de DÉFENSE adverse lors du calcul des dégats, pas d'armure. 
+
+  -le Multiplicateur d'exp
+Multiplie le nombre d'exp reçue par whatever chiffre cette stat possède, sans augmenter le coup en exp du prochain niveau
+
+  -l'Armure 
+Ignore un montant fixe des dégats infligés. S'APPLIQUE APRES LE CALCUL DES DÉGATS TOTAUX
+
+  -le Multiplicateur de damage
+Multiplie par un nombre fixe le nombre de déats infligés. S'APPLIQUE AVANT CAULCUL DES DÉGATS TOTAUX
+======================================================================================================================================================================
+Fonctionnement des Armes : 
+Chaque Arme se présentera dans l'inventaire sous forme de Carte avec 4 compartiments :
+
+- L'apparence de l'Arme
+===
+- Les 1 à 3 spells que possède l'arme
+Chaque arme possède au moins UN spell. (100% de chances au total, 1 arme sur 1)
+Chaque Arme qui possède UN spell a 50% de chances d'en posséder un 2eme. (50% de chances au total, 1 arme sur 2)
+Chaque Arme qui possède DEUX spell a 40% de chances d'en posséder un 3eme. (20% de chances au total, 1 arme sur 5)
+
+Les spells seront tirés aléatoirement parmi la banque de spells de l'arme en question.
+===
+- Les statistiques de l'Arme
+Chaque arme possèdera divers malus ou bonus appliqués aux stats du joueur :
+
+de -30% à +30% d'Attaque
+
+de -50% à +50% de True Cooldown Reduction
+
+de -40% à +40% de Vitesse d'Attaque
+
+de -30% à + 30% de Vitesse au Sol
+===
+- Les statistiques bonus de l'arme
+Chaque arme possèdera entre 1 et 5 bonus aux stats de base, qui ne seront pas Multiplicatifs (pas en %), mais Additifs. Ils seront égaux à 5~20% des statistiques de base prévues pour la classe (c'est aussi en bas)
+
+Chaque arme possède au moins UNE statistique bonus. (100% de chances au total, 1 arme sur 1)
+Chaque Arme qui possède UNE statistique bonus a 70% de chances d'en posséder une 2eme. (70% de chances au total, 2 arme sur 3)
+Chaque Arme qui possède DEUX statistiques bonus a 50% de chances d'en posséder une 3eme. (35% de chances au total, 1 arme sur 3)
+Chaque Arme qui possède TROIS statistiques bonus a 50% de chances d'en posséder une 4eme. (17.5% de chances au total, 1 arme sur 6)
+Chaque Arme qui possède QUATRE statistiques bonus a 50% de chances d'en posséder une 5eme. (8.75% de chances au total, 1 arme sur 12)
+======================================================================================================================================================================
+Progression statistique et level up :
+à chaque Level up, les statistiques de base augmente d'un chiffre pris au hasard dans une fourchette de pourcentages. Ces pourcentages seront différents pour chaque classe, et auront un impact immense sur l'évolutions des statistiques à plus haut niveau.
+Ce système est ainsi ouvert à la critique, l'effet boule de neige d'une évolution en pourcentage étant très sensible au snowball et aux problèmes d'équilibrage.
+
+j'ai tenté de theorycraft les levels 1 à 20 de la Mystique, ça augemente très vite de façon plus que considérable, faut vraiement un meilleur système, peut être plus basé sur le choix des utilisateurs que sur une progression arbitraire.
+Donner au joueur à chaque level un nombre croissant de points caractéristiques peut être une option, mais il faut équilibrer la valeur de chaque point de carac pour chaque stat, et empêcher les joeuur de tout foutre en attaque et OHKO tous les boss du jeu.
+bref, je suis ouvert à la discussion sur le sujet du level up. y'a des idées, mais c'est la merde quand même un peu.
+=====================================================================================================================================================================
+Statistiques des Mobs :
+Pareil que pour les joueurs, je pensais les mettre à un niveau similaire au joueur et leur donner une progression statistiques à peu près égale, mais elle pose des problèmes.
+Mais surtout, il est important de préciser que chaque mob aura les statistiques dont il aura besoin, mais pas plus. les mobs ne posséderont aps de mana, les slimes pas d'armure ni de cdr, les signeurs pas de vitesse d'attaque, etc etc. Faut voir au cas par cas.
+Il reste aussi à définir les loots d'exp et de golds. Ils seront forcément relatifs au level, mais bon, j'ai pensé à beaucoup plus en terme de concret.
+J'ai besoin d'aide, laissez moi aspirer vos idées.
+
+
+
+
+
+
+
+
