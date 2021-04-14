@@ -4,7 +4,7 @@ import sys
 
 print("Server Starting...")
 
-server = "192.168.1.26"
+server = "87.89.177.64"
 port = 5555
 
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -96,14 +96,14 @@ def Client(conn, User):
             data = conn.recv(2048).decode("utf-8")  # data = données recus
             if data:
                 Data[1] = read_pos(data)
-                print("Recived informations from User", User, ": ", data)
+                print("Recived informations from \tUser", User, ":\t", data)
 
             if not data:
                 print("User", User, "is disconnected")
                 break
             else:
                 reply = make_Data(Data[1], "tuple")
-                print("Sending informations to User", User, ": ", reply)
+                print("Sending informations to \tUser", User, ":\t", reply)
                 conn.sendall(str.encode(reply))
         except error:
             print("error")
