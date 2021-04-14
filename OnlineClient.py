@@ -9,7 +9,6 @@
 # Import -tremisabdoul
 from Scripts.Functions import *
 from Scripts.Classes import *
-from Network import Network
 
 '''==================================='''
 
@@ -25,6 +24,8 @@ musicDANOARKIOUT(Game)
 
 for item in pygame.colordict.THECOLORS.items():
     print(item)
+
+print(Game.Network.read_pos(Game.Network.GetData1()))
 
 # Contient tout ce qui est fait pendant que le jeu est run -tremisabdoul
 while Game.Running:

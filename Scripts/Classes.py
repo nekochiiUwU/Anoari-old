@@ -1,4 +1,5 @@
 from User.UserData import *
+from Network import Network
 import random as rd
 import pygame
 
@@ -9,6 +10,8 @@ print("/Scripts/Classes: Loading")
 
 class Game:
     def __init__(self):
+
+        self.Network = Network()
 
         # LocalImport -tremisabdoul
         self.Saves = SaveSlot()

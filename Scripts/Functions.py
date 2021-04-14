@@ -281,7 +281,7 @@ def inGame(Game, Screen):
         Game.Tick = Game.time()
         Game.Frame += 1
         """ ===== Movements ===== """
-        Movements(Game, Screen)
+        Movements(Game)
         """ ===== Camera ===== """
         SmoothCamera(Game)
         """ ===== Printer ===== """
@@ -292,7 +292,11 @@ def inGame(Game, Screen):
         FrameLimiter(Game, Screen)
         """ ===== Affichage ===== """
         pygame.display.flip()
-
+        """Test Network"""
+        Slimeposition = Game.Network.read_pos(Game.Network.send(Game.Network.make_Data((Game.Monster.rect.x, Game.Monster.rect.y), "tuple")))
+        print(Slimeposition)
+        Game.Monster.rect.x = Slimeposition[0]
+        Game.Monster.rect.y = Slimeposition[1]
 
 def LobbyBlit(Screen, Game):
     """Affichage des Elements du lobby -steven"""
@@ -856,7 +860,7 @@ def NewWall(Game, x, y):
     Game.WallNumber += 1
 
 
-def Movements(Game, Screen):
+def Movements(Game):
     """Contiens tout les mouvements ingame -tremisabdoul"""
     global booleanjump
 
