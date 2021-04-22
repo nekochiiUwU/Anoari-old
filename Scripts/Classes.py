@@ -526,8 +526,8 @@ class Arm:
             self.imageDirection   = 0
             Game.Player.Direction = 1
         elif not -90 < self.angle < 90:
-            self.origin_image    = pygame.image.load\
-            ("Assets/Visual/Mystique/Left/Spells/bras mystique prepa spell.png")
+            self.origin_image    = pygame.image.load(
+                "Assets/Visual/Mystique/Left/Spells/bras mystique prepa spell.png")
             self.imageDirection   = 1
             Game.Player.Direction = 0
 

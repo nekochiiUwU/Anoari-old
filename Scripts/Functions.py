@@ -25,27 +25,19 @@ def Paterns(Game):
     for line in PaternsFile:
         line = line.strip()
         Load.append(line)
-
     Load = "".join(Load)
     Load = Load.split(",")
     Game.Paterns = Load
     Game.Paterns.pop(0)
 
     for Patern in range(len(Game.Paterns)):
-        print(Patern)
-        # noinspection PyTypeChecker
+
         Game.Paterns[Patern] = Game.Paterns[Patern].split(":")
-        print("\nID Game.Paterns[", Patern, "] :  ", Game.Paterns[Patern], ": ", sep='')
 
         for item in range(len(Game.Paterns[Patern])):
             if 2 <= item <= 6:
                 Game.Paterns[Patern][item] = ",".join(Game.Paterns[Patern][item])
                 Game.Paterns[Patern][item] = Game.Paterns[Patern][item].split(",")
-            print("\tID Game.Paterns[", Patern, "][", item, "] :  ", Game.Paterns[Patern][item], "\n", sep='')
-            if isinstance(Game.Paterns[Patern][item], list):
-                for Chr in range(len(Game.Paterns[Patern][item])):
-                    print("\t\tID Game.Paterns[", Patern, "][", item, "][", Chr, "] :  ",
-                          Game.Paterns[Patern][item][Chr], sep='')
 
     Game.Grid = {"xTiles": len(Game.Paterns[0][2]),
                  "yTiles": len(Game.Paterns[0]),

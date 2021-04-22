@@ -14,8 +14,8 @@ musicDANOARKIOUT(Game)
 
 '''==================================='''
 
-for item in pygame.colordict.THECOLORS.items():
-    print(item)
+# for item in pygame.colordict.THECOLORS.items():
+#     print(item)
 
 while Game.Running:
 
