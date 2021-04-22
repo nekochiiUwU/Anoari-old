@@ -33,6 +33,7 @@ def Paterns(Game):
 
     for Patern in range(len(Game.Paterns)):
         print(Patern)
+        # noinspection PyTypeChecker
         Game.Paterns[Patern] = Game.Paterns[Patern].split(":")
         print("\nID Game.Paterns[", Patern, "] :  ", Game.Paterns[Patern], ": ", sep='')
 
@@ -474,17 +475,17 @@ def FrameLimiter(Game, Screen):
     Game.Tickchecker -= Game.Tick
     if Game.ShowHitbox:
         print("\n Player Posion: ", Game.PositionPlayer)
-        try:
-            start = Game.time()
-            Test = Game.time() - start
-            TestL1 = str(round((Game.Tickchecker - Test) / 0.00017)) + "    % of 60 FPS: Framerate without Test"
-            TestL2 = str(round(Game.Tickchecker / 0.00017)) + "    % of 60 FPS: Framerate"
-            TestL3 = str(round(Test / 0.00017)) + "    % of 60 FPS : Test"
-            Texte(Game.police1, TestL1, (255, 255, 255), Screen, (1000, 20))
-            Texte(Game.police1, TestL2, (255, 255, 255), Screen, (1000, 40))
-            Texte(Game.police1, TestL3, (255, 255, 255), Screen, (1000, 60))
-        finally:
-            Test = 0
+
+        start = Game.time()
+        Test = Game.time() - start
+
+        TestL1 = str(round((Game.Tickchecker - Test) / 0.00017)) + "    % of 60 FPS: Framerate without Test"
+        TestL2 = str(round(Game.Tickchecker / 0.00017)) + "    % of 60 FPS: Framerate"
+        TestL3 = str(round(Test / 0.00017)) + "    % of 60 FPS : Test"
+
+        Texte(Game.police1, TestL1, (255, 255, 255), Screen, (1000, 20))
+        Texte(Game.police1, TestL2, (255, 255, 255), Screen, (1000, 40))
+        Texte(Game.police1, TestL3, (255, 255, 255), Screen, (1000, 60))
 
     pygame.display.flip()
 

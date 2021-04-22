@@ -10,22 +10,18 @@ print("/Scripts/Classes: Loading")
 class Game:
     def __init__(self):
 
-        # import -tremisabdoul
         from math import atan2, degrees
         from time import time
         from random import randint
         self.AngleCalc, self.Deges, self.time, self.randint = atan2, degrees, time, randint
         del atan2, degrees, time, randint
 
-        # LocalImport -tremisabdoul
         self.Saves    = SaveSlot()
         self.UserData = UserData()
 
-        # Resolution actuelle-tremisabdoul
         self.DataY = self.UserData.UserGraphicInfo.current_h
         self.DataX = self.UserData.UserGraphicInfo.current_w
 
-        # Booleens -tremisabdoul
         self.Running    = True
         self.Lobby      = True
         self.ShowHitbox = False
@@ -35,7 +31,6 @@ class Game:
         self.Pause      = False
         self.SaveMenu   = False
 
-        # Game Variables -tremisabdoul
         self.PlateformNumber = 1
         self.Tickchecker     = 1
         self.WallNumber      = 1
@@ -51,20 +46,16 @@ class Game:
         self.Frame           = 0
         self.Tick            = 0
 
-        # Listes -tremisabdoul
         self.pressed = {}
         self.Paterns = {}
         self.Grid    = {}
 
-        # Audio -tremisabdoul
         self.Click = pygame.mixer.Sound("Assets/Audio/FX/pas.mp3")
         self.data  = pygame.mixer.Sound("Assets/Audio/FX/DATA.mp3")
 
-        # Polices -tremisabdoul
         self.police1 = pygame.font.Font("Assets/Font/Retro Gaming.ttf", 10)
         self.police2 = pygame.font.Font("Assets/Font/Retro Gaming.ttf", 20)
 
-        # Classes -tremisabdoul
         self.Player     = Player()
         self.Arm        = Arm()
         self.Monster    = Monster()
@@ -76,7 +67,6 @@ class Game:
         self.Projectile = Projectile(self)
         self.Particles  = Particles()
 
-        # Groupes -tremisabdoul
         self.all_Monster   = pygame.sprite.Group()
         self.all_Player    = pygame.sprite.Group()
         self.Entities      = pygame.sprite.Group()
@@ -100,7 +90,6 @@ class Game:
         elif XorY == "Y":
             return round((value / self.UserData.DataY) * self.DataY)
 
-    # Fonction de collision -tremisabdoul
     @staticmethod
     def check_collisions(sprite, group):
         return pygame.sprite.spritecollide(sprite, group, False, pygame.sprite.collide_rect)
@@ -111,17 +100,14 @@ class Game:
 
 class Player(pygame.sprite.Sprite, Game):
 
-    # Fonction exÃƒÂ©cutÃƒÂ©e au dÃƒÂ©marrage de Player -tremisabdoul
     def __init__(self):
         super().__init__()
 
         self.pop = False
 
-        # Force devient une sous-classe de Player et Game est chargÃƒÂ© en tant que super-classe -tremisabdoul
         self.Force = Force()
         self.Game  = Game
 
-        # Statistiques -tremisabdoul
         self.Pv      = 100
         self.MaxPv   = 100
         self.Damage  = 10
@@ -130,7 +116,6 @@ class Player(pygame.sprite.Sprite, Game):
         self.Armor   = 0
         self.Mana    = 60
         self.MaxMana = 60  # ##### #
-        # Statistique Variable -steven
         self.CDR                  = 0
         self.AttackSpeed          = 0
         self.CCHit                = 130
@@ -144,7 +129,6 @@ class Player(pygame.sprite.Sprite, Game):
         self.Level = 1
         self.Gold  = 100
 
-        # Statistique gagnÃƒÂ©e par niveau / points -steven
         self.Gain_Stat_Level   = int((self.Level/2)**2+(self.Level/2))
         self.Point_Pv          = 0
         self.Point_Damage      = 0
@@ -165,12 +149,10 @@ class Player(pygame.sprite.Sprite, Game):
 
         self.Element = 'fire'
 
-        # DÃƒÂ©finit l'ÃƒÂ©lÃƒÂ©ment visuel en tant que variable et la hitbox de Player -tremisabdoul
         self.image = pygame.image.load("Assets/Visual/Mystique/resp1.png")
         self.rect  = self.image.get_rect()
         self.rect  = self.image.get_rect(bottomleft=self.rect.bottomleft)
 
-        # Position de Player -tremisabdoul
         self.rect.center = (320, 600)
 
         self.LastY        = 0
@@ -182,47 +164,27 @@ class Player(pygame.sprite.Sprite, Game):
 
         self.Direction = 1  # Droite = 1 Gauche = -1
 
-        # Valeurs max et min que Player peut atteindre (Bords de l'ÃƒÂ©cran x) -tremisabdoul
         self.MinX = 20
         self.MaxX = 1200
 
-        # Valeurs max et min que Player peut atteindre (Bords de l'ÃƒÂ©cran y) -tremisabdoul
         self.MinY = -20
         self.MaxY = 740
         self.MovementKey = False
 
-    #   def Check_Collisions(rectA, rectB):
-    #       if rectB.right < rectA.left:
-    #           # rectB est ÃƒÂ  gauche
-    #           return False
-    #       if rectB.bottom < rectA.top:
-    #           # rectB est au-dessus
-    #           return False
-    #       if rectB.left > rectA.right:
-    #           # rectB est ÃƒÂ  droite
-    #           return False
-    #       if rectB.top > rectA.bottom:
-    #           # rectB est en-dessous
-    #           return False
-
-    # Fonction de mouvement (Droite) -tremisabdoul
     def Move_Right(self, Game):
         self.Force.xm += self.Speed
         if not Game.PrepaSpell:
             self.Direction = 1
 
-    # Fonction de mouvement (Gauche) -tremisabdoul
     def Move_Left(self, Game):
         self.Force.xm -= self.Speed
         if not Game.PrepaSpell:
             self.Direction = 0
 
-    # Fonction de gain de stat ( valeur placÃƒÂ©e arbitrairement lol ) - steven
     def Gain_Stats(self):
         self.MaxPv  += self.Gain_Stat_Level + (4 * self.Point_Pv)
         self.Damage += self.Gain_Stat_Level + (2 * self.Point_Damage)
 
-    # Fonction appliquÃƒÂ© que si l'utilisateur meurt
     def Death(self):
         self.all_Monster = pygame.sprite.Group()
         self.Player.Pv = self.Player.MaxPv
@@ -239,10 +201,8 @@ class Player(pygame.sprite.Sprite, Game):
 """=====  Game.Player.Force [2.1]  ====="""
 
 
-#  Contient les vecteurs physiques -tremisabdoul
 class Force:
 
-    # Fonction exÃƒÂ©cutÃƒÂ©e au demarÃƒÂ©e au lancement de Force - tremisabdoul
     def __init__(self):
 
         self.x     = float(0)
@@ -253,10 +213,8 @@ class Force:
 
         self.Game = Game
 
-    # Fonction permettant un mouvement fluide -tremisabdoul
     def AccelerationFunctionX(self):
 
-        # Forces appliquÃƒÂ©s + ((Forces appliquÃƒÂ©s lors de la derniÃƒÂ¨re frame / 1.3) / 1.1) -tremisabdoul
         self.StepX = self.xm + self.x + ((self.lastx / 1.00001) / 1.4)
 
         """if round(self.StepX) == 0:
@@ -272,18 +230,16 @@ class Force:
         self.xm    = 0
         return self.StepX
 
-    # Faut se dire que la gravitÃƒÂ© a une force de 20 et que lorsque
-    # Base_Gravity est a 0 c'est que la force appliquÃƒÂ©e par le sol est de -20
-    def Gravity(self, Game0, Target):
+    @staticmethod
+    def Gravity(Game0, Target):
         base = Target.rect.y
-        if Target.Base_Gravity < 20:  # Si force de sol > 0
-            Target.Base_Gravity += 0.4  # Diminution de la force "Sol" (Ratio 0.4)
+        if Target.Base_Gravity < 20:
+            Target.Base_Gravity += 0.4
             Target.rect.y += Target.Base_Gravity
         else:
-            Target.Base_Gravity = 20  # Force de sol = 0
+            Target.Base_Gravity = 20
             Target.rect.y += 20
 
-        # VÃƒÂ©rification des collisions entre Player et toutes les plateformes
         Collide = Game0.check_collisions(Target, Game0.all_plateform)
         for item in Collide:
 
@@ -291,8 +247,8 @@ class Force:
                 Target.rect.y = base
                 Replace = item.rect.top - (Target.rect.bottom - 1)  # Y reset (Premier pixel du rect de plateforme)
                 if Target.Base_Gravity > 0.8:
-                    Target.SpeedY = 0  # Cancel le saut
-                Target.Base_Gravity = 0  # Reset la force du sol (-20)
+                    Target.SpeedY = 0
+                Target.Base_Gravity = 0
                 Target.rect.y += Replace
 
 
@@ -303,16 +259,12 @@ class Sol(pygame.sprite.Sprite):
 
     def __init__(self):
         super().__init__()
-        # DÃƒÂ©finit l'ÃƒÂ©lÃƒÂ©ment visuel en tant que variable -steven
         self.image = pygame.image.load("Assets/Visual/plateforme_base.png")
 
-        # Transforme l'image sol en la rÃƒÂ©solution indiquÃƒÂ©e -tremisabdoul
         self.image = pygame.transform.scale(self.image, (1280, 34))
 
-        # DÃƒÂ©finit la hitbox de sol -steven
         self.rect = self.image.get_rect()
 
-        # Position de la plateforme principale -steven
         self.rect.x = 0
         self.rect.y = 686
 
@@ -325,16 +277,12 @@ class Plateform(pygame.sprite.Sprite, Game):
     def __init__(self):
         super().__init__()
 
-        # DÃƒÂ©finit l'ÃƒÂ©lÃƒÂ©ment visuel en tant que variable -tremisabdoul
         self.image = pygame.image.load("Assets/Visual/plateforme_base.png")
 
-        # Transforme l'image sol en la rÃƒÂ©solution indiquÃƒÂ©e -tremisabdoul
         self.image = pygame.transform.scale(self.image, (250, 20))
 
-        # DÃƒÂ©finit la hitbox de sol -tremisabdoul
         self.rect = self.image.get_rect()
 
-        # Position de la plateforme -tremisabdoul
         self.rect.x = 0
         self.rect.y = 0
 
@@ -347,14 +295,11 @@ class Mouse(pygame.sprite.Sprite):
     def __init__(self):
         super().__init__()
 
-        # Rends la sourie windows invisible -tremisabdoul
         pygame.mouse.set_visible(True)
 
-        # Definit l'image (emplacent la sourie) -tremisabdoul
         self.image = pygame.image.load("Assets/Visual/UI/Mouse.png")
         self.image = pygame.transform.scale(self.image, (22, 22))
 
-        # Cree la hit-box de l'image -tremisabdoul
         self.rect = self.image.get_rect()
         self.rect = self.image.get_rect(center=self.rect.center)
 
@@ -362,39 +307,32 @@ class Mouse(pygame.sprite.Sprite):
 """=====  Game.UI [6]  ====="""
 
 
-# Interface -tremisabdoul
 class UI:
 
     def __init__(self):
         super().__init__()
 
-        """ CatÃƒÂ©gorie Pause """
-        # Font grisÃƒÂ© (Ca prends full perf) -tremisabdoul
         self.baselayer = pygame.image.load("Assets/Visual/UI/baselayer.png")
         self.baselayer = pygame.transform.scale(self.baselayer, (1280, 720))
 
-        # Boutton "REPRENDRE" -tremisabdoul
         self.resumebutton       = pygame.image.load("Assets/Visual/UI/bouton_REPRENDRE.png")
         self.resumebutton       = pygame.transform.scale(self.resumebutton, (140, 30))
         self.resumebuttonrect   = self.resumebutton.get_rect()
         self.resumebuttonrect.x = 640 - 70
         self.resumebuttonrect.y = 360 - 40
 
-        # Boutton "SAUVEGARDER" -tremisabdoul
         self.savebutton       = pygame.image.load("Assets/Visual/UI/bouton_SAUVEGARDER.png")
         self.savebutton       = pygame.transform.scale(self.savebutton, (172, 30))
         self.savebuttonrect   = self.savebutton.get_rect()
         self.savebuttonrect.x = 640 - 86
         self.savebuttonrect.y = 360
 
-        # Boutton "PARAMÃƒË†TRE" -steven
         self.settingsbutton       = pygame.image.load("Assets/Visual/UI/bouton_SETTINGS.png")
         self.settingsbutton       = pygame.transform.scale(self.settingsbutton, (100, 30))
         self.settingsbuttonrect   = self.settingsbutton.get_rect()
         self.settingsbuttonrect.x = 640 - 50
         self.settingsbuttonrect.y = 360 + 40
 
-        # Boutton "QUITER" -tremisabdoul
         self.quitbutton       = pygame.image.load("Assets/Visual/UI/bouton_QUITTER.png")
         self.quitbutton       = pygame.transform.scale(self.quitbutton, (100, 30))
         self.quitbuttonrect   = self.quitbutton.get_rect()
@@ -403,25 +341,21 @@ class UI:
 
         """ CatÃƒÂ©gorie Menu d'accueil """
 
-        # IntÃƒÂ©gration de l'image qui apparaitrera du menu d'accueil -steven
         self.lobbybackground = pygame.image.load("Assets/Visual/background.png")
         self.lobbybackground = pygame.transform.scale(self.lobbybackground, (1280, 720))
 
-        # IntÃƒÂ©gration du boutton "JOUER" -steven
         self.lobby_playbutton       = pygame.image.load("Assets/Visual/UI/bouton_JOUER.png")
         self.lobby_playbutton       = pygame.transform.scale(self.lobby_playbutton, (82, 30))
         self.lobby_playbuttonrect   = self.lobby_playbutton.get_rect()
         self.lobby_playbuttonrect.x = -62
         self.lobby_playbuttonrect.y = 360 - 60
 
-        # IntÃƒÂ©gration du boutton "CHARGER" -steven
         self.lobby_loadbutton       = pygame.image.load("Assets/Visual/UI/bouton_REPRENDRE.png")
         self.lobby_loadbutton       = pygame.transform.scale(self.lobby_loadbutton, (140, 30))
         self.lobby_loadbuttonrect   = self.lobby_loadbutton.get_rect()
         self.lobby_loadbuttonrect.x = -62
         self.lobby_loadbuttonrect.y = 360
 
-        # IntÃƒÂ©gration du boutton "QUITTER" -Steven
         self.lobby_quitbutton       = pygame.image.load("Assets/Visual/UI/bouton_QUITTER.png")
         self.lobby_quitbutton       = pygame.transform.scale(self.lobby_quitbutton, (100, 30))
         self.lobby_quitbuttonrect   = self.lobby_quitbutton.get_rect()
@@ -451,11 +385,9 @@ class UI:
 
 class Monster(pygame.sprite.Sprite, Game):
 
-    # Fonction ÃƒÂ©xÃƒÂ©cutÃƒÂ© au dÃƒÂ©marrage de Monster -steven
     def __init__(self):
         super().__init__()
 
-        # Statistiques -steven
         self.Pv          = 100
         self.MaxPv       = 100
         self.DamageDealt = 10
@@ -475,7 +407,6 @@ class Monster(pygame.sprite.Sprite, Game):
 
         self.rect = self.image.get_rect(midtop=self.rect.midtop)
 
-        # Barre de pv des monstres -tremisabdoul
         self.image0 = pygame.image.load("Assets/Visual/UI/100pv.png")
         self.image0 = pygame.transform.scale(self.image0, (200, 30))
 
@@ -486,7 +417,6 @@ class Monster(pygame.sprite.Sprite, Game):
 
         self.Direction = 1
 
-    # Dessin concernant la barre de vie du monstre -steven / tremisabdoul
     def Life(self, Screen, Game):
         if self.Pv > 0:
             self.pvfontrect           = self.image0.get_rect(midbottom=self.pvfontrect.midbottom)
@@ -496,7 +426,6 @@ class Monster(pygame.sprite.Sprite, Game):
             self.Pv                  -= 0.2
             Screen.blit(self.image0, (self.pvfontrect.x - Game.Position, self.pvfontrect.y))
 
-    # DÃƒÂ©placement du monstre vers la droite -steven
     def Move_Right(self, Game):
         if Game.check_collisions(self, Game.all_plateform):
             self.rect.x += self.Speed
@@ -504,7 +433,6 @@ class Monster(pygame.sprite.Sprite, Game):
             self.rect.x   -= int(self.Speed * 2)
             self.Direction = 1
 
-    # DÃƒÂ©placement du monstre vers la gauche -steven
     def Move_Left(self, Game):
         if Game.check_collisions(self, Game.all_plateform):
             self.rect.x -= self.Speed
@@ -516,13 +444,13 @@ class Monster(pygame.sprite.Sprite, Game):
 class Weapon:
 
     def __init__(self):
-        # Type d'arme Ex: Mitraillette = 3
+        # Type d'arme Ex: Staff = 3
         self.MetaType = rd.randrange(1, 5, 1)
 
-        # Arme en question Ex: Mitraillette.Poison = 3.4
+        # Arme en question Ex: Staff.Feu = 3.4
         self.MetaWeapon = rd.randrange(1, 10, 1)
 
-        # RarertÃƒÂ© Ex: Mitraillette.Poison.Rare = 3.4.2
+        # Rarerte Ex: Staff.Feu.Rare = 3.4.2
         self.MetaClass = rd.randrange(1, 4, 1)
 
         # Donne l'ensemble des propiÃƒÂ©tÃƒÂ©es de l'arme  Ex: 3.4.2
@@ -567,7 +495,6 @@ class Background:
     def __init__(self):
         super().__init__()
         self.image       = pygame.image.load("Assets/Visual/UI/Background.png")
-        # self.image       = pygame.transform.scale(self.image, (3848, 686))
         self.rect        = self.image.get_rect()
         self.rect        = self.image.get_rect(midtop=self.rect.midtop)
         self.rect.midtop = (self.rect.width / 3, 0)
@@ -713,8 +640,10 @@ class Projectile(pygame.sprite.Sprite):
             for _ in range(5):
                 Game.Particles.Add(Game, self.rect.center, 'Grey50', 12)
 
-    def Add(self, Game):
+    @staticmethod
+    def Add(Game):
         Game.Projectiles.add(Projectile(Game))
+
 
 class Particles:
     def __init__(self):
