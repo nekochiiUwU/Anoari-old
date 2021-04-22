@@ -1,5 +1,4 @@
 from User.UserData import *
-from Network import Network
 import random as rd
 import pygame
 
@@ -11,16 +10,6 @@ print("/Scripts/Classes: Loading")
 class Game:
     def __init__(self):
 
-        self.Network = Network()
-
-        # LocalImport -tremisabdoul
-        self.Saves = SaveSlot()
-        self.UserData = UserData()
-
-        # Resolution actuelle-tremisabdoul
-        self.DataY = self.UserData.UserGraphicInfo.current_h
-        self.DataX = self.UserData.UserGraphicInfo.current_w
-
         # import -tremisabdoul
         from math import atan2, degrees
         from time import time
@@ -28,71 +17,75 @@ class Game:
         self.AngleCalc, self.Deges, self.time, self.randint = atan2, degrees, time, randint
         del atan2, degrees, time, randint
 
+        # LocalImport -tremisabdoul
+        self.Saves    = SaveSlot()
+        self.UserData = UserData()
+
+        # Resolution actuelle-tremisabdoul
+        self.DataY = self.UserData.UserGraphicInfo.current_h
+        self.DataX = self.UserData.UserGraphicInfo.current_w
+
         # Booleens -tremisabdoul
-        self.Running = True
-        self.Lobby = True
+        self.Running    = True
+        self.Lobby      = True
         self.ShowHitbox = False
         self.PrepaSpell = False
-        self.InGame = False
-        self.Option = False
-        self.Pause = False
-        self.SaveMenu = False
+        self.InGame     = False
+        self.Option     = False
+        self.Pause      = False
+        self.SaveMenu   = False
 
         # Game Variables -tremisabdoul
-        self.SaveValue = 0
         self.PlateformNumber = 1
-        self.Tickchecker = 1
-        self.WallNumber = 1
-        self.PositionPlayer = 0
-        self.PaternNumber = 0
-        self.lastPosition = 0
-        self.ActualFrame = 0
-        self.MusicLengh = 0
-        self.MusicStart = 0
-        self.Fullscreen = 0
-        self.Position = 0
-        self.Frame = 0
-        self.Tick = 0
+        self.Tickchecker     = 1
+        self.WallNumber      = 1
+        self.PositionPlayer  = 0
+        self.PaternNumber    = 0
+        self.lastPosition    = 0
+        self.ActualFrame     = 0
+        self.MusicLengh      = 0
+        self.MusicStart      = 0
+        self.Fullscreen      = 0
+        self.SaveValue       = 0
+        self.Position        = 0
+        self.Frame           = 0
+        self.Tick            = 0
 
         # Listes -tremisabdoul
         self.pressed = {}
         self.Paterns = {}
-        self.Grid = {}
+        self.Grid    = {}
 
         # Audio -tremisabdoul
         self.Click = pygame.mixer.Sound("Assets/Audio/FX/pas.mp3")
-        self.data = pygame.mixer.Sound("Assets/Audio/FX/DATA.mp3")
+        self.data  = pygame.mixer.Sound("Assets/Audio/FX/DATA.mp3")
 
         # Polices -tremisabdoul
         self.police1 = pygame.font.Font("Assets/Font/Retro Gaming.ttf", 10)
         self.police2 = pygame.font.Font("Assets/Font/Retro Gaming.ttf", 20)
 
         # Classes -tremisabdoul
-        self.Player = Player()
-        self.Arm = Arm()
-
-        self.Monster = Monster()
-
-        self.wall = Wall()
-        self.Sol = Sol()
+        self.Player     = Player()
+        self.Arm        = Arm()
+        self.Monster    = Monster()
+        self.wall       = Wall()
+        self.Sol        = Sol()
         self.Background = Background()
-
-        self.Mouse = Mouse()
-        self.UI = UI()
-
+        self.Mouse      = Mouse()
+        self.UI         = UI()
         self.Projectile = Projectile(self)
-
-        self.Particles = Particles()
+        self.Particles  = Particles()
 
         # Groupes -tremisabdoul
-        self.all_Monster = pygame.sprite.Group()
-        self.all_Player = pygame.sprite.Group()
-        self.Entities = pygame.sprite.Group()
+        self.all_Monster   = pygame.sprite.Group()
+        self.all_Player    = pygame.sprite.Group()
+        self.Entities      = pygame.sprite.Group()
         self.all_plateform = pygame.sprite.Group()
-        self.all_wall = pygame.sprite.Group()
-        self.AcrossWall = pygame.sprite.Group()
+        self.all_wall      = pygame.sprite.Group()
+        self.AcrossWall    = pygame.sprite.Group()
         self.ApplyedPatens = pygame.sprite.Group()
-        self.Projectiles = pygame.sprite.Group()
+        self.Projectiles   = pygame.sprite.Group()
+
         self.all_Monster.add(self.Monster)
         self.Entities.add(self.Monster)
         self.Entities.add(self.Player)
@@ -106,6 +99,11 @@ class Game:
             return round((value / self.UserData.DataX) * self.DataX)
         elif XorY == "Y":
             return round((value / self.UserData.DataY) * self.DataY)
+
+    # Fonction de collision -tremisabdoul
+    @staticmethod
+    def check_collisions(sprite, group):
+        return pygame.sprite.spritecollide(sprite, group, False, pygame.sprite.collide_rect)
 
 
 """=====  Game.Player [2.0]  ====="""
@@ -121,61 +119,63 @@ class Player(pygame.sprite.Sprite, Game):
 
         # Force devient une sous-classe de Player et Game est chargÃƒÂ© en tant que super-classe -tremisabdoul
         self.Force = Force()
-        self.Game = Game
+        self.Game  = Game
 
         # Statistiques -tremisabdoul
-        self.Pv = 100
-        self.MaxPv = 100
-        self.Damage = 10
-        self.Speed = 3
-        self.SpeedY = 60
-        self.Armor = 0
-        self.Mana = 60
+        self.Pv      = 100
+        self.MaxPv   = 100
+        self.Damage  = 10
+        self.Speed   = 3
+        self.SpeedY  = 60
+        self.Armor   = 0
+        self.Mana    = 60
         self.MaxMana = 60  # ##### #
         # Statistique Variable -steven
-        self.CDR = 0
-        self.AttackSpeed = 0
-        self.CCHit = 130
-        self.CCSpell = 3
-        self.CCDamage = 3
-        self.Penetration = 0
-        self.ManaRegen = 2
-        self.XP_Multiplicator = 1
+        self.CDR                  = 0
+        self.AttackSpeed          = 0
+        self.CCHit                = 130
+        self.CCSpell              = 3
+        self.CCDamage             = 3
+        self.Penetration          = 0
+        self.ManaRegen            = 2
+        self.XP_Multiplicator     = 1
         self.Damage_Multiplicator = 1
 
         self.Level = 1
-        self.Gold = 100
+        self.Gold  = 100
 
         # Statistique gagnÃƒÂ©e par niveau / points -steven
-        self.Gain_Stat_Level = int((self.Level/2)**2+(self.Level/2))
-        self.Point_Pv = 0
-        self.Point_Damage = 0
-        self.Point_Speed = 2  # ##### #
-        self.Point_Armor = 0  # ##### #
-        self.Point_Mana = 60  # ##### #
-        self.Point_MaxMana = 0  # ##### #
-        self.Point_CDR = 0  # ##### #
+        self.Gain_Stat_Level   = int((self.Level/2)**2+(self.Level/2))
+        self.Point_Pv          = 0
+        self.Point_Damage      = 0
+        self.Point_Speed       = 2  # ##### #
+        self.Point_Armor       = 0  # ##### #
+        self.Point_Mana        = 60  # ##### #
+        self.Point_MaxMana     = 0  # ##### #
+        self.Point_CDR         = 0  # ##### #
         self.Point_AttackSpeed = 0  # ##### #
-        self.Point_CCHit = 0  # ##### #
-        self.Point_CCSpell = 0  # ##### #
-        self.Point_CCDamage = 0  # ##### #
+        self.Point_CCHit       = 0  # ##### #
+        self.Point_CCSpell     = 0  # ##### #
+        self.Point_CCDamage    = 0  # ##### #
         self.Point_Penetration = 0  # ##### #
-        self.Point_ManaRegen = 0  # ##### #
+        self.Point_ManaRegen   = 0  # ##### #
 
         self.Weapon1 = Weapon()
         self.Weapon2 = Weapon()
 
+        self.Element = 'fire'
+
         # DÃƒÂ©finit l'ÃƒÂ©lÃƒÂ©ment visuel en tant que variable et la hitbox de Player -tremisabdoul
         self.image = pygame.image.load("Assets/Visual/Mystique/resp1.png")
-        self.rect = self.image.get_rect()
-        self.rect = self.image.get_rect(bottomleft=self.rect.bottomleft)
+        self.rect  = self.image.get_rect()
+        self.rect  = self.image.get_rect(bottomleft=self.rect.bottomleft)
 
         # Position de Player -tremisabdoul
         self.rect.center = (320, 600)
 
-        self.LastY = 0
-        self.YVector = 0
-        self.YVectorblit = 0
+        self.LastY        = 0
+        self.YVector      = 0
+        self.YVectorblit  = 0
         self.Base_Gravity = 0
 
         self.LastX = 0
@@ -205,12 +205,6 @@ class Player(pygame.sprite.Sprite, Game):
     #           # rectB est en-dessous
     #           return False
 
-    # Fonction de collision -tremisabdoul
-
-    @staticmethod
-    def check_collisions(sprite, group):
-        return pygame.sprite.spritecollide(sprite, group, False, pygame.sprite.collide_rect)
-
     # Fonction de mouvement (Droite) -tremisabdoul
     def Move_Right(self, Game):
         self.Force.xm += self.Speed
@@ -225,13 +219,21 @@ class Player(pygame.sprite.Sprite, Game):
 
     # Fonction de gain de stat ( valeur placÃƒÂ©e arbitrairement lol ) - steven
     def Gain_Stats(self):
-        self.MaxPv += self.Gain_Stat_Level + (4 * self.Point_Pv)
+        self.MaxPv  += self.Gain_Stat_Level + (4 * self.Point_Pv)
         self.Damage += self.Gain_Stat_Level + (2 * self.Point_Damage)
 
     # Fonction appliquÃƒÂ© que si l'utilisateur meurt
     def Death(self):
         self.all_Monster = pygame.sprite.Group()
         self.Player.Pv = self.Player.MaxPv
+
+    def Orb(self, Game):
+        if Game.Frame % 2:
+            if self.Element == 'fire':
+                Game.Particles.Add(Game, (self.rect.center[0] - 35, self.rect.center[1] - 20), 'red', 6)
+                Game.Particles.Add(Game, (self.rect.center[0] - 35, self.rect.center[1] - 20), 'orangered', 6)
+                Game.Particles.Add(Game, (self.rect.center[0] - 35, self.rect.center[1] - 20), 'orangered4', 6)
+                Game.Particles.Add(Game, (Game.Player.rect.center[0] - 35, Game.Player.rect.center[1] - 20), 'red3', 6)
 
 
 """=====  Game.Player.Force [2.1]  ====="""
@@ -243,8 +245,8 @@ class Force:
     # Fonction exÃƒÂ©cutÃƒÂ©e au demarÃƒÂ©e au lancement de Force - tremisabdoul
     def __init__(self):
 
-        self.x = float(0)
-        self.xm = float(0)
+        self.x     = float(0)
+        self.xm    = float(0)
         self.StepX = float(0)
         self.lastx = float(0)
         self.lasty = float(0)
@@ -266,8 +268,8 @@ class Force:
 
         else:"""
         self.lastx = self.StepX
-        self.x = 0
-        self.xm = 0
+        self.x     = 0
+        self.xm    = 0
         return self.StepX
 
     # Faut se dire que la gravitÃƒÂ© a une force de 20 et que lorsque
@@ -282,7 +284,7 @@ class Force:
             Target.rect.y += 20
 
         # VÃƒÂ©rification des collisions entre Player et toutes les plateformes
-        Collide = Game0.Player.check_collisions(Target, Game0.all_plateform)
+        Collide = Game0.check_collisions(Target, Game0.all_plateform)
         for item in Collide:
 
             if item and Target.YVector <= 1 and (Target.rect.bottom <= item.rect.top + Target.Base_Gravity + 2):
@@ -372,30 +374,30 @@ class UI:
         self.baselayer = pygame.transform.scale(self.baselayer, (1280, 720))
 
         # Boutton "REPRENDRE" -tremisabdoul
-        self.resumebutton = pygame.image.load("Assets/Visual/UI/bouton_REPRENDRE.png")
-        self.resumebutton = pygame.transform.scale(self.resumebutton, (140, 30))
-        self.resumebuttonrect = self.resumebutton.get_rect()
+        self.resumebutton       = pygame.image.load("Assets/Visual/UI/bouton_REPRENDRE.png")
+        self.resumebutton       = pygame.transform.scale(self.resumebutton, (140, 30))
+        self.resumebuttonrect   = self.resumebutton.get_rect()
         self.resumebuttonrect.x = 640 - 70
         self.resumebuttonrect.y = 360 - 40
 
         # Boutton "SAUVEGARDER" -tremisabdoul
-        self.savebutton = pygame.image.load("Assets/Visual/UI/bouton_SAUVEGARDER.png")
-        self.savebutton = pygame.transform.scale(self.savebutton, (172, 30))
-        self.savebuttonrect = self.savebutton.get_rect()
+        self.savebutton       = pygame.image.load("Assets/Visual/UI/bouton_SAUVEGARDER.png")
+        self.savebutton       = pygame.transform.scale(self.savebutton, (172, 30))
+        self.savebuttonrect   = self.savebutton.get_rect()
         self.savebuttonrect.x = 640 - 86
         self.savebuttonrect.y = 360
 
         # Boutton "PARAMÃƒË†TRE" -steven
-        self.settingsbutton = pygame.image.load("Assets/Visual/UI/bouton_SETTINGS.png")
-        self.settingsbutton = pygame.transform.scale(self.settingsbutton, (100, 30))
-        self.settingsbuttonrect = self.settingsbutton.get_rect()
+        self.settingsbutton       = pygame.image.load("Assets/Visual/UI/bouton_SETTINGS.png")
+        self.settingsbutton       = pygame.transform.scale(self.settingsbutton, (100, 30))
+        self.settingsbuttonrect   = self.settingsbutton.get_rect()
         self.settingsbuttonrect.x = 640 - 50
         self.settingsbuttonrect.y = 360 + 40
 
         # Boutton "QUITER" -tremisabdoul
-        self.quitbutton = pygame.image.load("Assets/Visual/UI/bouton_QUITTER.png")
-        self.quitbutton = pygame.transform.scale(self.quitbutton, (100, 30))
-        self.quitbuttonrect = self.quitbutton.get_rect()
+        self.quitbutton       = pygame.image.load("Assets/Visual/UI/bouton_QUITTER.png")
+        self.quitbutton       = pygame.transform.scale(self.quitbutton, (100, 30))
+        self.quitbuttonrect   = self.quitbutton.get_rect()
         self.quitbuttonrect.x = 640 - 50
         self.quitbuttonrect.y = 360 + 80
 
@@ -406,23 +408,23 @@ class UI:
         self.lobbybackground = pygame.transform.scale(self.lobbybackground, (1280, 720))
 
         # IntÃƒÂ©gration du boutton "JOUER" -steven
-        self.lobby_playbutton = pygame.image.load("Assets/Visual/UI/bouton_JOUER.png")
-        self.lobby_playbutton = pygame.transform.scale(self.lobby_playbutton, (82, 30))
-        self.lobby_playbuttonrect = self.lobby_playbutton.get_rect()
+        self.lobby_playbutton       = pygame.image.load("Assets/Visual/UI/bouton_JOUER.png")
+        self.lobby_playbutton       = pygame.transform.scale(self.lobby_playbutton, (82, 30))
+        self.lobby_playbuttonrect   = self.lobby_playbutton.get_rect()
         self.lobby_playbuttonrect.x = -62
         self.lobby_playbuttonrect.y = 360 - 60
 
         # IntÃƒÂ©gration du boutton "CHARGER" -steven
-        self.lobby_loadbutton = pygame.image.load("Assets/Visual/UI/bouton_REPRENDRE.png")
-        self.lobby_loadbutton = pygame.transform.scale(self.lobby_loadbutton, (140, 30))
-        self.lobby_loadbuttonrect = self.lobby_loadbutton.get_rect()
+        self.lobby_loadbutton       = pygame.image.load("Assets/Visual/UI/bouton_REPRENDRE.png")
+        self.lobby_loadbutton       = pygame.transform.scale(self.lobby_loadbutton, (140, 30))
+        self.lobby_loadbuttonrect   = self.lobby_loadbutton.get_rect()
         self.lobby_loadbuttonrect.x = -62
         self.lobby_loadbuttonrect.y = 360
 
         # IntÃƒÂ©gration du boutton "QUITTER" -Steven
-        self.lobby_quitbutton = pygame.image.load("Assets/Visual/UI/bouton_QUITTER.png")
-        self.lobby_quitbutton = pygame.transform.scale(self.lobby_quitbutton, (100, 30))
-        self.lobby_quitbuttonrect = self.lobby_quitbutton.get_rect()
+        self.lobby_quitbutton       = pygame.image.load("Assets/Visual/UI/bouton_QUITTER.png")
+        self.lobby_quitbutton       = pygame.transform.scale(self.lobby_quitbutton, (100, 30))
+        self.lobby_quitbuttonrect   = self.lobby_quitbutton.get_rect()
         self.lobby_quitbuttonrect.x = -62
         self.lobby_quitbuttonrect.y = 360 + 60
 
@@ -454,10 +456,10 @@ class Monster(pygame.sprite.Sprite, Game):
         super().__init__()
 
         # Statistiques -steven
-        self.Pv = 100
-        self.MaxPv = 100
+        self.Pv          = 100
+        self.MaxPv       = 100
         self.DamageDealt = 10
-        self.Speed = 3
+        self.Speed       = 3
 
         self.image = pygame.image.load("Assets/Visual/Entities/Monster/Slime/Stand1.png")
 
@@ -465,10 +467,10 @@ class Monster(pygame.sprite.Sprite, Game):
 
         self.rect.x = rd.randint(150, 1050)
         self.rect.y = 50
-        self.LastY = 675
+        self.LastY  = 675
 
-        self.YVector = 0
-        self.YVectorblit = 0
+        self.YVector      = 0
+        self.YVectorblit  = 0
         self.Base_Gravity = 0
 
         self.rect = self.image.get_rect(midtop=self.rect.midtop)
@@ -477,37 +479,37 @@ class Monster(pygame.sprite.Sprite, Game):
         self.image0 = pygame.image.load("Assets/Visual/UI/100pv.png")
         self.image0 = pygame.transform.scale(self.image0, (200, 30))
 
-        self.pvfontrect = self.image0.get_rect()
-        self.pvfontrect = self.image0.get_rect(midbottom=self.pvfontrect.midbottom)
+        self.pvfontrect           = self.image0.get_rect()
+        self.pvfontrect           = self.image0.get_rect(midbottom=self.pvfontrect.midbottom)
         self.pvfontrect.midbottom = self.rect.midtop
-        self.pvfontrect.y += 10
+        self.pvfontrect.y        += 10
 
         self.Direction = 1
 
     # Dessin concernant la barre de vie du monstre -steven / tremisabdoul
     def Life(self, Screen, Game):
         if self.Pv > 0:
-            self.pvfontrect = self.image0.get_rect(midbottom=self.pvfontrect.midbottom)
+            self.pvfontrect           = self.image0.get_rect(midbottom=self.pvfontrect.midbottom)
             self.pvfontrect.midbottom = self.rect.midtop
-            self.pvfontrect.y -= 7
-            self.image0 = pygame.transform.scale(self.image0, (int(self.Pv / self.MaxPv * 64), 8))
-            self.Pv -= 0.2
+            self.pvfontrect.y        -= 7
+            self.image0               = pygame.transform.scale(self.image0, (int(self.Pv / self.MaxPv * 64), 8))
+            self.Pv                  -= 0.2
             Screen.blit(self.image0, (self.pvfontrect.x - Game.Position, self.pvfontrect.y))
 
     # DÃƒÂ©placement du monstre vers la droite -steven
     def Move_Right(self, Game):
-        if Game.Player.check_collisions(self, Game.all_plateform):
+        if Game.check_collisions(self, Game.all_plateform):
             self.rect.x += self.Speed
         else:
-            self.rect.x -= int(self.Speed * 2)
+            self.rect.x   -= int(self.Speed * 2)
             self.Direction = 1
 
     # DÃƒÂ©placement du monstre vers la gauche -steven
     def Move_Left(self, Game):
-        if Game.Player.check_collisions(self, Game.all_plateform):
+        if Game.check_collisions(self, Game.all_plateform):
             self.rect.x -= self.Speed
         else:
-            self.rect.x += int(self.Speed * 2)
+            self.rect.x   += int(self.Speed * 2)
             self.Direction = 0
 
 
@@ -527,13 +529,13 @@ class Weapon:
         self.MetaName = [self.MetaType, self.MetaWeapon, self.MetaClass]
 
         self.Damage = rd.randrange(2, 9, 1)
-        self.Speed = rd.randrange(41, 80, 1)/10
-        self.CD = self.MetaWeapon * 3
+        self.Speed  = rd.randrange(41, 80, 1)/10
+        self.CD     = self.MetaWeapon * 3
 
         self.DamageBuff = 0
-        self.SpeedBuff = 0
-        self.CDR = 0
-        self.tester = self.MetaClass
+        self.SpeedBuff  = 0
+        self.CDR        = 0
+        self.tester     = self.MetaClass
 
         while self.tester > 0:
             self.RandomTest = rd.randrange(1, 3, 1)
@@ -553,9 +555,9 @@ class Weapon:
 class Wall(pygame.sprite.Sprite, Game):
     def __init__(self):
         super().__init__()
-        self.image = pygame.image.load("Assets/Visual/Structure/Wall.png")
-        self.image = pygame.transform.scale(self.image, (250, 150))
-        self.rect = self.image.get_rect()
+        self.image  = pygame.image.load("Assets/Visual/Structure/Wall.png")
+        self.image  = pygame.transform.scale(self.image, (250, 150))
+        self.rect   = self.image.get_rect()
         self.rect.x = - 750
         self.rect.y = - 0
 
@@ -564,10 +566,10 @@ class Background:
 
     def __init__(self):
         super().__init__()
-        self.image = pygame.image.load("Assets/Visual/UI/Background.png")
-        # self.image = pygame.transform.scale(self.image, (3848, 686))
-        self.rect = self.image.get_rect()
-        self.rect = self.image.get_rect(midtop=self.rect.midtop)
+        self.image       = pygame.image.load("Assets/Visual/UI/Background.png")
+        # self.image       = pygame.transform.scale(self.image, (3848, 686))
+        self.rect        = self.image.get_rect()
+        self.rect        = self.image.get_rect(midtop=self.rect.midtop)
         self.rect.midtop = (self.rect.width / 3, 0)
 
 
@@ -576,15 +578,15 @@ class Arm:
         super().__init__()
         self.Game = Game
 
-        self.image = pygame.image.load("Assets/Visual/Mystique/Spells/bras mystique prepa spell.png")
+        self.image          = pygame.image.load("Assets/Visual/Mystique/Spells/bras mystique prepa spell.png")
         self.imageDirection = 0
-        self.rect = self.image.get_rect()
+        self.rect           = self.image.get_rect()
 
-        self.rect.x = 100
-        self.rect.y = 100
-        self.rect = self.image.get_rect(center=self.rect.center)
+        self.rect.x       = 100
+        self.rect.y       = 100
+        self.rect         = self.image.get_rect(center=self.rect.center)
         self.origin_image = self.image
-        self.angle = 0
+        self.angle        = 0
 
     def print(self, Game, Screen):
         self.rect.center = Game.Player.rect.center
@@ -593,30 +595,31 @@ class Arm:
                                                     Game.Mouse.rect.center[0] - self.rect.center[0]))
 
         if -90 < self.angle < 90:
-            self.origin_image = pygame.image.load("Assets/Visual/Mystique/Spells/bras mystique prepa spell.png")
-            self.imageDirection = 0
+            self.origin_image     = pygame.image.load("Assets/Visual/Mystique/Spells/bras mystique prepa spell.png")
+            self.imageDirection   = 0
             Game.Player.Direction = 1
         elif not -90 < self.angle < 90:
-            self.origin_image = pygame.image.load("Assets/Visual/Mystique/Left/Spells/bras mystique prepa spell.png")
-            self.imageDirection = 1
+            self.origin_image    = pygame.image.load\
+            ("Assets/Visual/Mystique/Left/Spells/bras mystique prepa spell.png")
+            self.imageDirection   = 1
             Game.Player.Direction = 0
 
         self.image = pygame.transform.rotozoom(self.origin_image, self.angle, 1)
-        self.rect = self.image.get_rect(center=self.rect.center)
+        self.rect  = self.image.get_rect(center=self.rect.center)
         Screen.blit(self.image, self.rect)
 
 
 class Patern(pygame.sprite.Sprite, Game):
     def __init__(self):
         super().__init__()
-        self.ID = 0
-        self.position = 0
+        self.ID         = 0
+        self.position   = 0
         self.PaternCode = 0
 
     def Init(self, Game, NewWall, NewPlatform):
-        self.ID = Game.PaternNumber
+        self.ID       = Game.PaternNumber
         self.position = Game.PaternNumber * 10 - 10
-        Id = len(Game.ApplyedPatens)
+        Id            = len(Game.ApplyedPatens)
         while Id > len(Game.Paterns) - 1:
             Id -= len(Game.Paterns)
 
@@ -643,23 +646,23 @@ class Projectile(pygame.sprite.Sprite):
     def __init__(self, Game):
         super().__init__()
 
-        self.Speed = 15
+        self.Speed  = 15
         self.Frames = ["Assets/Visual/Spells/FireBall/Nion1.png",
                        "Assets/Visual/Spells/FireBall/Nion2.png",
                        "Assets/Visual/Spells/FireBall/Nion3.png"]
-        self.Frame = 0
+        self.Frame        = 0
         self.origin_image = pygame.image.load("Assets/Visual/Spells/FireBall/Nion1.png")
-        self.rect = self.origin_image.get_rect()
-        self.rect.x = Game.Player.rect.x + 80
-        self.rect.y = Game.Player.rect.y + 45
-        self.DistanceX = Game.Mouse.rect.center[0] - self.rect.center[0]
-        self.DistanceY = Game.Mouse.rect.center[1] - self.rect.center[1]
+        self.rect         = self.origin_image.get_rect()
+        self.rect.x       = Game.Player.rect.x + 80
+        self.rect.y       = Game.Player.rect.y + 45
+        self.DistanceX    = Game.Mouse.rect.center[0] - self.rect.center[0]
+        self.DistanceY    = Game.Mouse.rect.center[1] - self.rect.center[1]
 
         if self.DistanceY == 0:
             self.DistanceY = 0.01
         from math import sqrt
 
-        self.norm = sqrt(self.DistanceX ** 2 + self.DistanceY ** 2)
+        self.norm       = sqrt(self.DistanceX ** 2 + self.DistanceY ** 2)
         self.DirectionX = self.DistanceX / self.norm
         self.DirectionY = self.DistanceY / self.norm
         self.DirectionX = self.DirectionX * sqrt(2)
@@ -670,7 +673,7 @@ class Projectile(pygame.sprite.Sprite):
         self.angle = -Game.Deges(Game.AngleCalc(self.DirectionY, self.DirectionX))
 
         self.image = pygame.transform.rotozoom(self.origin_image, self.angle, 1)
-        self.rect = self.image.get_rect(center=self.rect.center)
+        self.rect  = self.image.get_rect(center=self.rect.center)
 
     def move(self, Game):
 
@@ -685,23 +688,21 @@ class Projectile(pygame.sprite.Sprite):
                 self.Frame = 0
                 self.origin_image = pygame.image.load(self.Frames[0])
 
-
-
-        self.rect.x += self.DirectionX
-        self.rect.y += self.DirectionY
+        self.rect.x     += self.DirectionX
+        self.rect.y     += self.DirectionY
         self.DirectionY += 0.05
-        self.angle = -Game.Deges(Game.AngleCalc(self.DirectionY, self.DirectionX))
+        self.angle       = -Game.Deges(Game.AngleCalc(self.DirectionY, self.DirectionX))
 
         self.image = pygame.transform.rotozoom(self.origin_image, self.angle, 1)
-        self.rect = self.image.get_rect(center=self.rect.center)
+        self.rect  = self.image.get_rect(center=self.rect.center)
 
         Game.Particles.Add(Game, self.rect.center, 'red', 8)
         Game.Particles.Add(Game, self.rect.center, 'orangered', 8)
 
         if not -1280 < self.rect.x - Game.Player.rect.x < 1280\
                 or not -720 < self.rect.y < 720\
-                or Game.Player.check_collisions(self, Game.all_wall)\
-                or Game.Player.check_collisions(self, Game.all_plateform):
+                or Game.check_collisions(self, Game.all_wall)\
+                or Game.check_collisions(self, Game.all_plateform):
             Game.Projectiles.remove(self)
             for _ in range(5):
                 Game.Particles.Add(Game, self.rect.center, 'Grey80', 32)
@@ -712,6 +713,8 @@ class Projectile(pygame.sprite.Sprite):
             for _ in range(5):
                 Game.Particles.Add(Game, self.rect.center, 'Grey50', 12)
 
+    def Add(self, Game):
+        Game.Projectiles.add(Projectile(Game))
 
 class Particles:
     def __init__(self):

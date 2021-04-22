@@ -17,7 +17,7 @@ pygame.init()
 Game = Game()
 Music_Init()
 Screen = Display()
-Paterns(Game, NewWall, NewPlatform)
+Paterns(Game)
 musicDANOARKIOUT(Game)
 
 '''==================================='''

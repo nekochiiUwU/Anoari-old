@@ -4,15 +4,17 @@ import sys
 
 print("Server Starting...")
 
-server = "87.89.177.64"
-port = 5555
+server = "192.168.1.26"
+port = 555
 
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
 try:
     s.bind((server, port))
 except socket.error as error:
-    print(str(error))
+    print("ERROR: ", str(error))
+
+print(str(s))
 
 s.listen(10)  # Limite d'utulisateurs sur le serveur
 

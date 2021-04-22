@@ -1,46 +1,10 @@
-
 # Contient toutes les fonctions (pour ne pas envahir les autres fichiers) -tremisabdoul
-
-import pygame
 import os
+from Scripts.Printers import *
 
 print("/Scripts/Functions: Loading")
 
-
-def Music_Init():
-    """Initialisation du module pygame.mixer -tremisabdoul"""
-    pygame.mixer.music.set_volume(0.4)
-    print(pygame.mixer.music.get_volume())
-    pygame.mixer.init()
-
-
-def musicDANOARKI(Game):
-    """Musique -tremisabdoul"""
-    Timer = pygame.mixer.music.get_pos() / 1000.0
-
-    if Timer + Game.MusicStart > Game.MusicLengh:
-        pygame.mixer.music.rewind()
-        Game.MusicStart = 0
-
-    Game.MusicStart = Timer + Game.MusicStart
-
-    pygame.mixer.music.load("Assets/Audio/Music/DANOARKI.mp3")
-    Game.MusicLengh = 300
-    pygame.mixer.music.play(-1, Game.MusicStart)
-
-
-def musicDANOARKIOUT(Game):
-    """Musique _tremisabdoul"""
-    Timer = pygame.mixer.music.get_pos() / 1000.0
-    if Timer + Game.MusicStart > Game.MusicLengh:
-        pygame.mixer.music.rewind()
-        Game.MusicStart = 0
-
-    Game.MusicStart = Timer + Game.MusicStart
-
-    pygame.mixer.music.load("Assets/Audio/Music/DANOARKIout.mp3")
-    Game.MusicLengh = 300
-    pygame.mixer.music.play(-1, Game.MusicStart)
+""" ===  Init  === """
 
 
 def Display():
@@ -53,169 +17,74 @@ def Display():
     return screen
 
 
-def Jump(Game):
-    """Saut: [ Key: Space ] -tremisabdoul"""
-    global booleanjump
-    if Game.Player.SpeedY > -17 and Game.pressed.get(pygame.K_SPACE) and booleanjump:
-        Game.Player.SpeedY -= 3.4
-        Game.Player.rect.y += Game.Player.SpeedY
+def Paterns(Game):
+    """Initialisation: Paterns -tremisabdoul"""
+    Load = []
+    PaternsFile = open('Data/Paterns.txt', 'r')
 
-    else:
-        booleanjump = 0
-        if Game.Player.SpeedY < 0:
-            Game.Player.rect.y += Game.Player.SpeedY
-            Game.Player.SpeedY += 0.4
-        else:
-            Game.Player.SpeedY = 0
+    for line in PaternsFile:
+        line = line.strip()
+        Load.append(line)
 
+    Load = "".join(Load)
+    Load = Load.split(",")
+    Game.Paterns = Load
+    Game.Paterns.pop(0)
 
-def DeplacementX(Game):
-    """Deplacement X:  [Gauche: LEFT / Q ], [Droite: RIGHT / D] -tremisabdoul"""
+    for Patern in range(len(Game.Paterns)):
+        print(Patern)
+        Game.Paterns[Patern] = Game.Paterns[Patern].split(":")
+        print("\nID Game.Paterns[", Patern, "] :  ", Game.Paterns[Patern], ": ", sep='')
 
-    Game.Player.MovementKey = False
-    if Game.pressed.get(pygame.K_d) and Game.Player.rect.x < Game.Player.MaxX \
-            or Game.pressed.get(pygame.K_RIGHT) and Game.Player.rect.x < Game.Player.MaxX:
-        Game.Player.MovementKey = True
-        Game.Player.Move_Right(Game)
+        for item in range(len(Game.Paterns[Patern])):
+            if 2 <= item <= 6:
+                Game.Paterns[Patern][item] = ",".join(Game.Paterns[Patern][item])
+                Game.Paterns[Patern][item] = Game.Paterns[Patern][item].split(",")
+            print("\tID Game.Paterns[", Patern, "][", item, "] :  ", Game.Paterns[Patern][item], "\n", sep='')
+            if isinstance(Game.Paterns[Patern][item], list):
+                for Chr in range(len(Game.Paterns[Patern][item])):
+                    print("\t\tID Game.Paterns[", Patern, "][", item, "][", Chr, "] :  ",
+                          Game.Paterns[Patern][item][Chr], sep='')
 
-    if Game.pressed.get(pygame.K_q) and Game.Player.rect.x > Game.Player.MinX \
-            or Game.pressed.get(pygame.K_LEFT) and Game.Player.rect.x > Game.Player.MinX:
-        Game.Player.MovementKey = True
-        Game.Player.Move_Left(Game)
+    Game.Grid = {"xTiles": len(Game.Paterns[0][2]),
+                 "yTiles": len(Game.Paterns[0]),
+                 "width": 250,
+                 "height": 150,
+                 "x": 0,
+                 "y": 0}
 
-
-def MousePrinter(Screen, Game):
-    """Affichage de la sourie -tremisabdoul"""
-
-    Game.Mouse.rect.center = pygame.mouse.get_pos()
-    Screen.blit(Game.Mouse.image, Game.Mouse.rect)
-
-
-def Printer(Screen, Game):
-    """Fonction d'affichage: Elements in-game -tremisabdoul"""
-
-    Game.Background.rect.x -= Game.Position
-    Game.Sol.rect.x += Game.Position
-
-    Screen.blit(Game.Background.image, Game.Background.rect)
-
-    for Entity in Game.Entities:
-        if Entity != Game.Player:
-            Entity.rect.x -= Game.Position
-            Screen.blit(Entity.image, Entity.rect)
-            Entity.Life(Screen, Game)
-
-    for Projectile in Game.Projectiles:
-        Projectile.rect.x -= Game.Position
-        Projectile.move(Game)
-        Screen.blit(Projectile.image, Projectile.rect)
-
-    Game.Particles.Print(Game, Screen)
-
-    for Structure in Game.all_plateform:
-        Structure.rect.x -= Game.Position
-        if -250 < Structure.rect.x < 1280:
-            Screen.blit(Structure.image, Structure.rect)
-
-    for Structure in Game.all_wall:
-        Structure.rect.x -= Game.Position
-        if -250 < Structure.rect.x < 1280:
-            Screen.blit(Structure.image, Structure.rect)
-
-    if Game.pressed.get("3"):
-        MousePrinter(Screen, Game)
-        Game.Arm.print(Game, Screen)
-    else:
-        if Game.Player.Direction:
-            Game.Mouse.rect.y = Game.Player.rect.y + 50
-            Game.Mouse.rect.x = Game.Player.rect.x + 220
-        else:
-            Game.Mouse.rect.y = Game.Player.rect.y + 50
-            Game.Mouse.rect.x = Game.Player.rect.x - 100
-
-    Screen.blit(Game.Sol.image, Game.Sol.rect)
-
-    Animation(Game)
-    Screen.blit(Game.Player.image, Game.Player.rect)
-
-    if Game.Frame % 2:
-        Game.Particles.Add(Game, (Game.Player.rect.center[0] - 35, Game.Player.rect.center[1] - 20), 'red', 6)
-        Game.Particles.Add(Game, (Game.Player.rect.center[0] - 35, Game.Player.rect.center[1] - 20), 'orangered', 6)
-        Game.Particles.Add(Game, (Game.Player.rect.center[0] - 35, Game.Player.rect.center[1] - 20), 'orangered4', 6)
-        Game.Particles.Add(Game, (Game.Player.rect.center[0] - 35, Game.Player.rect.center[1] - 20), 'red3', 6)
-
-    if Game.ShowHitbox:
-        for Object in Game.Entities:
-            Draw_rect(Screen, Object)
-
-        for Object in Game.all_wall:
-            Draw_rect(Screen, Object)
-
-        for Object in Game.all_plateform:
-            Draw_rect(Screen, Object)
-
-    UIPrinter(Screen, Game)
+    for _ in range(30):
+        from Scripts.Classes import Patern
+        Patern = Patern()
+        Patern.Init(Game, NewWall, NewPlatform)
+        Game.ApplyedPatens.add(Patern)
 
 
-# Print: -tremisabdoul
-def UIPrinter(Screen, Game):
-    """Fonction d'affichage: Elements d'interface in-game -tremisabdoul"""
-
-    # Cree une couleur plus ou moins rouge en fonction des PV restants -tremisabdoul
-    Color = (Game.Player.Pv / Game.Player.MaxPv) * 255
-    LifeColor = [255, Color, Color]
-
-    opti = str(round(Game.Player.Pv))
-    opti = str(str(opti) + " / " + str(Game.Player.MaxPv) + " HP")
-    opti = Game.police1.render(str(opti), True, LifeColor)
-    Screen.blit(opti, (15 + Color / 50, 48 + Color / 50))
-
-    opti1 = round((Game.Player.Pv / Game.Player.MaxPv) * 100)
-    opti1 = opti1 * "|"
-    opti1 = Game.police1.render(str(opti1), True, LifeColor)
-    Screen.blit(opti1, (15 + Color / 50, 60 + Color / 50))
-
-    if Game.ShowHitbox:
-        jump = "Jump: " + str(Game.Player.SpeedY)
-        jump = Game.police1.render(str(jump), True, (128, 255, 128))
-        Screen.blit(jump, (15, 80))
-
-        jump1 = round((Game.Player.SpeedY / 16) * 100)
-        jump1 = -jump1 * "|"
-        jump1 = Game.police1.render(str(jump1), True, (128, 255, 128))
-        Screen.blit(jump1, (15, 100))
-
-        # Permet de voir le nombre de frames a la seconde -tremisabdoul -tremisabdoul
-        frame = 1
-        fps = frame / Game.Tickchecker
-        fps = "FPS : " + str(round(fps))
-        printfps = Game.police1.render(str(fps), True, (255, 255, 255))
-        Screen.blit(printfps, (6, 34))
-
-        y = 34
-        for Entity in Game.Entities:
-            Entity.YVectorblit = Game.police1.render("Y Vector checker: " + str(Entity.YVector), True, (100, 100, 200))
-            Screen.blit(Entity.YVectorblit, (100, y))
-            y += 10
+""" ===  Loops  === """
 
 
-def pauseblit(Screen, Game):
-    """Fonction d'affichage: Elements de pause -tremisabdoul"""
+def inGame(Game, Screen):
+    """ Loop de Jeu -tremisabdoul"""
 
-    Screen.blit(Game.Background.image, Game.Background.rect)
-    Screen.blit(Game.UI.baselayer, (0, 0))
+    while Game.InGame:
+        """ ===== Frame Limiter ===== """
+        Game.Tick = Game.time()
+        Game.Frame += 1
 
-    Screen.blit(Game.UI.resumebutton, Game.UI.resumebuttonrect)
-    Screen.blit(Game.UI.savebutton, Game.UI.savebuttonrect)
-    Screen.blit(Game.UI.settingsbutton, Game.UI.settingsbuttonrect)
-    Screen.blit(Game.UI.quitbutton, Game.UI.quitbuttonrect)
+        """ ===== Movements ===== """
+        Movements(Game)
 
-    Game.Particles.Add(Game, Game.Mouse.rect.center, 'white', 10)
-    Game.Particles.Add(Game, Game.Mouse.rect.center, 'grey', 10)
-    Game.Particles.Add(Game, Game.Mouse.rect.center, 'black', 10)
-    Game.Particles.Print(Game, Screen)
+        """ ===== Camera ===== """
+        SmoothCamera(Game)
 
-    MousePrinter(Screen, Game)
+        """ ===== Key Inputs ===== """
+        InGameKeys(Game, Screen)
+
+        """ ===== Printer ===== """
+        Printer(Screen, Game)
+
+        """ ===== Frame Limiter ===== """
+        FrameLimiter(Game, Screen)
 
 
 def pause(Game, Screen):
@@ -224,7 +93,7 @@ def pause(Game, Screen):
     while Game.Pause:
 
         # Init du compteur d'FPS -tremisabdoul
-        tick = Game.time()
+        Game.Tick = Game.time()
 
         for event in pygame.event.get():
 
@@ -267,44 +136,11 @@ def pause(Game, Screen):
 
         # Affichage -tremisabdoul
         pauseblit(Screen, Game)
-        pygame.display.flip()
 
         # Limiteur d'FPS
-        FrameLimiter(Game, tick)
-
-
-def inGame(Game, Screen):
-    """ Loop de Jeu -tremisabdoul"""
-
-    while Game.InGame:
-        """ ===== Frame Limiter ===== """
-        Game.Tick = Game.time()
-        Game.Frame += 1
-        """ ===== Movements ===== """
-        Movements(Game)
-        """ ===== Camera ===== """
-        SmoothCamera(Game)
-        """ ===== Printer ===== """
-        Printer(Screen, Game)
-        """ ===== Key Inputs ===== """
-        InGameKeys(Game, Screen)
-        """ ===== Frame Limiter ===== """
         FrameLimiter(Game, Screen)
-        """ ===== Affichage ===== """
-        pygame.display.flip()
-        """Test Network"""
-        Slimeposition = Game.Network.read_pos(Game.Network.send(Game.Network.make_Data((Game.Monster.rect.x, Game.Monster.rect.y), "tuple")))
-        print(Slimeposition)
-        Game.Monster.rect.x = Slimeposition[0]
-        Game.Monster.rect.y = Slimeposition[1]
 
-def LobbyBlit(Screen, Game):
-    """Affichage des Elements du lobby -steven"""
-    Screen.blit(Game.UI.lobbybackground, (0, 0))
-    Screen.blit(Game.UI.lobby_loadbutton, Game.UI.lobby_loadbuttonrect)
-    Screen.blit(Game.UI.lobby_playbutton, Game.UI.lobby_playbuttonrect)
-    Screen.blit(Game.UI.lobby_quitbutton, Game.UI.lobby_quitbuttonrect)
-    MousePrinter(Screen, Game)
+        pygame.display.flip()
 
 
 def Lobby(Game, Screen):
@@ -369,19 +205,6 @@ def Lobby(Game, Screen):
         pygame.display.flip()
 
 
-def OptionPrinter(Game, Screen):
-    """Affichage des options -steven"""
-    White = (255, 255, 255)
-    Screen.fill((0, 0, 0))
-    pygame.draw.rect(Screen, White, pygame.Rect(600, 200, 100, 60), 2)
-
-    Texte(Game.police2, 'Resolution : ', (255, 255, 255), Screen, (100, 100))
-    Texte(Game.police2, 'Volume : ', (255, 255, 255), Screen, (100, 225))
-    Texte(Game.police2, 'Controles : ', (255, 255, 255), Screen, (100, 350))
-
-    MousePrinter(Screen, Game)
-
-
 def Option(Game, Screen):
     """Loop des options -steven"""
     while Game.Option:
@@ -421,19 +244,6 @@ def Option(Game, Screen):
         Texte(Game.police1, fps, (255, 255, 255), Screen, (6, 34))
 
         pygame.display.flip()
-
-
-def SaveMenuPrinter(Game, Screen, SaveButton1, SaveButton2, SaveButton3):
-    """Affichage dans la Loop SaveMenu -steven"""
-    MousePrinter(Screen, Game)
-
-    White = (255, 255, 255)
-    Screen.fill((0, 0, 0))
-
-    # Creation des rectangles -steven
-    Rectangle(Screen, White, SaveButton1, 2)
-    Rectangle(Screen, White, SaveButton2, 2)
-    Rectangle(Screen, White, SaveButton3, 2)
 
 
 def SaveMenu(Game, Screen):
@@ -530,6 +340,295 @@ def SaveMenu(Game, Screen):
         SaveMenuPrinter(Game, Screen, SaveButton1, SaveButton2, SaveButton3)
 
         pygame.display.flip()
+
+
+""" ===  Movement  === """
+
+
+def Movements(Game):
+    """Contiens tout les mouvements ingame -tremisabdoul"""
+    global booleanjump
+
+    DeplacementX(Game)
+
+    for Entity in Game.Entities:
+        Entity.LastY = Entity.rect.y
+
+    for Monster in Game.all_Monster:
+        Collide = Game.check_collisions(Game.Player, Game.all_Monster)
+        if not Collide:
+            if Monster.Direction:
+                Monster.Move_Left(Game)
+            else:
+                Monster.Move_Right(Game)
+        else:
+            if Collide[0].rect.center[0] > Game.Player.rect.center[0]:
+                Monster.Direction = 0
+                Monster.Move_Right(Game)
+            else:
+                Monster.Direction = 1
+                Monster.Move_Left(Game)
+
+    if Game.pressed.get(pygame.K_SPACE) \
+            and Game.check_collisions(Game.Player, Game.all_plateform) \
+            and Game.Player.YVector == 0:
+        Game.Player.SpeedY = -5
+        booleanjump = 1
+        Jump(Game)
+
+    elif Game.Player.SpeedY:
+        Jump(Game)
+
+    for Entity in Game.Entities:
+        Game.Player.Force.Gravity(Game, Entity)
+        Entity.YVector = Entity.LastY - Entity.rect.y
+
+    Game.Position = Game.Player.Force.AccelerationFunctionX()
+    for Target in Game.Entities:
+        Collide = Game.check_collisions(Target, Game.all_wall)
+
+        if Target == Game.Player:
+            Target.rect.x += Game.Position
+
+        for Wall in Collide:
+            if not Wall.rect.bottomleft < Target.rect.midtop < Wall.rect.topright:
+
+                if Target == Game.Player:
+                    if Wall.rect.center < Target.rect.center:
+                        if Game.Position < 0:
+                            Game.Position = -Game.Position
+                    elif Wall.rect.center > Target.rect.center:
+                        if Game.Position > 0:
+                            Game.Position = -Game.Position
+
+                elif Target in Game.AcrossWall:
+                    if Wall.rect.center < Target.rect.center:
+                        Target.rect.x -= Wall.rect.right - (Target.rect.left - 33)
+                        Target.Direction = 1
+                    elif Wall.rect.center > Target.rect.center:
+                        Target.rect.x -= Wall.rect.left - (Target.rect.right + 33)
+                        Target.Direction = 0
+
+                else:
+                    if Wall.rect.center < Target.rect.center:
+                        Target.rect.x += Wall.rect.right - (Target.rect.left - 33)
+                        Target.Direction = 0
+                    elif Wall.rect.center > Target.rect.center:
+                        Target.rect.x += Wall.rect.left - (Target.rect.right + 33)
+                        Target.Direction = 1
+
+            else:
+                if Target == Game.Player:
+                    Target.Base_Gravity = Wall.rect.bottom - Target.rect.top
+                    if Target.Base_Gravity < -11:
+                        Target.Base_Gravity = -11
+                    Game.Player.SpeedY = 0
+
+        if Target == Game.Player:
+            Target.rect.x += Game.Position
+
+    Game.Position = round(Game.Position)
+
+    Game.PositionPlayer += Game.Position
+
+    BackgroundScroll(Game)
+
+
+def Jump(Game):
+    """Saut: [ Key: Space ] -tremisabdoul"""
+    global booleanjump
+    if Game.Player.SpeedY > -17 and Game.pressed.get(pygame.K_SPACE) and booleanjump:
+        Game.Player.SpeedY -= 3.4
+        Game.Player.rect.y += Game.Player.SpeedY
+
+    else:
+        booleanjump = 0
+        if Game.Player.SpeedY < 0:
+            Game.Player.rect.y += Game.Player.SpeedY
+            Game.Player.SpeedY += 0.4
+        else:
+            Game.Player.SpeedY = 0
+
+
+def DeplacementX(Game):
+    """Deplacement X:  [Gauche: LEFT / Q ], [Droite: RIGHT / D] -tremisabdoul"""
+
+    Game.Player.MovementKey = False
+    if Game.pressed.get(pygame.K_d) and Game.Player.rect.x < Game.Player.MaxX \
+            or Game.pressed.get(pygame.K_RIGHT) and Game.Player.rect.x < Game.Player.MaxX:
+        Game.Player.MovementKey = True
+        Game.Player.Move_Right(Game)
+
+    if Game.pressed.get(pygame.K_q) and Game.Player.rect.x > Game.Player.MinX \
+            or Game.pressed.get(pygame.K_LEFT) and Game.Player.rect.x > Game.Player.MinX:
+        Game.Player.MovementKey = True
+        Game.Player.Move_Left(Game)
+
+
+""" ===  Limiter  === """
+
+
+def FrameLimiter(Game, Screen):
+    """Limiteur de FPS -tremisabdoul"""
+    Game.Tickchecker = Game.time()
+    Game.Tickchecker -= Game.Tick
+    if Game.ShowHitbox:
+        print("\n Player Posion: ", Game.PositionPlayer)
+        try:
+            start = Game.time()
+            Test = Game.time() - start
+            TestL1 = str(round((Game.Tickchecker - Test) / 0.00017)) + "    % of 60 FPS: Framerate without Test"
+            TestL2 = str(round(Game.Tickchecker / 0.00017)) + "    % of 60 FPS: Framerate"
+            TestL3 = str(round(Test / 0.00017)) + "    % of 60 FPS : Test"
+            Texte(Game.police1, TestL1, (255, 255, 255), Screen, (1000, 20))
+            Texte(Game.police1, TestL2, (255, 255, 255), Screen, (1000, 40))
+            Texte(Game.police1, TestL3, (255, 255, 255), Screen, (1000, 60))
+        finally:
+            Test = 0
+
+    pygame.display.flip()
+
+    while Game.Tickchecker < 0.017:
+        Game.Tickchecker = Game.time()
+        Game.Tickchecker -= Game.Tick
+
+
+""" ===  Imput  === """
+
+
+def InGameKeys(Game, Screen):
+    """Check des input et instances -tremisabdoul"""
+    for event in pygame.event.get():
+
+        # Touches enfoncees -tremisabdoul
+        if event.type == pygame.KEYDOWN:
+            Game.pressed[event.key] = True
+
+            # Activation de Pause -tremisabdoul
+            if Game.pressed.get(pygame.K_ESCAPE):
+                Game.Pause = True
+                Game.InGame = False
+
+            # Changement entre Fullscreen / Window -steven
+            if Game.pressed.get(pygame.K_F11):
+                print("\n", pygame.display.Info())
+
+                if Game.Fullscreen == 0:
+                    Screen = pygame.display.set_mode((Game.UserData.DataX, Game.UserData.DataY), pygame.FULLSCREEN)
+                    Game.Fullscreen = 1
+                else:
+                    pygame.display.set_mode((Game.DataX, Game.DataY), pygame.RESIZABLE)
+                    pygame.display.toggle_fullscreen()
+                    pygame.display.set_mode((1280, 720), pygame.RESIZABLE)
+                    os.environ['SDL_VIDEO_WINDOW_POS'] = "%d,%d" % (100, 100)
+                    Game.Fullscreen = 0
+
+            if Game.pressed.get(pygame.K_F10):
+                pygame.image.save(Screen, "screenshot.jpg")
+
+        # Touches relachees -tremisabdoul
+        elif event.type == pygame.KEYUP:
+            Game.pressed[event.key] = False
+
+        # Boutons souris enfonces -nekochii x tremisabdoul
+        if event.type == pygame.MOUSEBUTTONDOWN:
+            Game.pressed[str(event.button)] = True
+            if event.button == 1:
+                Game.Projectile.Add(Game)
+                print("Left Click (None)")
+            elif event.button == 2:
+                print("Middle Click (Hitbox + print(Game.PlayerPosition))")
+                # Game.data.stop()
+                # Game.data.play()
+                Game.ShowHitbox = not Game.ShowHitbox
+            elif event.button == 3:
+                print("Right Click (Mode VisÃ©e)")
+                pygame.mouse.set_visible(False)
+                Game.PrepaSpell = True
+            elif event.button > 3:
+                if event.button % 2:
+                    print("Scroll Down (None) Value =", event.button)
+                else:
+                    print("Scroll Up (None) Value =", event.button)
+        # Boutons souris relaches -nekochii
+        elif event.type == pygame.MOUSEBUTTONUP:
+            Game.pressed[str(event.button)] = False
+            if event.button == 3:
+                Game.PrepaSpell = False
+                pygame.mouse.set_visible(True)
+
+        # Permet le resize de l'ecran -tremisabdoul
+        if event.type == pygame.VIDEORESIZE:
+            ReScale(Game, Screen)
+
+        # Bouton croix en haut a droite (Fermer le Programme) -tremisabdoul
+        if event.type == pygame.QUIT:
+            Game.InGame = False
+            Game.Lobby = False
+            Game.Pause = False
+            Game.running = False
+            pygame.quit()
+            quit()
+            break
+
+
+""" ===  Camera  === """
+
+
+def SmoothCamera(Game):
+    """Mouvements de Caméra -tremisabdoul"""
+    Game.Player.LastX = Game.Player.rect.x - 350
+    Game.lastPosition = Game.Position
+    Game.Player.rect.x = 350
+    # Information Smooth Cam:
+    #   Valeur Numerique n°2: Vitesse de camera ├──────────────────────┬┬┐ (y > 1)
+    #   Valeur Numerique n°1: Décalage max du Player ├──────────┬┬┐    │││ (x > 1)
+    #   ▬ ▬ ▬ ▬ ▬ ▬ ▬ ▬ ▬ ▬ ▬ ▬ ▬ ▬ ▬ ▬ ▬ ▬ ▬ ▬ ▬  ▼▼▼    ▼▼▼
+    Game.Player.rect.x += (Game.Position + (Game.Player.LastX / 1.9) / 1.5)
+
+
+def BackgroundScroll(Game):
+    """Déplacement du Background -tremisabdoul"""
+    checker = Game.PositionPlayer % 1280
+    if -10 < checker < 10:
+        Game.Background.rect.midtop = 640 - checker, 0
+
+
+def ReScale(Game, Screen):
+    """PAS FINI    Rescale Trop la flemme le le finir je vais le faire vous inquétez pas -tremisabdoul    PAS FINI"""
+    Game.DataX = pygame.Surface.get_width(Screen)
+    Game.DataY = pygame.Surface.get_height(Screen)
+    Game.Player.image = pygame.image.load("Assets/Visual/Mystique/resp1.png")
+    Game.Background.image = pygame.transform.scale(Game.Background.image,
+                                                   (Game.Rescale(Game.Background.image.get_width(), "X"),
+                                                    Game.Rescale(Game.Background.image.get_height(), "Y")))
+    Game.Player.image = pygame.transform.scale(Game.Player.image,
+                                               (Game.Rescale(Game.Player.image.get_width(), "X"),
+                                                Game.Rescale(Game.Player.image.get_height(), "Y")))
+
+
+""" ===  Pop  === """
+
+
+def NewPlatform(Game, x, y):
+    """Création d'une plateforme -tremisabdoul"""
+    from Scripts.Classes import Plateform
+    Plateform = Plateform()
+    Plateform.rect.x, Plateform.rect.y = x * 250, y * 150 + 130
+    Game.all_plateform.add(Plateform)
+    Game.PlateformNumber += 1
+
+
+def NewWall(Game, x, y):
+    """Création d'un mur -tremisabdoul"""
+    from Scripts.Classes import Wall
+    Wall = Wall()
+    Wall.rect.x, Wall.rect.y, Wall.rect.height, Wall.rect.width = x * 250, y * 150, 150, 250
+    Game.all_wall.add(Wall)
+    Game.WallNumber += 1
+
+
+""" ===  Operations  === """
 
 
 def Data_Save(Game, Screen, SaveState):
@@ -667,385 +766,43 @@ def Data_Load(Game, Screen, SaveState):
     return 0
 
 
-def ReScale(Game, Screen):
-    """PAS FINI    Rescale Trop la flemme le le finir je vais le faire vous inquétez pas -tremisabdoul    PAS FINI"""
-    Game.DataX = pygame.Surface.get_width(Screen)
-    Game.DataY = pygame.Surface.get_height(Screen)
-    Game.Player.image = pygame.image.load("Assets/Visual/Mystique/resp1.png")
-    Game.Background.image = pygame.transform.scale(Game.Background.image,
-                                                   (Game.Rescale(Game.Background.image.get_width(), "X"),
-                                                    Game.Rescale(Game.Background.image.get_height(), "Y")))
-    Game.Player.image = pygame.transform.scale(Game.Player.image,
-                                               (Game.Rescale(Game.Player.image.get_width(), "X"),
-                                                Game.Rescale(Game.Player.image.get_height(), "Y")))
+""" ===  Music  === """
 
 
-def Animation(Game):
-    """Animations (base par tremisabdoul) (PrepaSpell par nekochii) (Déssinées par nekochii)"""
-    if Game.PrepaSpell:
-        if Game.Player.YVector:
-            if Game.Player.YVector < 0:
-                PrepaSpellFallAnimation(Game)
-            else:
-                PrepaSpellJumpAnimation(Game)
-        elif Game.Player.MovementKey:
-            PrepaSpellRunAnimation(Game)
-        else:
-            PrepaSpellAnimation(Game)
+def Music_Init():
+    """Initialisation du module pygame.mixer -tremisabdoul"""
+    pygame.mixer.music.set_volume(0.4)
+    print(pygame.mixer.music.get_volume())
+    pygame.mixer.init()
 
-    elif Game.Player.YVector:
-        if Game.Player.YVector < 0:
-            FallAnimation(Game)
-        else:
-            JumpAnimation(Game)
-    elif Game.Player.MovementKey:
-        RunAnimation(Game)
-    else:
-        StandAnimation(Game)
 
+def musicDANOARKI(Game):
+    """Musique -tremisabdoul"""
+    Timer = pygame.mixer.music.get_pos() / 1000.0
 
-def FallAnimation(Game):
-    if Game.Player.Direction:
-        Game.Player.image = pygame.image.load("Assets/Visual/Mystique/Jump/Jump2.png")
-    else:
-        Game.Player.image = pygame.image.load("Assets/Visual/Mystique/Left/Jump/Jump2.png")
+    if Timer + Game.MusicStart > Game.MusicLengh:
+        pygame.mixer.music.rewind()
+        Game.MusicStart = 0
 
+    Game.MusicStart = Timer + Game.MusicStart
 
-def JumpAnimation(Game):
-    if Game.Player.Direction:
-        Game.Player.image = pygame.image.load("Assets/Visual/Mystique/Jump/Jump1.png")
-    else:
-        Game.Player.image = pygame.image.load("Assets/Visual/Mystique/Left/Jump/Jump1.png")
+    pygame.mixer.music.load("Assets/Audio/Music/DANOARKI.mp3")
+    Game.MusicLengh = 300
+    pygame.mixer.music.play(-1, Game.MusicStart)
 
 
-def RunAnimation(Game):
-    if Game.Player.Direction:
-        if Game.Frame % 4 == 0:
-            if Game.ActualFrame <= 0:
-                Game.ActualFrame = 1
-                Game.Player.image = pygame.image.load("Assets/Visual/Mystique/Run/Run1.png")
-            elif Game.ActualFrame >= 1:
-                Game.ActualFrame = 0
-                Game.Player.image = pygame.image.load("Assets/Visual/Mystique/Run/Run2.png")
-    else:
-        if Game.Frame % 4 == 0:
-            if Game.ActualFrame <= 0:
-                Game.ActualFrame = 1
-                Game.Player.image = pygame.image.load("Assets/Visual/Mystique/Left/Run/Run1.png")
-            elif Game.ActualFrame >= 1:
-                Game.ActualFrame = 0
-                Game.Player.image = pygame.image.load("Assets/Visual/Mystique/Left/Run/Run2.png")
+def musicDANOARKIOUT(Game):
+    """Musique _tremisabdoul"""
+    Timer = pygame.mixer.music.get_pos() / 1000.0
+    if Timer + Game.MusicStart > Game.MusicLengh:
+        pygame.mixer.music.rewind()
+        Game.MusicStart = 0
 
+    Game.MusicStart = Timer + Game.MusicStart
 
-def StandAnimation(Game):
-    if Game.Player.Direction:
-        if Game.Frame % 4 == 0:
-            if Game.ActualFrame <= 0:
-                Game.ActualFrame = 1
-                Game.Player.image = pygame.image.load("Assets/Visual/Mystique/resp2.png")
-            elif Game.ActualFrame >= 1:
-                Game.ActualFrame = 0
-                Game.Player.image = pygame.image.load("Assets/Visual/Mystique/resp1.png")
-    else:
-        if Game.Frame % 4 == 0:
-            if Game.ActualFrame <= 0:
-                Game.ActualFrame = 1
-                Game.Player.image = pygame.image.load("Assets/Visual/Mystique/Left/resp2.png")
-            elif Game.ActualFrame >= 1:
-                Game.ActualFrame = 0
-                Game.Player.image = pygame.image.load("Assets/Visual/Mystique/Left/resp1.png")
-
-
-def PrepaSpellJumpAnimation(Game):
-    if Game.Player.Direction:
-        if Game.Frame % 4 == 0:
-            Game.Player.image = pygame.image.load("Assets/Visual/Mystique/Spells/mystique prepa sort Jump.png")
-    else:
-        if Game.Frame % 4 == 0:
-            Game.Player.image = pygame.image.load("Assets/Visual/Mystique/Left/Spells/mystique prepa sort Jump.png")
-
-
-def PrepaSpellFallAnimation(Game):
-    if Game.Player.Direction:
-        if Game.Frame % 4 == 0:
-            Game.Player.image = pygame.image.load("Assets/Visual/Mystique/Spells/mystique prepa sort Fall.png")
-    else:
-        if Game.Frame % 4 == 0:
-            Game.Player.image = pygame.image.load("Assets/Visual/Mystique/Left/Spells/mystique prepa sort Fall.png")
-
-
-def PrepaSpellRunAnimation(Game):
-    if Game.Player.Direction:
-        if Game.Frame % 4 == 0:
-            if Game.ActualFrame <= 0:
-                Game.ActualFrame = 1
-                Game.Player.image = pygame.image.load("Assets/Visual/Mystique/Spells/mystique prepa sort marche.png")
-            elif Game.ActualFrame >= 1:
-                Game.ActualFrame = 0
-                Game.Player.image = pygame.image.load("Assets/Visual/Mystique/Spells/mystique prepa sort marche 2.png")
-    else:
-        if Game.Frame % 4 == 0:
-            if Game.ActualFrame <= 0:
-                Game.ActualFrame = 1
-                Game.Player.image = \
-                    pygame.image.load("Assets/Visual/Mystique/Left/Spells/mystique prepa sort marche.png")
-            elif Game.ActualFrame >= 1:
-                Game.ActualFrame = 0
-                Game.Player.image = \
-                    pygame.image.load("Assets/Visual/Mystique/Left/Spells/mystique prepa sort marche 2.png")
-
-
-def PrepaSpellAnimation(Game):
-    if Game.Player.Direction:
-        if Game.Frame % 4 == 0:
-            Game.Player.image = pygame.image.load("Assets/Visual/Mystique/Spells/mystique prepa sort.png")
-    else:
-        if Game.Frame % 4 == 0:
-            Game.Player.image = pygame.image.load("Assets/Visual/Mystique/Left/Spells/mystique prepa sort.png")
-
-
-def BackgroundScroll(Game):
-    """Déplacement du Background -tremisabdoul"""
-    checker = Game.PositionPlayer % 1280
-    if -10 < checker < 10:
-        Game.Background.rect.midtop = 640 - checker, 0
-
-
-def LoadingScreen(Game, Message, Screen, Ratio, Loading):
-    """Affichage d'un écran de chargement -tremisabdoul"""
-    Loading += 1
-    Screen.fill((0, 0, 0))
-
-    image = pygame.image.load("Assets/Visual/UI/Load.png")
-    rect = image.get_rect()
-    image = pygame.transform.scale(image, (int(Loading / Ratio * pygame.Surface.get_rect(Screen).width/2),
-                                           int(pygame.Surface.get_rect(Screen).height/40)))
-    rect = image.get_rect(center=rect.center)
-    rect.center = pygame.Surface.get_rect(Screen).center
-    Screen.blit(image, (rect.x, rect.y))
-
-    Texte(Game.police1, "Please Wait: " + str((Loading / Ratio) * 100) + "%", (255, 255, 255),
-          Screen, (pygame.Surface.get_rect(Screen).width-512, pygame.Surface.get_rect(Screen).height/4))
-
-    Texte(Game.police1, Message, (255, 255, 255), Screen,
-          (pygame.Surface.get_rect(Screen).width-512, pygame.Surface.get_rect(Screen).height/3))
-
-    pygame.display.flip()
-
-    return Loading
-
-
-def Draw_rect(Screen, Target):
-    """Affiche le canevas / la HitBox de l'élément appellé -tremisabdoul"""
-    pygame.draw.lines(Screen, (200, 150, 100), True, (
-        Target.rect.midbottom, Target.rect.midtop, Target.rect.topleft, Target.rect.bottomleft, Target.rect.bottomright,
-        Target.rect.topright, Target.rect.topleft, Target.rect.midleft, Target.rect.midright, Target.rect.bottomright))
-
-
-def NewPlatform(Game, x, y):
-    """Création d'une plateforme -tremisabdoul"""
-    from Scripts.Classes import Plateform
-    Plateform = Plateform()
-    Plateform.rect.x, Plateform.rect.y = x * 250, y * 150 + 130
-    Game.all_plateform.add(Plateform)
-    Game.PlateformNumber += 1
-
-
-def NewWall(Game, x, y):
-    """Création d'un mur -tremisabdoul"""
-    from Scripts.Classes import Wall
-    Wall = Wall()
-    Wall.rect.x, Wall.rect.y, Wall.rect.height, Wall.rect.width = x * 250, y * 150, 150, 250
-    Game.all_wall.add(Wall)
-    Game.WallNumber += 1
-
-
-def Movements(Game):
-    """Contiens tout les mouvements ingame -tremisabdoul"""
-    global booleanjump
-
-    DeplacementX(Game)
-
-    for Entity in Game.Entities:
-        Entity.LastY = Entity.rect.y
-
-    for Monster in Game.all_Monster:
-        Collide = Game.Player.check_collisions(Game.Player, Game.all_Monster)
-        if not Collide:
-            if Monster.Direction:
-                Monster.Move_Left(Game)
-            else:
-                Monster.Move_Right(Game)
-        else:
-            if Collide[0].rect.center[0] > Game.Player.rect.center[0]:
-                Monster.Direction = 0
-                Monster.Move_Right(Game)
-            else:
-                Monster.Direction = 1
-                Monster.Move_Left(Game)
-
-    if Game.pressed.get(pygame.K_SPACE) \
-            and Game.Player.check_collisions(Game.Player, Game.all_plateform) \
-            and Game.Player.YVector == 0:
-        Game.Player.SpeedY = -5
-        booleanjump = 1
-        Jump(Game)
-
-    elif Game.Player.SpeedY:
-        Jump(Game)
-
-    for Entity in Game.Entities:
-        Game.Player.Force.Gravity(Game, Entity)
-        Entity.YVector = Entity.LastY - Entity.rect.y
-
-    Game.Position = Game.Player.Force.AccelerationFunctionX()
-    for Target in Game.Entities:
-        Collide = Game.Player.check_collisions(Target, Game.all_wall)
-
-        if Target == Game.Player:
-            Target.rect.x += Game.Position
-
-        for Wall in Collide:
-            if not Wall.rect.bottomleft < Target.rect.midtop < Wall.rect.topright:
-
-                if Target == Game.Player:
-                    if Wall.rect.center < Target.rect.center:
-                        if Game.Position < 0:
-                            Game.Position = -Game.Position
-                    elif Wall.rect.center > Target.rect.center:
-                        if Game.Position > 0:
-                            Game.Position = -Game.Position
-
-                elif Target in Game.AcrossWall:
-                    if Wall.rect.center < Target.rect.center:
-                        Target.rect.x -= Wall.rect.right - (Target.rect.left - 33)
-                        Target.Direction = 1
-                    elif Wall.rect.center > Target.rect.center:
-                        Target.rect.x -= Wall.rect.left - (Target.rect.right + 33)
-                        Target.Direction = 0
-
-                else:
-                    if Wall.rect.center < Target.rect.center:
-                        Target.rect.x += Wall.rect.right - (Target.rect.left - 33)
-                        Target.Direction = 0
-                    elif Wall.rect.center > Target.rect.center:
-                        Target.rect.x += Wall.rect.left - (Target.rect.right + 33)
-                        Target.Direction = 1
-
-            else:
-                if Target == Game.Player:
-                    Target.Base_Gravity = Wall.rect.bottom - Target.rect.top
-                    if Target.Base_Gravity < -11:
-                        Target.Base_Gravity = -11
-                    Game.Player.SpeedY = 0
-
-        if Target == Game.Player:
-            Target.rect.x += Game.Position
-
-    Game.Position = round(Game.Position)
-
-    Game.PositionPlayer += Game.Position
-
-    BackgroundScroll(Game)
-
-
-def InGameKeys(Game, Screen):
-    """Check des input et instances -tremisabdoul"""
-    for event in pygame.event.get():
-
-        # Touches enfoncees -tremisabdoul
-        if event.type == pygame.KEYDOWN:
-            Game.pressed[event.key] = True
-
-            # Activation de Pause -tremisabdoul
-            if Game.pressed.get(pygame.K_ESCAPE):
-                Game.Pause = True
-                Game.InGame = False
-
-            # Changement entre Fullscreen / Window -steven
-            if Game.pressed.get(pygame.K_F11):
-                print("\n", pygame.display.Info())
-
-                if Game.Fullscreen == 0:
-                    Screen = pygame.display.set_mode((Game.UserData.DataX, Game.UserData.DataY), pygame.FULLSCREEN)
-                    Game.Fullscreen = 1
-                else:
-                    pygame.display.set_mode((Game.DataX, Game.DataY), pygame.RESIZABLE)
-                    pygame.display.toggle_fullscreen()
-                    pygame.display.set_mode((1280, 720), pygame.RESIZABLE)
-                    os.environ['SDL_VIDEO_WINDOW_POS'] = "%d,%d" % (100, 100)
-                    Game.Fullscreen = 0
-
-            if Game.pressed.get(pygame.K_F10):
-                pygame.image.save(Screen, "screenshot.jpg")
-
-        # Touches relachees -tremisabdoul
-        elif event.type == pygame.KEYUP:
-            Game.pressed[event.key] = False
-
-        # Boutons souris enfonces -nekochii x tremisabdoul
-        if event.type == pygame.MOUSEBUTTONDOWN:
-            Game.pressed[str(event.button)] = True
-            if event.button == 1:
-                Lunch_Projectile(Game)
-                print("Left Click (None)")
-            elif event.button == 2:
-                print("Middle Click (Hitbox + print(Game.PlayerPosition))")
-                # Game.data.stop()
-                # Game.data.play()
-                Game.ShowHitbox = not Game.ShowHitbox
-            elif event.button == 3:
-                print("Right Click (Mode VisÃ©e)")
-                pygame.mouse.set_visible(False)
-                Game.PrepaSpell = True
-            elif event.button > 3:
-                if event.button % 2:
-                    print("Scroll Down (None) Value =", event.button)
-                else:
-                    print("Scroll Up (None) Value =", event.button)
-        # Boutons souris relaches -nekochii
-        elif event.type == pygame.MOUSEBUTTONUP:
-            Game.pressed[str(event.button)] = False
-            if event.button == 3:
-                Game.PrepaSpell = False
-                pygame.mouse.set_visible(True)
-
-        # Permet le resize de l'ecran -tremisabdoul
-        if event.type == pygame.VIDEORESIZE:
-            ReScale(Game, Screen)
-
-        # Bouton croix en haut a droite (Fermer le Programme) -tremisabdoul
-        if event.type == pygame.QUIT:
-            Game.InGame = False
-            Game.Lobby = False
-            Game.Pause = False
-            Game.running = False
-            pygame.quit()
-            quit()
-            break
-
-
-def FrameLimiter(Game, Screen):
-    """Limiteur de FPS -tremisabdoul"""
-    Game.Tickchecker = Game.time()
-    Game.Tickchecker -= Game.Tick
-    if Game.ShowHitbox:
-        print("\n Player Posion: ", Game.PositionPlayer)
-        try:
-            start = Game.time()
-            Test = Game.time() - start
-            TestL1 = str(round((Game.Tickchecker - Test) / 0.00017)) + "    % of 60 FPS: Framerate without Test"
-            TestL2 = str(round(Game.Tickchecker / 0.00017)) + "    % of 60 FPS: Framerate"
-            TestL3 = str(round(Test / 0.00017)) + "    % of 60 FPS : Test"
-            Texte(Game.police1, TestL1, (255, 255, 255), Screen, (1000, 20))
-            Texte(Game.police1, TestL2, (255, 255, 255), Screen, (1000, 40))
-            Texte(Game.police1, TestL3, (255, 255, 255), Screen, (1000, 60))
-        finally:
-            Test = 0
-
-    while Game.Tickchecker < 0.017:
-        Game.Tickchecker = Game.time()
-        Game.Tickchecker -= Game.Tick
+    pygame.mixer.music.load("Assets/Audio/Music/DANOARKIout.mp3")
+    Game.MusicLengh = 300
+    pygame.mixer.music.play(-1, Game.MusicStart)
 
 
 """
@@ -1151,78 +908,6 @@ def initF():
                    'StepX = 0'
                    'StepY = 0'}
 """
-
-
-def SmoothCamera(Game):
-    """Mouvements de Caméra -tremisabdoul"""
-    Game.Player.LastX = Game.Player.rect.x - 350
-    Game.lastPosition = Game.Position
-    Game.Player.rect.x = 350
-    # Information Smooth Cam:
-    #   Valeur Numerique n°2: Vitesse de camera ├──────────────────────┬┬┐ (y > 1)
-    #   Valeur Numerique n°1: Décalage max du Player ├──────────┬┬┐    │││ (x > 1)
-    #   ▬ ▬ ▬ ▬ ▬ ▬ ▬ ▬ ▬ ▬ ▬ ▬ ▬ ▬ ▬ ▬ ▬ ▬ ▬ ▬ ▬  ▼▼▼    ▼▼▼
-    Game.Player.rect.x += (Game.Position + (Game.Player.LastX / 1.9) / 1.5)
-
-
-def Lunch_Projectile(Game):
-    """Lancement de Projectiles -tremisabdoul"""
-    from Scripts.Classes import Projectile
-    Game.Projectiles.add(Projectile(Game))
-
-
-def Texte(Police, text, color, Screen, Position):
-    """Creation de texte -steven"""
-    Texte_Contenu = Police.render(text, 1, color)
-    Screen.blit(Texte_Contenu, Position)
-
-
-def Rectangle(Screen, color, rect, border_radius):
-    """Creation de rectangle -steven"""
-    pygame.draw.rect(Screen, color, rect, border_radius)
-
-
-def Paterns(Game, NewWall, NewPlatform):
-    """Initialisation: Paterns -tremisabdoul"""
-    Load = []
-    PaternsFile = open('Data/Paterns.txt', 'r')
-
-    for line in PaternsFile:
-        line = line.strip()
-        Load.append(line)
-
-    Load = "".join(Load)
-    Load = Load.split(",")
-    Game.Paterns = Load
-    Game.Paterns.pop(0)
-
-    for Patern in range(len(Game.Paterns)):
-        print(Patern)
-        Game.Paterns[Patern] = Game.Paterns[Patern].split(":")
-        print("\nID Game.Paterns[", Patern, "] :  ", Game.Paterns[Patern], ": ", sep='')
-
-        for item in range(len(Game.Paterns[Patern])):
-            if 2 <= item <= 6:
-                Game.Paterns[Patern][item] = ",".join(Game.Paterns[Patern][item])
-                Game.Paterns[Patern][item] = Game.Paterns[Patern][item].split(",")
-            print("\tID Game.Paterns[", Patern, "][", item, "] :  ", Game.Paterns[Patern][item], "\n", sep='')
-            if isinstance(Game.Paterns[Patern][item], list):
-                for Chr in range(len(Game.Paterns[Patern][item])):
-                    print("\t\tID Game.Paterns[", Patern, "][", item, "][", Chr, "] :  ",
-                          Game.Paterns[Patern][item][Chr], sep='')
-
-    Game.Grid = {"xTiles": len(Game.Paterns[0][2]),
-                 "yTiles": len(Game.Paterns[0]),
-                 "width": 250,
-                 "height": 150,
-                 "x": 0,
-                 "y": 0}
-
-    for _ in range(30):
-        from Scripts.Classes import Patern
-        Patern = Patern()
-        Patern.Init(Game, NewWall, NewPlatform)
-        Game.ApplyedPatens.add(Patern)
 
 
 print("/Scripts/Functions: Loaded")
