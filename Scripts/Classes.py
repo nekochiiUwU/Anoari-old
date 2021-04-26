@@ -1,4 +1,5 @@
 from User.UserData import *
+from Data.Weapons import *
 import random as rd
 import pygame
 
@@ -18,6 +19,8 @@ class Game:
 
         self.Saves    = SaveSlot()
         self.UserData = UserData()
+
+        self.DataWeapon = DataWeapons()
 
         self.DataY = self.UserData.UserGraphicInfo.current_h
         self.DataX = self.UserData.UserGraphicInfo.current_w
@@ -93,6 +96,15 @@ class Game:
     @staticmethod
     def check_collisions(sprite, group):
         return pygame.sprite.spritecollide(sprite, group, False, pygame.sprite.collide_rect)
+
+    def RandomProba(self, Items, Probabilities):
+        Possibilities = [Items[0]]
+        for item in range(len(Probabilities)):
+            for x in range(Probabilities[item]):
+                if x > len(Possibilities):
+                    Possibilities.append(Items[item])
+        print(Possibilities)
+        return Possibilities[self.randint(1, 100)]
 
 
 """=====  Game.Player [2.0]  ====="""

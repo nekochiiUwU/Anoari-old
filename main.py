@@ -12,6 +12,8 @@ Screen = Display()
 Paterns(Game)
 musicDANOARKIOUT(Game)
 
+Game.DataWeapon.New(Game, Game.Player.Weapon1)
+
 '''==================================='''
 
 # for item in pygame.colordict.THECOLORS.items():
