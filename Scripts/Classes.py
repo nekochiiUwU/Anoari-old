@@ -1,5 +1,4 @@
 from User.UserData import *
-from Data.Weapons import *
 import random as rd
 import pygame
 
@@ -19,8 +18,6 @@ class Game:
 
         self.Saves    = SaveSlot()
         self.UserData = UserData()
-
-        self.DataWeapon = DataWeapons()
 
         self.DataY = self.UserData.UserGraphicInfo.current_h
         self.DataX = self.UserData.UserGraphicInfo.current_w
@@ -70,6 +67,8 @@ class Game:
         self.Projectile = Projectile(self)
         self.Particles  = Particles()
 
+        self.DataWeapon = None
+
         self.all_Monster   = pygame.sprite.Group()
         self.all_Player    = pygame.sprite.Group()
         self.Entities      = pygame.sprite.Group()
@@ -103,7 +102,6 @@ class Game:
             for x in range(Probabilities[item]):
                 if x > len(Possibilities):
                     Possibilities.append(Items[item])
-        print(Possibilities)
         return Possibilities[self.randint(1, 100)]
 
 
@@ -611,7 +609,7 @@ class Projectile(pygame.sprite.Sprite):
 
         self.angle = -Game.Deges(Game.AngleCalc(self.DirectionY, self.DirectionX))
 
-        self.image = pygame.transform.rotozoom(self.origin_image, self.angle, 1)
+        self.image = pygame.transform.rotozoom(self.origin_image, self.angle, 0.5)
         self.rect  = self.image.get_rect(center=self.rect.center)
 
     def move(self, Game):
@@ -632,7 +630,7 @@ class Projectile(pygame.sprite.Sprite):
         self.DirectionY += 0.05
         self.angle       = -Game.Deges(Game.AngleCalc(self.DirectionY, self.DirectionX))
 
-        self.image = pygame.transform.rotozoom(self.origin_image, self.angle, 1)
+        self.image = pygame.transform.rotozoom(self.origin_image, self.angle, 0.5)
         self.rect  = self.image.get_rect(center=self.rect.center)
 
         Game.Particles.Add(Game, self.rect.center, 'red', 8)

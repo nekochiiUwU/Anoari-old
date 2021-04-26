@@ -1,17 +1,24 @@
-class DataWeapons:
-    def __init__(self):
+import pygame
 
-        self.Types = ["Fire", "Ice", "Air", "Stone", "Shadow", "Light"]
+pygame.init()
+
+
+class DataWeapons:
+    def __init__(self, Game):
+
+        super().__init__()
+
+        self.Types = ["Lightning", "Fire", "Wind", "Water", "Shadow", "Light"]
         self.TypesProbabilties = [23, 46, 69, 92, 96, 100]
-        self.TypesLight = [70, 30, 60, 40, 5, 95]
+        self.TypesLight = [80, 70, 30, 20, 5, 95]
 
         for item in range(30):
             print(item)
-            exec("self.spell" + str(item) + " = " + "Spell" + str(item) + "()")
+            exec("self.spell" + str(item) + " = " + "Spell" + str(item) + "(Game)")
 
         self.Weapons = [
             {
-                "Name": "Fire",
+                "Name": "Lightning Staff",
 
                 "Damage": 10,
                 "AttackSpeed": 1.5,
@@ -26,7 +33,7 @@ class DataWeapons:
 
             },
             {
-                "Name": "Ice",
+                "Name": "Fire Staff",
 
                 "Damage": 10,
                 "AttackSpeed": 1.5,
@@ -41,7 +48,7 @@ class DataWeapons:
 
             },
             {
-                "Name": "Air",
+                "Name": "Wind Staff",
 
                 "Damage": 10,
                 "AttackSpeed": 1.5,
@@ -56,7 +63,7 @@ class DataWeapons:
 
             },
             {
-                "Name": "Stone",
+                "Name": "Water Staff",
 
                 "Damage": 10,
                 "AttackSpeed": 1.5,
@@ -71,7 +78,7 @@ class DataWeapons:
 
             },
             {
-                "Name": "Shadow",
+                "Name": "Shadow Staff",
 
                 "Damage": 10,
                 "AttackSpeed": 1.5,
@@ -86,7 +93,7 @@ class DataWeapons:
 
             },
             {
-                "Name": "Light",
+                "Name": "Light Staff",
 
                 "Damage": 10,
                 "AttackSpeed": 1.5,
@@ -115,52 +122,136 @@ class DataWeapons:
         else:
             A = TypeID - 8 + TypeID * 2
         Spells = []
-        for _ in range(Rarety):
-            exec("self.Spell" + " = " + "self.spell" + str(Game.randint(0, 6) + A))
-            Spells.append(self.Spell)
 
-            print(self.Spell)
+        for _ in range(Rarety):
+
+            self.Spell = exec("self.spell" + str(Game.randint(0, 6) + A))
+            Spells.append(self.Spell)
 
         for Spell in Spells:
             print(Spell.Name)
-        print(TypeID, Type, Data, Rarety, sep="\n")
+
+        Weapon.TypeID = TypeID
+        Weapon.Type = Type
+        Weapon.Data = Data
+        Weapon.Rarety = Rarety
+        Weapon.Spells = Spells
 
 
-# Fire
-class Spell0:
-    def __init__(self):
+# Lightning
+class Spell0(pygame.sprite.Sprite):
+    def __init__(self, Game):
+        super().__init__()
         self.Name = "Spell0"
 
 
-class Spell1:
-    def __init__(self):
+class Spell1(pygame.sprite.Sprite):
+    def __init__(self, Game):
+        super().__init__()
         self.Name = "Spell1"
 
 
-class Spell2:
-    def __init__(self):
+class Spell2(pygame.sprite.Sprite):
+    def __init__(self, Game):
+        super().__init__()
         self.Name = "Spell2"
 
 
-class Spell3:
-    def __init__(self):
+class Spell3(pygame.sprite.Sprite):
+    def __init__(self, Game):
+        super().__init__()
         self.Name = "Spell3"
 
 
-class Spell4:
-    def __init__(self):
+class Spell4(pygame.sprite.Sprite):
+    def __init__(self, Game):
+        super().__init__()
         self.Name = "Spell4"
 
 
-class Spell5:
-    def __init__(self):
+class Spell5(pygame.sprite.Sprite):
+    def __init__(self, Game):
+        super().__init__()
         self.Name = "Spell5"
 
 
-# Ice
-class Spell6:
-    def __init__(self):
-        self.Name = "Spell6"
+# Fire
+class Spell6(pygame.sprite.Sprite):
+    def __init__(self, Game):
+        super().__init__()
+
+        self.Name = "FireBall"
+
+        self.Speed  = 15
+        self.Frames = ["Assets/Visual/Spells/FireBall/Nion1.png",
+                       "Assets/Visual/Spells/FireBall/Nion2.png",
+                       "Assets/Visual/Spells/FireBall/Nion3.png"]
+        self.Frame        = 0
+        self.origin_image = pygame.image.load("Assets/Visual/Spells/FireBall/Nion1.png")
+        self.rect         = self.origin_image.get_rect()
+        self.rect.x       = Game.Player.rect.x + 80
+        self.rect.y       = Game.Player.rect.y + 45
+        self.DistanceX    = Game.Mouse.rect.center[0] - self.rect.center[0]
+        self.DistanceY    = Game.Mouse.rect.center[1] - self.rect.center[1]
+
+        if self.DistanceY == 0:
+            self.DistanceY = 0.01
+        from math import sqrt
+
+        self.norm       = sqrt(self.DistanceX ** 2 + self.DistanceY ** 2)
+        self.DirectionX = self.DistanceX / self.norm
+        self.DirectionY = self.DistanceY / self.norm
+        self.DirectionX = self.DirectionX * sqrt(2)
+        self.DirectionY = self.DirectionY * sqrt(2)
+
+        self.DirectionX, self.DirectionY = self.DirectionX * self.Speed, self.DirectionY * self.Speed
+
+        self.angle = -Game.Deges(Game.AngleCalc(self.DirectionY, self.DirectionX))
+
+        self.image = pygame.transform.rotozoom(self.origin_image, self.angle, 1)
+        self.rect  = self.image.get_rect(center=self.rect.center)
+
+    def move(self, Game):
+
+        if Game.Frame % 2:
+            if self.Frame == 0:
+                self.Frame = 1
+                self.origin_image = pygame.image.load(self.Frames[1])
+            if self.Frame == 1:
+                self.Frame = 2
+                self.origin_image = pygame.image.load(self.Frames[2])
+            if self.Frame == 2:
+                self.Frame = 0
+                self.origin_image = pygame.image.load(self.Frames[0])
+
+        self.rect.x     += self.DirectionX
+        self.rect.y     += self.DirectionY
+        self.DirectionY += 0.05
+        self.angle       = -Game.Deges(Game.AngleCalc(self.DirectionY, self.DirectionX))
+
+        self.image = pygame.transform.rotozoom(self.origin_image, self.angle, 1)
+        self.rect  = self.image.get_rect(center=self.rect.center)
+
+        Game.Particles.Add(Game, self.rect.center, 'red', 8)
+        Game.Particles.Add(Game, self.rect.center, 'orangered', 8)
+
+        if not -1280 < self.rect.x - Game.Player.rect.x < 1280\
+                or not -720 < self.rect.y < 720\
+                or Game.check_collisions(self, Game.all_wall)\
+                or Game.check_collisions(self, Game.all_plateform):
+            Game.Projectiles.remove(self)
+            for _ in range(5):
+                Game.Particles.Add(Game, self.rect.center, 'Grey80', 32)
+            for _ in range(5):
+                Game.Particles.Add(Game, self.rect.center, 'Grey70', 24)
+            for _ in range(5):
+                Game.Particles.Add(Game, self.rect.center, 'Grey60', 16)
+            for _ in range(5):
+                Game.Particles.Add(Game, self.rect.center, 'Grey50', 12)
+
+    @staticmethod
+    def Add(Game):
+        Game.Projectiles.add(Spell0(Game))
 
 
 class Spell7:
@@ -188,7 +279,7 @@ class Spell11:
         self.Name = "Spell11"
 
 
-# Air
+# Wind
 class Spell12:
     def __init__(self):
         self.Name = "Spell12"
@@ -197,6 +288,7 @@ class Spell12:
 class Spell13:
     def __init__(self):
         self.Name = "Spell13"
+
 
 class Spell14:
     def __init__(self):
@@ -218,7 +310,7 @@ class Spell17:
         self.Name = "Spell17"
 
 
-# Stone
+# Water
 class Spell18:
     def __init__(self):
         self.Name = "Spell18"
@@ -279,3 +371,5 @@ class Spell28:
 class Spell29:
     def __init__(self):
         self.Name = "Spell29"
+
+del pygame
