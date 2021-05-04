@@ -67,6 +67,8 @@ class Game:
         self.Projectile = Projectile(self)
         self.Particles  = Particles()
 
+        self.DataWeapon = None
+
         self.all_Monster   = pygame.sprite.Group()
         self.all_Player    = pygame.sprite.Group()
         self.Entities      = pygame.sprite.Group()
@@ -93,6 +95,14 @@ class Game:
     @staticmethod
     def check_collisions(sprite, group):
         return pygame.sprite.spritecollide(sprite, group, False, pygame.sprite.collide_rect)
+
+    def RandomProba(self, Items, Probabilities):
+        Possibilities = [Items[0]]
+        for item in range(len(Probabilities)):
+            for x in range(Probabilities[item]):
+                if x > len(Possibilities):
+                    Possibilities.append(Items[item])
+        return Possibilities[self.randint(1, 100)]
 
 
 """=====  Game.Player [2.0]  ====="""
@@ -526,8 +536,8 @@ class Arm:
             self.imageDirection   = 0
             Game.Player.Direction = 1
         elif not -90 < self.angle < 90:
-            self.origin_image    = pygame.image.load\
-            ("Assets/Visual/Mystique/Left/Spells/bras mystique prepa spell.png")
+            self.origin_image    = pygame.image.load(
+                "Assets/Visual/Mystique/Left/Spells/bras mystique prepa spell.png")
             self.imageDirection   = 1
             Game.Player.Direction = 0
 
@@ -599,7 +609,7 @@ class Projectile(pygame.sprite.Sprite):
 
         self.angle = -Game.Deges(Game.AngleCalc(self.DirectionY, self.DirectionX))
 
-        self.image = pygame.transform.rotozoom(self.origin_image, self.angle, 1)
+        self.image = pygame.transform.rotozoom(self.origin_image, self.angle, 0.5)
         self.rect  = self.image.get_rect(center=self.rect.center)
 
     def move(self, Game):
@@ -620,7 +630,7 @@ class Projectile(pygame.sprite.Sprite):
         self.DirectionY += 0.05
         self.angle       = -Game.Deges(Game.AngleCalc(self.DirectionY, self.DirectionX))
 
-        self.image = pygame.transform.rotozoom(self.origin_image, self.angle, 1)
+        self.image = pygame.transform.rotozoom(self.origin_image, self.angle, 0.5)
         self.rect  = self.image.get_rect(center=self.rect.center)
 
         Game.Particles.Add(Game, self.rect.center, 'red', 8)

@@ -2,6 +2,7 @@
 
 from Scripts.Functions import *
 from Scripts.Classes import *
+from Data.Weapons import *
 
 '''==================================='''
 
@@ -12,10 +13,14 @@ Screen = Display()
 Paterns(Game)
 musicDANOARKIOUT(Game)
 
+Game.DataWeapon = DataWeapons(Game)
+Game.DataWeapon.New(Game, Game.Player.Weapon1)
+
+
 '''==================================='''
 
-for item in pygame.colordict.THECOLORS.items():
-    print(item)
+# for item in pygame.colordict.THECOLORS.items():
+#     print(item)
 
 while Game.Running:
 
