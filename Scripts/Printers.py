@@ -56,9 +56,9 @@ def pauseblit(Screen, Game):
     Screen.blit(Game.UI.settingsbutton, Game.UI.settingsbuttonrect)
     Screen.blit(Game.UI.quitbutton, Game.UI.quitbuttonrect)
 
-    Game.Particles.Add(Game, Game.Mouse.rect.center, 'white', 10)
-    Game.Particles.Add(Game, Game.Mouse.rect.center, 'grey', 10)
-    Game.Particles.Add(Game, Game.Mouse.rect.center, 'black', 10)
+    Game.Particles.Add(Game, Game.Mouse.rect.center, 'white', 5)
+    Game.Particles.Add(Game, Game.Mouse.rect.center, 'grey', 5)
+    Game.Particles.Add(Game, Game.Mouse.rect.center, 'black', 5)
     Game.Particles.Print(Game, Screen)
 
     MousePrinter(Screen, Game)
@@ -114,9 +114,8 @@ def MousePrinter(Screen, Game):
 
 def PrintMouse3Condition(Game, Screen):
 
-    Game.Player.Orb(Game)
-
     if Game.pressed.get("3"):
+        Game.Player.Orb(Game)
         Game.Arm.print(Game, Screen)
         Animation(Game)
         Screen.blit(Game.Player.image, Game.Player.rect)

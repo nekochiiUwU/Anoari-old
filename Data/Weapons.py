@@ -1,7 +1,5 @@
 import pygame
 
-pygame.init()
-
 
 class DataWeapons:
     def __init__(self, Game):
@@ -14,7 +12,7 @@ class DataWeapons:
 
         for item in range(30):
             print(item)
-            exec("self.spell" + str(item) + " = " + "Spell" + str(item) + "(Game)")
+            exec("spell" + str(item) + " = " + "Spell" + str(item) + "(Game)")
 
         self.Weapons = [
             {
@@ -125,7 +123,7 @@ class DataWeapons:
 
         for _ in range(Rarety):
 
-            self.Spell = exec("self.spell" + str(Game.randint(0, 6) + A))
+            self.Spell = exec("spell" + str(Game.randint(0, 6) + A))
             Spells.append(self.Spell)
 
         for Spell in Spells:
@@ -178,6 +176,7 @@ class Spell5(pygame.sprite.Sprite):
 # Fire
 class Spell6(pygame.sprite.Sprite):
     def __init__(self, Game):
+        import pygame
         super().__init__()
 
         self.Name = "FireBall"
@@ -371,5 +370,6 @@ class Spell28:
 class Spell29:
     def __init__(self):
         self.Name = "Spell29"
+
 
 del pygame
