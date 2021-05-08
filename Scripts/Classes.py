@@ -157,7 +157,7 @@ class Player(pygame.sprite.Sprite, Game):
         self.Point_ManaRegen   = 0  # ##### #
 
         self.Weapon1 = Weapon()
-        self.Weapon2 = Weapon()
+        self.Weapon2 = None # Weapon()
 
         self.Element = 'fire'
 

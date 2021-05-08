@@ -15,7 +15,6 @@ class DataWeapons:
         for item in range(30):
             print("Loading spells: spell" + str(item))
             exec("self.spell" + str(item) + " = " + "Spell(Game, item)")
-            exec("print('\t', self.spell" + str(item) + ")")
 
 
 
@@ -122,14 +121,20 @@ class DataWeapons:
 
         if TypeID < 4:
             A = TypeID * 6
+            print(TypeID, A)
         else:
             A = TypeID - 8 + TypeID * 2
+            print(TypeID, A)
         Spells = []
 
         for _ in range(Rarety):
-            exec("global spell\nself.Spell = self.spell" + str(Game.randint(0, 6) + A))
+            exec("global spell\nspell = self.spell" + str(Game.randint(0, 6) + A))
             global spell
             Spells.append(spell)
+            if len(Spells) > 1:
+                while Spells[-1].Name == Spells[-2].Name:
+                    exec("global spell\nspell = self.spell" + str(Game.randint(0, 6) + A))
+                    Spells.append(spell)
 
         Weapon.TypeID = TypeID
         Weapon.Type = Type
@@ -137,7 +142,7 @@ class DataWeapons:
         Weapon.Rarety = Rarety
         Weapon.Spells = Spells
 
-        print(TypeID, Type, Data, Rarety, "\n\t".join([Spell.Name for Spell in Spells]), sep="\n")
+        print(TypeID, Type, Data, Rarety, "\n".join(["\t" + Spell.Name for Spell in Spells]), sep="\n")
 
 
 # Lightning
