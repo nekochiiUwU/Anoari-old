@@ -491,6 +491,9 @@ def FrameLimiter(Game, Screen):
 
 def InGameKeys(Game, Screen):
     """Check des input et instances -tremisabdoul"""
+    if Game.pressed.get("3"):
+        Game.Projectile.Add(Game)
+
     for event in pygame.event.get():
 
         # Touches enfoncees -tremisabdoul

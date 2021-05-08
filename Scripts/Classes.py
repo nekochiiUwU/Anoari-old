@@ -684,12 +684,25 @@ class Particles:
                     self.Particles.remove(Particle)
                 pygame.draw.circle(Screen, Particle[4], [Particle[0][0], Particle[0][1]], Particle[1])
 
-    def Add(self, Game, Position, Color, Radius):
+    def Add(self, Game, Position, Color, Radius, Decrease = 0):
+        
         x = Position[0] + Game.randint(-Radius / 2, Radius / 2)
         y = Position[1] + Game.randint(-Radius / 2, Radius / 2)
+        
+        if x < Position[0]:
+            DirectionX = Game.randint(0, 1)
+        else:
+            DirectionX = Game.randint(-1, 0)
+        if y < Position[1]:
+            DirectionY = Game.randint(0, 1)
+        else:
+            DirectionY = Game.randint(-1, 0)
+        
+        #DirectionX = Game.randint(-2, 2)
+        #DirectionY = Game.randint(-2, 2)
+        
+        if not Decrease:
+            Decrease = Radius / 20
 
-        DirectionX = Game.randint(-2, 2)
-        DirectionY = Game.randint(-2, 2)
-
-        Particle = [[x, y], Radius, DirectionX, DirectionY, Color, Radius / 20]
-        self.Particles.append(Particle)
+        Particle = [[int(x), int(y)], int(Radius), int(DirectionX), int(DirectionY), Color, Decrease]
+        #self.Particles.append(Particle)

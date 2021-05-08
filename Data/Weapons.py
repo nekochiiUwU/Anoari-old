@@ -10,9 +10,14 @@ class DataWeapons:
         self.TypesProbabilties = [23, 46, 69, 92, 96, 100]
         self.TypesLight = [80, 70, 30, 20, 5, 95]
 
+        globals()
+
         for item in range(30):
-            print(item)
-            exec("spell" + str(item) + " = " + "Spell" + str(item) + "(Game)")
+            print("Loading spells: spell" + str(item))
+            exec("self.spell" + str(item) + " = " + "Spell(Game, item)")
+            exec("print('\t', self.spell" + str(item) + ")")
+
+
 
         self.Weapons = [
             {
@@ -122,18 +127,17 @@ class DataWeapons:
         Spells = []
 
         for _ in range(Rarety):
-
-            self.Spell = exec("spell" + str(Game.randint(0, 6) + A))
-            Spells.append(self.Spell)
-
-        for Spell in Spells:
-            print(Spell.Name)
+            exec("global spell\nself.Spell = self.spell" + str(Game.randint(0, 6) + A))
+            global spell
+            Spells.append(spell)
 
         Weapon.TypeID = TypeID
         Weapon.Type = Type
         Weapon.Data = Data
         Weapon.Rarety = Rarety
         Weapon.Spells = Spells
+
+        print(TypeID, Type, Data, Rarety, "\n\t".join([Spell.Name for Spell in Spells]), sep="\n")
 
 
 # Lightning
@@ -254,122 +258,128 @@ class Spell6(pygame.sprite.Sprite):
 
 
 class Spell7:
-    def __init__(self):
+    def __init__(self, Game):
         self.Name = "Spell7"
 
 
 class Spell8:
-    def __init__(self):
+    def __init__(self, Game):
         self.Name = "Spell8"
 
 
 class Spell9:
-    def __init__(self):
+    def __init__(self, Game):
         self.Name = "Spell9"
 
 
 class Spell10:
-    def __init__(self):
+    def __init__(self, Game):
         self.Name = "Spell10"
 
 
 class Spell11:
-    def __init__(self):
+    def __init__(self, Game):
         self.Name = "Spell11"
 
 
 # Wind
 class Spell12:
-    def __init__(self):
+    def __init__(self, Game):
         self.Name = "Spell12"
 
 
 class Spell13:
-    def __init__(self):
+    def __init__(self, Game):
         self.Name = "Spell13"
 
 
 class Spell14:
-    def __init__(self):
+    def __init__(self, Game):
         self.Name = "Spell14"
 
 
 class Spell15:
-    def __init__(self):
+    def __init__(self, Game):
         self.Name = "Spell15"
 
 
 class Spell16:
-    def __init__(self):
+    def __init__(self, Game):
         self.Name = "Spell16"
 
 
 class Spell17:
-    def __init__(self):
+    def __init__(self, Game):
         self.Name = "Spell17"
 
 
 # Water
 class Spell18:
-    def __init__(self):
+    def __init__(self, Game):
         self.Name = "Spell18"
 
 
 class Spell19:
-    def __init__(self):
+    def __init__(self, Game):
         self.Name = "Spell9"
 
 
 class Spell20:
-    def __init__(self):
+    def __init__(self, Game):
         self.Name = "Spell20"
 
 
 class Spell21:
-    def __init__(self):
+    def __init__(self, Game):
         self.Name = "Spell21"
 
 
 class Spell22:
-    def __init__(self):
+    def __init__(self, Game):
         self.Name = "Spell22"
 
 
 class Spell23:
-    def __init__(self):
+    def __init__(self, Game):
         self.Name = "Spell23"
 
 
 # Shadow
 class Spell24:
-    def __init__(self):
+    def __init__(self, Game):
         self.Name = "Spell24"
 
 
 class Spell25:
-    def __init__(self):
+    def __init__(self, Game):
         self.Name = "Spell25"
 
 
 class Spell26:
-    def __init__(self):
+    def __init__(self, Game):
         self.Name = "Spell26"
 
 
 # Light
 class Spell27:
-    def __init__(self):
+    def __init__(self, Game):
         self.Name = "Spell27"
 
 
 class Spell28:
-    def __init__(self):
+    def __init__(self, Game):
         self.Name = "Spell28"
 
 
 class Spell29:
-    def __init__(self):
+    def __init__(self, Game):
         self.Name = "Spell29"
+
+
+def Spell(Game, item):
+    exec("global spell\nspell = " + "Spell" + str(item) + "(Game)")
+    global spell
+    return spell
 
 
 del pygame
