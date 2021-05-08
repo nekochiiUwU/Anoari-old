@@ -16,8 +16,6 @@ class DataWeapons:
             print("Loading spells: spell" + str(item))
             exec("self.spell" + str(item) + " = " + "Spell(Game, item)")
 
-
-
         self.Weapons = [
             {
                 "Name": "Lightning Staff",

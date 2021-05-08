@@ -654,9 +654,6 @@ class Projectile(pygame.sprite.Sprite):
                 or Game.check_collisions(self, Game.all_wall)\
                 or Game.check_collisions(self, Game.all_plateform):
             Game.Projectiles.remove(self)
-            for _ in range(1000):
-                Game.Particles.Add(Game, self.rect.center, 'red', 8)
-                Game.Particles.Add(Game, self.rect.center, 'orangered', 8)
             for _ in range(5):
                 Game.Particles.Add(Game, self.rect.center, 'Grey80', 32)
             for _ in range(5):
@@ -701,6 +698,7 @@ class Particles:
         if not Decrease:
             Decrease = Radius / 20
 
+        #               v rect v        v taille v          v mouvement v       v couleur v
         Particle = [[int(x), int(y)], int(Radius), int(DirectionX), int(DirectionY), Color, Decrease]
         self.Particles.append(Particle)
         print(len(self.Particles))
