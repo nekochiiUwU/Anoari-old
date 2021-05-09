@@ -46,7 +46,7 @@ def Paterns(Game):
                  "x": 0,
                  "y": 0}
 
-    for _ in range(30):
+    for _ in range(10):
         from Scripts.Classes import Patern
         Patern = Patern()
         Patern.Init(Game, NewWall, NewPlatform)
@@ -491,6 +491,7 @@ def FrameLimiter(Game, Screen):
 
 def InGameKeys(Game, Screen):
     """Check des input et instances -tremisabdoul"""
+
     for event in pygame.event.get():
 
         # Touches enfoncees -tremisabdoul
@@ -527,7 +528,8 @@ def InGameKeys(Game, Screen):
         if event.type == pygame.MOUSEBUTTONDOWN:
             Game.pressed[str(event.button)] = True
             if event.button == 1:
-                Game.Projectile.Add(Game)
+                if Game.pressed.get("3"):
+                    Game.Projectile.Add(Game)
                 print("Left Click (None)")
             elif event.button == 2:
                 print("Middle Click (Hitbox + print(Game.PlayerPosition))")

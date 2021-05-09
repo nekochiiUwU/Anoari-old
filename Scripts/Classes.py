@@ -10,6 +10,8 @@ print("/Scripts/Classes: Loading")
 class Game:
     def __init__(self):
 
+        self.pygame = pygame
+
         from math import atan2, degrees
         from time import time
         from random import randint
@@ -97,12 +99,15 @@ class Game:
         return pygame.sprite.spritecollide(sprite, group, False, pygame.sprite.collide_rect)
 
     def RandomProba(self, Items, Probabilities):
-        Possibilities = [Items[0]]
+
+        Possibilities = []
         for item in range(len(Probabilities)):
             for x in range(Probabilities[item]):
                 if x > len(Possibilities):
                     Possibilities.append(Items[item])
-        return Possibilities[self.randint(1, 100)]
+        Possibilities.append(Items[-1])
+
+        return Possibilities[self.randint(0, 99)]
 
 
 """=====  Game.Player [2.0]  ====="""
@@ -154,8 +159,8 @@ class Player(pygame.sprite.Sprite, Game):
         self.Point_Penetration = 0  # ##### #
         self.Point_ManaRegen   = 0  # ##### #
 
-        self.Weapon1 = Weapon()
-        self.Weapon2 = Weapon()
+        self.Weapon1 = Class()
+        self.Weapon2 = Class()
 
         self.Element = 'fire'
 
@@ -202,10 +207,16 @@ class Player(pygame.sprite.Sprite, Game):
     def Orb(self, Game):
         if Game.Frame % 2:
             if self.Element == 'fire':
-                Game.Particles.Add(Game, (self.rect.center[0] - 35, self.rect.center[1] - 20), 'red', 6)
-                Game.Particles.Add(Game, (self.rect.center[0] - 35, self.rect.center[1] - 20), 'orangered', 6)
-                Game.Particles.Add(Game, (self.rect.center[0] - 35, self.rect.center[1] - 20), 'orangered4', 6)
-                Game.Particles.Add(Game, (Game.Player.rect.center[0] - 35, Game.Player.rect.center[1] - 20), 'red3', 6)
+                if self.Direction:
+                    Game.Particles.Add(Game, (self.rect.center[0] - 25, self.rect.center[1] - 20), 'red', 6)
+                    Game.Particles.Add(Game, (self.rect.center[0] - 25, self.rect.center[1] - 20), 'orangered', 6)
+                    Game.Particles.Add(Game, (self.rect.center[0] - 25, self.rect.center[1] - 20), 'orangered4', 6)
+                    Game.Particles.Add(Game, (Game.Player.rect.center[0] - 25, Game.Player.rect.center[1] - 20), 'red3', 6)
+                else:
+                    Game.Particles.Add(Game, (self.rect.center[0] + 25, self.rect.center[1] - 20), 'red', 6)
+                    Game.Particles.Add(Game, (self.rect.center[0] + 25, self.rect.center[1] - 20), 'orangered', 6)
+                    Game.Particles.Add(Game, (self.rect.center[0] + 25, self.rect.center[1] - 20), 'orangered4', 6)
+                    Game.Particles.Add(Game, (Game.Player.rect.center[0] + 25, Game.Player.rect.center[1] - 20), 'red3', 6)
 
 
 """=====  Game.Player.Force [2.1]  ====="""
@@ -590,8 +601,7 @@ class Projectile(pygame.sprite.Sprite):
         self.Frame        = 0
         self.origin_image = pygame.image.load("Assets/Visual/Spells/FireBall/Nion1.png")
         self.rect         = self.origin_image.get_rect()
-        self.rect.x       = Game.Player.rect.x + 80
-        self.rect.y       = Game.Player.rect.y + 45
+        self.rect.x, self.rect.y = Game.Player.rect.center
         self.DistanceX    = Game.Mouse.rect.center[0] - self.rect.center[0]
         self.DistanceY    = Game.Mouse.rect.center[1] - self.rect.center[1]
 
@@ -609,8 +619,11 @@ class Projectile(pygame.sprite.Sprite):
 
         self.angle = -Game.Deges(Game.AngleCalc(self.DirectionY, self.DirectionX))
 
-        self.image = pygame.transform.rotozoom(self.origin_image, self.angle, 0.5)
+        self.image = pygame.transform.rotozoom(self.origin_image, self.angle, 1)
         self.rect  = self.image.get_rect(center=self.rect.center)
+        
+        self.rect.x = Game.Player.rect.center[0] + int(self.DirectionX * 1.7)
+        self.rect.y = Game.Player.rect.center[1] + int(self.DirectionY * 1.7)
 
     def move(self, Game):
 
@@ -630,7 +643,7 @@ class Projectile(pygame.sprite.Sprite):
         self.DirectionY += 0.05
         self.angle       = -Game.Deges(Game.AngleCalc(self.DirectionY, self.DirectionX))
 
-        self.image = pygame.transform.rotozoom(self.origin_image, self.angle, 0.5)
+        self.image = pygame.transform.rotozoom(self.origin_image, self.angle, 1)
         self.rect  = self.image.get_rect(center=self.rect.center)
 
         Game.Particles.Add(Game, self.rect.center, 'red', 8)
@@ -674,12 +687,23 @@ class Particles:
                     self.Particles.remove(Particle)
                 pygame.draw.circle(Screen, Particle[4], [Particle[0][0], Particle[0][1]], Particle[1])
 
-    def Add(self, Game, Position, Color, Radius):
+    def Add(self, Game, Position, Color, Radius, Decrease = 0):
+        
         x = Position[0] + Game.randint(-Radius / 2, Radius / 2)
         y = Position[1] + Game.randint(-Radius / 2, Radius / 2)
-
+        
         DirectionX = Game.randint(-2, 2)
         DirectionY = Game.randint(-2, 2)
+        
+        if not Decrease:
+            Decrease = Radius / 20
 
-        Particle = [[x, y], Radius, DirectionX, DirectionY, Color, Radius / 20]
+        #               v rect v        v taille v          v mouvement v       v couleur v
+        Particle = [[int(x), int(y)], int(Radius), int(DirectionX), int(DirectionY), Color, Decrease]
         self.Particles.append(Particle)
+        print(len(self.Particles))
+
+
+class Class:
+    def __init__(self):
+        pass
