@@ -13,6 +13,8 @@ def Printer(Screen, Game):
 
     PrintEntities(Game, Screen)
 
+    PrintPreMade(Game, Screen)
+
     Game.Particles.Print(Game, Screen)
 
     PrintStructures(Game, Screen)
@@ -134,6 +136,10 @@ def PrintEntities(Game, Screen):
             Screen.blit(Entity.image, Entity.rect)
             Entity.Life(Screen, Game)
 
+def PrintPreMade(Game, Screen):
+    for Entity in Game.PreMade:
+        Entity.rect.x -= Game.Position
+        Screen.blit(Entity.image, Entity.rect)
 
 def PrintProjectiles(Game, Screen):
     for Projectile in Game.Projectiles:

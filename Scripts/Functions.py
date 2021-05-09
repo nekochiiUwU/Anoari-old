@@ -529,7 +529,9 @@ def InGameKeys(Game, Screen):
             Game.pressed[str(event.button)] = True
             if event.button == 1:
                 if Game.pressed.get("3"):
+                    Game.CastSpell = True
                     Game.Projectile.Add(Game)
+                    Game.Countframes = 3
                 print("Left Click (None)")
             elif event.button == 2:
                 print("Middle Click (Hitbox + print(Game.PlayerPosition))")
@@ -634,7 +636,7 @@ def Data_Save(Game, Screen, SaveState):
 
     import csv
 
-    Loading = LoadingScreen(Game, "I'm actually loading your data", Screen, FullLoading, Loading)
+    Loading = LoadingScreen(Game, "I'm currently loading your data", Screen, FullLoading, Loading)
 
     Datalist = {
         "Variable": "Value",
@@ -678,11 +680,11 @@ def Data_Save(Game, Screen, SaveState):
         "Game.Player.Force.x": Game.Player.Force.x
     }
 
-    Loading = LoadingScreen(Game, "I'm actually opening your data file", Screen, FullLoading, Loading)
+    Loading = LoadingScreen(Game, "I'm currently opening your data file", Screen, FullLoading, Loading)
 
     text_file = open(SaveState, "w+", newline="")
 
-    Loading = LoadingScreen(Game, "I'm actually writing your data file ()", Screen, FullLoading, Loading)
+    Loading = LoadingScreen(Game, "I'm currently writing your data file ()", Screen, FullLoading, Loading)
 
     with text_file:
         Writer = csv.writer(text_file, quoting=0)
@@ -704,18 +706,18 @@ def Data_Load(Game, Screen, SaveState):
     Replace = Game.PositionPlayer
     import csv
 
-    Loading = LoadingScreen(Game, "I'm actually opening your data file", Screen, FullLoading, Loading)
+    Loading = LoadingScreen(Game, "I'm currently opening your data file", Screen, FullLoading, Loading)
 
     file = SaveState
     CSV_file = csv.DictReader(open(file, 'r'))
     Load = {}
 
-    Loading = LoadingScreen(Game, "I'm actually reading your data file", Screen, FullLoading, Loading)
+    Loading = LoadingScreen(Game, "I'm currently reading your data file", Screen, FullLoading, Loading)
 
     for lines in CSV_file:
         Load[lines["Variable"]] = lines["Value"]
 
-    Loading = LoadingScreen(Game, "I'm actually loading your data", Screen, FullLoading, Loading)
+    Loading = LoadingScreen(Game, "I'm currently loading your data", Screen, FullLoading, Loading)
 
     Game.Player.Pv = int(Load["Game.Player.Pv"])
     Game.Player.MaxPv = int(Load["Game.Player.MaxPv"])
@@ -747,13 +749,13 @@ def Data_Load(Game, Screen, SaveState):
     Game.Player.XP_Multiplicator = float(Load["Game.Player.XP_Multiplicator"])
     Game.Player.Damage_Multiplicator = float(Load["Game.Player.Damage.Multiplicator"])
 
-    Loading = LoadingScreen(Game, "I'm actually loading the mobs", Screen, FullLoading, Loading)
+    Loading = LoadingScreen(Game, "I'm currently loading the mobs", Screen, FullLoading, Loading)
     for mob in Game.all_Monster:
         mob.rect.x -= Game.PositionPlayer - Replace
-    Loading = LoadingScreen(Game, "I'm actually loading the plateforms", Screen, FullLoading, Loading)
+    Loading = LoadingScreen(Game, "I'm currently loading the plateforms", Screen, FullLoading, Loading)
     for plateform in Game.all_plateform:
         plateform.rect.x -= Game.PositionPlayer - Replace
-    Loading = LoadingScreen(Game, "I'm actually loading your walls", Screen, FullLoading, Loading)
+    Loading = LoadingScreen(Game, "I'm currently loading your walls", Screen, FullLoading, Loading)
     for wall in Game.all_wall:
         wall.rect.x -= Game.PositionPlayer - Replace
     LoadingScreen(Game, "Your data has been loaded", Screen, FullLoading, Loading)

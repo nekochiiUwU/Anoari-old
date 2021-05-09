@@ -28,6 +28,8 @@ class Game:
         self.Lobby      = True
         self.ShowHitbox = False
         self.PrepaSpell = False
+        self.CastSpell = False
+        self.Countframes = 0
         self.InGame     = False
         self.Option     = False
         self.Pause      = False
@@ -61,6 +63,7 @@ class Game:
         self.Player     = Player()
         self.Arm        = Arm()
         self.Monster    = Monster()
+        self.FinRudimentaire = FinRudimentaire()
         self.wall       = Wall()
         self.Sol        = Sol()
         self.Background = Background()
@@ -74,6 +77,7 @@ class Game:
         self.all_Monster   = pygame.sprite.Group()
         self.all_Player    = pygame.sprite.Group()
         self.Entities      = pygame.sprite.Group()
+        self.PreMade       = pygame.sprite.Group()
         self.all_plateform = pygame.sprite.Group()
         self.all_wall      = pygame.sprite.Group()
         self.AcrossWall    = pygame.sprite.Group()
@@ -82,6 +86,7 @@ class Game:
 
         self.all_Monster.add(self.Monster)
         self.Entities.add(self.Monster)
+        self.PreMade.add(self.FinRudimentaire)
         self.Entities.add(self.Player)
         self.all_plateform.add(self.Sol)
         self.all_wall.add(self.wall)
@@ -543,13 +548,24 @@ class Arm:
                                                     Game.Mouse.rect.center[0] - self.rect.center[0]))
 
         if -90 < self.angle < 90:
-            self.origin_image     = pygame.image.load("Assets/Visual/Mystique/Spells/bras mystique prepa spell.png")
-            self.imageDirection   = 0
+            if Game.CastSpell:
+                self.origin_image = pygame.image.load("Assets/Visual/Mystique/Spells/bras mystique cast spell.png")
+                Game.Countframes -= 1
+                if Game.Countframes < 1:
+                    Game.CastSpell = False
+            else:
+                self.origin_image = pygame.image.load("Assets/Visual/Mystique/Spells/bras mystique prepa spell.png")
+            self.imageDirection = 0
             Game.Player.Direction = 1
         elif not -90 < self.angle < 90:
-            self.origin_image    = pygame.image.load(
-                "Assets/Visual/Mystique/Left/Spells/bras mystique prepa spell.png")
-            self.imageDirection   = 1
+            if Game.CastSpell:
+                self.origin_image = pygame.image.load("Assets/Visual/Mystique/Left/Spells/bras mystique cast spell.png")
+                Game.Countframes -= 1
+                if Game.Countframes < 1:
+                    Game.CastSpell = False
+            else:
+                self.origin_image = pygame.image.load("Assets/Visual/Mystique/Left/Spells/bras mystique prepa spell.png")
+            self.imageDirection = 1
             Game.Player.Direction = 0
 
         self.image = pygame.transform.rotozoom(self.origin_image, self.angle, 1)
@@ -703,6 +719,20 @@ class Particles:
         self.Particles.append(Particle)
         print(len(self.Particles))
 
+class FinRudimentaire(pygame.sprite.Sprite, Game):
+    def __init__(self):
+        super().__init__()
+
+
+        self.image = pygame.image.load("Assets/Visual/Structure/ligneFin.png")
+        self.rect = self.image.get_rect()
+        self.rect.x = 100000
+        self.rect.y = 0
+        self.origin_image = self.image
+
+        self.YVector = 0
+        self.YVectorblit = 0
+        self.Base_Gravity = 0
 
 class Class:
     def __init__(self):
