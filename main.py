@@ -12,15 +12,15 @@ Music_Init()
 Screen = Display()
 Paterns(Game)
 musicDANOARKIOUT(Game)
-
+ImportOptions(Game)
 Game.DataWeapon = DataWeapons(Game)
 Game.DataWeapon.New(Game, Game.Player.Weapon1)
 
 
 '''==================================='''
 
-# for item in pygame.colordict.THECOLORS.items():
-#     print(item)
+#for item in pygame.colordict.THECOLORS.items():
+    #print(item)
 
 while Game.Running:
 

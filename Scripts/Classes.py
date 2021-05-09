@@ -10,6 +10,8 @@ print("/Scripts/Classes: Loading")
 class Game:
     def __init__(self):
 
+        self.pygame = pygame
+
         from math import atan2, degrees
         from time import time
         from random import randint
@@ -26,6 +28,8 @@ class Game:
         self.Lobby      = True
         self.ShowHitbox = False
         self.PrepaSpell = False
+        self.CastSpell = False
+        self.Countframes = 0
         self.InGame     = False
         self.Option     = False
         self.Pause      = False
@@ -59,6 +63,7 @@ class Game:
         self.Player     = Player()
         self.Arm        = Arm()
         self.Monster    = Monster()
+        self.FinRudimentaire = FinRudimentaire()
         self.wall       = Wall()
         self.Sol        = Sol()
         self.Background = Background()
@@ -72,6 +77,7 @@ class Game:
         self.all_Monster   = pygame.sprite.Group()
         self.all_Player    = pygame.sprite.Group()
         self.Entities      = pygame.sprite.Group()
+        self.PreMade       = pygame.sprite.Group()
         self.all_plateform = pygame.sprite.Group()
         self.all_wall      = pygame.sprite.Group()
         self.AcrossWall    = pygame.sprite.Group()
@@ -80,6 +86,7 @@ class Game:
 
         self.all_Monster.add(self.Monster)
         self.Entities.add(self.Monster)
+        self.PreMade.add(self.FinRudimentaire)
         self.Entities.add(self.Player)
         self.all_plateform.add(self.Sol)
         self.all_wall.add(self.wall)
@@ -97,12 +104,15 @@ class Game:
         return pygame.sprite.spritecollide(sprite, group, False, pygame.sprite.collide_rect)
 
     def RandomProba(self, Items, Probabilities):
-        Possibilities = [Items[0]]
+
+        Possibilities = []
         for item in range(len(Probabilities)):
             for x in range(Probabilities[item]):
                 if x > len(Possibilities):
                     Possibilities.append(Items[item])
-        return Possibilities[self.randint(1, 100)]
+        Possibilities.append(Items[-1])
+
+        return Possibilities[self.randint(0, 99)]
 
 
 """=====  Game.Player [2.0]  ====="""
@@ -154,8 +164,8 @@ class Player(pygame.sprite.Sprite, Game):
         self.Point_Penetration = 0  # ##### #
         self.Point_ManaRegen   = 0  # ##### #
 
-        self.Weapon1 = Weapon()
-        self.Weapon2 = Weapon()
+        self.Weapon1 = Class()
+        self.Weapon2 = Class()
 
         self.Element = 'fire'
 
@@ -202,10 +212,16 @@ class Player(pygame.sprite.Sprite, Game):
     def Orb(self, Game):
         if Game.Frame % 2:
             if self.Element == 'fire':
-                Game.Particles.Add(Game, (self.rect.center[0] - 35, self.rect.center[1] - 20), 'red', 6)
-                Game.Particles.Add(Game, (self.rect.center[0] - 35, self.rect.center[1] - 20), 'orangered', 6)
-                Game.Particles.Add(Game, (self.rect.center[0] - 35, self.rect.center[1] - 20), 'orangered4', 6)
-                Game.Particles.Add(Game, (Game.Player.rect.center[0] - 35, Game.Player.rect.center[1] - 20), 'red3', 6)
+                if self.Direction:
+                    Game.Particles.Add(Game, (self.rect.center[0] - 25, self.rect.center[1] - 20), 'red', 6)
+                    Game.Particles.Add(Game, (self.rect.center[0] - 25, self.rect.center[1] - 20), 'orangered', 6)
+                    Game.Particles.Add(Game, (self.rect.center[0] - 25, self.rect.center[1] - 20), 'orangered4', 6)
+                    Game.Particles.Add(Game, (Game.Player.rect.center[0] - 25, Game.Player.rect.center[1] - 20), 'red3', 6)
+                else:
+                    Game.Particles.Add(Game, (self.rect.center[0] + 25, self.rect.center[1] - 20), 'red', 6)
+                    Game.Particles.Add(Game, (self.rect.center[0] + 25, self.rect.center[1] - 20), 'orangered', 6)
+                    Game.Particles.Add(Game, (self.rect.center[0] + 25, self.rect.center[1] - 20), 'orangered4', 6)
+                    Game.Particles.Add(Game, (Game.Player.rect.center[0] + 25, Game.Player.rect.center[1] - 20), 'red3', 6)
 
 
 """=====  Game.Player.Force [2.1]  ====="""
@@ -322,6 +338,9 @@ class UI:
     def __init__(self):
         super().__init__()
 
+        self.Lobby = LobbyUI()
+        self.Option = OptionUI()
+
         self.baselayer = pygame.image.load("Assets/Visual/UI/baselayer.png")
         self.baselayer = pygame.transform.scale(self.baselayer, (1280, 720))
 
@@ -348,46 +367,6 @@ class UI:
         self.quitbuttonrect   = self.quitbutton.get_rect()
         self.quitbuttonrect.x = 640 - 50
         self.quitbuttonrect.y = 360 + 80
-
-        """ CatÃƒÂ©gorie Menu d'accueil """
-
-        self.lobbybackground = pygame.image.load("Assets/Visual/background.png")
-        self.lobbybackground = pygame.transform.scale(self.lobbybackground, (1280, 720))
-
-        self.lobby_playbutton       = pygame.image.load("Assets/Visual/UI/bouton_JOUER.png")
-        self.lobby_playbutton       = pygame.transform.scale(self.lobby_playbutton, (82, 30))
-        self.lobby_playbuttonrect   = self.lobby_playbutton.get_rect()
-        self.lobby_playbuttonrect.x = -62
-        self.lobby_playbuttonrect.y = 360 - 60
-
-        self.lobby_loadbutton       = pygame.image.load("Assets/Visual/UI/bouton_REPRENDRE.png")
-        self.lobby_loadbutton       = pygame.transform.scale(self.lobby_loadbutton, (140, 30))
-        self.lobby_loadbuttonrect   = self.lobby_loadbutton.get_rect()
-        self.lobby_loadbuttonrect.x = -62
-        self.lobby_loadbuttonrect.y = 360
-
-        self.lobby_quitbutton       = pygame.image.load("Assets/Visual/UI/bouton_QUITTER.png")
-        self.lobby_quitbutton       = pygame.transform.scale(self.lobby_quitbutton, (100, 30))
-        self.lobby_quitbuttonrect   = self.lobby_quitbutton.get_rect()
-        self.lobby_quitbuttonrect.x = -62
-        self.lobby_quitbuttonrect.y = 360 + 60
-
-    def TitleMenuButtunDeplacement(self, Game):
-
-        Dep = (self.lobby_loadbuttonrect.y - Game.Mouse.rect.y) / 16
-        if Dep > 0:
-            Dep = -Dep
-        self.lobby_loadbuttonrect.x = Dep * -Dep + 186
-
-        Dep = (self.lobby_quitbuttonrect.y - Game.Mouse.rect.y) / 16
-        if Dep > 0:
-            Dep = -Dep
-        self.lobby_quitbuttonrect.x = Dep * -Dep + 206
-
-        Dep = (self.lobby_playbuttonrect.y - Game.Mouse.rect.y) / 16
-        if Dep > 0:
-            Dep = -Dep
-        self.lobby_playbuttonrect.x = Dep * -Dep + 215
 
 
 """=====  Monstre [7]  ====="""
@@ -532,13 +511,24 @@ class Arm:
                                                     Game.Mouse.rect.center[0] - self.rect.center[0]))
 
         if -90 < self.angle < 90:
-            self.origin_image     = pygame.image.load("Assets/Visual/Mystique/Spells/bras mystique prepa spell.png")
-            self.imageDirection   = 0
+            if Game.CastSpell:
+                self.origin_image = pygame.image.load("Assets/Visual/Mystique/Spells/bras mystique cast spell.png")
+                Game.Countframes -= 1
+                if Game.Countframes < 1:
+                    Game.CastSpell = False
+            else:
+                self.origin_image = pygame.image.load("Assets/Visual/Mystique/Spells/bras mystique prepa spell.png")
+            self.imageDirection = 0
             Game.Player.Direction = 1
         elif not -90 < self.angle < 90:
-            self.origin_image    = pygame.image.load(
-                "Assets/Visual/Mystique/Left/Spells/bras mystique prepa spell.png")
-            self.imageDirection   = 1
+            if Game.CastSpell:
+                self.origin_image = pygame.image.load("Assets/Visual/Mystique/Left/Spells/bras mystique cast spell.png")
+                Game.Countframes -= 1
+                if Game.Countframes < 1:
+                    Game.CastSpell = False
+            else:
+                self.origin_image = pygame.image.load("Assets/Visual/Mystique/Left/Spells/bras mystique prepa spell.png")
+            self.imageDirection = 1
             Game.Player.Direction = 0
 
         self.image = pygame.transform.rotozoom(self.origin_image, self.angle, 1)
@@ -590,8 +580,7 @@ class Projectile(pygame.sprite.Sprite):
         self.Frame        = 0
         self.origin_image = pygame.image.load("Assets/Visual/Spells/FireBall/Nion1.png")
         self.rect         = self.origin_image.get_rect()
-        self.rect.x       = Game.Player.rect.x + 80
-        self.rect.y       = Game.Player.rect.y + 45
+        self.rect.x, self.rect.y = Game.Player.rect.center
         self.DistanceX    = Game.Mouse.rect.center[0] - self.rect.center[0]
         self.DistanceY    = Game.Mouse.rect.center[1] - self.rect.center[1]
 
@@ -609,8 +598,11 @@ class Projectile(pygame.sprite.Sprite):
 
         self.angle = -Game.Deges(Game.AngleCalc(self.DirectionY, self.DirectionX))
 
-        self.image = pygame.transform.rotozoom(self.origin_image, self.angle, 0.5)
+        self.image = pygame.transform.rotozoom(self.origin_image, self.angle, 1)
         self.rect  = self.image.get_rect(center=self.rect.center)
+        
+        self.rect.x = Game.Player.rect.center[0] + int(self.DirectionX * 1.7)
+        self.rect.y = Game.Player.rect.center[1] + int(self.DirectionY * 1.7)
 
     def move(self, Game):
 
@@ -630,7 +622,7 @@ class Projectile(pygame.sprite.Sprite):
         self.DirectionY += 0.05
         self.angle       = -Game.Deges(Game.AngleCalc(self.DirectionY, self.DirectionX))
 
-        self.image = pygame.transform.rotozoom(self.origin_image, self.angle, 0.5)
+        self.image = pygame.transform.rotozoom(self.origin_image, self.angle, 1)
         self.rect  = self.image.get_rect(center=self.rect.center)
 
         Game.Particles.Add(Game, self.rect.center, 'red', 8)
@@ -674,12 +666,130 @@ class Particles:
                     self.Particles.remove(Particle)
                 pygame.draw.circle(Screen, Particle[4], [Particle[0][0], Particle[0][1]], Particle[1])
 
-    def Add(self, Game, Position, Color, Radius):
-        x = Position[0] + Game.randint(-Radius / 2, Radius / 2)
-        y = Position[1] + Game.randint(-Radius / 2, Radius / 2)
-
+    def Add(self, Game, Position, Color, Radius, Decrease = 0):
+        
+        x = Position[0] + Game.randint(int(-Radius / 2), int(Radius / 2))
+        y = Position[1] + Game.randint(int(-Radius / 2), int(Radius / 2))
+        
         DirectionX = Game.randint(-2, 2)
         DirectionY = Game.randint(-2, 2)
+        
+        if not Decrease:
+            Decrease = Radius / 20
 
-        Particle = [[x, y], Radius, DirectionX, DirectionY, Color, Radius / 20]
+        #               v rect v        v taille v          v mouvement v       v couleur v
+        Particle = [[int(x), int(y)], int(Radius), int(DirectionX), int(DirectionY), Color, Decrease]
         self.Particles.append(Particle)
+        print(len(self.Particles))
+
+
+class FinRudimentaire(pygame.sprite.Sprite, Game):
+    def __init__(self):
+        super().__init__()
+
+        self.image = pygame.image.load("Assets/Visual/Structure/ligneFin.png")
+        self.rect = self.image.get_rect()
+        self.rect.x = 10400
+        self.rect.y = 0
+        self.origin_image = self.image
+
+        self.YVector = 0
+        self.YVectorblit = 0
+        self.Base_Gravity = 0
+
+
+class Class:
+    def __init__(self):
+        pass
+
+
+class LobbyUI:
+    def __init__(self):
+        self.background = pygame.image.load("Assets/Visual/background.png")
+        self.background = pygame.transform.scale(self.background, (1280, 720))
+
+        self.playbutton       = pygame.image.load("Assets/Visual/UI/bouton_JOUER.png")
+        self.playbutton       = pygame.transform.scale(self.playbutton, (82, 30))
+        self.playbuttonrect   = self.playbutton.get_rect()
+        self.playbuttonrect.x = -62
+        self.playbuttonrect.y = 360 - 60
+
+        self.loadbutton       = pygame.image.load("Assets/Visual/UI/bouton_REPRENDRE.png")
+        self.loadbutton       = pygame.transform.scale(self.loadbutton, (140, 30))
+        self.loadbuttonrect   = self.loadbutton.get_rect()
+        self.loadbuttonrect.x = -62
+        self.loadbuttonrect.y = 360
+
+        self.quitbutton       = pygame.image.load("Assets/Visual/UI/bouton_QUITTER.png")
+        self.quitbutton       = pygame.transform.scale(self.quitbutton, (100, 30))
+        self.quitbuttonrect   = self.quitbutton.get_rect()
+        self.quitbuttonrect.x = -62
+        self.quitbuttonrect.y = 360 + 60
+
+    def TitleMenuButtunDeplacement(self, Game):
+
+        Dep = (self.loadbuttonrect.y - Game.Mouse.rect.y) / 16
+        if Dep > 0:
+            Dep = -Dep
+        self.loadbuttonrect.x = Dep * -Dep + 186
+
+        Dep = (self.quitbuttonrect.y - Game.Mouse.rect.y) / 16
+        if Dep > 0:
+            Dep = -Dep
+        self.quitbuttonrect.x = Dep * -Dep + 206
+
+        Dep = (self.playbuttonrect.y - Game.Mouse.rect.y) / 16
+        if Dep > 0:
+            Dep = -Dep
+        self.playbuttonrect.x = Dep * -Dep + 215
+
+
+class OptionUI:
+    def __init__(self):
+        self.Key1 = pygame.Rect(100, 400, 125, 125)
+
+        self.Key2 = pygame.Rect(250, 550, 125, 125)
+        self.Key3 = pygame.Rect(400, 400, 125, 125)
+        self.Key4 = pygame.Rect(550, 550, 125, 125)
+
+        """C'était chiant"""
+        self.Keys = {
+            0: pygame.image.load("Assets/Visual/UI/Key/Other.png"),
+            32: pygame.image.load("Assets/Visual/UI/Key/Space.png"),
+            48: pygame.image.load("Assets/Visual/UI/Key/0.png"),
+            49: pygame.image.load("Assets/Visual/UI/Key/1.png"),
+            50: pygame.image.load("Assets/Visual/UI/Key/2.png"),
+            51: pygame.image.load("Assets/Visual/UI/Key/3.png"),
+            52: pygame.image.load("Assets/Visual/UI/Key/4.png"),
+            53: pygame.image.load("Assets/Visual/UI/Key/5.png"),
+            54: pygame.image.load("Assets/Visual/UI/Key/6.png"),
+            55: pygame.image.load("Assets/Visual/UI/Key/7.png"),
+            56: pygame.image.load("Assets/Visual/UI/Key/8.png"),
+            57: pygame.image.load("Assets/Visual/UI/Key/9.png"),
+            97: pygame.image.load("Assets/Visual/UI/Key/A.png"),
+            98: pygame.image.load("Assets/Visual/UI/Key/B.png"),
+            99: pygame.image.load("Assets/Visual/UI/Key/C.png"),
+            100: pygame.image.load("Assets/Visual/UI/Key/D.png"),
+            101: pygame.image.load("Assets/Visual/UI/Key/E.png"),
+            102: pygame.image.load("Assets/Visual/UI/Key/F.png"),
+            103: pygame.image.load("Assets/Visual/UI/Key/G.png"),
+            104: pygame.image.load("Assets/Visual/UI/Key/H.png"),
+            105: pygame.image.load("Assets/Visual/UI/Key/I.png"),
+            106: pygame.image.load("Assets/Visual/UI/Key/J.png"),
+            107: pygame.image.load("Assets/Visual/UI/Key/K.png"),
+            108: pygame.image.load("Assets/Visual/UI/Key/L.png"),
+            109: pygame.image.load("Assets/Visual/UI/Key/M.png"),
+            110: pygame.image.load("Assets/Visual/UI/Key/N.png"),
+            111: pygame.image.load("Assets/Visual/UI/Key/O.png"),
+            112: pygame.image.load("Assets/Visual/UI/Key/P.png"),
+            113: pygame.image.load("Assets/Visual/UI/Key/Q.png"),
+            114: pygame.image.load("Assets/Visual/UI/Key/R.png"),
+            115: pygame.image.load("Assets/Visual/UI/Key/S.png"),
+            116: pygame.image.load("Assets/Visual/UI/Key/T.png"),
+            117: pygame.image.load("Assets/Visual/UI/Key/U.png"),
+            118: pygame.image.load("Assets/Visual/UI/Key/V.png"),
+            119: pygame.image.load("Assets/Visual/UI/Key/W.png"),
+            120: pygame.image.load("Assets/Visual/UI/Key/X.png"),
+            121: pygame.image.load("Assets/Visual/UI/Key/Y.png"),
+            122: pygame.image.load("Assets/Visual/UI/Key/Z.png"),
+        }
