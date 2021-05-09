@@ -141,6 +141,7 @@ def PrintPreMade(Game, Screen):
         Entity.rect.x -= Game.Position
         Screen.blit(Entity.image, Entity.rect)
 
+
 def PrintProjectiles(Game, Screen):
     for Projectile in Game.Projectiles:
         Projectile.rect.x -= Game.Position

@@ -79,6 +79,10 @@ def inGame(Game, Screen):
         """ ===== Frame Limiter ===== """
         FrameLimiter(Game, Screen)
 
+        """ ===== Check des choses ===== """
+        if Game.PositionPlayer > 10000:
+            print("fin ")
+
 
 def pause(Game, Screen):
     """ Loop de pause -tremisabdoul"""

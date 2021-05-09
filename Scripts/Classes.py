@@ -723,10 +723,9 @@ class FinRudimentaire(pygame.sprite.Sprite, Game):
     def __init__(self):
         super().__init__()
 
-
         self.image = pygame.image.load("Assets/Visual/Structure/ligneFin.png")
         self.rect = self.image.get_rect()
-        self.rect.x = 100000
+        self.rect.x = 10400
         self.rect.y = 0
         self.origin_image = self.image
 
