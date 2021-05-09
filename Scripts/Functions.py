@@ -63,25 +63,16 @@ def inGame(Game, Screen):
         """ ===== Frame Limiter ===== """
         Game.Tick = Game.time()
         Game.Frame += 1
-
         """ ===== Movements ===== """
         Movements(Game)
-
         """ ===== Camera ===== """
         SmoothCamera(Game)
-
         """ ===== Key Inputs ===== """
         InGameKeys(Game, Screen)
-
         """ ===== Printer ===== """
         Printer(Screen, Game)
-
         """ ===== Frame Limiter ===== """
         FrameLimiter(Game, Screen)
-
-        """ ===== Check des choses ===== """
-        if Game.PositionPlayer > 10000:
-            print("fin ")
 
 
 def pause(Game, Screen):
@@ -160,16 +151,16 @@ def Lobby(Game, Screen):
             elif event.type == pygame.MOUSEBUTTONDOWN:
                 Game.pressed[str(event.button)] = True
 
-                if Game.UI.lobby_playbuttonrect.collidepoint(event.pos):
+                if Game.UI.Lobby.playbuttonrect.collidepoint(event.pos):
                     Game.Click.play()
                     Game.InGame = True
                     Game.Lobby = False
-                elif Game.UI.lobby_loadbuttonrect.collidepoint(event.pos):
+                elif Game.UI.Lobby.loadbuttonrect.collidepoint(event.pos):
                     Game.Click.play()
                     Game.Lobby = False
                     Game.SaveMenu = True
                     Game.SaveValue = 1
-                elif Game.UI.lobby_quitbuttonrect.collidepoint(event.pos):
+                elif Game.UI.Lobby.quitbuttonrect.collidepoint(event.pos):
                     Game.Click.play()
                     Game.Running = False
                     pygame.quit()
@@ -184,7 +175,7 @@ def Lobby(Game, Screen):
                 Game.running = False
                 pygame.quit()
 
-        Game.UI.TitleMenuButtunDeplacement(Game)
+        Game.UI.Lobby.TitleMenuButtunDeplacement(Game)
 
         LobbyBlit(Screen, Game)
 
@@ -204,9 +195,10 @@ def Lobby(Game, Screen):
 
 def Option(Game, Screen):
     """Loop des options -steven"""
-    while Game.Option:
 
-        tick = Game.time()
+    ImportOptions(Game)
+
+    while Game.Option:
 
         for event in pygame.event.get():
 
@@ -217,8 +209,14 @@ def Option(Game, Screen):
                     Game.Pause = True
                     Game.Option = False
 
-            elif event.type == pygame.KEYUP:
-                Game.pressed[event.key] = False
+                elif Game.pressed.get(pygame.K_SPACE):
+                    Game.Option = False
+                    Game.InGame = True
+
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                for Key in Game.Keys:
+                    if Key[0].collidepoint(event.pos):
+                        Key[1] = True
 
             if event.type == pygame.QUIT:
                 Game.InGame = False
@@ -227,18 +225,13 @@ def Option(Game, Screen):
                 Game.running = False
                 pygame.quit()
 
+        print(Game.pressed)
+
+        OptionInterations(Game)
+
         OptionPrinter(Game, Screen)
 
-        tickchecker = Game.time()
-        tickchecker -= tick
-
-        if tickchecker:
-            fps = 1 / tickchecker
-            fps = "FPS : " + str(round(fps))
-        else:
-            fps = "Il n'as meme pas eu le temps de compter..."
-
-        Texte(Game.police1, fps, (255, 255, 255), Screen, (6, 34))
+        FrameLimiter(Game, Screen)
 
         pygame.display.flip()
 
@@ -366,7 +359,7 @@ def Movements(Game):
                 Monster.Direction = 1
                 Monster.Move_Left(Game)
 
-    if Game.pressed.get(pygame.K_SPACE) \
+    if Game.pressed.get(Game.Keys[0][2]) \
             and Game.check_collisions(Game.Player, Game.all_plateform) \
             and Game.Player.YVector == 0:
         Game.Player.SpeedY = -5
@@ -430,14 +423,16 @@ def Movements(Game):
 
     BackgroundScroll(Game)
 
+    if Game.PositionPlayer > 10000:
+        print("fin ")
+
 
 def Jump(Game):
     """Saut: [ Key: Space ] -tremisabdoul"""
     global booleanjump
-    if Game.Player.SpeedY > -17 and Game.pressed.get(pygame.K_SPACE) and booleanjump:
+    if Game.Player.SpeedY > -17 and Game.pressed.get(Game.Keys[0][2]) and booleanjump:
         Game.Player.SpeedY -= 3.4
         Game.Player.rect.y += Game.Player.SpeedY
-
     else:
         booleanjump = 0
         if Game.Player.SpeedY < 0:
@@ -450,14 +445,13 @@ def Jump(Game):
 def DeplacementX(Game):
     """Deplacement X:  [Gauche: LEFT / Q ], [Droite: RIGHT / D] -tremisabdoul"""
 
+
     Game.Player.MovementKey = False
-    if Game.pressed.get(pygame.K_d) and Game.Player.rect.x < Game.Player.MaxX \
-            or Game.pressed.get(pygame.K_RIGHT) and Game.Player.rect.x < Game.Player.MaxX:
+    if Game.pressed.get(Game.Keys[2][2]) and Game.Player.rect.x < Game.Player.MaxX:
         Game.Player.MovementKey = True
         Game.Player.Move_Right(Game)
 
-    if Game.pressed.get(pygame.K_q) and Game.Player.rect.x > Game.Player.MinX \
-            or Game.pressed.get(pygame.K_LEFT) and Game.Player.rect.x > Game.Player.MinX:
+    if Game.pressed.get(Game.Keys[1][2]) and Game.Player.rect.x > Game.Player.MinX:
         Game.Player.MovementKey = True
         Game.Player.Move_Left(Game)
 
@@ -765,6 +759,47 @@ def Data_Load(Game, Screen, SaveState):
     LoadingScreen(Game, "Your data has been loaded", Screen, FullLoading, Loading)
     Game.Sol.rect.x = 0
     return 0
+
+
+def ImportOptions(Game):
+    Keys = open('Data/Keys.txt', 'r')
+
+    for line in Keys:
+        line = line.strip()
+        exec(line)
+
+    Keys.close()
+
+
+def OptionInterations(Game):
+
+    print(Game.Keys)
+
+    for item in range(len(Game.Keys)):
+        while Game.Keys[item][1]:
+            for event in pygame.event.get():
+                if event.type == pygame.KEYDOWN:
+                    Game.Keys[item][2] = event.key
+                    Game.Keys[item][1] = False
+
+                if event.type == pygame.QUIT:
+                    Game.InGame = False
+                    Game.Lobby = False
+                    Game.Pause = False
+                    Game.running = False
+                    pygame.quit()
+                    quit()
+                    break
+
+            if not Game.Keys[item][1]:
+                Keys = open('Data/Keys.txt', 'w')
+                Keys.write("Game.Keys = [[Game.UI.Option.Key1, False, " + str(Game.Keys[0][2]) +
+                           "], [Game.UI.Option.Key2, False, " + str(Game.Keys[1][2]) +
+                           "], [Game.UI.Option.Key3, False, " + str(Game.Keys[2][2]) +
+                           "], [Game.UI.Option.Key4, False, " + str(Game.Keys[3][2]) + "]]")
+                Keys.close()
+                ImportOptions(Game)
+
 
 
 """ ===  Music  === """

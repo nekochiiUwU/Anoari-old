@@ -92,6 +92,13 @@ class Game:
         self.all_wall.add(self.wall)
         self.all_Player.add(self.Player)
 
+        self.Trash = []
+
+        self.TopBind = 122
+        self.BotBind = 115
+        self.LeftBind = 113
+        self.RightBind = 100
+
     def Rescale(self, value, XorY):
         print("===\nx", self.UserData.DataX, ">>>", self.DataX, "\ny", self.UserData.DataY, ">>>", self.DataY)
         if XorY == "X":
@@ -338,6 +345,9 @@ class UI:
     def __init__(self):
         super().__init__()
 
+        self.Lobby = LobbyUI()
+        self.Option = OptionUI()
+
         self.baselayer = pygame.image.load("Assets/Visual/UI/baselayer.png")
         self.baselayer = pygame.transform.scale(self.baselayer, (1280, 720))
 
@@ -364,46 +374,6 @@ class UI:
         self.quitbuttonrect   = self.quitbutton.get_rect()
         self.quitbuttonrect.x = 640 - 50
         self.quitbuttonrect.y = 360 + 80
-
-        """ CatÃƒÂ©gorie Menu d'accueil """
-
-        self.lobbybackground = pygame.image.load("Assets/Visual/background.png")
-        self.lobbybackground = pygame.transform.scale(self.lobbybackground, (1280, 720))
-
-        self.lobby_playbutton       = pygame.image.load("Assets/Visual/UI/bouton_JOUER.png")
-        self.lobby_playbutton       = pygame.transform.scale(self.lobby_playbutton, (82, 30))
-        self.lobby_playbuttonrect   = self.lobby_playbutton.get_rect()
-        self.lobby_playbuttonrect.x = -62
-        self.lobby_playbuttonrect.y = 360 - 60
-
-        self.lobby_loadbutton       = pygame.image.load("Assets/Visual/UI/bouton_REPRENDRE.png")
-        self.lobby_loadbutton       = pygame.transform.scale(self.lobby_loadbutton, (140, 30))
-        self.lobby_loadbuttonrect   = self.lobby_loadbutton.get_rect()
-        self.lobby_loadbuttonrect.x = -62
-        self.lobby_loadbuttonrect.y = 360
-
-        self.lobby_quitbutton       = pygame.image.load("Assets/Visual/UI/bouton_QUITTER.png")
-        self.lobby_quitbutton       = pygame.transform.scale(self.lobby_quitbutton, (100, 30))
-        self.lobby_quitbuttonrect   = self.lobby_quitbutton.get_rect()
-        self.lobby_quitbuttonrect.x = -62
-        self.lobby_quitbuttonrect.y = 360 + 60
-
-    def TitleMenuButtunDeplacement(self, Game):
-
-        Dep = (self.lobby_loadbuttonrect.y - Game.Mouse.rect.y) / 16
-        if Dep > 0:
-            Dep = -Dep
-        self.lobby_loadbuttonrect.x = Dep * -Dep + 186
-
-        Dep = (self.lobby_quitbuttonrect.y - Game.Mouse.rect.y) / 16
-        if Dep > 0:
-            Dep = -Dep
-        self.lobby_quitbuttonrect.x = Dep * -Dep + 206
-
-        Dep = (self.lobby_playbuttonrect.y - Game.Mouse.rect.y) / 16
-        if Dep > 0:
-            Dep = -Dep
-        self.lobby_playbuttonrect.x = Dep * -Dep + 215
 
 
 """=====  Monstre [7]  ====="""
@@ -705,8 +675,8 @@ class Particles:
 
     def Add(self, Game, Position, Color, Radius, Decrease = 0):
         
-        x = Position[0] + Game.randint(-Radius / 2, Radius / 2)
-        y = Position[1] + Game.randint(-Radius / 2, Radius / 2)
+        x = Position[0] + Game.randint(int(-Radius / 2), int(Radius / 2))
+        y = Position[1] + Game.randint(int(-Radius / 2), int(Radius / 2))
         
         DirectionX = Game.randint(-2, 2)
         DirectionY = Game.randint(-2, 2)
@@ -718,6 +688,7 @@ class Particles:
         Particle = [[int(x), int(y)], int(Radius), int(DirectionX), int(DirectionY), Color, Decrease]
         self.Particles.append(Particle)
         print(len(self.Particles))
+
 
 class FinRudimentaire(pygame.sprite.Sprite, Game):
     def __init__(self):
@@ -733,6 +704,56 @@ class FinRudimentaire(pygame.sprite.Sprite, Game):
         self.YVectorblit = 0
         self.Base_Gravity = 0
 
+
 class Class:
     def __init__(self):
         pass
+
+
+class LobbyUI:
+    def __init__(self):
+        self.background = pygame.image.load("Assets/Visual/background.png")
+        self.background = pygame.transform.scale(self.background, (1280, 720))
+
+        self.playbutton       = pygame.image.load("Assets/Visual/UI/bouton_JOUER.png")
+        self.playbutton       = pygame.transform.scale(self.playbutton, (82, 30))
+        self.playbuttonrect   = self.playbutton.get_rect()
+        self.playbuttonrect.x = -62
+        self.playbuttonrect.y = 360 - 60
+
+        self.loadbutton       = pygame.image.load("Assets/Visual/UI/bouton_REPRENDRE.png")
+        self.loadbutton       = pygame.transform.scale(self.loadbutton, (140, 30))
+        self.loadbuttonrect   = self.loadbutton.get_rect()
+        self.loadbuttonrect.x = -62
+        self.loadbuttonrect.y = 360
+
+        self.quitbutton       = pygame.image.load("Assets/Visual/UI/bouton_QUITTER.png")
+        self.quitbutton       = pygame.transform.scale(self.quitbutton, (100, 30))
+        self.quitbuttonrect   = self.quitbutton.get_rect()
+        self.quitbuttonrect.x = -62
+        self.quitbuttonrect.y = 360 + 60
+
+    def TitleMenuButtunDeplacement(self, Game):
+
+        Dep = (self.loadbuttonrect.y - Game.Mouse.rect.y) / 16
+        if Dep > 0:
+            Dep = -Dep
+        self.loadbuttonrect.x = Dep * -Dep + 186
+
+        Dep = (self.quitbuttonrect.y - Game.Mouse.rect.y) / 16
+        if Dep > 0:
+            Dep = -Dep
+        self.quitbuttonrect.x = Dep * -Dep + 206
+
+        Dep = (self.playbuttonrect.y - Game.Mouse.rect.y) / 16
+        if Dep > 0:
+            Dep = -Dep
+        self.playbuttonrect.x = Dep * -Dep + 215
+
+
+class OptionUI:
+    def __init__(self):
+        self.Key1 = pygame.Rect(200, 400, 80, 40)
+        self.Key2 = pygame.Rect(300, 500, 80, 40)
+        self.Key3 = pygame.Rect(400, 600, 80, 40)
+        self.Key4 = pygame.Rect(500, 700, 80, 40)

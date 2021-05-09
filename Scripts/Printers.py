@@ -27,10 +27,10 @@ def Printer(Screen, Game):
 
 def LobbyBlit(Screen, Game):
     """Affichage des Elements du lobby -steven"""
-    Screen.blit(Game.UI.lobbybackground, (0, 0))
-    Screen.blit(Game.UI.lobby_loadbutton, Game.UI.lobby_loadbuttonrect)
-    Screen.blit(Game.UI.lobby_playbutton, Game.UI.lobby_playbuttonrect)
-    Screen.blit(Game.UI.lobby_quitbutton, Game.UI.lobby_quitbuttonrect)
+    Screen.blit(Game.UI.Lobby.background, (0, 0))
+    Screen.blit(Game.UI.Lobby.loadbutton, Game.UI.Lobby.loadbuttonrect)
+    Screen.blit(Game.UI.Lobby.playbutton, Game.UI.Lobby.playbuttonrect)
+    Screen.blit(Game.UI.Lobby.quitbutton, Game.UI.Lobby.quitbuttonrect)
     MousePrinter(Screen, Game)
 
 
@@ -38,7 +38,11 @@ def OptionPrinter(Game, Screen):
     """Affichage des options -steven"""
     White = (255, 255, 255)
     Screen.fill((0, 0, 0))
-    pygame.draw.rect(Screen, White, pygame.Rect(600, 200, 100, 60), 2)
+
+    pygame.draw.rect(Screen, White, Game.UI.Option.Key1, 2)
+    pygame.draw.rect(Screen, White, Game.UI.Option.Key2, 2)
+    pygame.draw.rect(Screen, White, Game.UI.Option.Key3, 2)
+    pygame.draw.rect(Screen, White, Game.UI.Option.Key4, 2)
 
     Texte(Game.police2, 'Resolution : ', (255, 255, 255), Screen, (100, 100))
     Texte(Game.police2, 'Volume : ', (255, 255, 255), Screen, (100, 225))
