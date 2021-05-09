@@ -92,13 +92,6 @@ class Game:
         self.all_wall.add(self.wall)
         self.all_Player.add(self.Player)
 
-        self.Trash = []
-
-        self.TopBind = 122
-        self.BotBind = 115
-        self.LeftBind = 113
-        self.RightBind = 100
-
     def Rescale(self, value, XorY):
         print("===\nx", self.UserData.DataX, ">>>", self.DataX, "\ny", self.UserData.DataY, ">>>", self.DataY)
         if XorY == "X":

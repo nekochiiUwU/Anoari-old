@@ -38,10 +38,20 @@ def OptionPrinter(Game, Screen):
     """Affichage des options -steven"""
     Screen.fill((0, 0, 0))
 
-    Screen.blit(Game.UI.Option.Keys[Game.Keys[0][2]], Game.UI.Option.Key1)
-    Screen.blit(Game.UI.Option.Keys[Game.Keys[1][2]], Game.UI.Option.Key2)
-    Screen.blit(Game.UI.Option.Keys[Game.Keys[2][2]], Game.UI.Option.Key3)
-    Screen.blit(Game.UI.Option.Keys[Game.Keys[3][2]], Game.UI.Option.Key4)
+    for item in Game.Keys:
+        if not 97 <= item[2] <= 122 and not 48 <= item[2] <= 57 and not item[2] == 32:
+            item[2] = 0
+
+    K1Image = Game.UI.Option.Keys[Game.Keys[0][2]]
+    K2Image = Game.UI.Option.Keys[Game.Keys[1][2]]
+    K3Image = Game.UI.Option.Keys[Game.Keys[2][2]]
+    K4Image = Game.UI.Option.Keys[Game.Keys[3][2]]
+
+
+    Screen.blit( K1Image, Game.UI.Option.Key1)
+    Screen.blit( K2Image, Game.UI.Option.Key2)
+    Screen.blit( K3Image, Game.UI.Option.Key3)
+    Screen.blit( K4Image, Game.UI.Option.Key4)
 
     Key = Game.police1.render("Jump", 1, (200, 200, 200))
     Screen.blit(Key, (Game.UI.Option.Key1[0] + int(62.5 - Key.get_width() / 2), Game.UI.Option.Key1[1] + 130))
