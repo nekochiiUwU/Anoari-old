@@ -36,13 +36,25 @@ def LobbyBlit(Screen, Game):
 
 def OptionPrinter(Game, Screen):
     """Affichage des options -steven"""
-    White = (255, 255, 255)
     Screen.fill((0, 0, 0))
 
-    pygame.draw.rect(Screen, White, Game.UI.Option.Key1, 2)
-    pygame.draw.rect(Screen, White, Game.UI.Option.Key2, 2)
-    pygame.draw.rect(Screen, White, Game.UI.Option.Key3, 2)
-    pygame.draw.rect(Screen, White, Game.UI.Option.Key4, 2)
+    Screen.blit(Game.UI.Option.Keys[Game.Keys[0][2]], Game.UI.Option.Key1)
+    Screen.blit(Game.UI.Option.Keys[Game.Keys[1][2]], Game.UI.Option.Key2)
+    Screen.blit(Game.UI.Option.Keys[Game.Keys[2][2]], Game.UI.Option.Key3)
+    Screen.blit(Game.UI.Option.Keys[Game.Keys[3][2]], Game.UI.Option.Key4)
+
+    Key = Game.police1.render("Jump", 1, (200, 200, 200))
+    Screen.blit(Key, (Game.UI.Option.Key1[0] + int(62.5 - Key.get_width() / 2), Game.UI.Option.Key1[1] + 130))
+
+    Key = Game.police1.render("Left", 1, (200, 200, 200))
+    Screen.blit(Key, (Game.UI.Option.Key2[0] + int(62.5 - Key.get_width() / 2), Game.UI.Option.Key2[1] + 130))
+
+    Key = Game.police1.render("Right", 1, (200, 200, 200))
+    Screen.blit(Key, (Game.UI.Option.Key3[0] + int(62.5 - Key.get_width() / 2), Game.UI.Option.Key3[1] + 130))
+
+    Key = Game.police1.render("Trash", 1, (200, 200, 200))
+    Screen.blit(Key, (Game.UI.Option.Key4[0] + int(62.5 - Key.get_width() / 2), Game.UI.Option.Key4[1] + 130))
+
 
     Texte(Game.police2, 'Resolution : ', (255, 255, 255), Screen, (100, 100))
     Texte(Game.police2, 'Volume : ', (255, 255, 255), Screen, (100, 225))
@@ -139,6 +151,7 @@ def PrintEntities(Game, Screen):
             Entity.rect.x -= Game.Position
             Screen.blit(Entity.image, Entity.rect)
             Entity.Life(Screen, Game)
+
 
 def PrintPreMade(Game, Screen):
     for Entity in Game.PreMade:

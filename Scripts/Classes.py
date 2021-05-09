@@ -753,7 +753,50 @@ class LobbyUI:
 
 class OptionUI:
     def __init__(self):
-        self.Key1 = pygame.Rect(200, 400, 80, 40)
-        self.Key2 = pygame.Rect(300, 500, 80, 40)
-        self.Key3 = pygame.Rect(400, 600, 80, 40)
-        self.Key4 = pygame.Rect(500, 700, 80, 40)
+        self.Key1 = pygame.Rect(100, 400, 125, 125)
+
+        self.Key2 = pygame.Rect(250, 550, 125, 125)
+        self.Key3 = pygame.Rect(400, 400, 125, 125)
+        self.Key4 = pygame.Rect(550, 550, 125, 125)
+
+        """C'était chiant"""
+        self.Keys = {
+            0: pygame.image.load("Assets/Visual/UI/Key/Other.png"),
+            32: pygame.image.load("Assets/Visual/UI/Key/Space.png"),
+            48: pygame.image.load("Assets/Visual/UI/Key/0.png"),
+            49: pygame.image.load("Assets/Visual/UI/Key/1.png"),
+            50: pygame.image.load("Assets/Visual/UI/Key/2.png"),
+            51: pygame.image.load("Assets/Visual/UI/Key/3.png"),
+            52: pygame.image.load("Assets/Visual/UI/Key/4.png"),
+            53: pygame.image.load("Assets/Visual/UI/Key/5.png"),
+            54: pygame.image.load("Assets/Visual/UI/Key/6.png"),
+            55: pygame.image.load("Assets/Visual/UI/Key/7.png"),
+            56: pygame.image.load("Assets/Visual/UI/Key/8.png"),
+            57: pygame.image.load("Assets/Visual/UI/Key/9.png"),
+            97: pygame.image.load("Assets/Visual/UI/Key/A.png"),
+            98: pygame.image.load("Assets/Visual/UI/Key/B.png"),
+            99: pygame.image.load("Assets/Visual/UI/Key/C.png"),
+            100: pygame.image.load("Assets/Visual/UI/Key/D.png"),
+            101: pygame.image.load("Assets/Visual/UI/Key/E.png"),
+            102: pygame.image.load("Assets/Visual/UI/Key/F.png"),
+            103: pygame.image.load("Assets/Visual/UI/Key/G.png"),
+            104: pygame.image.load("Assets/Visual/UI/Key/H.png"),
+            105: pygame.image.load("Assets/Visual/UI/Key/I.png"),
+            106: pygame.image.load("Assets/Visual/UI/Key/J.png"),
+            107: pygame.image.load("Assets/Visual/UI/Key/K.png"),
+            108: pygame.image.load("Assets/Visual/UI/Key/L.png"),
+            109: pygame.image.load("Assets/Visual/UI/Key/M.png"),
+            110: pygame.image.load("Assets/Visual/UI/Key/N.png"),
+            111: pygame.image.load("Assets/Visual/UI/Key/O.png"),
+            112: pygame.image.load("Assets/Visual/UI/Key/P.png"),
+            113: pygame.image.load("Assets/Visual/UI/Key/Q.png"),
+            114: pygame.image.load("Assets/Visual/UI/Key/R.png"),
+            115: pygame.image.load("Assets/Visual/UI/Key/S.png"),
+            116: pygame.image.load("Assets/Visual/UI/Key/T.png"),
+            117: pygame.image.load("Assets/Visual/UI/Key/U.png"),
+            118: pygame.image.load("Assets/Visual/UI/Key/V.png"),
+            119: pygame.image.load("Assets/Visual/UI/Key/W.png"),
+            120: pygame.image.load("Assets/Visual/UI/Key/X.png"),
+            121: pygame.image.load("Assets/Visual/UI/Key/Y.png"),
+            122: pygame.image.load("Assets/Visual/UI/Key/Z.png"),
+        }
