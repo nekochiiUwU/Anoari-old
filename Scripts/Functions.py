@@ -225,8 +225,6 @@ def Option(Game, Screen):
                 Game.running = False
                 pygame.quit()
 
-        print(Game.pressed)
-
         OptionInterations(Game)
 
         OptionPrinter(Game, Screen)
@@ -424,7 +422,7 @@ def Movements(Game):
     BackgroundScroll(Game)
 
     if Game.PositionPlayer > 10000:
-        print("fin ")
+        print("Check Fin du niveau atteint = True")
 
 
 def Jump(Game):
@@ -464,7 +462,6 @@ def FrameLimiter(Game, Screen):
     Game.Tickchecker = Game.time()
     Game.Tickchecker -= Game.Tick
     if Game.ShowHitbox:
-        print("\n Player Posion: ", Game.PositionPlayer)
 
         start = Game.time()
         Test = Game.time() - start
@@ -472,10 +469,12 @@ def FrameLimiter(Game, Screen):
         TestL1 = str(round((Game.Tickchecker - Test) / 0.00017)) + "    % of 60 FPS: Framerate without Test"
         TestL2 = str(round(Game.Tickchecker / 0.00017)) + "    % of 60 FPS: Framerate"
         TestL3 = str(round(Test / 0.00017)) + "    % of 60 FPS : Test"
+        Pos = " \t Position =" + str(Game.PositionPlayer) + " Px" + " \t End = 10.000"
 
         Texte(Game.police1, TestL1, (255, 255, 255), Screen, (1000, 20))
         Texte(Game.police1, TestL2, (255, 255, 255), Screen, (1000, 40))
         Texte(Game.police1, TestL3, (255, 255, 255), Screen, (1000, 60))
+        Texte(Game.police1, Pos, (255, 255, 255), Screen, (10, 700))
 
     pygame.display.flip()
 

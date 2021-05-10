@@ -54,6 +54,8 @@ class Game:
         self.Paterns = {}
         self.Grid    = {}
 
+        self.Timed = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+
         self.Click = pygame.mixer.Sound("Assets/Audio/FX/pas.mp3")
         self.data  = pygame.mixer.Sound("Assets/Audio/FX/DATA.mp3")
 
@@ -512,22 +514,29 @@ class Arm:
 
         if -90 < self.angle < 90:
             if Game.CastSpell:
+
                 self.origin_image = pygame.image.load("Assets/Visual/Mystique/Spells/bras mystique cast spell.png")
                 Game.Countframes -= 1
+
                 if Game.Countframes < 1:
                     Game.CastSpell = False
             else:
                 self.origin_image = pygame.image.load("Assets/Visual/Mystique/Spells/bras mystique prepa spell.png")
+
             self.imageDirection = 0
             Game.Player.Direction = 1
+
         elif not -90 < self.angle < 90:
             if Game.CastSpell:
+
                 self.origin_image = pygame.image.load("Assets/Visual/Mystique/Left/Spells/bras mystique cast spell.png")
                 Game.Countframes -= 1
+
                 if Game.Countframes < 1:
                     Game.CastSpell = False
             else:
                 self.origin_image = pygame.image.load("Assets/Visual/Mystique/Left/Spells/bras mystique prepa spell.png")
+
             self.imageDirection = 1
             Game.Player.Direction = 0
 
@@ -680,7 +689,6 @@ class Particles:
         #               v rect v        v taille v          v mouvement v       v couleur v
         Particle = [[int(x), int(y)], int(Radius), int(DirectionX), int(DirectionY), Color, Decrease]
         self.Particles.append(Particle)
-        print(len(self.Particles))
 
 
 class FinRudimentaire(pygame.sprite.Sprite, Game):
@@ -746,11 +754,11 @@ class LobbyUI:
 
 class OptionUI:
     def __init__(self):
-        self.Key1 = pygame.Rect(100, 400, 125, 125)
 
-        self.Key2 = pygame.Rect(250, 550, 125, 125)
-        self.Key3 = pygame.Rect(400, 400, 125, 125)
-        self.Key4 = pygame.Rect(550, 550, 125, 125)
+        self.Key1 = pygame.Rect(100, 400, 125, 125)
+        self.Key2 = pygame.Rect(100, 550, 125, 125)
+        self.Key3 = pygame.Rect(250, 550, 125, 125)
+        self.Key4 = pygame.Rect(250, 400, 125, 125)
 
         """C'était chiant"""
         self.Keys = {

@@ -1,1 +1,1 @@
-Game.Keys = [[Game.UI.Option.Key1, False, 97], [Game.UI.Option.Key2, False, 98], [Game.UI.Option.Key3, False, 99], [Game.UI.Option.Key4, False, 100]]
+Game.Keys = [[Game.UI.Option.Key1, False, 32], [Game.UI.Option.Key2, False, 113], [Game.UI.Option.Key3, False, 100], [Game.UI.Option.Key4, False, 115]]
