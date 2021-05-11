@@ -8,7 +8,7 @@ from Data.Weapons import *
 
 pygame.init()
 Game = Game()
-Music_Init()
+Music_Init(0.40)
 Screen = Display()
 Paterns(Game)
 musicDANOARKIOUT(Game)

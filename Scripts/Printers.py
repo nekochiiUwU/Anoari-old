@@ -135,7 +135,6 @@ def ShowHitbox(Game, Screen):
 
 def MousePrinter(Screen, Game):
     """Affichage de la sourie -tremisabdoul"""
-
     Game.Mouse.rect.center = pygame.mouse.get_pos()
     Screen.blit(Game.Mouse.image, Game.Mouse.rect)
 

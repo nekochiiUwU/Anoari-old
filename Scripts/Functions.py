@@ -195,9 +195,8 @@ def Lobby(Game, Screen):
 
 def Option(Game, Screen):
     """Loop des options -steven"""
-
     ImportOptions(Game)
-
+    
     while Game.Option:
 
         for event in pygame.event.get():
@@ -761,18 +760,16 @@ def Data_Load(Game, Screen, SaveState):
 
 
 def ImportOptions(Game):
-    Keys = open('Data/Keys.txt', 'r')
+    Options = open('Data/Options.txt', 'r')
 
-    for line in Keys:
+    for line in Options:
         line = line.strip()
         exec(line)
 
-    Keys.close()
+    Options.close()
 
 
 def OptionInterations(Game):
-
-    print(Game.Keys)
 
     for item in range(len(Game.Keys)):
         while Game.Keys[item][1]:
@@ -790,14 +787,52 @@ def OptionInterations(Game):
                     quit()
                     break
 
-            if not Game.Keys[item][1]:
-                Keys = open('Data/Keys.txt', 'w')
-                Keys.write("Game.Keys = [[Game.UI.Option.Key1, False, " + str(Game.Keys[0][2]) +
-                           "], [Game.UI.Option.Key2, False, " + str(Game.Keys[1][2]) +
-                           "], [Game.UI.Option.Key3, False, " + str(Game.Keys[2][2]) +
-                           "], [Game.UI.Option.Key4, False, " + str(Game.Keys[3][2]) + "]]")
-                Keys.close()
+            if not Game.Options[item][1]:
+                Options = open('Data/Options.txt', 'w')
+                Options.write("Game.Keys = [[Game.UI.Option.Key1, False, " + str(Game.Keys[0][2]) +
+                              "], [Game.UI.Option.Key2, False, " + str(Game.Keys[1][2]) +
+                              "], [Game.UI.Option.Key3, False, " + str(Game.Keys[2][2]) +
+                              "], [Game.UI.Option.Key4, False, " + str(Game.Keys[3][2]) +
+                              "]]\nGame.Volume = " + str(Game.Volume))
+                Options.close()
                 ImportOptions(Game)
+                
+        while Game.Volume[1]:
+            for event in pygame.event.get():
+                if event.type == pygame.MOUSEBUTTONUP:
+                    Game.pressed[str(event.button)] = False
+                    Game.Volume[1] = False
+
+                if event.type == pygame.QUIT:
+                    Game.InGame = False
+                    Game.Lobby = False
+                    Game.Pause = False
+                    Game.running = False
+                    pygame.quit()
+                    quit()
+                    break
+                
+            MousePrinter(Screen, Game)
+            
+            if 139 < Game.Mouse.x < 641:
+                Game.Volume[2] = (Game.Mouse.x - 140) / 500
+            if 640 < Game.Mouse.x:
+                Game.Volume[2] = 1
+            if Game.Mouse.x < 140:
+                Game.Volume[2] = 0
+            
+            
+            if not VolumeModification:
+                Options = open('Data/Options.txt', 'w')
+                Options.write("Game.Keys = [[Game.UI.Option.Key1, False, " + str(Game.Keys[0][2]) +
+                              "], [Game.UI.Option.Key2, False, " + str(Game.Keys[1][2]) +
+                              "], [Game.UI.Option.Key3, False, " + str(Game.Keys[2][2]) +
+                              "], [Game.UI.Option.Key4, False, " + str(Game.Keys[3][2]) +
+                              "]]\nself.Volume = [pygame.Rect((" + str(Game.Volume) + " * 500) + 140, 400, 60, 30), False, " + str(Game.Volume) + "]")
+                Options.close()
+                ImportOptions(Game)
+                Music_Init()
+            
 
 
 
@@ -807,7 +842,7 @@ def OptionInterations(Game):
 
 def Music_Init():
     """Initialisation du module pygame.mixer -tremisabdoul"""
-    pygame.mixer.music.set_volume(0.4)
+    pygame.mixer.music.set_volume(Game.Volume)
     print(pygame.mixer.music.get_volume())
     pygame.mixer.init()
 
