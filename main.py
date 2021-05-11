@@ -8,11 +8,11 @@ from Data.Weapons import *
 
 pygame.init()
 Game = Game()
-Music_Init()
+ImportOptions(Game)
+Music_Init(Game)
 Screen = Display()
 Paterns(Game)
 musicDANOARKIOUT(Game)
-ImportOptions(Game)
 Game.DataWeapon = DataWeapons(Game)
 Game.DataWeapon.New(Game, Game.Player.Weapon1)
 

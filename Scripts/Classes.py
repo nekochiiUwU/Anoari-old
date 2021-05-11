@@ -6,7 +6,7 @@ print("/Scripts/Classes: Loading")
 
 """=====  Game [1]  ====="""
 
-
+global Game
 class Game:
     def __init__(self):
 
@@ -53,6 +53,8 @@ class Game:
         self.pressed = {}
         self.Paterns = {}
         self.Grid    = {}
+
+        self.Timed = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 
         self.Click = pygame.mixer.Sound("Assets/Audio/FX/pas.mp3")
         self.data  = pygame.mixer.Sound("Assets/Audio/FX/DATA.mp3")
@@ -442,7 +444,7 @@ class Weapon:
         # Rarerte Ex: Staff.Feu.Rare = 3.4.2
         self.MetaClass = rd.randrange(1, 4, 1)
 
-        # Donne l'ensemble des propiÃƒÂ©tÃƒÂ©es de l'arme  Ex: 3.4.2
+        # Donne l'ensemble des propiÃƒÆ’Ã‚Â©tÃƒÆ’Ã‚Â©es de l'arme  Ex: 3.4.2
         self.MetaName = [self.MetaType, self.MetaWeapon, self.MetaClass]
 
         self.Damage = rd.randrange(2, 9, 1)
@@ -512,22 +514,29 @@ class Arm:
 
         if -90 < self.angle < 90:
             if Game.CastSpell:
+
                 self.origin_image = pygame.image.load("Assets/Visual/Mystique/Spells/bras mystique cast spell.png")
                 Game.Countframes -= 1
+
                 if Game.Countframes < 1:
                     Game.CastSpell = False
             else:
                 self.origin_image = pygame.image.load("Assets/Visual/Mystique/Spells/bras mystique prepa spell.png")
+
             self.imageDirection = 0
             Game.Player.Direction = 1
+
         elif not -90 < self.angle < 90:
             if Game.CastSpell:
+
                 self.origin_image = pygame.image.load("Assets/Visual/Mystique/Left/Spells/bras mystique cast spell.png")
                 Game.Countframes -= 1
+
                 if Game.Countframes < 1:
                     Game.CastSpell = False
             else:
                 self.origin_image = pygame.image.load("Assets/Visual/Mystique/Left/Spells/bras mystique prepa spell.png")
+
             self.imageDirection = 1
             Game.Player.Direction = 0
 
@@ -600,7 +609,7 @@ class Projectile(pygame.sprite.Sprite):
 
         self.image = pygame.transform.rotozoom(self.origin_image, self.angle, 1)
         self.rect  = self.image.get_rect(center=self.rect.center)
-        
+
         self.rect.x = Game.Player.rect.center[0] + int(self.DirectionX * 1.7)
         self.rect.y = Game.Player.rect.center[1] + int(self.DirectionY * 1.7)
 
@@ -667,20 +676,19 @@ class Particles:
                 pygame.draw.circle(Screen, Particle[4], [Particle[0][0], Particle[0][1]], Particle[1])
 
     def Add(self, Game, Position, Color, Radius, Decrease = 0):
-        
+
         x = Position[0] + Game.randint(int(-Radius / 2), int(Radius / 2))
         y = Position[1] + Game.randint(int(-Radius / 2), int(Radius / 2))
-        
+
         DirectionX = Game.randint(-2, 2)
         DirectionY = Game.randint(-2, 2)
-        
+
         if not Decrease:
             Decrease = Radius / 20
 
         #               v rect v        v taille v          v mouvement v       v couleur v
         Particle = [[int(x), int(y)], int(Radius), int(DirectionX), int(DirectionY), Color, Decrease]
         self.Particles.append(Particle)
-        print(len(self.Particles))
 
 
 class FinRudimentaire(pygame.sprite.Sprite, Game):
@@ -746,13 +754,15 @@ class LobbyUI:
 
 class OptionUI:
     def __init__(self):
+
+        self.Cursor = pygame.image.load("Assets/Visual/UI/Cursor.png")
+
         self.Key1 = pygame.Rect(100, 400, 125, 125)
+        self.Key2 = pygame.Rect(100, 550, 125, 125)
+        self.Key3 = pygame.Rect(250, 550, 125, 125)
+        self.Key4 = pygame.Rect(250, 400, 125, 125)
 
-        self.Key2 = pygame.Rect(250, 550, 125, 125)
-        self.Key3 = pygame.Rect(400, 400, 125, 125)
-        self.Key4 = pygame.Rect(550, 550, 125, 125)
-
-        """C'était chiant"""
+        """C'Ã©tait chiant"""
         self.Keys = {
             0: pygame.image.load("Assets/Visual/UI/Key/Other.png"),
             32: pygame.image.load("Assets/Visual/UI/Key/Space.png"),

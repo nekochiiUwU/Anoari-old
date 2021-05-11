@@ -8,7 +8,7 @@ print("/Scripts/Functions: Loading")
 
 
 def Display():
-    """Création de la fenètre -tremisabdoul"""
+    """CrÃ©ation de la fenÃ¨tre -tremisabdoul"""
 
     pygame.init()
     pygame.display.set_caption("Anoari")
@@ -195,7 +195,6 @@ def Lobby(Game, Screen):
 
 def Option(Game, Screen):
     """Loop des options -steven"""
-
     ImportOptions(Game)
 
     while Game.Option:
@@ -225,9 +224,7 @@ def Option(Game, Screen):
                 Game.running = False
                 pygame.quit()
 
-        print(Game.pressed)
-
-        OptionInterations(Game)
+        OptionInterations(Game, Screen)
 
         OptionPrinter(Game, Screen)
 
@@ -263,7 +260,7 @@ def SaveMenu(Game, Screen):
                         Game.Pause = True
                         Game.SaveValue = 0
 
-            # Sauvegarde des donnees du joueurs (SaveValue == 2 signifie qu'il est rentré par le menu pause) -steven
+            # Sauvegarde des donnees du joueurs (SaveValue == 2 signifie qu'il est rentrÃ© par le menu pause) -steven
             elif event.type == pygame.MOUSEBUTTONDOWN and Game.SaveValue == 2:
                 if SaveButton1.collidepoint(event.pos):
                     Game.Click.play()
@@ -280,7 +277,7 @@ def SaveMenu(Game, Screen):
                     SaveState = State[2]
                     Data_Save(Game, Screen, SaveState)
 
-            # Chargement des donnees du joueurs (SaveValue == 1 signifie qu'il est rentré par le menu d'accueil) -steven
+            # Chargement des donnees du joueurs (SaveValue == 1 signifie qu'il est rentrÃ© par le menu d'accueil) -steven
             elif event.type == pygame.MOUSEBUTTONDOWN and Game.SaveValue == 1:
                 if SaveButton1.collidepoint(event.pos):
                     Game.Click.play()
@@ -424,7 +421,7 @@ def Movements(Game):
     BackgroundScroll(Game)
 
     if Game.PositionPlayer > 10000:
-        print("fin ")
+        print("Check Fin du niveau atteint = True")
 
 
 def Jump(Game):
@@ -464,7 +461,6 @@ def FrameLimiter(Game, Screen):
     Game.Tickchecker = Game.time()
     Game.Tickchecker -= Game.Tick
     if Game.ShowHitbox:
-        print("\n Player Posion: ", Game.PositionPlayer)
 
         start = Game.time()
         Test = Game.time() - start
@@ -472,10 +468,12 @@ def FrameLimiter(Game, Screen):
         TestL1 = str(round((Game.Tickchecker - Test) / 0.00017)) + "    % of 60 FPS: Framerate without Test"
         TestL2 = str(round(Game.Tickchecker / 0.00017)) + "    % of 60 FPS: Framerate"
         TestL3 = str(round(Test / 0.00017)) + "    % of 60 FPS : Test"
+        Pos = " \t Position =" + str(Game.PositionPlayer) + " Px" + " \t End = 10.000"
 
         Texte(Game.police1, TestL1, (255, 255, 255), Screen, (1000, 20))
         Texte(Game.police1, TestL2, (255, 255, 255), Screen, (1000, 40))
         Texte(Game.police1, TestL3, (255, 255, 255), Screen, (1000, 60))
+        Texte(Game.police1, Pos, (255, 255, 255), Screen, (10, 700))
 
     pygame.display.flip()
 
@@ -537,7 +535,7 @@ def InGameKeys(Game, Screen):
                 # Game.data.play()
                 Game.ShowHitbox = not Game.ShowHitbox
             elif event.button == 3:
-                print("Right Click (Mode VisÃ©e)")
+                print("Right Click (Mode VisÃƒÂ©e)")
                 pygame.mouse.set_visible(False)
                 Game.PrepaSpell = True
             elif event.button > 3:
@@ -571,26 +569,26 @@ def InGameKeys(Game, Screen):
 
 
 def SmoothCamera(Game):
-    """Mouvements de Caméra -tremisabdoul"""
+    """Mouvements de CamÃ©ra -tremisabdoul"""
     Game.Player.LastX = Game.Player.rect.x - 350
     Game.lastPosition = Game.Position
     Game.Player.rect.x = 350
     # Information Smooth Cam:
-    #   Valeur Numerique n°2: Vitesse de camera ├──────────────────────┬┬┐ (y > 1)
-    #   Valeur Numerique n°1: Décalage max du Player ├──────────┬┬┐    │││ (x > 1)
-    #   ▬ ▬ ▬ ▬ ▬ ▬ ▬ ▬ ▬ ▬ ▬ ▬ ▬ ▬ ▬ ▬ ▬ ▬ ▬ ▬ ▬  ▼▼▼    ▼▼▼
+    #   Valeur Numerique nÂ°2: Vitesse de camera â”œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”¬â”¬â” (y > 1)
+    #   Valeur Numerique nÂ°1: DÃ©calage max du Player â”œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”¬â”¬â”    â”‚â”‚â”‚ (x > 1)
+    #   â–¬ â–¬ â–¬ â–¬ â–¬ â–¬ â–¬ â–¬ â–¬ â–¬ â–¬ â–¬ â–¬ â–¬ â–¬ â–¬ â–¬ â–¬ â–¬ â–¬ â–¬  â–¼â–¼â–¼    â–¼â–¼â–¼
     Game.Player.rect.x += (Game.Position + (Game.Player.LastX / 1.9) / 1.5)
 
 
 def BackgroundScroll(Game):
-    """Déplacement du Background -tremisabdoul"""
+    """DÃ©placement du Background -tremisabdoul"""
     checker = Game.PositionPlayer % 1280
     if -10 < checker < 10:
         Game.Background.rect.midtop = 640 - checker, 0
 
 
 def ReScale(Game, Screen):
-    """PAS FINI    Rescale Trop la flemme le le finir je vais le faire vous inquétez pas -tremisabdoul    PAS FINI"""
+    """PAS FINI    Rescale Trop la flemme le le finir je vais le faire vous inquÃ©tez pas -tremisabdoul    PAS FINI"""
     Game.DataX = pygame.Surface.get_width(Screen)
     Game.DataY = pygame.Surface.get_height(Screen)
     Game.Player.image = pygame.image.load("Assets/Visual/Mystique/resp1.png")
@@ -606,7 +604,7 @@ def ReScale(Game, Screen):
 
 
 def NewPlatform(Game, x, y):
-    """Création d'une plateforme -tremisabdoul"""
+    """CrÃ©ation d'une plateforme -tremisabdoul"""
     from Scripts.Classes import Plateform
     Plateform = Plateform()
     Plateform.rect.x, Plateform.rect.y = x * 250, y * 150 + 130
@@ -615,7 +613,7 @@ def NewPlatform(Game, x, y):
 
 
 def NewWall(Game, x, y):
-    """Création d'un mur -tremisabdoul"""
+    """CrÃ©ation d'un mur -tremisabdoul"""
     from Scripts.Classes import Wall
     Wall = Wall()
     Wall.rect.x, Wall.rect.y, Wall.rect.height, Wall.rect.width = x * 250, y * 150, 150, 250
@@ -627,7 +625,7 @@ def NewWall(Game, x, y):
 
 
 def Data_Save(Game, Screen, SaveState):
-    """Save des données -tremisabdoul"""
+    """Save des donnÃ©es -tremisabdoul"""
 
     Loading = 0
     FullLoading = 4
@@ -697,7 +695,7 @@ def Data_Save(Game, Screen, SaveState):
 
 
 def Data_Load(Game, Screen, SaveState):
-    """Load des données -tremisabdoul"""
+    """Load des donnÃ©es -tremisabdoul"""
 
     Loading = 0
     FullLoading = 7
@@ -762,20 +760,21 @@ def Data_Load(Game, Screen, SaveState):
 
 
 def ImportOptions(Game):
-    Keys = open('Data/Keys.txt', 'r')
+    Options = open('Data/Options.txt', 'r')
 
-    for line in Keys:
-        line = line.strip()
+    for line in Options:
+        line.strip()
+        print(line)
         exec(line)
 
-    Keys.close()
+    Options.close()
 
 
-def OptionInterations(Game):
-
-    print(Game.Keys)
+def OptionInterations(Game, Screen):
 
     for item in range(len(Game.Keys)):
+        print("ue c'est la modification du volume mec")
+        Game.Volume[1] = True
         while Game.Keys[item][1]:
             for event in pygame.event.get():
                 if event.type == pygame.KEYDOWN:
@@ -792,13 +791,62 @@ def OptionInterations(Game):
                     break
 
             if not Game.Keys[item][1]:
-                Keys = open('Data/Keys.txt', 'w')
-                Keys.write("Game.Keys = [[Game.UI.Option.Key1, False, " + str(Game.Keys[0][2]) +
-                           "], [Game.UI.Option.Key2, False, " + str(Game.Keys[1][2]) +
-                           "], [Game.UI.Option.Key3, False, " + str(Game.Keys[2][2]) +
-                           "], [Game.UI.Option.Key4, False, " + str(Game.Keys[3][2]) + "]]")
-                Keys.close()
+                Options = open('Data/Options.txt', 'w')
+                Options.write("Game.Keys = [[Game.UI.Option.Key1, False, " + str(Game.Keys[0][2]) +
+                              "], [Game.UI.Option.Key2, False, " + str(Game.Keys[1][2]) +
+                              "], [Game.UI.Option.Key3, False, " + str(Game.Keys[2][2]) +
+                              "], [Game.UI.Option.Key4, False, " + str(Game.Keys[3][2]) +
+                              "]]\nGame.Volume = [pygame.Rect(" + str(Game.Volume[2] * 500 + 140) + ", 400, 60, 30), False, " + str(Game.Volume[2]) + "]")
+                Options.close()
                 ImportOptions(Game)
+        
+        while Game.Volume[1]:
+            print("Volume Modifications: ", Game.Volume[2])
+            for event in pygame.event.get():
+                if event.type == pygame.MOUSEBUTTONUP:
+                    print("MouseButtonUp", event.button)
+                    if event.button == 1:
+                        Game.pressed[str(event.button)] = False
+                        Game.Volume[1] = False
+
+                if event.type == pygame.QUIT:
+                    Game.InGame = False
+                    Game.Lobby = False
+                    Game.Pause = False
+                    Game.running = False
+                    pygame.quit()
+                    quit()
+                    break
+
+
+            OptionPrinter(Game, Screen)
+            Screen.blit(Game.UI.Option.Cursor, Game.Volume[0])
+            MousePrinter(Screen, Game)
+            
+            pygame.display.flip()
+
+            if 139 < Game.Mouse.rect.center[0] < 641:
+                Game.Volume[0].x = Game.Mouse.rect.center[0] - 5
+                Game.Volume[2] = (Game.Mouse.rect.center[0] - 140) / 500
+            elif 640 < Game.Mouse.rect.center[0]:
+                Game.Volume[0].x = 640
+                Game.Volume[2] = 1
+            elif Game.Mouse.rect.center[0] < 140:
+                Game.Volume[0].x = 140
+                Game.Volume[2] = 0
+
+
+            if not Game.Volume[1]:
+                Options = open('Data/Options.txt', 'w')
+                Options.write("Game.Keys = [[Game.UI.Option.Key1, False, " + str(Game.Keys[0][2]) +
+                              "], [Game.UI.Option.Key2, False, " + str(Game.Keys[1][2]) +
+                              "], [Game.UI.Option.Key3, False, " + str(Game.Keys[2][2]) +
+                              "], [Game.UI.Option.Key4, False, " + str(Game.Keys[3][2]) +
+                              "]]\nGame.Volume = [pygame.Rect((" + str(Game.Volume[2]) + " * 500) + 140, 400, 60, 30), False, " + str(Game.Volume[2]) + "]")
+                Options.close()
+                ImportOptions(Game)
+                Music_Init(Game)
+
 
 
 
@@ -806,9 +854,9 @@ def OptionInterations(Game):
 """ ===  Music  === """
 
 
-def Music_Init():
+def Music_Init(Game):
     """Initialisation du module pygame.mixer -tremisabdoul"""
-    pygame.mixer.music.set_volume(0.4)
+    pygame.mixer.music.set_volume(Game.Volume[2])
     print(pygame.mixer.music.get_volume())
     pygame.mixer.init()
 
