@@ -279,7 +279,6 @@ def SaveMenu(Game, Screen):
                     SaveState = State[2]
                     Data_Save(Game, Screen, SaveState)
 
-            # Chargement des donnees du joueurs (SaveValue == 1 signifie qu'il est rentrÃ© par le menu d'accueil) -steven
             elif event.type == pygame.MOUSEBUTTONDOWN and Game.SaveValue == 1:
                 if SaveButton1.collidepoint(event.pos):
                     Game.Click.play()
@@ -444,8 +443,8 @@ def Jump(Game):
 def DeplacementX(Game):
     """Deplacement X:  [Gauche: LEFT / Q ], [Droite: RIGHT / D] -tremisabdoul"""
 
-
     Game.Player.MovementKey = False
+
     if Game.pressed.get(Game.Keys[2][2]) and Game.Player.rect.x < Game.Player.MaxX:
         Game.Player.MovementKey = True
         Game.Player.Move_Right(Game)
@@ -575,10 +574,6 @@ def SmoothCamera(Game):
     Game.Player.LastX = Game.Player.rect.x - 350
     Game.lastPosition = Game.Position
     Game.Player.rect.x = 350
-    # Information Smooth Cam:
-    #   Valeur Numerique nÂ°2: Vitesse de camera â”œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”¬â”¬â” (y > 1)
-    #   Valeur Numerique nÂ°1: DÃ©calage max du Player â”œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”¬â”¬â”    â”‚â”‚â”‚ (x > 1)
-    #   â–¬ â–¬ â–¬ â–¬ â–¬ â–¬ â–¬ â–¬ â–¬ â–¬ â–¬ â–¬ â–¬ â–¬ â–¬ â–¬ â–¬ â–¬ â–¬ â–¬ â–¬  â–¼â–¼â–¼    â–¼â–¼â–¼
     Game.Player.rect.x += (Game.Position + (Game.Player.LastX / 1.9) / 1.5)
 
 
@@ -764,6 +759,8 @@ def Data_Load(Game, Screen, SaveState):
 def ImportOptions(Game):
     Options = open('Data/Options.txt', 'r')
 
+    _ = Game.police1
+
     for line in Options:
         line.strip()
         print(line)
@@ -800,7 +797,8 @@ def OptionInterations(Game, Screen):
                               "], [Game.UI.Option.Key2, False, " + str(Game.Keys[1][2]) +
                               "], [Game.UI.Option.Key3, False, " + str(Game.Keys[2][2]) +
                               "], [Game.UI.Option.Key4, False, " + str(Game.Keys[3][2]) +
-                              "]]\nGame.Volume = [pygame.Rect((" + str(Game.Volume[2] - 0.03) + " * 500) + 140, 275, 30, 60), False, " + str(Game.Volume[2]) + "]")
+                              "]]\nGame.Volume = [pygame.Rect(" + str((Game.Volume[2] - 0.03) * 500) +
+                              " + 140, 275, 30, 60), False, " + str(Game.Volume[2]) + "]")
                 Options.close()
                 ImportOptions(Game)
         
@@ -826,7 +824,7 @@ def OptionInterations(Game, Screen):
 
             if 139 < Game.Mouse.rect.center[0] < 641:
                 Game.Volume[0].x = Game.Mouse.rect.center[0] - 15
-                Game.Volume[2] = (Game.Mouse.rect.center[0] - 140) / 500
+                Game.Volume[2] = round((Game.Mouse.rect.center[0] - 140) / 500, 2)
             elif 640 < Game.Mouse.rect.center[0]:
                 Game.Volume[0].x = 625
                 Game.Volume[2] = 1
@@ -834,19 +832,19 @@ def OptionInterations(Game, Screen):
                 Game.Volume[0].x = 125
                 Game.Volume[2] = 0
 
+            Music_Init(Game)
+
             if not Game.Volume[1]:
                 Options = open('Data/Options.txt', 'w')
                 Options.write("Game.Keys = [[Game.UI.Option.Key1, False, " + str(Game.Keys[0][2]) +
                               "], [Game.UI.Option.Key2, False, " + str(Game.Keys[1][2]) +
                               "], [Game.UI.Option.Key3, False, " + str(Game.Keys[2][2]) +
                               "], [Game.UI.Option.Key4, False, " + str(Game.Keys[3][2]) +
-                              "]]\nGame.Volume = [pygame.Rect((" + str(Game.Volume[2] - 0.03) + " * 500) + 140, 275, 30, 60), False, " + str(Game.Volume[2]) + "]")
+                              "]]\nGame.Volume = [pygame.Rect(" + str((Game.Volume[2] - 0.03) * 500) +
+                              " + 140, 275, 30, 60), False, " + str(Game.Volume[2]) + "]")
                 Options.close()
                 ImportOptions(Game)
                 Music_Init(Game)
-
-
-
 
 
 """ ===  Music  === """
