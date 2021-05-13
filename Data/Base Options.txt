@@ -1,2 +1,2 @@
 Game.Keys = [[Game.UI.Option.Key1, False, 32], [Game.UI.Option.Key2, False, 113], [Game.UI.Option.Key3, False, 100], [Game.UI.Option.Key4, False, 115]]
-Game.Volume = [pygame.Rect(175.0 + 140, 275, 30, 60), False, 0.38]
+Game.Volume = [pygame.Rect(185.0 + 140, 275, 30, 60), False, 0.4]

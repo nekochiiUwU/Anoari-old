@@ -36,39 +36,43 @@ def LobbyBlit(Screen, Game):
 
 def OptionPrinter(Game, Screen):
     """Affichage des options -steven"""
-    Screen.fill((0, 0, 0))
-
+    Game.UI.Option.Color = Game.RandomRGB(Game.UI.Option.Color)
+    UnColor = -Game.UI.Option.Color[0] + 255, -Game.UI.Option.Color[1] + 255, -Game.UI.Option.Color[2] + 255
     for item in Game.Keys:
         if not 97 <= item[2] <= 122 and not 48 <= item[2] <= 57 and not item[2] == 32:
             item[2] = 0
 
+    Screen.fill(Game.UI.Option.Color)
+
+    Texte(Game.police2, 'Resolution : ', UnColor, Screen, (100, 100))
+
+    Texte(Game.police2, 'Volume : ', UnColor, Screen, (100, 225))
+
+    pygame.draw.line(Screen, UnColor, (140, 303), (640, 303), 1)
+    pygame.draw.line(Screen, UnColor, (140, 307), (640, 307), 1)
+    Screen.blit(Game.UI.Option.Cursor, Game.Volume[0])
+    Volume = "Volume: " + str(int(Game.Volume[2] * 100)) + " %"
+    Volume = Game.police1.render(Volume, 1, UnColor)
+    Screen.blit(Volume, (700, 300))
+
+    Texte(Game.police2, 'Controles : ', UnColor, Screen, (100, 350))
+
     K1Image = Game.UI.Option.Keys[Game.Keys[0][2]]
+    Screen.blit(K1Image, Game.UI.Option.Key1)
     K2Image = Game.UI.Option.Keys[Game.Keys[1][2]]
+    Screen.blit(K2Image, Game.UI.Option.Key2)
     K3Image = Game.UI.Option.Keys[Game.Keys[2][2]]
+    Screen.blit(K3Image, Game.UI.Option.Key3)
     K4Image = Game.UI.Option.Keys[Game.Keys[3][2]]
-
-
-    Screen.blit( K1Image, Game.UI.Option.Key1)
-    Screen.blit( K2Image, Game.UI.Option.Key2)
-    Screen.blit( K3Image, Game.UI.Option.Key3)
-    Screen.blit( K4Image, Game.UI.Option.Key4)
-
-    Key = Game.police1.render("Jump", 1, (200, 200, 200))
+    Screen.blit(K4Image, Game.UI.Option.Key4)
+    Key = Game.police1.render("Jump", 1, UnColor)
     Screen.blit(Key, (Game.UI.Option.Key1[0] + int(62.5 - Key.get_width() / 2), Game.UI.Option.Key1[1] + 130))
-
-    Key = Game.police1.render("Left", 1, (200, 200, 200))
+    Key = Game.police1.render("Left", 1, UnColor)
     Screen.blit(Key, (Game.UI.Option.Key2[0] + int(62.5 - Key.get_width() / 2), Game.UI.Option.Key2[1] + 130))
-
-    Key = Game.police1.render("Right", 1, (200, 200, 200))
+    Key = Game.police1.render("Right", 1, UnColor)
     Screen.blit(Key, (Game.UI.Option.Key3[0] + int(62.5 - Key.get_width() / 2), Game.UI.Option.Key3[1] + 130))
-
-    Key = Game.police1.render("Trash", 1, (200, 200, 200))
+    Key = Game.police1.render("Trash", 1, UnColor)
     Screen.blit(Key, (Game.UI.Option.Key4[0] + int(62.5 - Key.get_width() / 2), Game.UI.Option.Key4[1] + 130))
-
-
-    Texte(Game.police2, 'Resolution : ', (255, 255, 255), Screen, (100, 100))
-    Texte(Game.police2, 'Volume : ', (255, 255, 255), Screen, (100, 225))
-    Texte(Game.police2, 'Controles : ', (255, 255, 255), Screen, (100, 350))
 
     MousePrinter(Screen, Game)
 

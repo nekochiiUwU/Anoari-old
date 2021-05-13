@@ -1,2 +1,0 @@
-Game.Keys = [[Game.UI.Option.Key1, False, 0], [Game.UI.Option.Key2, False, 0], [Game.UI.Option.Key3, False, 0], [Game.UI.Option.Key4, False, 0]]  # Value 4 = Key (ASCII)
-Game.Volume = [pygame.Rect(340, 400, 60, 30), False, 0.4]  # Last Value = Volume (0 to 1)

@@ -6,7 +6,7 @@ print("/Scripts/Classes: Loading")
 
 """=====  Game [1]  ====="""
 
-global Game
+
 class Game:
     def __init__(self):
 
@@ -93,6 +93,14 @@ class Game:
         self.all_plateform.add(self.Sol)
         self.all_wall.add(self.wall)
         self.all_Player.add(self.Player)
+
+    def RandomRGB(self, RGB):
+        for item in range(3):
+            Modifier = self.randint(-1, 1)
+            RGB[item] += Modifier
+            if not 0 < RGB[item] < 255:
+                RGB[item] -= Modifier * 2
+        return RGB
 
     def Rescale(self, value, XorY):
         print("===\nx", self.UserData.DataX, ">>>", self.DataX, "\ny", self.UserData.DataY, ">>>", self.DataY)
@@ -754,6 +762,9 @@ class LobbyUI:
 
 class OptionUI:
     def __init__(self):
+        super().__init__()
+
+        self.Color = [10, 10, 20]
 
         self.Cursor = pygame.image.load("Assets/Visual/UI/Cursor.png")
 
