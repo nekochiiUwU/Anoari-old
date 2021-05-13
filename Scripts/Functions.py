@@ -216,6 +216,8 @@ def Option(Game, Screen):
                 for Key in Game.Keys:
                     if Key[0].collidepoint(event.pos):
                         Key[1] = True
+                    if Game.Volume[0].collidepoint(event.pos):
+                        Game.Volume[1] = True
 
             if event.type == pygame.QUIT:
                 Game.InGame = False
@@ -773,8 +775,6 @@ def ImportOptions(Game):
 def OptionInterations(Game, Screen):
 
     for item in range(len(Game.Keys)):
-        print("ue c'est la modification du volume mec")
-        Game.Volume[1] = True
         while Game.Keys[item][1]:
             for event in pygame.event.get():
                 if event.type == pygame.KEYDOWN:
@@ -790,21 +790,23 @@ def OptionInterations(Game, Screen):
                     quit()
                     break
 
+            OptionPrinter(Game, Screen)
+            MousePrinter(Screen, Game)
+            pygame.display.flip()
+
             if not Game.Keys[item][1]:
                 Options = open('Data/Options.txt', 'w')
                 Options.write("Game.Keys = [[Game.UI.Option.Key1, False, " + str(Game.Keys[0][2]) +
                               "], [Game.UI.Option.Key2, False, " + str(Game.Keys[1][2]) +
                               "], [Game.UI.Option.Key3, False, " + str(Game.Keys[2][2]) +
                               "], [Game.UI.Option.Key4, False, " + str(Game.Keys[3][2]) +
-                              "]]\nGame.Volume = [pygame.Rect(" + str(Game.Volume[2] * 500 + 140) + ", 400, 60, 30), False, " + str(Game.Volume[2]) + "]")
+                              "]]\nGame.Volume = [pygame.Rect((" + str(Game.Volume[2] - 0.03) + " * 500) + 140, 275, 30, 60), False, " + str(Game.Volume[2]) + "]")
                 Options.close()
                 ImportOptions(Game)
         
         while Game.Volume[1]:
-            print("Volume Modifications: ", Game.Volume[2])
             for event in pygame.event.get():
                 if event.type == pygame.MOUSEBUTTONUP:
-                    print("MouseButtonUp", event.button)
                     if event.button == 1:
                         Game.pressed[str(event.button)] = False
                         Game.Volume[1] = False
@@ -818,23 +820,19 @@ def OptionInterations(Game, Screen):
                     quit()
                     break
 
-
             OptionPrinter(Game, Screen)
-            Screen.blit(Game.UI.Option.Cursor, Game.Volume[0])
             MousePrinter(Screen, Game)
-            
             pygame.display.flip()
 
             if 139 < Game.Mouse.rect.center[0] < 641:
-                Game.Volume[0].x = Game.Mouse.rect.center[0] - 5
+                Game.Volume[0].x = Game.Mouse.rect.center[0] - 15
                 Game.Volume[2] = (Game.Mouse.rect.center[0] - 140) / 500
             elif 640 < Game.Mouse.rect.center[0]:
-                Game.Volume[0].x = 640
+                Game.Volume[0].x = 625
                 Game.Volume[2] = 1
             elif Game.Mouse.rect.center[0] < 140:
-                Game.Volume[0].x = 140
+                Game.Volume[0].x = 125
                 Game.Volume[2] = 0
-
 
             if not Game.Volume[1]:
                 Options = open('Data/Options.txt', 'w')
@@ -842,7 +840,7 @@ def OptionInterations(Game, Screen):
                               "], [Game.UI.Option.Key2, False, " + str(Game.Keys[1][2]) +
                               "], [Game.UI.Option.Key3, False, " + str(Game.Keys[2][2]) +
                               "], [Game.UI.Option.Key4, False, " + str(Game.Keys[3][2]) +
-                              "]]\nGame.Volume = [pygame.Rect((" + str(Game.Volume[2]) + " * 500) + 140, 400, 60, 30), False, " + str(Game.Volume[2]) + "]")
+                              "]]\nGame.Volume = [pygame.Rect((" + str(Game.Volume[2] - 0.03) + " * 500) + 140, 275, 30, 60), False, " + str(Game.Volume[2]) + "]")
                 Options.close()
                 ImportOptions(Game)
                 Music_Init(Game)
