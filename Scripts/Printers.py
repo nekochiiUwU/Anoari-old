@@ -4,8 +4,8 @@ import pygame
 
 
 def Printer(Screen, Game):
+    Game.Tick1 = Game.time()
     """Fonction d'affichage: Elements in-game -tremisabdoul"""
-
     Game.Background.rect.x -= Game.Position
     Screen.blit(Game.Background.image, Game.Background.rect)
 
@@ -23,6 +23,11 @@ def Printer(Screen, Game):
 
     if Game.ShowHitbox:
         ShowHitbox(Game, Screen)
+        
+    pygame.display.flip()
+    
+    Print = "\n\nPrint Time" + str(Game.time() - Game.Tick1)
+    print(Print)
 
 
 def LobbyBlit(Screen, Game):
@@ -222,12 +227,13 @@ def UIPrinter(Screen, Game):
         jump1 = Game.police1.render(str(jump1), True, (128, 255, 128))
         Screen.blit(jump1, (15, 100))
 
-        # Permet de voir le nombre de frames a la seconde -tremisabdoul -tremisabdoul
-        frame = 1
-        fps = frame / Game.Tickchecker
-        fps = "FPS : " + str(round(fps))
-        printfps = Game.police1.render(str(fps), True, (255, 255, 255))
-        Screen.blit(printfps, (6, 34))
+
+        if Game.Tickchecker > 0:
+            frame = 1
+            fps = frame / Game.Tickchecker
+            fps = "FPS : " + str(round(fps))
+            printfps = Game.police1.render(str(fps), True, (255, 255, 255))
+            Screen.blit(printfps, (6, 34))
 
         y = 34
         for Entity in Game.Entities:
