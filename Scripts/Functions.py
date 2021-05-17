@@ -58,9 +58,7 @@ def Paterns(Game):
 
 def inGame(Game, Screen):
     """ Loop de Jeu -tremisabdoul"""
-    from _thread import start_new_thread
-    global Print
-    Print = True
+
     while Game.InGame:
         """ ===== Frame Limiter ===== """
         Game.Tick = Game.time()
@@ -71,13 +69,10 @@ def inGame(Game, Screen):
         SmoothCamera(Game)
         """ ===== Key Inputs ===== """
         InGameKeys(Game, Screen)
+        """ ===== Printer ===== """
+        Printer(Screen, Game)
         """ ===== Frame Limiter ===== """
         FrameLimiter(Game, Screen)
-        """ ===== Printer ===== """
-        start_new_thread(Printer, (Screen, Game))
-        
-        Print = "\n\nOperation Time" + str(Game.time() - Game.Tick)
-        print(Print)
 
 
 def pause(Game, Screen):
@@ -481,6 +476,8 @@ def FrameLimiter(Game, Screen):
         Texte(Game.police1, TestL3, (255, 255, 255), Screen, (1000, 60))
         Texte(Game.police1, Pos, (255, 255, 255), Screen, (10, 700))
 
+    pygame.display.flip()
+
     while Game.Tickchecker < 0.017:
         Game.Tickchecker = Game.time()
         Game.Tickchecker -= Game.Tick
@@ -560,8 +557,13 @@ def InGameKeys(Game, Screen):
 
         # Bouton croix en haut a droite (Fermer le Programme) -tremisabdoul
         if event.type == pygame.QUIT:
+            Game.InGame = False
+            Game.Lobby = False
+            Game.Pause = False
+            Game.running = False
+            pygame.quit()
             quit()
-            pass
+            break
 
 
 """ ===  Camera  === """
@@ -583,7 +585,7 @@ def BackgroundScroll(Game):
 
 
 def ReScale(Game, Screen):
-    """PAS FINI    Rescale Trop la flemme le le finir je vais le faire vous inquetez pas -tremisabdoul    PAS FINI"""
+    """PAS FINI    Rescale Trop la flemme le le finir je vais le faire vous inquÃ©tez pas -tremisabdoul    PAS FINI"""
     Game.DataX = pygame.Surface.get_width(Screen)
     Game.DataY = pygame.Surface.get_height(Screen)
     Game.Player.image = pygame.image.load("Assets/Visual/Mystique/resp1.png")

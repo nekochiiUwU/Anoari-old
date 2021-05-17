@@ -18,6 +18,7 @@ class Game:
         self.AngleCalc, self.Deges, self.time, self.randint = atan2, degrees, time, randint
         del atan2, degrees, time, randint
 
+        self.Saves    = SaveSlot()
         self.UserData = UserData()
 
         self.DataY = self.UserData.UserGraphicInfo.current_h
@@ -27,7 +28,8 @@ class Game:
         self.Lobby      = True
         self.ShowHitbox = False
         self.PrepaSpell = False
-        self.CastSpell  = False
+        self.CastSpell = False
+        self.Countframes = 0
         self.InGame     = False
         self.Option     = False
         self.Pause      = False
@@ -39,7 +41,6 @@ class Game:
         self.PositionPlayer  = 0
         self.PaternNumber    = 0
         self.lastPosition    = 0
-        self.Countframes     = 0
         self.ActualFrame     = 0
         self.MusicLengh      = 0
         self.MusicStart      = 0
@@ -48,8 +49,6 @@ class Game:
         self.Position        = 0
         self.Frame           = 0
         self.Tick            = 0
-        
-        self.Frame1           = 0
 
         self.pressed = {}
         self.Paterns = {}
@@ -96,25 +95,19 @@ class Game:
         self.all_Player.add(self.Player)
 
     def RandomRGB(self, RGB):
-        """
         for item in range(3):
             Modifier = self.randint(-1, 1)
             RGB[item] += Modifier
             if not 0 < RGB[item] < 255:
                 RGB[item] -= Modifier * 2
-        """
-        return (0, 0, 0)  # RGB
+        return RGB
 
     def Rescale(self, value, XorY):
         print("===\nx", self.UserData.DataX, ">>>", self.DataX, "\ny", self.UserData.DataY, ">>>", self.DataY)
         if XorY == "X":
-            Return = round((value / self.UserData.DataX) * self.DataX)
-            self.UserData.DataX = self.DataX
-            return Return
+            return round((value / self.UserData.DataX) * self.DataX)
         elif XorY == "Y":
-            Return = round((value / self.UserData.DataY) * self.DataY)
-            self.UserData.DataY = self.DataY
-            return Return
+            return round((value / self.UserData.DataY) * self.DataY)
 
     @staticmethod
     def check_collisions(sprite, group):
