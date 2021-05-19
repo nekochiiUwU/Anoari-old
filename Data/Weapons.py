@@ -244,7 +244,8 @@ class Spell6(pygame.sprite.Sprite):
         if not -1280 < self.rect.x - Game.Player.rect.x < 1280\
                 or not -720 < self.rect.y < 720\
                 or Game.check_collisions(self, Game.all_wall)\
-                or Game.check_collisions(self, Game.all_plateform):
+                or Game.check_collisions(self, Game.all_plateform)\
+                or Game.check_collisions(self, Game.all_Monster):
             Game.Projectiles.remove(self)
             for _ in range(5):
                 Game.Particles.Add(Game, self.rect.center, 'Grey80', 32)

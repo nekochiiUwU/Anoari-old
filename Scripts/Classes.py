@@ -85,9 +85,6 @@ class Game:
         self.AcrossWall    = pygame.sprite.Group()
         self.ApplyedPatens = pygame.sprite.Group()
         self.Projectiles   = pygame.sprite.Group()
-
-        self.all_Monster.add(self.Monster)
-        self.Entities.add(self.Monster)
         self.PreMade.add(self.FinRudimentaire)
         self.Entities.add(self.Player)
         self.all_plateform.add(self.Sol)
@@ -95,12 +92,15 @@ class Game:
         self.all_Player.add(self.Player)
 
     def RandomRGB(self, RGB):
+        """
         for item in range(3):
             Modifier = self.randint(-1, 1)
             RGB[item] += Modifier
             if not 0 < RGB[item] < 255:
                 RGB[item] -= Modifier * 2
-        return RGB
+        """
+        return (0, 0, 0)
+
 
     def Rescale(self, value, XorY):
         print("===\nx", self.UserData.DataX, ">>>", self.DataX, "\ny", self.UserData.DataY, ">>>", self.DataY)
@@ -387,7 +387,7 @@ class Monster(pygame.sprite.Sprite, Game):
     def __init__(self):
         super().__init__()
 
-        self.Pv          = 100
+        self.Pv          = 40
         self.MaxPv       = 100
         self.DamageDealt = 10
         self.Speed       = 3
@@ -396,8 +396,8 @@ class Monster(pygame.sprite.Sprite, Game):
 
         self.rect = self.image.get_rect()
 
-        self.rect.x = rd.randint(150, 1050)
-        self.rect.y = 50
+        self.rect.x = 0
+        self.rect.y = 0
         self.LastY  = 675
 
         self.YVector      = 0
@@ -422,7 +422,11 @@ class Monster(pygame.sprite.Sprite, Game):
             self.pvfontrect.midbottom = self.rect.midtop
             self.pvfontrect.y        -= 7
             self.image0               = pygame.transform.scale(self.image0, (int(self.Pv / self.MaxPv * 64), 8))
-            self.Pv                  -= 0.2
+            self.Pv                  += 0.4
+            if self.Pv <= 0:
+                Game.Entities.remove(self)
+                Game.all_Monster.remove(self)
+                del self
             Screen.blit(self.image0, (self.pvfontrect.x - Game.Position, self.pvfontrect.y))
 
     def Move_Right(self, Game):
@@ -560,7 +564,7 @@ class Patern(pygame.sprite.Sprite, Game):
         self.position   = 0
         self.PaternCode = 0
 
-    def Init(self, Game, NewWall, NewPlatform):
+    def Init(self, Game, NewWall, NewPlatform, SpawnMonster):
         self.ID       = Game.PaternNumber
         self.position = Game.PaternNumber * 10 - 10
         Id            = len(Game.ApplyedPatens)
@@ -571,7 +575,7 @@ class Patern(pygame.sprite.Sprite, Game):
         posy = -1
         for item in range(len(self.PaternCode)):
             posx = -1
-            if 2 <= item <= 6:
+            if 1 <= item <= 5:
                 posy += 1
                 for tile in self.PaternCode[item]:
                     posx += 1
@@ -579,7 +583,13 @@ class Patern(pygame.sprite.Sprite, Game):
                         NewWall(Game, posx + self.position, posy)
                     elif tile == "_":
                         NewPlatform(Game, posx + self.position, posy)
+                    elif tile == "o":
+                        SpawnMonster(Game, posx + self.position, posy)
         Game.PaternNumber += 1
+        for item in Game.Entities:
+            print(item.rect)
+        for item in Game.all_Monster:
+            print(item.rect)
 
 
 print("/Scripts/Classes: Loaded")
@@ -589,6 +599,8 @@ class Projectile(pygame.sprite.Sprite):
 
     def __init__(self, Game):
         super().__init__()
+
+        self.Damage = 10
 
         self.Speed  = 15
         self.Frames = ["Assets/Visual/Spells/FireBall/Nion1.png",
@@ -648,8 +660,36 @@ class Projectile(pygame.sprite.Sprite):
         if not -1280 < self.rect.x - Game.Player.rect.x < 1280\
                 or not -720 < self.rect.y < 720\
                 or Game.check_collisions(self, Game.all_wall)\
-                or Game.check_collisions(self, Game.all_plateform):
+                or Game.check_collisions(self, Game.all_plateform)\
+                or Game.check_collisions(self, Game.all_Monster):
             Game.Projectiles.remove(self)
+
+            for Entity in Game.Entities:
+                if Entity.rect.topleft[0] <= self.rect.center[0] + 25 and\
+                    Entity.rect.topleft[1] <= self.rect.center[1] + 25:
+                    Entity.Pv -= self.Damage
+                elif Entity.rect.topright[0] <= self.rect.center[0] + 25 and\
+                    Entity.rect.topright[1] <= self.rect.center[1] + 25:
+                    Entity.Pv -= self.Damage
+                elif Entity.rect.midleft[0] <= self.rect.center[0] + 25 and\
+                    Entity.rect.midleft[1] <= self.rect.center[1] + 25:
+                    Entity.Pv -= self.Damage
+                elif Entity.rect.midright[0] <= self.rect.center[0] + 25 and\
+                    Entity.rect.midright[1] <= self.rect.center[1] + 25:
+                    Entity.Pv -= self.Damage
+                elif Entity.rect.midtop[0] <= self.rect.center[0] + 25 and\
+                        Entity.rect.midtop[1] <= self.rect.center[1] + 25:
+                    Entity.Pv -= self.Damage
+                elif Entity.rect.midbottom[0] <= self.rect.center[0] + 25 and\
+                    Entity.rect.midbottom[1] <= self.rect.center[1] + 25:
+                    Entity.Pv -= self.Damage
+                elif Entity.rect.bottomleft[0] <= self.rect.center[0] + 25 and\
+                    Entity.rect.bottomleft[1] <= self.rect.center[1] + 25:
+                    Entity.Pv -= self.Damage
+                elif Entity.rect.bottomright[0] <= self.rect.center[0] + 25 and\
+                    Entity.rect.bottomright[1] <= self.rect.center[1] + 25:
+                    Entity.Pv -= self.Damage
+
             for _ in range(5):
                 Game.Particles.Add(Game, self.rect.center, 'Grey80', 32)
             for _ in range(5):

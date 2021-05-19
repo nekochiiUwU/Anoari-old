@@ -160,7 +160,8 @@ def PrintMouse3Condition(Game, Screen):
 
 def PrintEntities(Game, Screen):
     for Entity in Game.Entities:
-        if Entity != Game.Player:
+        print(Entity.rect)
+        if Entity != Game.Player and -250 < Entity.rect.x < 1280:
             Entity.rect.x -= Game.Position
             Screen.blit(Entity.image, Entity.rect)
             Entity.Life(Screen, Game)

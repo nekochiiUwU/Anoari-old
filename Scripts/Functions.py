@@ -49,7 +49,7 @@ def Paterns(Game):
     for _ in range(10):
         from Scripts.Classes import Patern
         Patern = Patern()
-        Patern.Init(Game, NewWall, NewPlatform)
+        Patern.Init(Game, NewWall, NewPlatform, SpawnMonster)
         Game.ApplyedPatens.add(Patern)
 
 
@@ -616,6 +616,15 @@ def NewWall(Game, x, y):
     Wall.rect.x, Wall.rect.y, Wall.rect.height, Wall.rect.width = x * 250, y * 150, 150, 250
     Game.all_wall.add(Wall)
     Game.WallNumber += 1
+
+
+def SpawnMonster(Game, x, y):
+    from Scripts.Classes import Monster
+    for _ in range(Game.randint(0, 1)):
+        Mob = Monster()
+        Mob.rect.x, Mob.rect.y = x * 250, y * 150
+        Game.all_Monster.add(Mob)
+        Game.Entities.add(Mob)
 
 
 """ ===  Operations  === """
