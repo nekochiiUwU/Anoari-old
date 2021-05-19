@@ -1,2 +1,8 @@
 
 *.pyc
+User/__pycache__/UserData.cpython-39.pyc
+Scripts/__pycache__/Printers.cpython-39.pyc
+Scripts/__pycache__/Functions.cpython-39.pyc
+Data/__pycache__/Weapons.cpython-39.pyc
+Scripts/__pycache__/Classes.cpython-39.pyc
+*.pyc
