@@ -203,11 +203,11 @@ class Player(pygame.sprite.Sprite, Game):
         self.MaxY = 740
         self.MovementKey = False
         
-    def Get_Hit(self, damages):
+    def Get_Hit(self, Damage, Game):
         #Bascule sur l'animation de la prise de dégats
-        self.Pv -= damage
+        self.Pv -= Damage
         if self.Pv <= 0:
-            Death()
+            self.Death(Game)
 
     def Move_Right(self, Game):
         self.Force.xm += self.Speed
@@ -223,9 +223,10 @@ class Player(pygame.sprite.Sprite, Game):
         self.MaxPv  += self.Gain_Stat_Level + (4 * self.Point_Pv)
         self.Damage += self.Gain_Stat_Level + (2 * self.Point_Damage)
 
-    def Death(self):
+    def Death(self, Game):
         self.all_Monster = pygame.sprite.Group()
-        self.Player.Pv = self.Player.MaxPv
+        self.Pv = self.MaxPv
+        Game.__init__()
 
     def Orb(self, Game):
         if Game.Frame % 2:
@@ -400,6 +401,8 @@ class Monster(pygame.sprite.Sprite, Game):
         self.DamageDealt = 10
         self.Speed       = 3
 
+        self.Special = []
+
         self.image = pygame.image.load("Assets/Visual/Entities/Monster/Slime/Stand1.png")
 
         self.rect = self.image.get_rect()
@@ -426,13 +429,15 @@ class Monster(pygame.sprite.Sprite, Game):
 
     def Life(self, Screen, Game):
         if self.Pv > 0:
-            self.pvfontrect           = self.image0.get_rect(midbottom=self.pvfontrect.midbottom)
             self.pvfontrect.midbottom = self.rect.midtop
             self.pvfontrect.y        -= 7
             self.image0               = pygame.transform.scale(self.image0, (int(self.Pv / self.MaxPv * 64), 8))
-            self.Pv                  += 0.4
+            self.Pv                  += 0.1
             #*
             Screen.blit(self.image0, (self.pvfontrect.x - Game.Position, self.pvfontrect.y))
+        else:
+            Game.all_Monster.remove(self)
+            Game.Entities.remove(self)
 
     def Move_Right(self, Game):
         if Game.check_collisions(self, Game.all_plateform):
@@ -617,6 +622,8 @@ class Projectile(pygame.sprite.Sprite):
 
         self.Damage = 10
 
+        self.Radius = 42
+
         self.Speed  = 15
         self.Frames = ["Assets/Visual/Spells/FireBall/Nion1.png",
                        "Assets/Visual/Spells/FireBall/Nion2.png",
@@ -680,39 +687,40 @@ class Projectile(pygame.sprite.Sprite):
             Game.Projectiles.remove(self)
 
             for Entity in Game.Entities:
-                if Entity.rect.topleft[0] <= self.rect.center[0] + 25 and\
-                    Entity.rect.topleft[1] <= self.rect.center[1] + 25:
-                    Entity.Get_Hit(self.Damage)
-                elif Entity.rect.topright[0] <= self.rect.center[0] + 25 and\
-                    Entity.rect.topright[1] <= self.rect.center[1] + 25:
-                    Entity.Get_Hit(self.Damage)
-                elif Entity.rect.midleft[0] <= self.rect.center[0] + 25 and\
-                    Entity.rect.midleft[1] <= self.rect.center[1] + 25:
-                    Entity.Get_Hit(self.Damage)
-                elif Entity.rect.midright[0] <= self.rect.center[0] + 25 and\
-                    Entity.rect.midright[1] <= self.rect.center[1] + 25:
-                    Entity.Get_Hit(self.Damage)
-                elif Entity.rect.midtop[0] <= self.rect.center[0] + 25 and\
-                        Entity.rect.midtop[1] <= self.rect.center[1] + 25:
-                    Entity.Get_Hit(self.Damage)
-                elif Entity.rect.midbottom[0] <= self.rect.center[0] + 25 and\
-                    Entity.rect.midbottom[1] <= self.rect.center[1] + 25:
-                    Entity.Get_Hit(self.Damage)
-                elif Entity.rect.bottomleft[0] <= self.rect.center[0] + 25 and\
-                    Entity.rect.bottomleft[1] <= self.rect.center[1] + 25:
-                    Entity.Get_Hit(self.Damage)
-                elif Entity.rect.bottomright[0] <= self.rect.center[0] + 25 and\
-                    Entity.rect.bottomright[1] <= self.rect.center[1] + 25:
-                    Entity.Get_Hit(self.Damage)
+                if self.rect.center[0] - self.Radius <= Entity.rect.topleft[0] <= self.rect.center[0] + self.Radius and\
+                        self.rect.center[1] - self.Radius <= Entity.rect.topleft[1] <= self.rect.center[1] + self.Radius:
+                    Entity.Get_Hit(self.Damage, Game)
+                elif self.rect.center[1] - self.Radius <= Entity.rect.topright[0] <= self.rect.center[0] + self.Radius and\
+                        self.rect.center[0] - self.Radius <= Entity.rect.topright[1] <= self.rect.center[1] + self.Radius:
+                    Entity.Get_Hit(self.Damage, Game)
+                elif self.rect.center[0] - self.Radius <= Entity.rect.midleft[0] <= self.rect.center[0] + self.Radius and\
+                        self.rect.center[1] - self.Radius <= Entity.rect.midleft[1] <= self.rect.center[1] + self.Radius:
+                    Entity.Get_Hit(self.Damage, Game)
+                elif self.rect.center[0] - self.Radius <= Entity.rect.midright[0] <= self.rect.center[0] + self.Radius and\
+                        self.rect.center[1] - self.Radius <= Entity.rect.midright[1] <= self.rect.center[1] + self.Radius:
+                    Entity.Get_Hit(self.Damage, Game)
+                elif self.rect.center[0] - self.Radius <= Entity.rect.midtop[0] <= self.rect.center[0] + self.Radius and\
+                        self.rect.center[1] - self.Radius <= Entity.rect.midtop[1] <= self.rect.center[1] + self.Radius:
+                    Entity.Get_Hit(self.Damage, Game)
+                elif self.rect.center[0] - self.Radius <= Entity.rect.midbottom[0] <= self.rect.center[0] + self.Radius and\
+                        self.rect.center[1] - self.Radius <= Entity.rect.midbottom[1] <= self.rect.center[1] + self.Radius:
+                    Entity.Get_Hit(self.Damage, Game)
+                elif self.rect.center[0] - self.Radius <= Entity.rect.bottomleft[0] <= self.rect.center[0] + self.Radius and\
+                        self.rect.center[1] - self.Radius <= Entity.rect.bottomleft[1] <= self.rect.center[1] + self.Radius:
+                    Entity.Get_Hit(self.Damage, Game)
+                elif self.rect.center[0] - self.Radius <= Entity.rect.bottomright[0] <= self.rect.center[0] + self.Radius and\
+                        self.rect.center[1] - self.Radius <= Entity.rect.bottomright[1] <= self.rect.center[1] + self.Radius:
+                    Entity.Get_Hit(self.Damage, Game)
 
             for _ in range(5):
                 Game.Particles.Add(Game, self.rect.center, 'Grey80', 32)
-            for _ in range(5):
+            for _ in range(3):
                 Game.Particles.Add(Game, self.rect.center, 'Grey70', 24)
-            for _ in range(5):
+            for _ in range(3):
                 Game.Particles.Add(Game, self.rect.center, 'Grey60', 16)
-            for _ in range(5):
+            for _ in range(3):
                 Game.Particles.Add(Game, self.rect.center, 'Grey50', 12)
+
 
     @staticmethod
     def Add(Game):

@@ -344,18 +344,23 @@ def Movements(Game):
 
     for Monster in Game.all_Monster:
         Collide = Game.check_collisions(Game.Player, Game.all_Monster)
-        if not Collide:
-            if Monster.Direction:
-                Monster.Move_Left(Game)
+        Skip = False
+        for item in Monster.Special:
+            if item == 'fly':
+                Skip = True
+        if -69 < Monster.rect.x < 1279 or Skip:
+            if not Collide:
+                if Monster.Direction:
+                    Monster.Move_Left(Game)
+                else:
+                    Monster.Move_Right(Game)
             else:
-                Monster.Move_Right(Game)
-        else:
-            if Collide[0].rect.center[0] > Game.Player.rect.center[0]:
-                Monster.Direction = 0
-                Monster.Move_Right(Game)
-            else:
-                Monster.Direction = 1
-                Monster.Move_Left(Game)
+                if Collide[0].rect.center[0] > Game.Player.rect.center[0]:
+                    Monster.Direction = 0
+                    Monster.Move_Right(Game)
+                else:
+                    Monster.Direction = 1
+                    Monster.Move_Left(Game)
 
     if Game.pressed.get(Game.Keys[0][2]) \
             and Game.check_collisions(Game.Player, Game.all_plateform) \
@@ -368,8 +373,9 @@ def Movements(Game):
         Jump(Game)
 
     for Entity in Game.Entities:
-        Game.Player.Force.Gravity(Game, Entity)
-        Entity.YVector = Entity.LastY - Entity.rect.y
+        if -69 < Entity.rect.x < 1279:
+            Game.Player.Force.Gravity(Game, Entity)
+            Entity.YVector = Entity.LastY - Entity.rect.y
 
     Game.Position = Game.Player.Force.AccelerationFunctionX()
     for Target in Game.Entities:
@@ -379,6 +385,7 @@ def Movements(Game):
             Target.rect.x += Game.Position
 
         for Wall in Collide:
+
             if not Wall.rect.bottomleft < Target.rect.midtop < Wall.rect.topright:
 
                 if Target == Game.Player:
