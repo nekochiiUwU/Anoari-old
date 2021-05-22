@@ -56,6 +56,25 @@ def Paterns(Game):
 """ ===  Loops  === """
 
 
+def Lobby(Game, Screen):
+    """Loop d'ecran d'acceuil -steven"""
+
+    while Game.Lobby:
+        """ ===== Frame Limiter ===== """
+        Game.Tick = Game.time()
+        Game.Frame += 1
+        FrameLimiter(Game, Screen)
+
+        """ ===== Key Inputs ===== """
+        LobbyKeys(Game)
+
+        """ ===== Printer ===== """
+        LobbyPrinter(Screen, Game)
+
+        """ ===== Button Movement ===== """
+        Game.UI.Lobby.TitleMenuButtonDeplacement(Game)
+
+
 def inGame(Game, Screen):
     """ Loop de Jeu -tremisabdoul"""
 
@@ -89,25 +108,6 @@ def Pause(Game, Screen):
 
         """ ===== Printer ===== """
         PausePrinter(Screen, Game)
-
-
-def Lobby(Game, Screen):
-    """Loop d'ecran d'acceuil -steven"""
-
-    while Game.Lobby:
-        """ ===== Frame Limiter ===== """
-        Game.Tick = Game.time()
-        Game.Frame += 1
-        FrameLimiter(Game, Screen)
-
-        """ ===== Key Inputs ===== """
-        LobbyKeys(Game)
-
-        """ ===== Printer ===== """
-        LobbyPrinter(Screen, Game)
-
-        """ ===== Button Movement ===== """
-        Game.UI.Lobby.TitleMenuButtonDeplacement(Game)
 
 
 def Option(Game, Screen):

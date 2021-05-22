@@ -24,6 +24,7 @@ class Game:
         self.DataY = self.UserData.UserGraphicInfo.current_h
         self.DataX = self.UserData.UserGraphicInfo.current_w
 
+        """ ===== Utility ===== """
         self.Running    = True
         self.Lobby      = True
         self.ShowHitbox = False
@@ -35,6 +36,7 @@ class Game:
         self.Pause      = False
         self.SaveMenu   = False
 
+        """ ===== Variable value ===== """
         self.PlateformNumber = 1
         self.Tickchecker     = 1
         self.WallNumber      = 1
@@ -56,12 +58,15 @@ class Game:
 
         self.Timed = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 
+        """ ===== Song ===== """
         self.Click = pygame.mixer.Sound("Assets/Audio/FX/pas.mp3")
         self.data  = pygame.mixer.Sound("Assets/Audio/FX/DATA.mp3")
 
+        """ ===== Police ===== """
         self.police1 = pygame.font.Font("Assets/Font/Retro Gaming.ttf", 10)
         self.police2 = pygame.font.Font("Assets/Font/Retro Gaming.ttf", 20)
 
+        """ ===== Class Introduction ===== """
         self.Player     = Player()
         self.Arm        = Arm()
         self.Monster    = Monster()
@@ -76,6 +81,7 @@ class Game:
 
         self.DataWeapon = None
 
+        """ ===== Group ===== """
         self.all_Monster   = pygame.sprite.Group()
         self.all_Player    = pygame.sprite.Group()
         self.Entities      = pygame.sprite.Group()

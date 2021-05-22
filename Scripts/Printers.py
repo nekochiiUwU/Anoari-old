@@ -1,6 +1,5 @@
 # Contient tous les fonctions d'affichages
 import pygame
-import csv
 
 """ ===  Printers  === """
 
@@ -100,6 +99,7 @@ def PausePrinter(Screen, Game):
 
 def SaveMenuPrinter(Game, Screen, SavePos, State):
     """Affichage dans la Loop SaveMenu -steven"""
+    import csv
 
     MousePrinter(Screen, Game)
     Screen.fill((0, 0, 0))
@@ -117,6 +117,7 @@ def SaveMenuPrinter(Game, Screen, SavePos, State):
 
     for i in range(0, len(State)):
         file = State[i]
+        print(file)
 
         CSV_file = csv.DictReader(open(file, 'r'))
         Load = {}
