@@ -103,6 +103,7 @@ def SaveMenuPrinter(Game, Screen, SavePos, State):
 
     MousePrinter(Screen, Game)
     Screen.fill((0, 0, 0))
+    White = (255, 255, 255)
 
     # Création des rectangles
     SaveRect = pygame.image.load("Assets\Visual\SaveImage\SaveRectangle.png")
@@ -112,6 +113,7 @@ def SaveMenuPrinter(Game, Screen, SavePos, State):
 
     # Descriptif de la sauvegarde
     Leveltxt = "Level : "
+    Moneytxt = "Coins : "
     RectXtxt = "Position X : "
     RectYtxt = "Position Y : "
 
@@ -126,12 +128,14 @@ def SaveMenuPrinter(Game, Screen, SavePos, State):
             Load[lines["Variable"]] = lines["Value"]
 
         SaveLevel = str(Load["Game.Player.Level"])
+        Money = str(Load["Game.Player.Gold"])
         PosX = str(Load["Game.PositionPlayer"])
         PosY = str(Load["Game.Player.rect.y"])
 
-        Texte(Game.police1, Leveltxt + SaveLevel, (255, 255, 255), Screen, (SavePos[i][1].x + 10, SavePos[i][1].y + 40))
-        Texte(Game.police1, RectXtxt + PosX, (255, 255, 255), Screen, (SavePos[i][1].x + 10, SavePos[i][1].y + 60))
-        Texte(Game.police1, RectYtxt + PosY, (255, 255, 255), Screen, (SavePos[i][1].x + 10, SavePos[i][1].y + 80))
+        Texte(Game.police1, Leveltxt + SaveLevel, White, Screen, (SavePos[i][1].x + 10, SavePos[i][1].y + 20))
+        Texte(Game.police1, Moneytxt + Money, White, Screen, (SavePos[i][1].x + 10, SavePos[i][1].y + 40))
+        Texte(Game.police1, RectXtxt + PosX, White, Screen, (SavePos[i][1].x + 10, SavePos[i][1].y + 60))
+        Texte(Game.police1, RectYtxt + PosY, White, Screen, (SavePos[i][1].x + 10, SavePos[i][1].y + 80))
 
 
 """ ===  Print Tools  === """

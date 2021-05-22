@@ -406,6 +406,7 @@ class Monster(pygame.sprite.Sprite, Game):
         self.MaxPv       = 100
         self.DamageDealt = 10
         self.Speed       = 3
+        self.Price       = 2
 
         self.Special = []
 
@@ -466,6 +467,7 @@ class Monster(pygame.sprite.Sprite, Game):
         if self.Pv <= 0:
                 Game.Entities.remove(self)
                 Game.all_Monster.remove(self)
+                Game.Player.Gold += self.Price
                 del self
                 #]
 
