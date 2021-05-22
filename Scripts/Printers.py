@@ -1,7 +1,7 @@
 import pygame
 import csv
 
-""" ===  Priters  === """
+""" ===  Printers  === """
 
 
 def Printer(Screen, Game):
@@ -26,7 +26,7 @@ def Printer(Screen, Game):
         ShowHitbox(Game, Screen)
 
 
-def LobbyBlit(Screen, Game):
+def LobbyPrinter(Screen, Game):
     """Affichage des Elements du lobby -steven"""
     Screen.blit(Game.UI.Lobby.background, (0, 0))
     Screen.blit(Game.UI.Lobby.loadbutton, Game.UI.Lobby.loadbuttonrect)
@@ -78,7 +78,7 @@ def OptionPrinter(Game, Screen):
     MousePrinter(Screen, Game)
 
 
-def pauseblit(Screen, Game):
+def PausePrinter(Screen, Game):
     """Fonction d'affichage: Elements de pause -tremisabdoul"""
 
     Screen.blit(Game.Background.image, Game.Background.rect)

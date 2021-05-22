@@ -79,118 +79,35 @@ def pause(Game, Screen):
     """ Loop de pause -tremisabdoul"""
 
     while Game.Pause:
-
-        # Init du compteur d'FPS -tremisabdoul
+        """ ===== Frame Limiter ===== """
         Game.Tick = Game.time()
-
-        for event in pygame.event.get():
-
-            if event.type == pygame.KEYDOWN:
-                Game.pressed[event.key] = True
-
-                if Game.pressed.get(pygame.K_F11):
-                    pygame.display.toggle_fullscreen()
-                elif Game.pressed.get(pygame.K_ESCAPE):
-                    Game.Pause = False
-                    Game.InGame = True
-
-            elif event.type == pygame.KEYUP:
-                Game.pressed[event.key] = False
-
-            elif event.type == pygame.MOUSEBUTTONDOWN:
-
-                if Game.UI.resumebuttonrect.collidepoint(event.pos):
-                    Game.Click.play()
-                    Game.Pause = False
-                    Game.InGame = True
-                elif Game.UI.savebuttonrect.collidepoint(event.pos):
-                    Game.Click.play()
-                    Game.Pause = False
-                    Game.SaveMenu = True
-                    Game.SaveValue = 2
-                elif Game.UI.settingsbuttonrect.collidepoint(event.pos):
-                    Game.Click.play()
-                    Game.Pause = False
-                    Game.Option = True
-                elif Game.UI.quitbuttonrect.collidepoint(event.pos):
-                    Game.Click.play()
-                    Game.Pause = False
-                    Game.Lobby = True
-
-            if event.type == pygame.QUIT:
-                Game.Pause = False
-                Game.running = False
-                pygame.quit()
-
-        # Affichage -tremisabdoul
-        pauseblit(Screen, Game)
-
-        # Limiteur d'FPS
+        Game.Frame += 1
         FrameLimiter(Game, Screen)
 
-        pygame.display.flip()
+        """ ===== Key Inputs ===== """
+        PauseKeys(Game)
+
+        """ ===== Printer ===== """
+        PausePrinter(Screen, Game)
 
 
 def Lobby(Game, Screen):
     """Loop d'ecran d'acceuil -steven"""
 
     while Game.Lobby:
-        tick = Game.time()
+        """ ===== Frame Limiter ===== """
+        Game.Tick = Game.time()
+        Game.Frame += 1
+        FrameLimiter(Game, Screen)
 
-        for event in pygame.event.get():
+        """ ===== Key Inputs ===== """
+        LobbyKeys(Game)
 
-            if event.type == pygame.KEYDOWN:
-                Game.pressed[event.key] = True
+        """ ===== Printer ===== """
+        LobbyPrinter(Screen, Game)
 
-                if Game.pressed.get(pygame.K_F11):
-                    pygame.display.toggle_fullscreen()
-
-            elif event.type == pygame.KEYUP:
-                Game.pressed[event.key] = False
-
-            elif event.type == pygame.MOUSEBUTTONDOWN:
-                Game.pressed[str(event.button)] = True
-
-                if Game.UI.Lobby.playbuttonrect.collidepoint(event.pos):
-                    Game.Click.play()
-                    Game.InGame = True
-                    Game.Lobby = False
-                elif Game.UI.Lobby.loadbuttonrect.collidepoint(event.pos):
-                    Game.Click.play()
-                    Game.Lobby = False
-                    Game.SaveMenu = True
-                    Game.SaveValue = 1
-                elif Game.UI.Lobby.quitbuttonrect.collidepoint(event.pos):
-                    Game.Click.play()
-                    Game.Running = False
-                    pygame.quit()
-
-            elif event.type == pygame.MOUSEBUTTONUP:
-                Game.pressed[str(event.button)] = False
-
-            if event.type == pygame.QUIT:
-                Game.InGame = False
-                Game.Lobby = False
-                Game.Pause = False
-                Game.running = False
-                pygame.quit()
-
-        Game.UI.Lobby.TitleMenuButtunDeplacement(Game)
-
-        LobbyBlit(Screen, Game)
-
-        tickchecker = Game.time()
-        tickchecker -= tick
-
-        if tickchecker:
-            fps = 1 / tickchecker
-            fps = "FPS : " + str(round(fps))
-        else:
-            fps = "Il n'as meme pas eu le temps de compter..."
-
-        Texte(Game.police1, fps, (255, 255, 255), Screen, (6, 34))
-
-        pygame.display.flip()
+        """ ===== Button Movement ===== """
+        Game.UI.Lobby.TitleMenuButtonDeplacement(Game)
 
 
 def Option(Game, Screen):
@@ -198,135 +115,41 @@ def Option(Game, Screen):
     ImportOptions(Game)
 
     while Game.Option:
-
-        for event in pygame.event.get():
-
-            if event.type == pygame.KEYDOWN:
-                Game.pressed[event.key] = True
-
-                if Game.pressed.get(pygame.K_ESCAPE):
-                    Game.Pause = True
-                    Game.Option = False
-
-                elif Game.pressed.get(pygame.K_SPACE):
-                    Game.Option = False
-                    Game.InGame = True
-
-            if event.type == pygame.MOUSEBUTTONDOWN:
-                for Key in Game.Keys:
-                    if Key[0].collidepoint(event.pos):
-                        Key[1] = True
-                    if Game.Volume[0].collidepoint(event.pos):
-                        Game.Volume[1] = True
-
-            if event.type == pygame.QUIT:
-                Game.InGame = False
-                Game.Lobby = False
-                Game.Pause = False
-                Game.running = False
-                pygame.quit()
-
-        OptionInterations(Game, Screen)
-
-        OptionPrinter(Game, Screen)
-
+        """ ===== Frame Limiter ===== """
+        Game.Tick = Game.time()
+        Game.Frame += 1
         FrameLimiter(Game, Screen)
 
-        pygame.display.flip()
+        """ ===== Key Inputs ===== """
+        OptionKeys(Game)
+
+        """ ===== Key Interaction ===== """
+        OptionInterations(Game, Screen)
+
+        """ ===== Printer ===== """
+        OptionPrinter(Game, Screen)
 
 
 def SaveMenu(Game, Screen):
     """Loop de menu de save -steven"""
 
+    """ ===== Utility List ===== """
     SavePos = [("SaveButton1", pygame.Rect(200, 100, 500, 100)),
                ("SaveButton2", pygame.Rect(200, 300, 500, 100)),
                ("SaveButton3", pygame.Rect(200, 500, 500, 100))]
     State = ["Save/save1.csv", "Save/save2.csv", "Save/save3.csv"]
 
     while Game.SaveMenu:
-        tick = Game.time()
+        """ ===== Frame Limiter ===== """
+        Game.Tick = Game.time()
+        Game.Frame += 1
+        FrameLimiter(Game, Screen)
 
-        for event in pygame.event.get():
+        """ ===== Key Inputs ===== """
+        SaveMenuKeys(Game, Screen, SavePos, State)
 
-            if event.type == pygame.KEYDOWN:
-                Game.pressed[event.key] = True
-
-                if Game.pressed.get(pygame.K_ESCAPE):
-                    if Game.SaveValue == 1:
-                        Game.SaveMenu = False
-                        Game.Lobby = True
-                        Game.SaveValue = 0
-                    elif Game.SaveValue == 2:
-                        Game.SaveMenu = False
-                        Game.Pause = True
-                        Game.SaveValue = 0
-
-            # Sauvegarde des donnees du joueurs (SaveValue == 2 signifie qu'il est rentrÃ© par le menu pause) -steven
-            elif event.type == pygame.MOUSEBUTTONDOWN and Game.SaveValue == 2:
-                if SavePos[0][1].collidepoint(event.pos):
-                    Game.Click.play()
-                    SaveState = State[0]
-                    Data_Save(Game, Screen, SaveState)
-
-                elif SavePos[1][1].collidepoint(event.pos):
-                    Game.Click.play()
-                    SaveState = State[1]
-                    Data_Save(Game, Screen, SaveState)
-
-                elif SavePos[2][1].collidepoint(event.pos):
-                    Game.Click.play()
-                    SaveState = State[2]
-                    Data_Save(Game, Screen, SaveState)
-
-            elif event.type == pygame.MOUSEBUTTONDOWN and Game.SaveValue == 1:
-                if SavePos[0][1].collidepoint(event.pos):
-                    Game.Click.play()
-                    SaveState = State[0]
-                    Data_Load(Game, Screen, SaveState)
-                    Game.SaveMenu = False
-                    Game.InGame = True
-
-                elif SavePos[1][1].collidepoint(event.pos):
-                    Game.Click.play()
-                    SaveState = State[1]
-                    Data_Load(Game, Screen, SaveState)
-                    Game.SaveMenu = False
-                    Game.InGame = True
-
-                elif SavePos[2][1].collidepoint(event.pos):
-                    Game.Click.play()
-                    SaveState = State[2]
-                    Data_Load(Game, Screen, SaveState)
-                    Game.SaveMenu = False
-                    Game.InGame = True
-
-            elif event.type == pygame.KEYUP:
-                Game.pressed[event.key] = False
-
-            # Bouton croix en haut a droite (Fermer le Programme) -tremisabdoul
-            if event.type == pygame.QUIT:
-                Game.SaveValue = 0
-                Game.InGame = False
-                Game.Lobby = False
-                Game.Pause = False
-                Game.SaveMenu = False
-                Game.running = False
-                pygame.quit()
-
-        tickchecker = Game.time()
-        tickchecker -= tick
-
-        if tickchecker:
-            fps = 1 / tickchecker
-            fps = "FPS : " + str(round(fps))
-        else:
-            fps = "Il n'as meme pas eu le temps de compter..."
-
-        Texte(Game.police1, fps, (255, 255, 255), Screen, (6, 34))
-
+        """ ===== Printer ===== """
         SaveMenuPrinter(Game, Screen, SavePos, State)
-
-        pygame.display.flip()
 
 
 """ ===  Movement  === """
@@ -489,7 +312,49 @@ def FrameLimiter(Game, Screen):
         Game.Tickchecker -= Game.Tick
 
 
-""" ===  Imput  === """
+""" ===  Input  === """
+
+
+def LobbyKeys(Game):
+    for event in pygame.event.get():
+
+        if event.type == pygame.KEYDOWN:
+            Game.pressed[event.key] = True
+
+            if Game.pressed.get(pygame.K_F11):
+                pygame.display.toggle_fullscreen()
+
+        elif event.type == pygame.KEYUP:
+            Game.pressed[event.key] = False
+
+        elif event.type == pygame.MOUSEBUTTONDOWN:
+            Game.pressed[str(event.button)] = True
+
+            if Game.UI.Lobby.playbuttonrect.collidepoint(event.pos):
+                Game.Click.play()
+                Game.InGame = True
+                Game.Lobby = False
+            elif Game.UI.Lobby.loadbuttonrect.collidepoint(event.pos):
+                Game.Click.play()
+                Game.Lobby = False
+                Game.SaveMenu = True
+                Game.SaveValue = 1
+            elif Game.UI.Lobby.quitbuttonrect.collidepoint(event.pos):
+                Game.Click.play()
+                Game.Running = False
+                pygame.quit()
+
+        elif event.type == pygame.MOUSEBUTTONUP:
+            Game.pressed[str(event.button)] = False
+
+        if event.type == pygame.QUIT:
+            Game.InGame = False
+            Game.Option = False
+            Game.Pause = False
+            Game.SaveMenu = False
+            Game.Lobby = False
+            Game.Running = False
+            pygame.quit()
 
 
 def InGameKeys(Game, Screen):
@@ -563,13 +428,159 @@ def InGameKeys(Game, Screen):
 
         # Bouton croix en haut a droite (Fermer le Programme) -tremisabdoul
         if event.type == pygame.QUIT:
+            Game.Option = False
+            Game.Pause = False
+            Game.SaveMenu = False
+            Game.Lobby = False
             Game.InGame = False
+            Game.Running = False
+            pygame.quit()
+
+
+def PauseKeys(Game):
+    for event in pygame.event.get():
+
+        if event.type == pygame.KEYDOWN:
+            Game.pressed[event.key] = True
+
+            if Game.pressed.get(pygame.K_F11):
+                pygame.display.toggle_fullscreen()
+            elif Game.pressed.get(pygame.K_ESCAPE):
+                Game.Pause = False
+                Game.InGame = True
+
+        elif event.type == pygame.KEYUP:
+            Game.pressed[event.key] = False
+
+        elif event.type == pygame.MOUSEBUTTONDOWN:
+            if Game.UI.resumebuttonrect.collidepoint(event.pos):
+                Game.Click.play()
+                Game.Pause = False
+                Game.InGame = True
+            elif Game.UI.savebuttonrect.collidepoint(event.pos):
+                Game.Click.play()
+                Game.Pause = False
+                Game.SaveMenu = True
+                Game.SaveValue = 2
+            elif Game.UI.settingsbuttonrect.collidepoint(event.pos):
+                Game.Click.play()
+                Game.Pause = False
+                Game.Option = True
+            elif Game.UI.quitbuttonrect.collidepoint(event.pos):
+                Game.Click.play()
+                Game.Pause = False
+                Game.Lobby = True
+
+        if event.type == pygame.QUIT:
+            Game.InGame = False
+            Game.Option = False
+            Game.SaveMenu = False
             Game.Lobby = False
             Game.Pause = False
-            Game.running = False
+            Game.Running = False
             pygame.quit()
-            quit()
-            break
+
+
+def OptionKeys(Game):
+
+    for event in pygame.event.get():
+
+        if event.type == pygame.KEYDOWN:
+            Game.pressed[event.key] = True
+
+            if Game.pressed.get(pygame.K_ESCAPE):
+                Game.Pause = True
+                Game.Option = False
+
+            elif Game.pressed.get(pygame.K_SPACE):
+                Game.Option = False
+                Game.InGame = True
+
+        if event.type == pygame.MOUSEBUTTONDOWN:
+            for Key in Game.Keys:
+                if Key[0].collidepoint(event.pos):
+                    Key[1] = True
+                if Game.Volume[0].collidepoint(event.pos):
+                    Game.Volume[1] = True
+
+        if event.type == pygame.QUIT:
+            Game.InGame = False
+            Game.Pause = False
+            Game.SaveMenu = False
+            Game.Lobby = False
+            Game.Option = False
+            Game.Running = False
+            pygame.quit()
+
+
+def SaveMenuKeys(Game, Screen, SavePos, State):
+    for event in pygame.event.get():
+
+        if event.type == pygame.KEYDOWN:
+            Game.pressed[event.key] = True
+
+            if Game.pressed.get(pygame.K_ESCAPE):
+                if Game.SaveValue == 1:
+                    Game.SaveMenu = False
+                    Game.Lobby = True
+                    Game.SaveValue = 0
+                elif Game.SaveValue == 2:
+                    Game.SaveMenu = False
+                    Game.Pause = True
+                    Game.SaveValue = 0
+
+        # Sauvegarde des donnees du joueurs (SaveValue == 2 signifie qu'il est rentrÃ© par le menu pause) -steven
+        elif event.type == pygame.MOUSEBUTTONDOWN and Game.SaveValue == 2:
+            if SavePos[0][1].collidepoint(event.pos):
+                Game.Click.play()
+                SaveState = State[0]
+                Data_Save(Game, Screen, SaveState)
+
+            elif SavePos[1][1].collidepoint(event.pos):
+                Game.Click.play()
+                SaveState = State[1]
+                Data_Save(Game, Screen, SaveState)
+
+            elif SavePos[2][1].collidepoint(event.pos):
+                Game.Click.play()
+                SaveState = State[2]
+                Data_Save(Game, Screen, SaveState)
+
+        elif event.type == pygame.MOUSEBUTTONDOWN and Game.SaveValue == 1:
+            if SavePos[0][1].collidepoint(event.pos):
+                Game.Click.play()
+                SaveState = State[0]
+                Data_Load(Game, Screen, SaveState)
+                Game.SaveMenu = False
+                Game.InGame = True
+
+            elif SavePos[1][1].collidepoint(event.pos):
+                Game.Click.play()
+                SaveState = State[1]
+                Data_Load(Game, Screen, SaveState)
+                Game.SaveMenu = False
+                Game.InGame = True
+
+            elif SavePos[2][1].collidepoint(event.pos):
+                Game.Click.play()
+                SaveState = State[2]
+                Data_Load(Game, Screen, SaveState)
+                Game.SaveMenu = False
+                Game.InGame = True
+
+        elif event.type == pygame.KEYUP:
+            Game.pressed[event.key] = False
+
+        # Bouton croix en haut a droite (Fermer le Programme) -tremisabdoul
+        if event.type == pygame.QUIT:
+            Game.SaveValue = 0
+            Game.InGame = False
+            Game.Option = False
+            Game.Pause = False
+            Game.Lobby = False
+            Game.SaveMenu = False
+            Game.Running = False
+            pygame.quit()
 
 
 """ ===  Camera  === """

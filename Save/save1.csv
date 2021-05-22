@@ -4,11 +4,11 @@ SaveName,Save 1
 PlayerName,Name
 GameType,Rogue
 # Player[0],# Statistics -tremisabdoul
-Game.Player.Pv,100
+Game.Player.Pv,40
 Game.Player.MaxPv,100
 Game.Player.Damage,10
 Game.Player.Speed,3
-Game.Player.SpeedY,-15.40000000000001
+Game.Player.SpeedY,0
 Game.Player.Level,1
 Game.Player.Gold,100
 Game.Player.Armor,0
@@ -25,14 +25,14 @@ Game.Player.XP_Multiplicator,1
 Game.Player.Damage.Multiplicator,1
 # Player[2],# Position -tremisabdoul
 Game.Player.rect.x,375
-Game.Player.rect.y,294
+Game.Player.rect.y,300
 Game.Player.rect.height,116
 Game.Player.rect.width,76
-Game.Player.LastY,306
-Game.Player.YVector,12
-Game.PositionPlayer,1051
+Game.Player.LastY,294
+Game.Player.YVector,-6
+Game.PositionPlayer,-963
 # Phisics,# Actual Movement of Player -tremisabdoul
-Game.Player.Force.lastx,10.499737509187174
-Game.Player.Base_Gravity,4.8
+Game.Player.Force.lastx,10.475149298667311
+Game.Player.Base_Gravity,6.4
 Game.Monster.Base_Gravity,0
 Game.Player.Force.x,0

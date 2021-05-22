@@ -453,7 +453,7 @@ class Monster(pygame.sprite.Sprite, Game):
             self.rect.x   += int(self.Speed * 2)
             self.Direction = 0
             
-    def Get_Hit(self, damage):
+    def Get_Hit(self, damage, Game):
         #Bascule sur l'animation de la prise de dégats
         self.Pv -= damage
         #* coupé collé du #* plus haut.[
@@ -521,6 +521,7 @@ class Background:
         self.rect        = self.image.get_rect()
         self.rect        = self.image.get_rect(midtop=self.rect.midtop)
         self.rect.midtop = (self.rect.width / 3, 0)
+        print("Oui", self.rect.height)
 
 
 class Arm:
@@ -807,7 +808,7 @@ class LobbyUI:
         self.quitbuttonrect.x = -62
         self.quitbuttonrect.y = 360 + 60
 
-    def TitleMenuButtunDeplacement(self, Game):
+    def TitleMenuButtonDeplacement(self, Game):
 
         Dep = (self.loadbuttonrect.y - Game.Mouse.rect.y) / 16
         if Dep > 0:
