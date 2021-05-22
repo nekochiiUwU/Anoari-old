@@ -25,6 +25,7 @@ Game.DataWeapon.New(Game, Game.Player.Weapon1)
 while Game.Running:
 
     """ ===== Loop ===== """
+
     if Game.Lobby:
         Lobby(Game, Screen)
 

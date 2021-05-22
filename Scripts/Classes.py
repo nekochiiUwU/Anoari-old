@@ -606,11 +606,13 @@ class Patern(pygame.sprite.Sprite, Game):
                     elif tile == "o":
                         SpawnMonster(Game, posx + self.position, posy)
         Game.PaternNumber += 1
+
+        """ Checking
         for item in Game.Entities:
             print(item.rect)
         for item in Game.all_Monster:
             print(item.rect)
-
+        """
 
 print("/Scripts/Classes: Loaded")
 

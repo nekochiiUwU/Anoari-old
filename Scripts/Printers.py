@@ -1,4 +1,5 @@
 import pygame
+import csv
 
 """ ===  Priters  === """
 
@@ -96,15 +97,39 @@ def pauseblit(Screen, Game):
     MousePrinter(Screen, Game)
 
 
-def SaveMenuPrinter(Game, Screen, SavePos):
+def SaveMenuPrinter(Game, Screen, SavePos, State):
     """Affichage dans la Loop SaveMenu -steven"""
+
     MousePrinter(Screen, Game)
     Screen.fill((0, 0, 0))
 
+    # Création des rectangles
     SaveRect = pygame.image.load("Assets\Visual\SaveImage\SaveRectangle.png")
     Screen.blit(SaveRect, SavePos[0][1])
     Screen.blit(SaveRect, SavePos[1][1])
     Screen.blit(SaveRect, SavePos[2][1])
+
+    # Descriptif de la sauvegarde
+    Leveltxt = "Level : "
+    RectXtxt = "Position X : "
+    RectYtxt = "Position Y : "
+
+    for i in range(0, len(State)):
+        file = State[i]
+
+        CSV_file = csv.DictReader(open(file, 'r'))
+        Load = {}
+
+        for lines in CSV_file:
+            Load[lines["Variable"]] = lines["Value"]
+
+        SaveLevel = str(Load["Game.Player.Level"])
+        PosX = str(Load["Game.PositionPlayer"])
+        PosY = str(Load["Game.Player.rect.y"])
+
+        Texte(Game.police1, Leveltxt + SaveLevel, (255, 255, 255), Screen, (SavePos[i][1].x + 10, SavePos[i][1].y + 40))
+        Texte(Game.police1, RectXtxt + PosX, (255, 255, 255), Screen, (SavePos[i][1].x + 10, SavePos[i][1].y + 60))
+        Texte(Game.police1, RectYtxt + PosY, (255, 255, 255), Screen, (SavePos[i][1].x + 10, SavePos[i][1].y + 80))
 
 
 """ ===  Print Tools  === """
@@ -158,7 +183,7 @@ def PrintMouse3Condition(Game, Screen):
 
 def PrintEntities(Game, Screen):
     for Entity in Game.Entities:
-        print(Entity.rect)
+        #print(Entity.rect)
         if Entity != Game.Player and -250 < Entity.rect.x < 1280:
             Entity.rect.x -= Game.Position
             Screen.blit(Entity.image, Entity.rect)

@@ -241,7 +241,7 @@ def SaveMenu(Game, Screen):
     SavePos = [("SaveButton1", pygame.Rect(200, 100, 500, 100)),
                ("SaveButton2", pygame.Rect(200, 300, 500, 100)),
                ("SaveButton3", pygame.Rect(200, 500, 500, 100))]
-    State = ["Save/save1.csv", "Save/save2.csv", "Save/save3.csv", "Save/save4.csv", "Save/save5.csv"]
+    State = ["Save/save1.csv", "Save/save2.csv", "Save/save3.csv"]
 
     while Game.SaveMenu:
         tick = Game.time()
@@ -264,7 +264,6 @@ def SaveMenu(Game, Screen):
             # Sauvegarde des donnees du joueurs (SaveValue == 2 signifie qu'il est rentrÃ© par le menu pause) -steven
             elif event.type == pygame.MOUSEBUTTONDOWN and Game.SaveValue == 2:
                 if SavePos[0][1].collidepoint(event.pos):
-                    print("yes")
                     Game.Click.play()
                     SaveState = State[0]
                     Data_Save(Game, Screen, SaveState)
@@ -325,7 +324,7 @@ def SaveMenu(Game, Screen):
 
         Texte(Game.police1, fps, (255, 255, 255), Screen, (6, 34))
 
-        SaveMenuPrinter(Game, Screen, SavePos)
+        SaveMenuPrinter(Game, Screen, SavePos, State)
 
         pygame.display.flip()
 
