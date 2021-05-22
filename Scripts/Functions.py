@@ -238,14 +238,13 @@ def Option(Game, Screen):
 def SaveMenu(Game, Screen):
     """Loop de menu de save -steven"""
 
-    SaveButton1 = pygame.Rect(125, 50, 500, 100)
-    SaveButton2 = pygame.Rect(125, 200, 500, 100)
-    SaveButton3 = pygame.Rect(125, 350, 500, 100)
+    SavePos = [("SaveButton1", pygame.Rect(200, 100, 500, 100)),
+               ("SaveButton2", pygame.Rect(200, 300, 500, 100)),
+               ("SaveButton3", pygame.Rect(200, 500, 500, 100))]
+    State = ["Save/save1.csv", "Save/save2.csv", "Save/save3.csv", "Save/save4.csv", "Save/save5.csv"]
 
     while Game.SaveMenu:
         tick = Game.time()
-
-        State = ["Save/save1.csv", "Save/save2.csv", "Save/save3.csv", "Save/save4.csv", "Save/save5.csv"]
 
         for event in pygame.event.get():
 
@@ -264,37 +263,38 @@ def SaveMenu(Game, Screen):
 
             # Sauvegarde des donnees du joueurs (SaveValue == 2 signifie qu'il est rentrÃ© par le menu pause) -steven
             elif event.type == pygame.MOUSEBUTTONDOWN and Game.SaveValue == 2:
-                if SaveButton1.collidepoint(event.pos):
+                if SavePos[0][1].collidepoint(event.pos):
+                    print("yes")
                     Game.Click.play()
                     SaveState = State[0]
                     Data_Save(Game, Screen, SaveState)
 
-                elif SaveButton2.collidepoint(event.pos):
+                elif SavePos[1][1].collidepoint(event.pos):
                     Game.Click.play()
                     SaveState = State[1]
                     Data_Save(Game, Screen, SaveState)
 
-                elif SaveButton3.collidepoint(event.pos):
+                elif SavePos[2][1].collidepoint(event.pos):
                     Game.Click.play()
                     SaveState = State[2]
                     Data_Save(Game, Screen, SaveState)
 
             elif event.type == pygame.MOUSEBUTTONDOWN and Game.SaveValue == 1:
-                if SaveButton1.collidepoint(event.pos):
+                if SavePos[0][1].collidepoint(event.pos):
                     Game.Click.play()
                     SaveState = State[0]
                     Data_Load(Game, Screen, SaveState)
                     Game.SaveMenu = False
                     Game.InGame = True
 
-                elif SaveButton2.collidepoint(event.pos):
+                elif SavePos[1][1].collidepoint(event.pos):
                     Game.Click.play()
                     SaveState = State[1]
                     Data_Load(Game, Screen, SaveState)
                     Game.SaveMenu = False
                     Game.InGame = True
 
-                elif SaveButton3.collidepoint(event.pos):
+                elif SavePos[2][1].collidepoint(event.pos):
                     Game.Click.play()
                     SaveState = State[2]
                     Data_Load(Game, Screen, SaveState)
@@ -325,7 +325,7 @@ def SaveMenu(Game, Screen):
 
         Texte(Game.police1, fps, (255, 255, 255), Screen, (6, 34))
 
-        SaveMenuPrinter(Game, Screen, SaveButton1, SaveButton2, SaveButton3)
+        SaveMenuPrinter(Game, Screen, SavePos)
 
         pygame.display.flip()
 

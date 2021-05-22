@@ -96,17 +96,15 @@ def pauseblit(Screen, Game):
     MousePrinter(Screen, Game)
 
 
-def SaveMenuPrinter(Game, Screen, SaveButton1, SaveButton2, SaveButton3):
+def SaveMenuPrinter(Game, Screen, SavePos):
     """Affichage dans la Loop SaveMenu -steven"""
     MousePrinter(Screen, Game)
-
-    White = (255, 255, 255)
     Screen.fill((0, 0, 0))
 
-    # Creation des rectangles -steven
-    Rectangle(Screen, White, SaveButton1, 2)
-    Rectangle(Screen, White, SaveButton2, 2)
-    Rectangle(Screen, White, SaveButton3, 2)
+    SaveRect = pygame.image.load("Assets\Visual\SaveImage\SaveRectangle.png")
+    Screen.blit(SaveRect, SavePos[0][1])
+    Screen.blit(SaveRect, SavePos[1][1])
+    Screen.blit(SaveRect, SavePos[2][1])
 
 
 """ ===  Print Tools  === """
