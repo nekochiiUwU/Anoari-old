@@ -30,7 +30,7 @@ while Game.Running:
         Lobby(Game, Screen)
 
     if Game.Pause:
-        pause(Game, Screen)
+        Pause(Game, Screen)
 
     if Game.InGame:
         musicDANOARKI(Game)

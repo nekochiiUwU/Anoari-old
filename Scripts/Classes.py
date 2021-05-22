@@ -388,7 +388,7 @@ class UI:
         self.quitbuttonrect.y = 360 + 80
 
 
-"""=====  Monstre [7]  ====="""
+"""=====  Game.Monster [7]  ====="""
 
 
 class Monster(pygame.sprite.Sprite, Game):
@@ -614,8 +614,6 @@ class Patern(pygame.sprite.Sprite, Game):
         for item in Game.all_Monster:
             print(item.rect)
         """
-
-print("/Scripts/Classes: Loaded")
 
 
 class Projectile(pygame.sprite.Sprite):
@@ -880,3 +878,6 @@ class OptionUI:
             121: pygame.image.load("Assets/Visual/UI/Key/Y.png"),
             122: pygame.image.load("Assets/Visual/UI/Key/Z.png"),
         }
+
+
+print("/Scripts/Classes: Loaded")

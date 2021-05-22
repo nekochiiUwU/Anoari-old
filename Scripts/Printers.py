@@ -1,3 +1,4 @@
+# Contient tous les fonctions d'affichages
 import pygame
 import csv
 

@@ -75,7 +75,7 @@ def inGame(Game, Screen):
         FrameLimiter(Game, Screen)
 
 
-def pause(Game, Screen):
+def Pause(Game, Screen):
     """ Loop de pause -tremisabdoul"""
 
     while Game.Pause:
