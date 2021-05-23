@@ -119,7 +119,6 @@ def SaveMenuPrinter(Game, Screen, SavePos, State):
 
     for i in range(0, len(State)):
         file = State[i]
-        print(file)
 
         CSV_file = csv.DictReader(open(file, 'r'))
         Load = {}

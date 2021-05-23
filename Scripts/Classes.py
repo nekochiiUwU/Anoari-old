@@ -35,7 +35,6 @@ class Game:
         self.Option     = False
         self.Pause      = False
         self.SaveMenu   = False
-        self.Immunity = False
 
         """ ===== Variable value ===== """
         self.PlateformNumber = 1
@@ -409,6 +408,7 @@ class Monster(pygame.sprite.Sprite, Game):
         self.DamageDealt = 10
         self.Speed       = 3
         self.Price       = 2
+        self.OnCD = False
 
         self.Special = []
 
