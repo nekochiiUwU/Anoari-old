@@ -35,6 +35,7 @@ class Game:
         self.Option     = False
         self.Pause      = False
         self.SaveMenu   = False
+        self.Immunity = False
 
         """ ===== Variable value ===== """
         self.PlateformNumber = 1
@@ -51,6 +52,7 @@ class Game:
         self.Position        = 0
         self.Frame           = 0
         self.Tick            = 0
+        self.Timing = 0
 
         self.pressed = {}
         self.Paterns = {}

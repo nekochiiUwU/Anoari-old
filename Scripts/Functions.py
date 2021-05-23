@@ -176,13 +176,20 @@ def Movements(Game):
                     Monster.Move_Left(Game)
                 else:
                     Monster.Move_Right(Game)
-            else:
+            elif Collide and Game.Immunity == False:
                 if Collide[0].rect.center[0] > Game.Player.rect.center[0]:
                     Monster.Direction = 0
                     Monster.Move_Right(Game)
+                    Game.Player.Get_Hit(Game.Monster.DamageDealt, Game)
+                    Game.Timing = pygame.time.get_ticks()
+                    Game.Immunity = True
                 else:
                     Monster.Direction = 1
                     Monster.Move_Left(Game)
+            elif Collide and Game.Immunity == True:
+                if (pygame.time.get_ticks() - Game.Timing ) / 1000 > 2:
+                    Game.Immunity = False
+                    Game.Timing = 0
 
     if Game.pressed.get(Game.Keys[0][2]) \
             and Game.check_collisions(Game.Player, Game.all_plateform) \

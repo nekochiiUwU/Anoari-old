@@ -8,7 +8,7 @@ Game.Player.Pv,100
 Game.Player.MaxPv,100
 Game.Player.Damage,10
 Game.Player.Speed,3
-Game.Player.SpeedY,0
+Game.Player.SpeedY,-12.200000000000006
 Game.Player.Level,1
 Game.Player.Gold,100
 Game.Player.Armor,0
@@ -24,15 +24,15 @@ Game.Player.ManaRegen,2
 Game.Player.XP_Multiplicator,1
 Game.Player.Damage.Multiplicator,1
 # Player[2],# Position -tremisabdoul
-Game.Player.rect.x,349
-Game.Player.rect.y,560
+Game.Player.rect.x,375
+Game.Player.rect.y,335
 Game.Player.rect.height,116
 Game.Player.rect.width,76
-Game.Player.LastY,556
-Game.Player.YVector,-4
-Game.PositionPlayer,0
+Game.Player.LastY,340
+Game.Player.YVector,5
+Game.PositionPlayer,261
 # Phisics,# Actual Movement of Player -tremisabdoul
-Game.Player.Force.lastx,0.0
-Game.Player.Base_Gravity,3.9999999999999996
+Game.Player.Force.lastx,10.498887405614989
+Game.Player.Base_Gravity,8.000000000000002
 Game.Monster.Base_Gravity,0
 Game.Player.Force.x,0
