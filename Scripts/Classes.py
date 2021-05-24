@@ -311,7 +311,7 @@ class Sol(pygame.sprite.Sprite):
 
     def __init__(self):
         super().__init__()
-        self.image = pygame.image.load("Assets/Visual/plateforme_base.png")
+        self.image = pygame.image.load("Assets/Visual/plateforme_base - old.png")
 
         self.image = pygame.transform.scale(self.image, (1280, 34))
 
