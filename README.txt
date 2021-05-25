@@ -37,7 +37,6 @@ Informations:
 	Fichier de lancement: Execute.cmd
 	Si vous ne pouvez pas lancer Execute.cmd, vous devez installer Python avec PythonInstall 
 	et lancer DebugPygame.cmd pour installer les modules necesaires au jeu
-	Vous pouvez également lancer le jeu avec EduPython a partir du fichier main.py
 
 Bon jeu!
 
@@ -67,7 +66,6 @@ Informations:
 	Launch file: Execute.cmd
 	If you cant launch Execute.cmd you had to insall python with PythonInstall.cmd 
 	and launch DebugPygame.cmd to install the needed modules for Python
-	Also  you can launch the game with main.py
 
 Good game!
 
@@ -106,11 +104,7 @@ tremisabdoul
 
 
            ━━━ ∙ ʚ  Code:  ɞ ∙ ━━━
-
-                tremisabdoul
-
-                   Ok...
-
+	   
                 nekochiitsu
                   iRaiZz
                tremisabdoul
