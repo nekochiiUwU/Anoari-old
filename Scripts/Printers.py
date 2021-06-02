@@ -176,12 +176,12 @@ def PrintMouse3Condition(Game, Screen):
     if Game.pressed.get("3"):
         Game.Player.Orb(Game)
         Game.Arm.print(Game, Screen)
-        Animation(Game)
+        Game.Player.Animation(Game)
         Screen.blit(Game.Player.image, Game.Player.rect)
         UIPrinter(Screen, Game)
         MousePrinter(Screen, Game)
     else:
-        Animation(Game)
+        Game.Player.Animation(Game)
         Screen.blit(Game.Player.image, Game.Player.rect)
         UIPrinter(Screen, Game)
 
@@ -294,130 +294,3 @@ def LoadingScreen(Game, Message, Screen, Ratio, Loading):
     pygame.display.flip()
 
     return Loading
-
-
-""" ===  Animations  === """
-
-
-def Animation(Game):
-    """Animations (base par tremisabdoul) (PrepaSpell par nekochii) (Déssinées par nekochii)"""
-    if Game.PrepaSpell:
-        if Game.Player.YVector:
-            if Game.Player.YVector < 0:
-                PrepaSpellFallAnimation(Game)
-            else:
-                PrepaSpellJumpAnimation(Game)
-        elif Game.Player.MovementKey:
-            PrepaSpellRunAnimation(Game)
-        else:
-            PrepaSpellAnimation(Game)
-
-    elif Game.Player.YVector:
-        if Game.Player.YVector < 0:
-            FallAnimation(Game)
-        else:
-            JumpAnimation(Game)
-    elif Game.Player.MovementKey:
-        RunAnimation(Game)
-    else:
-        StandAnimation(Game)
-
-
-def FallAnimation(Game):
-    if Game.Player.Direction:
-        Game.Player.image = pygame.image.load("Assets/Visual/Mystique/Jump/Jump2.png")
-    else:
-        Game.Player.image = pygame.image.load("Assets/Visual/Mystique/Left/Jump/Jump2.png")
-
-
-def JumpAnimation(Game):
-    if Game.Player.Direction:
-        Game.Player.image = pygame.image.load("Assets/Visual/Mystique/Jump/Jump1.png")
-    else:
-        Game.Player.image = pygame.image.load("Assets/Visual/Mystique/Left/Jump/Jump1.png")
-
-
-def RunAnimation(Game):
-    if Game.Player.Direction:
-        if Game.Frame % 4 == 0:
-            if Game.ActualFrame <= 0:
-                Game.ActualFrame = 1
-                Game.Player.image = pygame.image.load("Assets/Visual/Mystique/Run/Run1.png")
-            elif Game.ActualFrame >= 1:
-                Game.ActualFrame = 0
-                Game.Player.image = pygame.image.load("Assets/Visual/Mystique/Run/Run2.png")
-    else:
-        if Game.Frame % 4 == 0:
-            if Game.ActualFrame <= 0:
-                Game.ActualFrame = 1
-                Game.Player.image = pygame.image.load("Assets/Visual/Mystique/Left/Run/Run1.png")
-            elif Game.ActualFrame >= 1:
-                Game.ActualFrame = 0
-                Game.Player.image = pygame.image.load("Assets/Visual/Mystique/Left/Run/Run2.png")
-
-
-def StandAnimation(Game):
-    if Game.Player.Direction:
-        if Game.Frame % 4 == 0:
-            if Game.ActualFrame <= 0:
-                Game.ActualFrame = 1
-                Game.Player.image = pygame.image.load("Assets/Visual/Mystique/resp2.png")
-            elif Game.ActualFrame >= 1:
-                Game.ActualFrame = 0
-                Game.Player.image = pygame.image.load("Assets/Visual/Mystique/resp1.png")
-    else:
-        if Game.Frame % 4 == 0:
-            if Game.ActualFrame <= 0:
-                Game.ActualFrame = 1
-                Game.Player.image = pygame.image.load("Assets/Visual/Mystique/Left/resp2.png")
-            elif Game.ActualFrame >= 1:
-                Game.ActualFrame = 0
-                Game.Player.image = pygame.image.load("Assets/Visual/Mystique/Left/resp1.png")
-
-
-def PrepaSpellJumpAnimation(Game):
-    if Game.Player.Direction:
-        if Game.Frame % 4 == 0:
-            Game.Player.image = pygame.image.load("Assets/Visual/Mystique/Spells/mystique prepa sort Jump.png")
-    else:
-        if Game.Frame % 4 == 0:
-            Game.Player.image = pygame.image.load("Assets/Visual/Mystique/Left/Spells/mystique prepa sort Jump.png")
-
-
-def PrepaSpellFallAnimation(Game):
-    if Game.Player.Direction:
-        if Game.Frame % 4 == 0:
-            Game.Player.image = pygame.image.load("Assets/Visual/Mystique/Spells/mystique prepa sort Fall.png")
-    else:
-        if Game.Frame % 4 == 0:
-            Game.Player.image = pygame.image.load("Assets/Visual/Mystique/Left/Spells/mystique prepa sort Fall.png")
-
-
-def PrepaSpellRunAnimation(Game):
-    if Game.Player.Direction:
-        if Game.Frame % 4 == 0:
-            if Game.ActualFrame <= 0:
-                Game.ActualFrame = 1
-                Game.Player.image = pygame.image.load("Assets/Visual/Mystique/Spells/mystique prepa sort marche.png")
-            elif Game.ActualFrame >= 1:
-                Game.ActualFrame = 0
-                Game.Player.image = pygame.image.load("Assets/Visual/Mystique/Spells/mystique prepa sort marche 2.png")
-    else:
-        if Game.Frame % 4 == 0:
-            if Game.ActualFrame <= 0:
-                Game.ActualFrame = 1
-                Game.Player.image = \
-                    pygame.image.load("Assets/Visual/Mystique/Left/Spells/mystique prepa sort marche.png")
-            elif Game.ActualFrame >= 1:
-                Game.ActualFrame = 0
-                Game.Player.image = \
-                    pygame.image.load("Assets/Visual/Mystique/Left/Spells/mystique prepa sort marche 2.png")
-
-
-def PrepaSpellAnimation(Game):
-    if Game.Player.Direction:
-        if Game.Frame % 4 == 0:
-            Game.Player.image = pygame.image.load("Assets/Visual/Mystique/Spells/mystique prepa sort.png")
-    else:
-        if Game.Frame % 4 == 0:
-            Game.Player.image = pygame.image.load("Assets/Visual/Mystique/Left/Spells/mystique prepa sort.png")

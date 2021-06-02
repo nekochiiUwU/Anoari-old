@@ -142,6 +142,62 @@ class Player(pygame.sprite.Sprite, Game):
     def __init__(self):
         super().__init__()
 
+        self.Frames = {
+            "Base": {
+                "Stand": [
+                    (pygame.image.load("Assets/Visual/Mystique/resp1.png"),
+                     pygame.image.load("Assets/Visual/Mystique/resp2.png")),
+                    (pygame.image.load("Assets/Visual/Mystique/Left/resp1.png"),
+                     pygame.image.load("Assets/Visual/Mystique/Left/resp2.png"))
+                ],
+                "Run": [
+                    (pygame.image.load("Assets/Visual/Mystique/Run/Run1.png"),
+                     pygame.image.load("Assets/Visual/Mystique/Run/Run2.png")),
+                    (pygame.image.load("Assets/Visual/Mystique/Left/Run/Run1.png"),
+                     pygame.image.load("Assets/Visual/Mystique/Left/Run/Run2.png"))
+                ],
+                "Jump": [
+                    (pygame.image.load("Assets/Visual/Mystique/Jump/Jump1.png"),
+                     pygame.image.load("Assets/Visual/Mystique/Jump/Jump1.png")),
+                    (pygame.image.load("Assets/Visual/Mystique/Left/Jump/Jump1.png"),
+                     pygame.image.load("Assets/Visual/Mystique/Left/Jump/Jump1.png"))
+                ],
+                "Fall": [
+                    (pygame.image.load("Assets/Visual/Mystique/Fall/Fall1.png"),
+                     pygame.image.load("Assets/Visual/Mystique/Fall/Fall1.png")),
+                    (pygame.image.load("Assets/Visual/Mystique/Left/Fall/Fall1.png"),
+                     pygame.image.load("Assets/Visual/Mystique/Left/Fall/Fall1.png"))
+                ]
+            },
+            "PrepaSpell": {
+                "Stand": [
+                    (pygame.image.load("Assets/Visual/Mystique/PrepaSpell/resp1.png"),
+                     pygame.image.load("Assets/Visual/Mystique/PrepaSpell/resp1.png")),
+                    (pygame.image.load("Assets/Visual/Mystique/Left/PrepaSpell/resp1.png"),
+                     pygame.image.load("Assets/Visual/Mystique/Left/PrepaSpell/resp1.png"))
+                ],
+                "Run": [
+                    (pygame.image.load("Assets/Visual/Mystique/PrepaSpell/Run/Run1.png"),
+                     pygame.image.load("Assets/Visual/Mystique/PrepaSpell/Run/Run2.png")),
+                    (pygame.image.load("Assets/Visual/Mystique/Left/PrepaSpell/Run/Run1.png"),
+                     pygame.image.load("Assets/Visual/Mystique/Left/PrepaSpell/Run/Run2.png"))
+                ],
+                "Jump": [
+                    (pygame.image.load("Assets/Visual/Mystique/PrepaSpell/Jump/Jump1.png"),
+                     pygame.image.load("Assets/Visual/Mystique/PrepaSpell/Jump/Jump1.png")),
+                    (pygame.image.load("Assets/Visual/Mystique/Left/PrepaSpell/Jump/Jump1.png"),
+                     pygame.image.load("Assets/Visual/Mystique/Left/PrepaSpell/Jump/Jump1.png"))
+                ],
+                "Fall": [
+                    (pygame.image.load("Assets/Visual/Mystique/PrepaSpell/Fall/Fall1.png"),
+                     pygame.image.load("Assets/Visual/Mystique/PrepaSpell/Fall/Fall1.png")),
+                    (pygame.image.load("Assets/Visual/Mystique/Left/PrepaSpell/Fall/Fall1.png"),
+                     pygame.image.load("Assets/Visual/Mystique/Left/PrepaSpell/Fall/Fall1.png"))
+                ]
+
+            }
+        }
+
         self.pop = False
 
         self.Force = Force()
@@ -248,6 +304,125 @@ class Player(pygame.sprite.Sprite, Game):
                     Game.Particles.Add(Game, (self.rect.center[0] + 25, self.rect.center[1] - 20), 'orangered', 6)
                     Game.Particles.Add(Game, (self.rect.center[0] + 25, self.rect.center[1] - 20), 'orangered4', 6)
                     Game.Particles.Add(Game, (Game.Player.rect.center[0] + 25, Game.Player.rect.center[1] - 20), 'red3', 6)
+
+    def Animation(self, Game):
+        """Animations (base par tremisabdoul) (PrepaSpell par nekochii) (Déssinées par nekochii)"""
+        if Game.PrepaSpell:
+            if self.YVector:
+                if self.YVector < 0:
+                    self.PrepaSpellFallAnimation(Game)
+                else:
+                    self.PrepaSpellJumpAnimation(Game)
+            elif self.MovementKey:
+                self.PrepaSpellRunAnimation(Game)
+            else:
+                self.PrepaSpellAnimation(Game)
+
+        elif self.YVector:
+            if self.YVector < 0:
+                self.FallAnimation(Game)
+            else:
+                self.JumpAnimation(Game)
+        elif self.MovementKey:
+            self.RunAnimation(Game)
+        else:
+            self.StandAnimation(Game)
+
+    def FallAnimation(self, Game):
+        if self.Direction:
+            self.image = self.Frames["Base"]["Fall"][0][0]
+        else:
+            self.image = self.Frames["Base"]["Fall"][1][0]
+
+    def JumpAnimation(self, Game):
+        if self.Direction:
+            self.image = self.Frames["Base"]["Jump"][0][0]
+        else:
+            self.image = self.Frames["Base"]["Jump"][1][0]
+
+    def RunAnimation(self, Game):
+        if self.Direction:
+            if Game.Frame % 4 == 0:
+                if Game.ActualFrame <= 0:
+                    Game.ActualFrame = 1
+                    self.image = self.Frames["Base"]["Run"][0][0]
+                elif Game.ActualFrame >= 1:
+                    Game.ActualFrame = 0
+                    self.image = self.Frames["Base"]["Run"][0][1]
+        else:
+            if Game.Frame % 4 == 0:
+                if Game.ActualFrame <= 0:
+                    Game.ActualFrame = 1
+                    self.image = self.Frames["Base"]["Run"][1][0]
+                elif Game.ActualFrame >= 1:
+                    Game.ActualFrame = 0
+                    self.image = self.Frames["Base"]["Run"][1][1]
+
+    def StandAnimation(self, Game):
+        if self.Direction:
+            if Game.Frame % 4 == 0:
+                if Game.ActualFrame <= 0:
+                    Game.ActualFrame = 1
+                    self.image = self.Frames["Base"]["Stand"][0][0]
+                elif Game.ActualFrame >= 1:
+                    Game.ActualFrame = 0
+                    self.image = self.Frames["Base"]["Stand"][0][1]
+        else:
+            if Game.Frame % 4 == 0:
+                if Game.ActualFrame <= 0:
+                    Game.ActualFrame = 1
+                    self.image = self.Frames["Base"]["Stand"][1][0]
+                elif Game.ActualFrame >= 1:
+                    Game.ActualFrame = 0
+                    self.image = self.Frames["Base"]["Stand"][1][1]
+
+    def PrepaSpellJumpAnimation(self, Game):
+        if self.Direction:
+            self.image = self.Frames["PrepaSpell"]["Jump"][0][0]
+        else:
+            self.image = self.Frames["PrepaSpell"]["Jump"][1][0]
+
+    def PrepaSpellFallAnimation(self, Game):
+        if self.Direction:
+            self.image = self.Frames["PrepaSpell"]["Fall"][0][0]
+        else:
+            self.image = self.Frames["PrepaSpell"]["Fall"][1][0]
+
+    def PrepaSpellRunAnimation(self, Game):
+        if self.Direction:
+            if Game.Frame % 4 == 0:
+                if Game.ActualFrame <= 0:
+                    Game.ActualFrame = 1
+                    self.image = self.Frames["PrepaSpell"]["Run"][0][0]
+                elif Game.ActualFrame >= 1:
+                    Game.ActualFrame = 0
+                    self.image = self.Frames["PrepaSpell"]["Run"][0][1]
+        else:
+            if Game.Frame % 4 == 0:
+                if Game.ActualFrame <= 0:
+                    Game.ActualFrame = 1
+                    self.image = self.Frames["PrepaSpell"]["Run"][1][0]
+                elif Game.ActualFrame >= 1:
+                    Game.ActualFrame = 0
+                    self.image = self.Frames["PrepaSpell"]["Run"][1][1]
+
+    def PrepaSpellAnimation(self, Game):
+        if self.Direction:
+            if Game.Frame % 4 == 0:
+                if Game.ActualFrame <= 0:
+                    Game.ActualFrame = 1
+                    self.image = self.Frames["PrepaSpell"]["Stand"][0][0]
+                elif Game.ActualFrame >= 1:
+                    Game.ActualFrame = 0
+                    self.image = self.Frames["PrepaSpell"]["Stand"][0][1]
+        else:
+            if Game.Frame % 4 == 0:
+                if Game.ActualFrame <= 0:
+                    Game.ActualFrame = 1
+                    self.image = self.Frames["PrepaSpell"]["Stand"][1][0]
+                elif Game.ActualFrame >= 1:
+                    Game.ActualFrame = 0
+                    self.image = self.Frames["PrepaSpell"]["Stand"][1][1]
 
 
 """=====  Game.Player.Force [2.1]  ====="""
@@ -539,7 +714,14 @@ class Arm:
         super().__init__()
         self.Game = Game
 
-        self.image          = pygame.image.load("Assets/Visual/Mystique/Spells/bras mystique prepa spell.png")
+        self.Frames = [
+            (pygame.image.load("Assets/Visual/Mystique/PrepaSpell/Arm/Arm1.png"),
+             pygame.image.load("Assets/Visual/Mystique/PrepaSpell/Arm/Arm1.png")),
+            (pygame.image.load("Assets/Visual/Mystique/Left/PrepaSpell/Arm/Arm1.png"),
+             pygame.image.load("Assets/Visual/Mystique/Left/PrepaSpell/Arm/Arm1.png"))
+        ]
+
+        self.image          = self.Frames[0][0]
         self.imageDirection = 0
         self.rect           = self.image.get_rect()
 
@@ -558,13 +740,13 @@ class Arm:
         if -90 < self.angle < 90:
             if Game.CastSpell:
 
-                self.origin_image = pygame.image.load("Assets/Visual/Mystique/Spells/bras mystique cast spell.png")
+                self.origin_image = self.Frames[0][0]
                 Game.Countframes -= 1
 
                 if Game.Countframes < 1:
                     Game.CastSpell = False
             else:
-                self.origin_image = pygame.image.load("Assets/Visual/Mystique/Spells/bras mystique prepa spell.png")
+                self.origin_image = self.Frames[0][0]
 
             self.imageDirection = 0
             Game.Player.Direction = 1
@@ -572,13 +754,13 @@ class Arm:
         elif not -90 < self.angle < 90:
             if Game.CastSpell:
 
-                self.origin_image = pygame.image.load("Assets/Visual/Mystique/Left/Spells/bras mystique cast spell.png")
+                self.origin_image = self.Frames[1][0]
                 Game.Countframes -= 1
 
                 if Game.Countframes < 1:
                     Game.CastSpell = False
             else:
-                self.origin_image = pygame.image.load("Assets/Visual/Mystique/Left/Spells/bras mystique prepa spell.png")
+                self.origin_image = self.Frames[1][0]
 
             self.imageDirection = 1
             Game.Player.Direction = 0
