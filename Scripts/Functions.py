@@ -13,7 +13,7 @@ def Display():
     pygame.init()
     pygame.display.set_caption("Anoari")
     size = (1280, 720)
-    screen = pygame.display.set_mode(size, pygame.RESIZABLE)
+    screen = pygame.display.set_mode(size)
     return screen
 
 
@@ -385,12 +385,11 @@ def InGameKeys(Game, Screen):
                 print("\n", pygame.display.Info())
 
                 if Game.Fullscreen == 0:
-                    Screen = pygame.display.set_mode((Game.UserData.DataX, Game.UserData.DataY), pygame.FULLSCREEN)
+                    Screen = pygame.display.set_mode((1280, 720), pygame.FULLSCREEN, pygame.WIN)
                     Game.Fullscreen = 1
                 else:
-                    pygame.display.set_mode((Game.DataX, Game.DataY), pygame.RESIZABLE)
                     pygame.display.toggle_fullscreen()
-                    pygame.display.set_mode((1280, 720), pygame.RESIZABLE)
+                    pygame.display.set_mode((1280, 720))
                     os.environ['SDL_VIDEO_WINDOW_POS'] = "%d,%d" % (100, 100)
                     Game.Fullscreen = 0
 
@@ -430,10 +429,6 @@ def InGameKeys(Game, Screen):
             if event.button == 3:
                 Game.PrepaSpell = False
                 pygame.mouse.set_visible(True)
-
-        # Permet le resize de l'ecran -tremisabdoul
-        if event.type == pygame.VIDEORESIZE:
-            ReScale(Game, Screen)
 
         # Bouton croix en haut a droite (Fermer le Programme) -tremisabdoul
         if event.type == pygame.QUIT:
@@ -608,19 +603,6 @@ def BackgroundScroll(Game):
     checker = Game.PositionPlayer % 1280
     if -10 < checker < 10:
         Game.Background.rect.midtop = 640 - checker, 0
-
-
-def ReScale(Game, Screen):
-    """PAS FINI    Rescale Trop la flemme le le finir je vais le faire vous inquÃ©tez pas -tremisabdoul    PAS FINI"""
-    Game.DataX = pygame.Surface.get_width(Screen)
-    Game.DataY = pygame.Surface.get_height(Screen)
-    Game.Player.image = pygame.image.load("Assets/Visual/Mystique/resp1.png")
-    Game.Background.image = pygame.transform.scale(Game.Background.image,
-                                                   (Game.Rescale(Game.Background.image.get_width(), "X"),
-                                                    Game.Rescale(Game.Background.image.get_height(), "Y")))
-    Game.Player.image = pygame.transform.scale(Game.Player.image,
-                                               (Game.Rescale(Game.Player.image.get_width(), "X"),
-                                                Game.Rescale(Game.Player.image.get_height(), "Y")))
 
 
 """ ===  Pop  === """

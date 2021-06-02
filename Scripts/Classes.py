@@ -108,14 +108,6 @@ class Game:
         """
         return (0, 0, 0)
 
-
-    def Rescale(self, value, XorY):
-        print("===\nx", self.UserData.DataX, ">>>", self.DataX, "\ny", self.UserData.DataY, ">>>", self.DataY)
-        if XorY == "X":
-            return round((value / self.UserData.DataX) * self.DataX)
-        elif XorY == "Y":
-            return round((value / self.UserData.DataY) * self.DataY)
-
     @staticmethod
     def check_collisions(sprite, group):
         return pygame.sprite.spritecollide(sprite, group, False, pygame.sprite.collide_rect)
@@ -818,9 +810,7 @@ class Projectile(pygame.sprite.Sprite):
         self.Radius = 42
 
         self.Speed  = 15
-        self.Frames = ["Assets/Visual/Spells/FireBall/Nion1.png",
-                       "Assets/Visual/Spells/FireBall/Nion2.png",
-                       "Assets/Visual/Spells/FireBall/Nion3.png"]
+        self.Frames = (pygame.image.load("Assets/Visual/Spells/FireBall/Nion1.png"),)
         self.Frame        = 0
         self.origin_image = pygame.image.load("Assets/Visual/Spells/FireBall/Nion1.png")
         self.rect         = self.origin_image.get_rect()
@@ -853,13 +843,13 @@ class Projectile(pygame.sprite.Sprite):
         if Game.Frame % 2:
             if self.Frame == 0:
                 self.Frame = 1
-                self.origin_image = pygame.image.load(self.Frames[1])
+                self.origin_image = self.Frames[0]
             if self.Frame == 1:
                 self.Frame = 2
-                self.origin_image = pygame.image.load(self.Frames[2])
+                self.origin_image = self.Frames[0]
             if self.Frame == 2:
                 self.Frame = 0
-                self.origin_image = pygame.image.load(self.Frames[0])
+                self.origin_image = self.Frames[0]
 
         self.rect.x     += self.DirectionX
         self.rect.y     += self.DirectionY
